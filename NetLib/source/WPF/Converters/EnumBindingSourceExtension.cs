@@ -96,13 +96,5 @@ namespace NetLib.WPF.Converters
             else
                 return enumValue.ToString();
         }
-    }
-
-    public static class EnumDescriptionExt
-    {
-        public static string Description(this object enumValue)
-        {
-            return EnumDescriptionTypeConverter.GetEnumDescription(enumValue);
-        }
-    }
+    }    
 }

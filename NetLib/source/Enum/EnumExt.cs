@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NetLib.WPF.Converters;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -30,6 +31,11 @@ namespace NetLib
 
             T result;
             return Enum.TryParse(value, true, out result) ? result : defaultValue;
+        }
+
+        public static string Description(this object enumValue)
+        {
+            return EnumDescriptionTypeConverter.GetEnumDescription(enumValue);
         }
     }
 }
