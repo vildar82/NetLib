@@ -47,26 +47,26 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="source\Comparers\AlphanumComparator.cs" />
-    <Compile Include="source\Comparers\DoubleEqualityComparer.cs" />
-    <Compile Include="source\Comparers\IntEqualityComparer.cs" />
-    <Compile Include="source\Comparers\StringsNumberComparer.cs" />
-    <Compile Include="source\Enum\EnumExt.cs" />
-    <Compile Include="source\Files\SerializerXml.cs" />
-    <Compile Include="source\Math\DoubleExt.cs" />
-    <Compile Include="source\Math\MathExt.cs" />
-    <Compile Include="source\Regex\RegexExt.cs" />
-    <Compile Include="source\Result.cs" />
-    <Compile Include="source\String\StringExt.cs" />
-    <Compile Include="source\String\StringHelper.cs" />
-    <Compile Include="source\WPF\Converters\BooleanToHidingVisibilityConverter.cs" />
-    <Compile Include="source\WPF\Converters\BooleanToOppositeBooleanConverter.cs" />
-    <Compile Include="source\WPF\Converters\ColorToBrushConverter.cs" />
-    <Compile Include="source\WPF\Converters\ConvertorBase.cs" />
-    <Compile Include="source\WPF\Converters\EnumBindingSourceExtension.cs" />
-    <Compile Include="source\WPF\Converters\EnumDescriptionConverter.cs" />
-    <Compile Include="source\WPF\Converters\MinToHoursConverter.cs" />
-    <Compile Include="source\WPF\Converters\RadiansToDegreeConverterExtension.cs" />
+    <Compile Include="Source\Comparers\AlphanumComparator.cs" />
+    <Compile Include="Source\Comparers\DoubleEqualityComparer.cs" />
+    <Compile Include="Source\Comparers\IntEqualityComparer.cs" />
+    <Compile Include="Source\Comparers\StringsNumberComparer.cs" />
+    <Compile Include="Source\Enum\EnumExt.cs" />
+    <Compile Include="Source\Files\SerializerXml.cs" />
+    <Compile Include="Source\Math\DoubleExt.cs" />
+    <Compile Include="Source\Math\MathExt.cs" />
+    <Compile Include="Source\Regex\RegexExt.cs" />
+    <Compile Include="Source\Result.cs" />
+    <Compile Include="Source\String\StringExt.cs" />
+    <Compile Include="Source\String\StringHelper.cs" />
+    <Compile Include="Source\WPF\Converters\BooleanToHidingVisibilityConverter.cs" />
+    <Compile Include="Source\WPF\Converters\BooleanToOppositeBooleanConverter.cs" />
+    <Compile Include="Source\WPF\Converters\ColorToBrushConverter.cs" />
+    <Compile Include="Source\WPF\Converters\ConvertorBase.cs" />
+    <Compile Include="Source\WPF\Converters\EnumBindingSourceExtension.cs" />
+    <Compile Include="Source\WPF\Converters\EnumDescriptionConverter.cs" />
+    <Compile Include="Source\WPF\Converters\MinToHoursConverter.cs" />
+    <Compile Include="Source\WPF\Converters\RadiansToDegreeConverterExtension.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
