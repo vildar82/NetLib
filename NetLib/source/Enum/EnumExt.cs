@@ -33,6 +33,11 @@ namespace NetLib
             return Enum.TryParse(value, true, out result) ? result : defaultValue;
         }
 
+        /// <summary>
+        /// Атрибут Description из значения enum
+        /// </summary>
+        /// <param name="enumValue">Enum значение</param>
+        /// <returns>Подаись в атрибуте Descrip</returns>
         public static string Description(this object enumValue)
         {
             return EnumDescriptionTypeConverter.GetEnumDescription(enumValue);
