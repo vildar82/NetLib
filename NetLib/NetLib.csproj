@@ -56,10 +56,8 @@
     <Compile Include="Source\Files\SerializerXml.cs" />
     <Compile Include="Source\Math\DoubleExt.cs" />
     <Compile Include="Source\Math\MathExt.cs" />
-    <Compile Include="Source\Regex\RegexExt.cs" />
     <Compile Include="Source\Result.cs" />
     <Compile Include="Source\String\StringExt.cs" />
-    <Compile Include="Source\String\StringHelper.cs" />
     <Compile Include="Source\WPF\Converters\BooleanToHidingVisibilityConverter.cs" />
     <Compile Include="Source\WPF\Converters\BooleanToOppositeBooleanConverter.cs" />
     <Compile Include="Source\WPF\Converters\ColorToBrushConverter.cs" />

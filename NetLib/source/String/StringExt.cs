@@ -26,17 +26,26 @@ namespace NetLib
         {
             //return Regex.Replace(input, @"\r\n?|\n", "");
             return input.Trim().Replace("\r\n", "").Replace("\n", "").Replace("\r", "");
-        }        
+        }                
 
         /// <summary>
-        /// Формат строки с аргументами string.Format();
+        /// Определение числа из строки начинающейся числом.
+        /// Например: "100 шт." = 100
         /// </summary>
-        /// <param name="format"></param>
-        /// <param name="args"></param>
+        /// <param name="input"></param>
         /// <returns></returns>
-        public static string f(this string format, params object[] args)
+        public static Result<int> GetStartInteger(this string input)
         {
-            return string.Format(format, args);
+            int value = 0;
+            var match = Regex.Match(input, @"^\d*");
+            if (match.Success)
+            {
+                if (int.TryParse(match.Value, out value))
+                {
+                    return Result.Ok(value);
+                }
+            }
+            return Result.Fail<int>($"Не определено целое число из строки - {input}");
         }
     }
 }
