@@ -51,6 +51,7 @@
     <Compile Include="Source\Comparers\DoubleEqualityComparer.cs" />
     <Compile Include="Source\Comparers\IntEqualityComparer.cs" />
     <Compile Include="Source\Comparers\StringsNumberComparer.cs" />
+    <Compile Include="Source\Converter\ConvertExt.cs" />
     <Compile Include="Source\Enum\EnumExt.cs" />
     <Compile Include="Source\Files\SerializerXml.cs" />
     <Compile Include="Source\Math\DoubleExt.cs" />
