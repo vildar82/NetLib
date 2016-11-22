@@ -9,8 +9,16 @@ namespace NetLib
 {
     public static class ConvertExt
     {
+        /// <summary>
+        /// Приведение типа объекта, к заданному типу, через Convert.ChangeType.
+        /// Если value строка, а T double, то учитывается разделитель ,
+        /// </summary>
+        /// <typeparam name="T">Требуемый тип</typeparam>
+        /// <param name="value">Значение</param>
+        /// <returns>Значение приведенное к заданному типу.</returns>
+        /// <exception cref="InvalidCastException">Это и другие исключения от Convert.ChangeType</exception>
         public static T GetValue<T>(this object value)
-        {
+        {            
             var culture = CultureInfo.InvariantCulture;
             if (value is string && typeof(T) == typeof(double))
             {
