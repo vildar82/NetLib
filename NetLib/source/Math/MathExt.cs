@@ -337,7 +337,7 @@ namespace NetLib
 
         public static int GetStartInt(this string input)
         {
-            var res = StringHelper.GetStartInteger(input);
+            var res = input.GetStartInteger();
             if (res.Success)
             {
                 return res.Value;
