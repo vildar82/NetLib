@@ -22,8 +22,9 @@ namespace NetLib
             var culture = CultureInfo.InvariantCulture;
             if (value is string && typeof(T) == typeof(double))
             {
-                value = ((string)value).Replace(",", ".");
-                culture = new CultureInfo("en-US");
+                value = ((string)value).ToDouble().ToString();
+                //value = ((string)value).Replace(",", ".");
+                //culture = new CultureInfo("en-US");
             }
             return (T)Convert.ChangeType(value, typeof(T), culture);
         }

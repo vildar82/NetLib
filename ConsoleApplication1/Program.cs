@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using NetLib.Comparers;
+using NetLib;
 
 namespace ConsoleApplication1
 {
@@ -11,8 +12,10 @@ namespace ConsoleApplication1
     {
         static void Main(string[] args)
         {
-            var values = new List<string>() { "0112301", "1001301"};
-            values.Sort(AlphanumComparator.New);
+            string value = "15,5";
+            var d = value.ToDouble();
+            Console.WriteLine(d);
+            Console.ReadKey();
         }
     }
 }

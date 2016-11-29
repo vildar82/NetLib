@@ -329,9 +329,26 @@ namespace NetLib
 
         public static double ToDouble (this string val)
         {
-            string s = val.Replace(",", ".");
-            CultureInfo ci = new CultureInfo("en-US");
-            double d = double.Parse(s, ci.NumberFormat);
+            //string s = val.Replace(",", ".");
+            //CultureInfo ci = new CultureInfo("en-US");            
+            //double d = double.Parse(s, ci.NumberFormat);
+            if (string.IsNullOrEmpty(val))
+            {
+                throw new NullReferenceException();
+            }
+            double d;
+            if (!double.TryParse(val, out d))
+            {
+                if (val.IndexOf(",") != -1)
+                {
+                    val = val.Replace(",", ".");
+                }
+                else
+                {
+                    val = val.Replace(".", ",");
+                }
+                d = double.Parse(val);
+            }
             return d;
         }
 
