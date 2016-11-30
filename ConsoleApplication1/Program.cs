@@ -13,8 +13,8 @@ namespace ConsoleApplication1
         static void Main(string[] args)
         {
             string value = "15,5";
-            var d = value.ToDouble();
-            Console.WriteLine(d);
+            var res = ConvertExt.GetValue<double>(value);
+            Console.WriteLine(res);
             Console.ReadKey();
         }
     }
