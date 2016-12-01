@@ -11,8 +11,8 @@ namespace ConsoleApplication1
     class Program
     {
         static void Main(string[] args)
-        {
-            string value = "15,5";
+        {            
+            string value = "-15 005.5";
             var res = ConvertExt.GetValue<double>(value);
             Console.WriteLine(res);
             Console.ReadKey();

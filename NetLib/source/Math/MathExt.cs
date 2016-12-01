@@ -334,9 +334,10 @@ namespace NetLib
             //double d = double.Parse(s, ci.NumberFormat);
             if (string.IsNullOrEmpty(val))
             {
-                throw new NullReferenceException();
+                return 0;
             }
             double d;
+            val = val.Trim();
             if (!double.TryParse(val, out d))
             {
                 if (val.IndexOf(",") != -1)

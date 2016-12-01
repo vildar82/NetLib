@@ -18,10 +18,10 @@ namespace NetLib
         /// <returns>Значение приведенное к заданному типу.</returns>
         /// <exception cref="InvalidCastException">Это и другие исключения от Convert.ChangeType</exception>
         public static T GetValue<T>(this object value)
-        {   
+        {
             if (value is string && typeof(T) == typeof(double))
             {
-                value = ((string)value).ToDouble().ToString();
+                value = ((string)value).ToDouble();
                 //value = ((string)value).Replace(",", ".");
                 //culture = new CultureInfo("en-US");
             }
