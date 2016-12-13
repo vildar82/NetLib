@@ -11,11 +11,18 @@ namespace ConsoleApplication1
     class Program
     {
         static void Main(string[] args)
-        {            
-            string value = "-15 005.5";
-            var res = ConvertExt.GetValue<double>(value);
+        {
+            object value = 1;
+            MyEnum res = value.GetValue<MyEnum>();
+            
             Console.WriteLine(res);
             Console.ReadKey();
         }
+    }
+
+    public enum MyEnum
+    {
+        None,
+        Default
     }
 }

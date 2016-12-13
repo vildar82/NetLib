@@ -25,7 +25,7 @@ namespace NetLib
         public static string ClearString(this string input)
         {
             //return Regex.Replace(input, @"\r\n?|\n", "");
-            return input.Trim().Replace("\r\n", "").Replace("\n", "").Replace("\r", "");
+            return input.Trim().Replace("\r\n", "").Replace("\n", "").Replace("\r", "").Replace(Convert.ToChar(160),' ');
         }                
 
         /// <summary>
@@ -46,6 +46,20 @@ namespace NetLib
                 }
             }
             return Result.Fail<int>($"Не определено целое число из строки - {input}");
+        }
+
+        /// <summary>
+        /// Сравнение строк с игнорированием спец.символов (неразрывный пробел, перенос строк)
+        /// </summary>
+        /// <param name="value1">Первая строка</param>
+        /// <param name="value2">Вторая строка</param>
+        /// <returns>Равны или нет</returns>
+        public static bool EqualsIgroreCaseAndSpecChars (this string value1, string value2)
+        {
+            // Удаление спец символов
+            string normalS1 = Regex.Replace(value1, @"\s", "");
+            string normalS2 = Regex.Replace(value2, @"\s", "");
+            return normalS1.Equals(normalS2, StringComparison.OrdinalIgnoreCase);
         }
     }
 }

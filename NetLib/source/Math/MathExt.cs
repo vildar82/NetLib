@@ -126,6 +126,29 @@ namespace NetLib
         }
 
         /// <summary>
+        /// Проверка - это ортогональный угол. И на сколько его нужно повернуть до ортогональности
+        /// </summary>
+        /// <param name="angleDeg">Проверяемый угол</param>
+        /// <param name="angteToOrtho">На сколько его нужно повернуть до ортогональности (положительный угол - против часовой стрелки)</param>
+        /// <returns>Да - это ортогональный угол. Нет - не ортогональный, и угол на который необходимо повернуть</returns>
+        public static bool IsOrthoAngle(this double angle, out double angteToOrtho, bool isRadians = true,double tolerance = 0.01)
+        {
+            if (!isRadians)
+            {
+                angle = angle.ToRadians();
+            }
+            var p = angle % PIHalf;
+            if (p < tolerance)
+            {
+                angteToOrtho = 0;
+                return true;
+            }
+            var np = PIHalf - p;
+            angteToOrtho = p < (np) ? -p : np;
+            return false;
+        }
+
+        /// <summary>
         /// Преобразование градусов в радианы (Math.PI / 180.0)*angleDegrees
         /// </summary>
         /// <param name="degrees">Угол в градусах</param>
@@ -350,7 +373,7 @@ namespace NetLib
                 }
                 d = double.Parse(val);
             }
-            return d;
+            return d.Round(4);
         }
 
         public static int GetStartInt(this string input)
