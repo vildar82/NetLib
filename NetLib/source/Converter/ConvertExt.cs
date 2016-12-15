@@ -20,11 +20,14 @@ namespace NetLib
         public static T GetValue<T>(this object value)
         {
             var typeT = typeof(T);
+
+            // Из строки в число - разделитель точка или запятая
             if (value is string && typeT == typeof(double))
             {
                 value = ((string)value).ToDouble();
                 return (T)value;                
             }
+            // Округление числа до 4 знаков
             else  if(value is double &&  typeT == typeof(double))
             {
                 value = ((double)value).Round(4);
