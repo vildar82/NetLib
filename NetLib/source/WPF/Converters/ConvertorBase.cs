@@ -25,7 +25,7 @@ namespace NetLib.WPF.Converters
         public virtual object ConvertBack (object value, Type targetType, object parameter,
             CultureInfo culture)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException($"ConvertBack в ConvertorBase - из значения {value} в {targetType}");
         }
 
         public override object ProvideValue (IServiceProvider serviceProvider)
