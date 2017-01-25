@@ -10,6 +10,16 @@ namespace NetLib
     public static class StringExt
     {
         /// <summary>
+        /// Есть ли в строке кирилические символы (русские буквы)
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        public static bool HasCyrilic(this string input)
+        {
+            return Regex.IsMatch(input, @"\p{IsCyrillic}");
+        }
+
+        /// <summary>
         /// IndexOf(toCheck, comp) >= 0
         /// </summary>        
         public static bool Contains(this string source, string toCheck, StringComparison comp)
@@ -25,7 +35,7 @@ namespace NetLib
         public static string ClearString(this string input)
         {
             //return Regex.Replace(input, @"\r\n?|\n", "");
-            return input.Trim().Replace("\r\n", "").Replace("\n", "").Replace("\r", "").Replace(Convert.ToChar(160),' ');
+            return input.Trim().Replace("\r\n", " ").Replace("\n", " ").Replace("\r", " ").Replace(Convert.ToChar(160),' ');
         }                
 
         /// <summary>

@@ -12,17 +12,10 @@ namespace ConsoleApplication1
     {
         static void Main(string[] args)
         {
-            object value = 1;
-            MyEnum res = value.GetValue<MyEnum>();
+            var res = NetLib.IO.Path.GetTempFile(".xlsx");
             
             Console.WriteLine(res);
             Console.ReadKey();
         }
-    }
-
-    public enum MyEnum
-    {
-        None,
-        Default
-    }
+    }   
 }

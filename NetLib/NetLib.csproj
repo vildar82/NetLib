@@ -58,6 +58,7 @@
     <Compile Include="Source\Enumerable\EnumerableExt.cs" />
     <Compile Include="Source\Enum\EnumExt.cs" />
     <Compile Include="Source\Files\SerializerXml.cs" />
+    <Compile Include="Source\IO\Path.cs" />
     <Compile Include="Source\Math\DoubleExt.cs" />
     <Compile Include="Source\Math\MathExt.cs" />
     <Compile Include="Source\Result.cs" />
