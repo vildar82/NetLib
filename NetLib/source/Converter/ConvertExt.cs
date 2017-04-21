@@ -51,5 +51,14 @@ namespace NetLib
                 return defaultValue;
             }
         }
+
+        public static string ColorToString (this System.Drawing.Color color)
+        {
+            return System.Drawing.ColorTranslator.ToHtml(color); 
+        }
+        public static System.Drawing.Color StringToColor (this string color)
+        {
+            return System.Drawing.ColorTranslator.FromHtml(color);
+        }
     }
 }
