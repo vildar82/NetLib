@@ -66,6 +66,7 @@
     <Compile Include="Source\Math\MathExt.cs" />
     <Compile Include="Source\Result.cs" />
     <Compile Include="Source\String\StringExt.cs" />
+    <Compile Include="Source\WPF\Converters\NullVisibilityConverter.cs" />
     <Compile Include="Source\WPF\Converters\DoubleConverter.cs" />
     <Compile Include="Source\WPF\Converters\BooleanToHidingVisibilityConverter.cs" />
     <Compile Include="Source\WPF\Converters\BooleanToOppositeBooleanConverter.cs" />
