@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.DirectoryServices;
 using System.DirectoryServices.AccountManagement;
 using System.Linq;
+using System.Security.AccessControl;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -13,7 +14,7 @@ namespace NetLib.AD
     /// </summary>
     public class ADUtils : IDisposable
     {
-        private PrincipalContext context;
+        public PrincipalContext context;
 
         /// <summary>
         /// Группы текущего пользователя
@@ -26,10 +27,23 @@ namespace NetLib.AD
             }
         }
 
-        /// <summary>
-        /// Получить базовый основной контекст
-        /// </summary>        
-        private PrincipalContext GetPrincipalContext(string domain = null)
+	    public static string GetUserFIO(string login)
+	    {
+			using (var adUtils = new ADUtils())
+			{
+				return adUtils.GetFIO(login);
+			}
+		}
+
+		public static bool IsLoginCorrect(string login)
+		{
+			return !string.IsNullOrEmpty(login) && !login.Any(char.IsWhiteSpace);
+		}
+
+	    /// <summary>
+		/// Получить базовый основной контекст
+		/// </summary>        
+		private PrincipalContext GetPrincipalContext(string domain = null)
         {
             if (domain == null) return new PrincipalContext(ContextType.Domain);
             return new PrincipalContext(ContextType.Domain, domain);
@@ -43,11 +57,7 @@ namespace NetLib.AD
         {
             context = GetPrincipalContext(domain);
             var user = UserPrincipal.FindByIdentity(context, IdentityType.SamAccountName, sUserName);
-            if (user != null)
-            {
-                return user;
-            }
-            return null;
+	        return user;
         }
 
         /// <summary>
@@ -70,10 +80,18 @@ namespace NetLib.AD
             return userGroups;
         }
 
-        /// <summary>
-        /// Очистка контекста AD
-        /// </summary>
-        public void Dispose()
+	    private string GetFIO(string login)
+	    {
+		    using (var user = GetUser(login, Environment.UserDomainName))
+		    {
+			    return user?.DisplayName;
+		    }
+		}
+
+		/// <summary>
+		/// Очистка контекста AD
+		/// </summary>
+		public void Dispose()
         {
             context?.Dispose();
         }
