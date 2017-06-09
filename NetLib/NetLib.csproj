@@ -30,6 +30,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="MahApps.Metro.IconPacks, Version=1.9.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MahApps.Metro.IconPacks.1.9.0\lib\net45\MahApps.Metro.IconPacks.dll</HintPath>
+    </Reference>
     <Reference Include="MicroMvvm">
       <HintPath>..\..\..\Package\MVVM\MicroMvvm.dll</HintPath>
     </Reference>
@@ -66,6 +69,9 @@
     <Compile Include="Source\Math\MathExt.cs" />
     <Compile Include="Source\Result.cs" />
     <Compile Include="Source\String\StringExt.cs" />
+    <Compile Include="Source\WPF\Controls\PathSelector\PathSelector.xaml.cs">
+      <DependentUpon>PathSelector.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Source\WPF\Converters\NullVisibilityConverter.cs" />
     <Compile Include="Source\WPF\Converters\DoubleConverter.cs" />
     <Compile Include="Source\WPF\Converters\BooleanToHidingVisibilityConverter.cs" />
@@ -77,7 +83,15 @@
     <Compile Include="Source\WPF\Converters\MinToHoursConverter.cs" />
     <Compile Include="Source\WPF\Converters\RadiansToDegreeConverterExtension.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Page Include="Source\WPF\Controls\PathSelector\PathSelector.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

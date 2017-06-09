@@ -88,7 +88,7 @@ namespace NetLib.WPF.Converters
         {
             if (enumValue == null) return null;
             FieldInfo fi = enumValue.GetType().GetField(enumValue.ToString());
-            if (fi == null) return null;
+            if (fi == null) return enumValue.ToString();
             var attributes = (DescriptionAttribute[])fi.GetCustomAttributes(typeof(DescriptionAttribute),false);            
             
             if (attributes != null && attributes.Length > 0)
