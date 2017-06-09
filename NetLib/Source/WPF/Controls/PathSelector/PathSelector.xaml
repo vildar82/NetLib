@@ -7,17 +7,17 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
 	<DockPanel Height="28">
-		<Button DockPanel.Dock="Right" Content="{iconPacks:PackIconMaterial Kind=FolderOutline}" Margin="2"
-				Click="OpenExplorer" ToolTip="Открыть в проводнике"/>
+		<Button DockPanel.Dock="Right" Content="{iconPacks:PackIconMaterial Kind=FolderOutline, Height=12}" Margin="2"
+				Click="OpenExplorer" ToolTip="Открыть в проводнике" Height="22"/>
 		<Button DockPanel.Dock="Right" Margin="2,2,0,2"
                 FontWeight="Bold"
                 Content="..."
-                Click="BrowseButton_Click" />		
+                Click="BrowseButton_Click" Height="22"/>		
 		<Grid>
 			<TextBox 
                 HorizontalAlignment="Stretch" VerticalAlignment="Center"
                 x:Name="SelectedPathTxtBox"
-                LostKeyboardFocus="SelectedPathTxtBox_LostKeyboardFocus" />
+				TextChanged="SelectedPathTxtBox_OnTextChanged"/>
 		</Grid>
 	</DockPanel>
 </UserControl>

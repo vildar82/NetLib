@@ -30,10 +30,7 @@ namespace NetLib.WPF.Controls
 
 		private void BrowseButton_Click(object sender, RoutedEventArgs e)
 		{
-			var fileDialog = new OpenFileDialog()
-			{
-				Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*"
-			};
+			var fileDialog = new OpenFileDialog();
 			if (fileDialog.ShowDialog() == true)
 			{
 				SelectedPathTxtBox.Text = fileDialog.FileName;
@@ -42,8 +39,8 @@ namespace NetLib.WPF.Controls
 		
 		public string SelectedPath
 		{
-			get { return (string)GetValue(SelectedPathProperty); }
-			set { SetValue(SelectedPathProperty, value); }
+			get => (string)GetValue(SelectedPathProperty);
+			set => SetValue(SelectedPathProperty, value);
 		}
 
 		public static readonly DependencyProperty SelectedPathProperty =
@@ -51,7 +48,7 @@ namespace NetLib.WPF.Controls
 			"SelectedPath",
 			typeof(string),
 			typeof(PathSelector),
-			new FrameworkPropertyMetadata(new PropertyChangedCallback(SelectedPathChanged))
+			new FrameworkPropertyMetadata(SelectedPathChanged)
 			{
 				BindsTwoWayByDefault = true,
 				DefaultUpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged
@@ -66,17 +63,28 @@ namespace NetLib.WPF.Controls
 		{
 			SelectedPath = SelectedPathTxtBox.Text;
 		}
+		private void SelectedPathTxtBox_OnTextChanged(object sender, TextChangedEventArgs e)
+		{
+			SelectedPath = SelectedPathTxtBox.Text;
+		}
 
 		private void OpenExplorer(object sender, RoutedEventArgs e)
 		{
-			var file = SelectedPath;			
-			if (!File.Exists(file))
+			var path = SelectedPathTxtBox.Text;	
+			if (!FileOrDirectoryExists(path))
 			{
 				MessageBox.Show("Путь не найден.");
 				return;
 			}			
-			string argument = "/select, \"" + file + "\"";
+			string argument = "/select, \"" + path + "\"";
 			Process.Start("explorer.exe", argument);
 		}
+
+		internal static bool FileOrDirectoryExists(string name)
+		{
+			return (Directory.Exists(name) || File.Exists(name));
+		}
+
+		
 	}
 }
