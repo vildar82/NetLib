@@ -71,5 +71,13 @@ namespace NetLib
             string normalS2 = Regex.Replace(value2, @"\s", "");
             return normalS1.Equals(normalS2, StringComparison.OrdinalIgnoreCase);
         }
-    }
+
+	    private static readonly Random random = new Random();
+	    public static string RandomString(int length)
+	    {
+		    const string chars = " qwerty uiop as df ghj klz xcv bnm AB CD EFG HIJK LMN OP QRS TUVWX YZ0123 456789";
+		    return new string(Enumerable.Repeat(chars, length)
+			    .Select(s => s[random.Next(s.Length)]).ToArray());
+	    }
+	}
 }
