@@ -35,5 +35,17 @@ namespace NetLib.IO
                 }
             }
         }
+
+	    public static void TryDeleteFile(string file)
+	    {
+		    try
+		    {
+			    File.Delete(file);
+		    }
+		    catch
+		    {
+			    //
+		    }
+	    }
     }
 }
