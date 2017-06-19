@@ -83,6 +83,7 @@
       <DependentUpon>TextView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Source\WPF\Controls\TextEdit\TextVM.cs" />
+    <Compile Include="Source\WPF\Converters\BooleanToCollapseVisibilityConverter.cs" />
     <Compile Include="Source\WPF\Converters\NullVisibilityConverter.cs" />
     <Compile Include="Source\WPF\Converters\DoubleConverter.cs" />
     <Compile Include="Source\WPF\Converters\BooleanToHidingVisibilityConverter.cs" />
