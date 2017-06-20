@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using NCalc;
 using NetLib.Comparers;
 
 namespace NetLib
@@ -16,6 +17,19 @@ namespace NetLib
         public const double PIQuart = Math.PI * 25;
         public const double RatioDegreeToRadian = Math.PI / 180;
         public const double RatioRadianToDegree = 180 / Math.PI;
+
+        public static object EvaluateString(string expression)
+        {
+            var expr = new Expression(expression);
+            expr.EvaluateParameter += (s, p) =>
+            {
+                if (s.Equals("Pi"))
+                {
+                    p.Result = Math.PI;
+                }
+            };
+            return expr.Evaluate();
+        }
 
         /// <summary>
         /// Приведение угла к значению от 0 до 2PI (один оборот)
