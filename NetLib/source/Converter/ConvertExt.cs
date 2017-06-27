@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Globalization;
 using System.Linq;
 using System.Text;
@@ -58,6 +59,7 @@ namespace NetLib
         }
         public static System.Drawing.Color StringToColor (this string color)
         {
+            if (string.IsNullOrEmpty(color)) return Color.Empty;
             return System.Drawing.ColorTranslator.FromHtml(color);
         }
     }
