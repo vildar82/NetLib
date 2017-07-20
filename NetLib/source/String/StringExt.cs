@@ -46,13 +46,12 @@ namespace NetLib
         /// <returns></returns>
         public static Result<int> GetStartInteger(this string input)
         {
-            int value = 0;
             var match = Regex.Match(input, @"^\d*");
             if (match.Success)
             {
-                if (int.TryParse(match.Value, out value))
+                if (int.TryParse(match.Value, out int value))
                 {
-                    return Result.Ok(value);
+                    return Result.Ok(0);
                 }
             }
             return Result.Fail<int>($"Не определено целое число из строки - {input}");
@@ -71,6 +70,11 @@ namespace NetLib
             string normalS2 = Regex.Replace(value2, @"\s", "");
             return normalS1.Equals(normalS2, StringComparison.OrdinalIgnoreCase);
         }
+
+	    public static bool IsBothStringsIsNullOrEmpty(this string s1, string s2)
+	    {
+		    return string.IsNullOrEmpty(s1) && string.IsNullOrEmpty(s2);
+	    }
 
 	    private static readonly Random random = new Random();
 	    public static string RandomString(int length)
