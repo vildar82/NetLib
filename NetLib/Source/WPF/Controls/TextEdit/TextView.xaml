@@ -1,19 +1,31 @@
-﻿<Controls:MetroWindow x:Class="NetLib.WPF.Controls.TextView"
-        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:controls="clr-namespace:NetLib.WPF.Controls"
-        mc:Ignorable="d"
-        d:DataContext="{d:DesignInstance Type=controls:TextVM, IsDesignTimeCreatable=True}"
-        GlowBrush="{DynamicResource AccentColorBrush}"        
-        Title="{Binding Title}"
-        ResizeMode="NoResize"
-        FocusManager.FocusedElement="{Binding ElementName=tbValue}"
-		SizeToContent="WidthAndHeight"
-		WindowStartupLocation="CenterScreen">
-    <Grid Margin="5">
+﻿<Controls:MetroWindow 
+	x:Class="NetLib.WPF.Controls.TextView"
+    xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="clr-namespace:NetLib.WPF.Controls"
+    mc:Ignorable="d"
+    d:DataContext="{d:DesignInstance Type=controls:DesignTextVM, IsDesignTimeCreatable=True}"
+    GlowBrush="{DynamicResource AccentColorBrush}"        
+    Title="{Binding Title}"
+    ResizeMode="NoResize"
+    FocusManager.FocusedElement="{Binding ElementName=tbValue}"
+	SizeToContent="WidthAndHeight"
+	Topmost="True"
+	ShowInTaskbar="False"
+	ShowMaxRestoreButton="False"
+	ShowMinButton="False"
+	WindowStartupLocation="CenterScreen">
+	<Controls:MetroWindow.Resources>
+		<ResourceDictionary>
+			<ResourceDictionary.MergedDictionaries>
+				<ResourceDictionary Source="../../../Style.xaml"/>
+			</ResourceDictionary.MergedDictionaries>
+		</ResourceDictionary>
+	</Controls:MetroWindow.Resources>
+	<Grid Margin="15,5,15,5">
         <Grid.RowDefinitions>            
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>

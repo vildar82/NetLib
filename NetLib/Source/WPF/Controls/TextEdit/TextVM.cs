@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace NetLib.WPF.Controls
 {
-    /// <summary>
-    /// Текстовое значение
-    /// </summary>
-    public class TextVM : ViewModelBase
-    {
-	    readonly Predicate<string> allowValue;
+	/// <summary>
+	/// Текстовое значение
+	/// </summary>
+	public class TextVM : ViewModelBase
+	{
+		private readonly Predicate<string> allowValue;
 
 		/// <summary>
 		/// Заголовок, имя и значение
@@ -22,27 +22,35 @@ namespace NetLib.WPF.Controls
 		/// <param name="value">Значение редактируемое</param>
 		/// <param name="allowValue">Проверка введенного значения</param>
 		public TextVM(string title, string name, string value, Predicate<string> allowValue)
-        {
-            Title = title;
-            Name = name;
-            Value = value;
-            OK = new RelayCommand(OkExecute, CanOkExecute);
-            this.allowValue = allowValue;
-        }        
+		{
+			Title = title;
+			Name = name;
+			Value = value;
+			OK = new RelayCommand(OkExecute, CanOkExecute);
+			this.allowValue = allowValue;
+		}
 
-        public string Title { get; set; }
-        public string Name { get; set; }
-        public string Value { get; set; }
+		public string Title { get; set; }
+		public string Name { get; set; }
+		public string Value { get; set; }
 
-        public RelayCommand OK { get; }
+		public RelayCommand OK { get; }
 
-        private bool CanOkExecute()
-        {
-            return allowValue(Value);
-        }
+		private bool CanOkExecute()
+		{
+			return allowValue(Value);
+		}
 
-        private void OkExecute()
-        {            
-        }
-    }
+		private void OkExecute()
+		{
+		}
+	}
+
+	public class DesignTextVM : TextVM
+	{
+		public DesignTextVM() 
+			: base("Новый объект", "Название объекта", "Вася", s=> !string.IsNullOrEmpty(s))
+		{
+		}
+	}
 }
