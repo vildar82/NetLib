@@ -3,7 +3,7 @@ using System.IO;
 
 namespace NetLib.Locks
 {
-	internal class FileLock : ILockItem
+	public class FileLock : ILockItem
 	{
 		private FileStream stream;
 		private readonly string file;
@@ -33,8 +33,14 @@ namespace NetLib.Locks
 		}
 
 		public bool IsLockSuccess { get; }
+		/// <summary>
+		/// Информация из файла блокировки
+		/// </summary>
 		public LockInfo Info { get; private set; }
 		
+		/// <summary>
+		/// строка для сообщения о блокировке - Пользователь, дата
+		/// </summary>
 		public string GetMessage()
 		{
 			return $"Пользователь - {Info.Login}, дата блокировки {Info.Date}";
