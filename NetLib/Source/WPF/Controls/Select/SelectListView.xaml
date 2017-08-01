@@ -34,7 +34,8 @@
 		</Grid.RowDefinitions>
 		<TextBlock Grid.Row="0" Text="{Binding Name}" TextWrapping="Wrap" Margin="5" HorizontalAlignment="Center"
 				   Visibility="{Binding HasName, Converter={converters:BooleanToCollapseVisibilityConverter}}"/>
-		<ListBox Grid.Row="1" ItemsSource="{Binding ItemsView}" SelectedItem="{Binding Selected}" Margin="12">
+		<ListBox Grid.Row="1" ItemsSource="{Binding ItemsView}" SelectedItem="{Binding Selected}" Margin="12" 
+				 MouseDoubleClick="OkClick">
 			<ListBox.ItemTemplate>
 				<DataTemplate>
 					<TextBlock Text="{Binding Name}" Margin="3"/>
