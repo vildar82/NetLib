@@ -9,6 +9,17 @@ namespace NetLib
 {
     public static class StringExt
     {
+		/// <summary>
+		/// Сравнение строк без учета регистра. 
+		/// Внимание! null, "", и строка только с пробелами считаются равными!
+		/// </summary>
+	    public static bool EqualsIgnoreCase(this string string1, string string2)
+		{
+			return string.Equals(string1, string2, StringComparison.OrdinalIgnoreCase) ||
+			       IsBothStringsIsNullOrEmpty(string1, string2);
+
+		}
+
         /// <summary>
         /// Есть ли в строке кирилические символы (русские буквы)
         /// </summary>
