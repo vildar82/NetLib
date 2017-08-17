@@ -109,6 +109,7 @@
       <DependentUpon>TextView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Source\WPF\Controls\TextEdit\TextVM.cs" />
+    <Compile Include="Source\WPF\Converters\GridLengthConverter.cs" />
     <Compile Include="Source\WPF\Converters\NullCollapseVisibilityConverter.cs" />
     <Compile Include="Source\WPF\Converters\BooleanToCollapseVisibilityConverter.cs" />
     <Compile Include="Source\WPF\Converters\BooleanToFontBoldConverter.cs" />
