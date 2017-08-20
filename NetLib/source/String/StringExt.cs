@@ -9,11 +9,21 @@ namespace NetLib
 {
     public static class StringExt
     {
+	    public static bool IsNullOrEmpty(this string str)
+	    {
+		    return string.IsNullOrEmpty(str);
+	    }
+
+	    public static bool IsNullOrWhiteSpace(this string str)
+	    {
+		    return string.IsNullOrWhiteSpace(str);
+	    }
+
 		/// <summary>
 		/// Сравнение строк без учета регистра. 
 		/// Внимание! null, "", и строка только с пробелами считаются равными!
 		/// </summary>
-	    public static bool EqualsIgnoreCase(this string string1, string string2)
+		public static bool EqualsIgnoreCase(this string string1, string string2)
 		{
 			return string.Equals(string1, string2, StringComparison.OrdinalIgnoreCase) ||
 			       IsBothStringsIsNullOrEmpty(string1, string2);

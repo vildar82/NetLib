@@ -8,6 +8,23 @@ namespace NetLib
 {
     public static class EnumerableExt
     {
+		/// <summary>
+		/// Добавление объекта в коллекцию
+		/// </summary>
+		/// <typeparam name="T">Тип добавляемого объекта</typeparam>
+		/// <param name="obj">Объект добавляемый в коллекцию. Может быть значимым или ссылочным типом.</param>
+		/// <param name="list">Коллекция</param>
+		/// <returns>Сам объект</returns>
+		public static T AddTo<T>(this T obj, ICollection<T> list)
+	    {
+			// Если это значимый тип, или не дефолтное значение для ссылочных типов (null)
+		    if (typeof(T).IsValueType || !EqualityComparer<T>.Default.Equals(obj, default(T)))
+		    {
+			    list.Add(obj);
+		    }
+		    return obj;
+	    }
+
         /// <summary>
         /// Преобразует одиночный объект в список из одного объекта (IEnumerable)
         /// </summary>                        
