@@ -95,6 +95,9 @@
     <Compile Include="Source\Math\MathExt.cs" />
     <Compile Include="Source\Result.cs" />
     <Compile Include="Source\String\StringExt.cs" />
+    <Compile Include="Source\WPF\Behaviors\DataGrid\AlphaNumSorter.cs" />
+    <Compile Include="Source\WPF\Behaviors\DataGrid\CustomSortBehaviour.cs" />
+    <Compile Include="Source\WPF\Behaviors\DataGrid\ICustomSorter.cs" />
     <Compile Include="Source\WPF\Behaviors\ScrollIntoViewForListBox.cs" />
     <Compile Include="Source\WPF\Controls\PathSelector\PathSelector.xaml.cs">
       <DependentUpon>PathSelector.xaml</DependentUpon>
