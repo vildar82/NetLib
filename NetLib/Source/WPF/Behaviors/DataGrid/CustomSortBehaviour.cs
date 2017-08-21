@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -69,6 +70,7 @@ namespace NetLib.WPF.Behaviors
 			// Sanity check
 			var sorter = GetCustomSorter(e.Column);
 			if (sorter == null) return;
+			sorter.SortPropertyName = e.Column.SortMemberPath;
 
 			// The guts.
 			e.Handled = true;

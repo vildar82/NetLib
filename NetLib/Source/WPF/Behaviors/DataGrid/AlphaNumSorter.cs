@@ -11,11 +11,13 @@ namespace NetLib.WPF.Behaviors
 	public class AlphaNumSorter : ICustomSorter
 	{
 		public ListSortDirection SortDirection { get; set; }
+		public string SortPropertyName { get; set; }
 
 		public int Compare(object x, object y)
 		{
-			var strX = x?.ToString();
-			var strY = y?.ToString();
+			var strX = x.GetType().GetProperty(SortPropertyName)?.GetValue(x).ToString();
+			var strY = y.GetType().GetProperty(SortPropertyName)?.GetValue(y).ToString();
+
 			if (SortDirection == ListSortDirection.Ascending)
 			{
 				return AlphanumComparator.New.Compare(strX, strY);
