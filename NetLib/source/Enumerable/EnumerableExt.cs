@@ -8,6 +8,14 @@ namespace NetLib
 {
     public static class EnumerableExt
     {
+	    /// <summary>
+	    /// Select без Null
+	    /// </summary>
+	    public static IEnumerable<TRes> SelectNulles<TSource, TRes>(this IEnumerable<TSource> list, Func<TSource, TRes> selector)
+	    {
+		    return list.Select(selector).Where(w => w != null);
+	    }
+
 		/// <summary>
 		/// Добавление объекта в коллекцию
 		/// </summary>

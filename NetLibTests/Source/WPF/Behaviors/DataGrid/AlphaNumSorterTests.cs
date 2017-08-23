@@ -12,6 +12,7 @@ namespace NetLib.WPF.Behaviors.Tests
 	[TestClass()]
 	public class AlphaNumSorterTests
 	{
+		[Ignore]
 		[TestMethod()]
 		public void CompareTest()
 		{

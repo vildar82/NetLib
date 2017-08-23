@@ -55,6 +55,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Source\Enumerable\EnumerableExtTests.cs" />
     <Compile Include="Source\WPF\Behaviors\DataGrid\AlphaNumSorterTests.cs" />
     <Compile Include="Source\WPF\Converters\GridLengthConverterTests.cs" />
   </ItemGroup>
