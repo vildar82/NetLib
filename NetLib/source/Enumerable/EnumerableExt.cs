@@ -11,11 +11,11 @@ namespace NetLib
 	    /// <summary>
 	    /// Select без Null
 	    /// </summary>
-	    public static IEnumerable<TRes> SelectNulles<TSource, TRes>(this IEnumerable<TSource> list, Func<TSource, TRes> selector)
+	    public static IEnumerable<TRes> SelectNulless<TSource, TRes>(this IEnumerable<TSource> list, Func<TSource, TRes> selector)
 	    {
-		    return list.Select(selector).Where(w => w != null);
+		    return list.Where(w => w != null).Select(selector).Where(w => w != null);
 	    }
-
+	    
 		/// <summary>
 		/// Добавление объекта в коллекцию
 		/// </summary>
