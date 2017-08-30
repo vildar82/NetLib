@@ -12,10 +12,25 @@ namespace NetLib
     public static class MathExt
     {
         public static DoubleEqualityComparer AngleComparer = new DoubleEqualityComparer();
+		/// <summary>
+		/// 2 ПИ - 6.28...радиан, (360 градусов)
+		/// </summary>
         public const double PI2 = Math.PI * 2;
+		/// <summary>
+		/// Пи/2 - 1,57...радиан, (90 градусов)
+		/// </summary>
         public const double PIHalf = Math.PI *0.5;
-        public const double PIQuart = Math.PI * 25;
+		/// <summary>
+		/// Пи/4 - 0,78...радиан, (45 градусов)
+		/// </summary>
+        public const double PIQuart = Math.PI * 0.25;
+		/// <summary>
+		/// ПИ/180 - для преобразования градусов в радианы
+		/// </summary>
         public const double RatioDegreeToRadian = Math.PI / 180;
+		/// <summary>
+		/// 180/Пи - для преобразования радиан в градусы
+		/// </summary>
         public const double RatioRadianToDegree = 180 / Math.PI;
 
         public static object EvaluateString(string expression)
