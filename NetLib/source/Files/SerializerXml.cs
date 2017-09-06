@@ -11,7 +11,7 @@ namespace NetLib
 {
     public class SerializerXml
     {
-        private string _settingsFile;
+        private readonly string _settingsFile;
 
         public SerializerXml (string settingsFile)
         {
@@ -27,9 +27,27 @@ namespace NetLib
             }
         }
 
+        public void SerializeList<T>(T settings, params Type[] types)
+        {
+            using (FileStream fs = new FileStream(_settingsFile, FileMode.Create, FileAccess.Write))
+            {
+                XmlSerializer ser = new XmlSerializer(typeof(T), types);
+                ser.Serialize(fs, settings);
+            }
+        }
+
         public T DeserializeXmlFile<T> ()
         {
             XmlSerializer ser = new XmlSerializer(typeof(T));
+            using (XmlReader reader = XmlReader.Create(_settingsFile))
+            {
+                return (T)ser.Deserialize(reader);
+            }
+        }
+
+        public T DeserializeXmlFile<T>(params Type[] types)
+        {
+            XmlSerializer ser = new XmlSerializer(typeof(T), types);
             using (XmlReader reader = XmlReader.Create(_settingsFile))
             {
                 return (T)ser.Deserialize(reader);
@@ -42,12 +60,20 @@ namespace NetLib
         /// <typeparam name="T">Тип считываемого объекта></typeparam>
         /// <param name="file">Файл xml</param>
         /// <returns>Объект T или null</returns>
-        public static T Load<T> (string file) where T: class, new()
+        public static T Load<T>(string file) where T : class, new()
         {
             var ser = new SerializerXml(file);
-            T res = null;            
-            res = ser.DeserializeXmlFile<T>();            
-            return res;                
+            T res = null;
+            res = ser.DeserializeXmlFile<T>();
+            return res;
+        }
+
+        public static T Load<T>(string file, params Type[] types) where T : class, new()
+        {
+            var ser = new SerializerXml(file);
+            T res = null;
+            res = ser.DeserializeXmlFile<T>(types);
+            return res;
         }
 
         /// <summary>
@@ -61,6 +87,12 @@ namespace NetLib
         {
             var ser = new SerializerXml(file);
             ser.SerializeList(obj);
-        }            
+        }
+
+        public static void Save<T>(string file, T obj, params Type[] types)
+        {
+            var ser = new SerializerXml(file);
+            ser.SerializeList(obj, types);
+        }
     }
 }
