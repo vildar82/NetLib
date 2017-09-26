@@ -9,6 +9,20 @@ namespace NetLib.IO
 {
     public static class Path
     {
+        public static void DeleteDir(string dir)
+        {
+            if (!Directory.Exists(dir)) return;
+            var di = new DirectoryInfo(dir);
+            foreach (var file in di.GetFiles())
+            {
+                file.Delete();
+            }
+            foreach (var d in di.GetDirectories())
+            {
+                d.Delete(true);
+            }
+        }
+
         /// <summary>
         /// Возвращает путь к временному файлу
         /// </summary>        
