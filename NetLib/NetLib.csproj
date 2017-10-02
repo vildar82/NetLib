@@ -100,6 +100,7 @@
     <Compile Include="Source\WPF\Behaviors\DataGrid\DataGridColumnsBehavior.cs" />
     <Compile Include="Source\WPF\Behaviors\DataGrid\ICustomSorter.cs" />
     <Compile Include="Source\WPF\Behaviors\ScrollIntoViewForListBox.cs" />
+    <Compile Include="Source\WPF\Behaviors\TreeView\BindableSelectedItemBehavior.cs" />
     <Compile Include="Source\WPF\Controls\PathSelector\PathSelector.xaml.cs">
       <DependentUpon>PathSelector.xaml</DependentUpon>
     </Compile>
