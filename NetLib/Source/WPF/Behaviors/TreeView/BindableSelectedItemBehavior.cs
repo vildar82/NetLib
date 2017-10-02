@@ -9,6 +9,11 @@ using System.Windows.Interactivity;
 
 namespace NetLib.WPF.Behaviors
 {
+    /// <summary>
+    /// e:Interaction.Behaviors
+    ///     behaviours:BindableSelectedItemBehavior SelectedItem = "{Binding SelectedItem, Mode=TwoWay}"
+    /// e:Interaction.Behaviors
+    /// </summary>
     public class BindableSelectedItemBehavior : Behavior<TreeView>
     {
         public object SelectedItem
