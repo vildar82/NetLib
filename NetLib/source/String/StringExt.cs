@@ -9,6 +9,23 @@ namespace NetLib
 {
     public static class StringExt
     {
+        /// <summary>
+        /// Соединение списка объектов в одну строку, с разделителем. 
+        /// Строка из T.ToString()
+        /// </summary>
+        public static string JoinToString<T>(this IEnumerable<T> array, string delimeter = ",")
+        {
+            return JoinToString(array, t=> t.ToString(), delimeter);
+        }
+
+        /// <summary>
+        /// Объекдинение списка объектов в одну строку, с разделителем и методом получения строки из объекта.
+        /// </summary>
+        public static string JoinToString<T>(this IEnumerable<T> array, Func<T, string> getString, string delimeter =",")
+        {
+            return string.Join(delimeter, array.Select(getString));
+        }
+
 	    public static bool IsNullOrEmpty(this string str)
 	    {
 		    return string.IsNullOrEmpty(str);
