@@ -118,6 +118,7 @@
     <Compile Include="Source\WPF\Converters\NullCollapseVisibilityConverter.cs" />
     <Compile Include="Source\WPF\Converters\BooleanToCollapseVisibilityConverter.cs" />
     <Compile Include="Source\WPF\Converters\BooleanToFontBoldConverter.cs" />
+    <Compile Include="Source\WPF\Converters\IsNullConverter.cs" />
     <Compile Include="Source\WPF\Converters\NullVisibilityConverter.cs" />
     <Compile Include="Source\WPF\Converters\DoubleConverter.cs" />
     <Compile Include="Source\WPF\Converters\BooleanToHidingVisibilityConverter.cs" />
