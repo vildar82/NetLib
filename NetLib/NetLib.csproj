@@ -76,6 +76,7 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Source\AD\AdUtils.cs" />
+    <Compile Include="Source\Bool\BoolUsage.cs" />
     <Compile Include="Source\Comparers\AlphanumComparator.cs" />
     <Compile Include="Source\Comparers\DoubleEqualityComparer.cs" />
     <Compile Include="Source\Comparers\IntEqualityComparer.cs" />
