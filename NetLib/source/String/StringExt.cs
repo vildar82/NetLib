@@ -23,7 +23,7 @@ namespace NetLib
         /// </summary>
         public static string JoinToString<T>(this IEnumerable<T> array, Func<T, string> getString, string delimeter =",")
         {
-            return string.Join(delimeter, array.Select(getString));
+            return string.Join(delimeter, array.SelectNulless(getString));
         }
 
 	    public static bool IsNullOrEmpty(this string str)
