@@ -16,6 +16,8 @@
 	MinHeight="150"
 	MaxWidth="1600"
 	MaxHeight="800"
+	Topmost="True"
+	ShowMinButton="False"
     Title="{Binding Title}">
 	<controls:MetroWindow.Resources>
 		<ResourceDictionary>
