@@ -11,6 +11,7 @@
     <AssemblyName>NetLib</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <TargetFrameworkProfile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
@@ -84,6 +85,16 @@
     <Compile Include="Source\Converter\ConvertExt.cs" />
     <Compile Include="Source\Enumerable\EnumerableExt.cs" />
     <Compile Include="Source\Enum\EnumExt.cs" />
+    <Compile Include="Source\Errors\Error.cs" />
+    <Compile Include="Source\Errors\ErrorLevel.cs" />
+    <Compile Include="Source\Errors\IError.cs" />
+    <Compile Include="Source\Errors\Inspector.cs" />
+    <Compile Include="Source\Errors\UI\ViewModel\ErrorsViewModel.cs" />
+    <Compile Include="Source\Errors\UI\ViewModel\ErrorViewModel.cs" />
+    <Compile Include="Source\Errors\UI\ViewModel\GroupViewModel.cs" />
+    <Compile Include="Source\Errors\UI\View\ErrorsView.xaml.cs">
+      <DependentUpon>ErrorsView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Source\Files\JsonExt.cs" />
     <Compile Include="Source\Files\SerializerXml.cs" />
     <Compile Include="Source\IO\DllResolver.cs" />
@@ -102,6 +113,11 @@
     <Compile Include="Source\WPF\Behaviors\DataGrid\ICustomSorter.cs" />
     <Compile Include="Source\WPF\Behaviors\ScrollIntoViewForListBox.cs" />
     <Compile Include="Source\WPF\Behaviors\TreeView\BindableSelectedItemBehavior.cs" />
+    <Compile Include="Source\WPF\Controls\InfoDialogs\InfoDialog.cs" />
+    <Compile Include="Source\WPF\Controls\InfoDialogs\InfoDialogView.xaml.cs">
+      <DependentUpon>InfoDialogView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Source\WPF\Controls\InfoDialogs\InfoDialogViewModel.cs" />
     <Compile Include="Source\WPF\Controls\PathSelector\PathSelector.xaml.cs">
       <DependentUpon>PathSelector.xaml</DependentUpon>
     </Compile>
@@ -132,9 +148,17 @@
     <Compile Include="Source\WPF\Converters\RadiansToDegreeConverterExtension.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Source\Errors\UI\View\ErrorsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Source\Style.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Source\WPF\Controls\InfoDialogs\InfoDialogView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Source\WPF\Controls\PathSelector\PathSelector.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -155,6 +179,7 @@
   <ItemGroup>
     <None Include="FodyWeavers.xml" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
