@@ -146,6 +146,7 @@
     <Compile Include="Source\WPF\Converters\EnumDescriptionConverter.cs" />
     <Compile Include="Source\WPF\Converters\MinToHoursConverter.cs" />
     <Compile Include="Source\WPF\Converters\RadiansToDegreeConverterExtension.cs" />
+    <Compile Include="Source\WPF\Converters\UniversalValueConverter.cs" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="Source\Errors\UI\View\ErrorsView.xaml">

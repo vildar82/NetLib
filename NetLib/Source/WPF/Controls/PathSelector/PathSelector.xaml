@@ -12,13 +12,16 @@
 			<ColumnDefinition Width="Auto"/>
 			<ColumnDefinition Width="Auto"/>
 		</Grid.ColumnDefinitions>
-		<TextBox Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Center"
+		<ScrollViewer Grid.Column="0" VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Auto">
+			<TextBox HorizontalAlignment="Stretch" VerticalAlignment="Center"
 			x:Name="SelectedPathTxtBox"
-			TextChanged="SelectedPathTxtBox_OnTextChanged" Margin="1"/>
-		<Button Grid.Column="1" DockPanel.Dock="Right"
+			TextChanged="SelectedPathTxtBox_OnTextChanged" Margin="1" TextWrapping="NoWrap"/>
+		</ScrollViewer>
+		<Button Grid.Column="1" DockPanel.Dock="Right" VerticalAlignment="Center"
 		        FontWeight="Bold" Content="..." Click="BrowseButton_Click" Margin="1" Width="22"/>
 		<Button Grid.Column="2" DockPanel.Dock="Right" Content="{iconPacks:PackIconMaterial Kind=FolderOutline, Width=10}" 
-				Click="OpenExplorer" ToolTip="Открыть в проводнике" Margin="1" Width="22"/>
+				Click="OpenExplorer" ToolTip="Открыть в проводнике" Margin="1" Width="22"
+				VerticalAlignment="Center"/>
 		
 	</Grid>
 </UserControl>
