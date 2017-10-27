@@ -44,7 +44,6 @@ namespace NetLib
 		{
 			return string.Equals(string1, string2, StringComparison.OrdinalIgnoreCase) ||
 			       IsBothStringsIsNullOrEmpty(string1, string2);
-
 		}
 
         /// <summary>
@@ -63,6 +62,23 @@ namespace NetLib
         public static bool Contains(this string source, string toCheck, StringComparison comp)
         {
             return source.IndexOf(toCheck, comp) >= 0;
+        }
+
+        public static bool EqualsAny(this string value, IEqualityComparer<string> comparer, params string[] values)
+        {
+            return EqualsAny(value, comparer, (IEnumerable<string>)values);
+        }
+        public static bool EqualsAnyIgnoreCase(this string value, params string[] values)
+        {
+            return EqualsAny(value, StringComparer.OrdinalIgnoreCase, (IEnumerable<string>)values);
+        }
+        public static bool EqualsAny(this string target, IEqualityComparer<string> comparer, IEnumerable<string> values)
+        {
+            return values.Contains(target, comparer);
+        }
+        public static bool EqualsAnyIgnoreCase(this string target, IEnumerable<string> values)
+        {
+            return values.Contains(target, StringComparer.OrdinalIgnoreCase);
         }
 
         /// <summary>

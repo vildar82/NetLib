@@ -29,14 +29,30 @@ namespace NetLib
                 return (T)value;                
             }
             // Округление числа до 4 знаков
-            else  if(value is double &&  typeT == typeof(double))
+            if(value is double &&  typeT == typeof(double))
             {
                 value = ((double)value).Round(4);
                 return (T)value;
             } 
-            else if (typeT.IsEnum)
+            if (typeT.IsEnum)
             {
                 return (T)value;
+            }
+            if (typeT == typeof(bool))
+            {
+                if (value is bool) return (T)value;
+                if (value is int valI)
+                {
+                    value = valI == 1;
+                }
+                else if (value is string valS)
+                {
+                    value = valS.EqualsAnyIgnoreCase("Да", "Yes", "1", "+");
+                }
+                else if (value is double valD)
+                {
+                    value = Math.Abs(valD - 1) < 0.0001;
+                }
             }
             return (T)Convert.ChangeType(value, typeof(T));
         }
