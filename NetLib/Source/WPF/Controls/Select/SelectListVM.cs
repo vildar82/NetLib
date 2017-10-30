@@ -11,7 +11,9 @@ namespace NetLib.WPF.Controls.Select
 	/// <typeparam name="T"></typeparam>
 	internal class SelectListVM<T> : ViewModelBase
 	{
-		public SelectListVM(List<SelectListItem<T>> items, string title, string name=null)
+	    private string filter;
+
+	    public SelectListVM(List<SelectListItem<T>> items, string title, string name=null)
 		{
 			Title = title;
 			Name = name;
@@ -28,15 +30,21 @@ namespace NetLib.WPF.Controls.Select
 		public bool HasName { get; set; }
 		public ListCollectionView ItemsView { get; set; }
 		public SelectListItem<T> Selected { get; set; }
-		public string Filter { get; set; }
-		public bool HasFilter { get; set; }
+
+	    public string Filter
+	    {
+	        get => filter;
+	        set { filter = value; ItemsView.Refresh(); }
+	    }
+
+	    public bool HasFilter { get; set; }
 		public RelayCommand OK => new RelayCommand(OkExecute, OkCanExecute);
 
 		private bool FilterPredicate(object obj)
 		{
 			if (string.IsNullOrEmpty(Filter)) return true;
 			var item = (SelectListItem<T>)obj;
-			return Regex.IsMatch(item.Name, Filter);
+			return Regex.IsMatch(item.Name, Filter, RegexOptions.IgnoreCase);
 		}
 
 		private void OkExecute()

@@ -12,11 +12,12 @@
 	GlowBrush="{DynamicResource AccentColorBrush}"
     Title="{Binding Title}"
 	WindowStartupLocation="CenterScreen"
-	SizeToContent="WidthAndHeight"
+    SizeToContent="WidthAndHeight"
 	Topmost="True"
 	ShowMaxRestoreButton="False"
 	ShowMinButton="False"
-	MinWidth="200"
+	MinWidth="250"
+    MaxHeight="600"
 	mc:Ignorable="d">
 	<Controls:MetroWindow.Resources>
         <ResourceDictionary>
