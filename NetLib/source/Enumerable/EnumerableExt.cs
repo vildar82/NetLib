@@ -8,10 +8,16 @@ namespace NetLib
 {
     public static class EnumerableExt
     {
-	    /// <summary>
-	    /// Select без Null
-	    /// </summary>
-	    public static IEnumerable<TRes> SelectNulless<TSource, TRes>(this IEnumerable<TSource> list, Func<TSource, TRes> selector)
+        public static IEnumerable<TRes> SelectManyNulless<TSource, TRes>(this IEnumerable<TSource> list, 
+            Func<TSource, IEnumerable<TRes>> selector)
+        {
+            return list.Where(w => w != null && selector(w) != null).SelectMany(selector).Where(w => w != null);
+        }
+
+        /// <summary>
+        /// Select без Null
+        /// </summary>
+        public static IEnumerable<TRes> SelectNulless<TSource, TRes>(this IEnumerable<TSource> list, Func<TSource, TRes> selector)
 	    {
 		    return list.Where(w => w != null).Select(selector).Where(w => w != null);
 	    }
