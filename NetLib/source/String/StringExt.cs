@@ -125,6 +125,11 @@ namespace NetLib
             return normalS1.Equals(normalS2, StringComparison.OrdinalIgnoreCase);
         }
 
+        public static string RemoveSpecChars(this string str)
+        {
+            return Regex.Replace(str, @"\s", "");
+        }
+
 	    public static bool IsBothStringsIsNullOrEmpty(this string s1, string s2)
 	    {
 		    return string.IsNullOrEmpty(s1) && string.IsNullOrEmpty(s2);
