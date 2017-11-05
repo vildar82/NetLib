@@ -96,11 +96,9 @@ namespace NetLib
         /// <param name="value">Проверяемое значение</param>
         /// <param name="tolerance">Допуск</param>
         /// <returns>Да или нет - если от заданного значения до целого числа меньше либо равно допуску</returns>
-        public static bool IsWholeNumber (this double value, double tolerance=0.1)
+        public static bool IsWholeNumber (this double value, double tolerance=0.001)
         {
-            var deltaInt = Math.Abs(Convert.ToInt32(value) - value);
-            var res = deltaInt <= tolerance;
-            return res;
+            return Math.Abs(value % 1) <= tolerance;
         }
 
         /// <summary>
