@@ -1,20 +1,19 @@
 ﻿using System;
 using System.Globalization;
-using System.Windows;
 using System.Windows.Data;
 
 namespace NetLib.WPF.Converters
 {
-    [ValueConversion(typeof(bool), typeof(Visibility))]
-    public class BooleanToHidingVisibilityConverter : ConvertorBase
+    [ValueConversion(typeof(bool), typeof(string))]
+    public class BoolToYesNoConverter : ConvertorBase
     {
         public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value is bool b)
             {
-                return b ? Visibility.Visible : Visibility.Hidden;
+                return b ? "Да" : "Нет";
             }
-            return Visibility.Hidden;
+            return null;
         }
     }
 }
