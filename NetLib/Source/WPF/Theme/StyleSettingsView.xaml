@@ -1,0 +1,47 @@
+﻿<wpf:BaseWindow 
+    x:Class="NetLib.WPF.Theme.StyleSettingsView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:local="clr-namespace:NetLib.WPF.Theme"
+    xmlns:wpf="clr-namespace:NetLib.WPF"
+    d:DataContext="{d:DesignInstance local:StyleSettingsViewModel, d:IsDesignTimeCreatable=True}"
+    Topmost="True"
+    mc:Ignorable="d"
+    x:Name="rfty"
+    Title="Настройки оформления" Height="300" Width="300">
+    <wpf:BaseWindow.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary>
+                    <DataTemplate DataType="{x:Type local:ThemeViewModel}">
+                        <TextBlock Text="{Binding Name}" VerticalAlignment="Center" Margin="1"/>
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type local:AccentViewModel}">
+                        <Grid Background="{Binding Color}" HorizontalAlignment="Stretch" MinWidth="100">
+                            <TextBlock Text="{Binding Name}" VerticalAlignment="Center" HorizontalAlignment="Stretch"
+                                       FontSize="12" Margin="3"/>
+                        </Grid>
+                    </DataTemplate>
+                </ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </wpf:BaseWindow.Resources>
+    <Grid>
+        <StackPanel Grid.Row="0" Margin="5">
+            <StackPanel Orientation="Vertical" Margin="5">
+                <TextBlock Text="Тема:" Margin="1" VerticalAlignment="Center"/>
+                <ComboBox ItemsSource="{Binding Themes}" SelectedItem="{Binding SelectedTheme}" Margin="1"/>
+            </StackPanel>
+            <StackPanel Orientation="Vertical" Margin="5">
+                <TextBlock Text="Цвет:" Margin="1" VerticalAlignment="Center"/>
+                <ComboBox ItemsSource="{Binding Accents}" SelectedItem="{Binding SelectedAccent}"/>
+            </StackPanel>
+            <CheckBox Content="Только для этого окна" IsChecked="{Binding IsOnlyThisWindow}" Margin="5"/>
+        </StackPanel>
+    </Grid>
+</wpf:BaseWindow>
+
+
+
