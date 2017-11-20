@@ -8,7 +8,7 @@ namespace NetLib.WPF.Controls.Select
 		public static T Select<T>(List<SelectListItem<T>> items, string title, string name=null)
 		{
 			var selVM = new SelectListVM<T>(items, title, name);
-			var selView = new SelectListView {DataContext = selVM};
+		    var selView = new SelectListView(selVM);
 			if (selView.ShowDialog() == true)
 			{
 				return selVM.Selected.Object;

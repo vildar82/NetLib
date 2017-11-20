@@ -7,7 +7,7 @@ using MicroMvvm;
 
 namespace NetLib.WPF.Controls.InfoDialogs
 {
-    internal class InfoDialogViewModel : ViewModelBase
+    internal class InfoDialogViewModel : BaseViewModel
     {
         public InfoDialogViewModel(string title, string msg)
         {

@@ -10,7 +10,7 @@ namespace NetLib.WPF.Theme
 {
     public class StyleSettingsViewModel : BaseViewModel
     {
-        public StyleSettingsViewModel(BaseViewModel parent) : base(parent)
+        public StyleSettingsViewModel(IBaseViewModel parent) : base(parent)
         {
             Themes = StyleSettings.GetThemes().Select(s => new ThemeViewModel(s)).ToList();
             Accents = StyleSettings.Getaccents().Select(s => new AccentViewModel(s)).ToList();

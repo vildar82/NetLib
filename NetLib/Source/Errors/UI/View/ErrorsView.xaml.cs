@@ -20,10 +20,9 @@ namespace NetLib.Errors.UI.View
     /// </summary>
     public partial class ErrorsView
     {
-        public ErrorsView(ErrorsViewModel errorsVM)
+        public ErrorsView(ErrorsViewModel errorsVM) : base (errorsVM)
         {
             InitializeComponent();
-            DataContext = errorsVM;
         }
     }
 }

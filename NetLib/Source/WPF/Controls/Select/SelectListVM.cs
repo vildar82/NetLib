@@ -9,7 +9,7 @@ namespace NetLib.WPF.Controls.Select
 	/// Использование - SelectList.Select()
 	/// </summary>
 	/// <typeparam name="T"></typeparam>
-	internal class SelectListVM<T> : ViewModelBase
+	internal class SelectListVM<T> : BaseViewModel
 	{
 	    private string filter;
 

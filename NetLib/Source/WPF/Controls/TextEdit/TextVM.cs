@@ -4,13 +4,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Validar;
 
 namespace NetLib.WPF.Controls
 {
-	/// <summary>
-	/// Текстовое значение
-	/// </summary>
-	public class TextVM : ViewModelBase
+    /// <summary>
+    /// Текстовое значение
+    /// </summary>
+    public class TextVM : BaseViewModel
 	{
 		private readonly Predicate<string> allowValue;
 

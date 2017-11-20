@@ -19,10 +19,9 @@ namespace NetLib.WPF.Controls
     /// </summary>
     public partial class TextView 
     {
-        public TextView(TextVM text)
+        public TextView(TextVM textVM) : base(textVM)
         {
             InitializeComponent();
-            DataContext = text;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

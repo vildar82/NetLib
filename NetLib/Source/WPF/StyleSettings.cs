@@ -134,7 +134,7 @@ namespace NetLib.WPF
 
         private static string GetWindowsThemesFile()
         {
-            return Path.GetUserPluginFile("Theme", "WindowsThemes.json");
+            return Path.GetUserPluginFile("AutoCAD\\Theme", "WindowsThemes.json");
         }
 
         public static IEnumerable<AppTheme> GetThemes()

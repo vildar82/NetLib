@@ -5,10 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using MicroMvvm;
+using NetLib.WPF;
 
 namespace NetLib.Errors.UI.ViewModel
 {
-    public class GroupViewModel : ViewModelBase
+    public class GroupViewModel : BaseViewModel
     {
         public GroupViewModel(string group, List<IError> errors)
         {

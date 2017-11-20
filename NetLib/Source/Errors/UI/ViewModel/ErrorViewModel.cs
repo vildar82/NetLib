@@ -7,10 +7,11 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using MahApps.Metro.IconPacks;
 using MicroMvvm;
+using NetLib.WPF;
 
 namespace NetLib.Errors.UI.ViewModel
 {
-    public class ErrorViewModel : ViewModelBase
+    public class ErrorViewModel : BaseViewModel
     {
         private readonly IError error;
 

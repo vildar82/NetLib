@@ -6,23 +6,36 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using MicroMvvm;
 using NetLib.Errors;
+using NetLib.WPF;
 using NetLib.WPF.Controls;
+using ReactiveUI;
+using ReactiveUI.Fody.Helpers;
+using Validar;
 
 namespace WpfApp1
 {
-	public class Model : ViewModelBase
-	{
+    public class Model : BaseViewModel
+    {
+        [Reactive] public string Value { get;set; }
 	    public RelayCommand Start => new RelayCommand(StartExec);
+
+	    public Model()
+	    {
+	        var r = this.Changed;
+	    }
 
 	    private void StartExec()
 	    {
-	        var msg = File.ReadAllText(@"C:\temp\test\infoDialog.txt");
+	        Value = "12345";
+            var msg = File.ReadAllText(@"C:\temp\test\infoDialog.txt");
 	        if (InfoDialog.ShowDialog("Продолжить?", msg))
 	        {
 	            
 	        }
+	        TestErrors();
 
 	        //var inspector = new Inspector();
 	        //GenerateErrors(inspector, "Тестовая группа ошибок 1", "Сообщение об ошибке", 100, ErrorLevel.Exclamation);
@@ -49,6 +62,20 @@ namespace WpfApp1
 	            };
 	            inspector.AddError(err);
 	        }
+	    }
+
+        private void TestErrors()
+	    {
+	        var inspector = new Inspector();
+	        GenerateErrors(inspector, "Тестовая группа ошибок 1", "Сообщение об ошибке", 100, ErrorLevel.Exclamation);
+	        GenerateErrors(inspector, "Тестовая группа ошибок 2",
+	            "Представляет скрытое содержимое, раскрывающееся по нажатию мышкой на указатель в виде стрелки. " +
+	            "Причем содержимое опять же может быть самым разным: кнопки, текст, картинки и т.д.",
+	            100, ErrorLevel.Info);
+	        GenerateErrors(inspector, "Тестовая группа ошибок 3",
+	            "Осталось добавить обработчик нажатия кнопки Click для обработки заказа и можно заказывать блюда.",
+	            500, ErrorLevel.Error);
+	        inspector.Show();
 	    }
     }
 }

@@ -1,46 +1,56 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Windows;
+﻿using FluentValidation;
+using FluentValidation.Results;
 using MahApps.Metro.Controls.Dialogs;
+using NLog;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
+using System;
+using System.Collections;
+using System.Collections.Concurrent;
+using System.ComponentModel;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Windows;
 
 namespace NetLib.WPF
 {
     /// <summary>
-    /// ReactiveUI ViewModel, с реализацией INotifyDataErrorInfo
+    /// ReactiveUI ViewModel, +FluentValidator (должен быть класс с таким же именем +Validator).
     /// </summary>
-    public abstract class BaseViewModel : ReactiveObject, INotifyDataErrorInfo, IDisposable
+    public abstract class BaseViewModel : ReactiveObject, IBaseViewModel
     {
+        private static Logger Logger { get; } = LogManager.GetCurrentClassLogger();
         protected readonly IDialogCoordinator dialogCoordinator = DialogCoordinator.Instance;
-        private readonly Dictionary<string, ICollection<string>> errors = new Dictionary<string, ICollection<string>>();
+        private ValidationResult validationResult;
+        private IValidator validator;
+        private static readonly ConcurrentDictionary<RuntimeTypeHandle, IValidator> validators =
+            new ConcurrentDictionary<RuntimeTypeHandle, IValidator>();
 
-        public BaseViewModel(BaseViewModel parent)
+        public BaseViewModel(IBaseViewModel parent)
         {
             Parent = parent;
+            PropertyChanged += Validate;
         }
 
-        public BaseViewModel()
+        public BaseViewModel() : this(null)
         {
 
         }
 
         public BaseWindow Window { get; set; }
-        public BaseViewModel Parent { get; set; }
-        public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
-        public bool HasErrors => errors.Any(a => a.Value != null);
+        public IBaseViewModel Parent { get; set; }
         [Reactive] public bool Hide { get; set; }
         [Reactive] public bool? DialogResult { get; set; }
+        public bool HasErrors => validationResult?.Errors?.Count > 0;
+        public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
 
         /// <summary>
         /// Если модель передана в конструктор окна BaseWindow, то этот метод вызывается после инициализации окна.
         /// </summary>
-        public virtual void OnInitialize()
+        public virtual async void OnInitialize()
         {
-
+            validator = await GetValidator(GetType());
+            validationResult = validator?.Validate(this);
         }
 
         public virtual void OnClosed()
@@ -48,29 +58,7 @@ namespace NetLib.WPF
 
         }
 
-        public IEnumerable GetErrors(string propertyName)
-        {
-            if (propertyName.IsNullOrEmpty()) return null;
-            errors.TryGetValue(propertyName, out ICollection<string> errs);
-            return errs;
-        }
-
-        protected void RaiseErrorsChanged(string propertyName)
-        {
-            if (propertyName.IsNullOrEmpty()) return;
-            ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(propertyName));
-        }
-
-        /// <summary>
-        /// Запись ошибки. Пустая строка или null очищает ошибку.
-        /// </summary>
-        protected void SetError(string propName, string err)
-        {
-            errors[propName] = err.IsNullOrEmpty() ? null : new List<string> { err };
-            RaiseErrorsChanged(propName);
-        }
-
-        public BoolUsage HideUsing()
+        public IDisposable HideWindow()
         {
             return new BoolUsage(Hide, true, h => Hide = h);
         }
@@ -84,8 +72,16 @@ namespace NetLib.WPF
             return command;
         }
 
+        public ReactiveCommand CreateCommand(Action execute, IObservable<bool> canExecute = null)
+        {
+            var command = ReactiveCommand.Create(execute, canExecute);
+            command.ThrownExceptions.Subscribe(CommandException);
+            return command;
+        }
+
         public void CommandException(Exception e)
         {
+            Logger.Error(e, "CommandException");
             ShowMessage(e.Message);
         }
 
@@ -99,6 +95,48 @@ namespace NetLib.WPF
             {
                 MessageBox.Show(msg, title);
             }
+        }
+
+        public IEnumerable GetErrors(string propertyName)
+        {
+            return validationResult?.Errors?
+                .Where(x => x.PropertyName == propertyName)
+                .Select(x => x.ErrorMessage);
+        }
+
+        private void Validate(object sender, PropertyChangedEventArgs e)
+        {
+            if (validator == null) return;
+            validationResult = validator.Validate(this);
+            foreach (var error in validationResult.Errors)
+            {
+                RaiseErrorsChanged(error.PropertyName);
+            }
+        }
+
+        private void RaiseErrorsChanged(string propertyName)
+        {
+            ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(propertyName));
+        }
+
+        private static async Task<IValidator> GetValidator(Type modelType)
+        {
+            return await Task.Run(() =>
+            {
+                try
+                {
+                    if (validators.TryGetValue(modelType.TypeHandle, out IValidator validator)) return validator;
+                    var typeName = $"{modelType.Namespace}.{modelType.Name}Validator";
+                    var type = modelType.Assembly.GetType(typeName, true);
+                    validators[modelType.TypeHandle] = validator = (IValidator) Activator.CreateInstance(type);
+                    return validator;
+                }
+                catch (Exception ex)
+                {
+                    Logger.Error(ex, $"No Validator in {modelType.FullName}.");
+                    return null;
+                }
+            });
         }
 
         public virtual void Dispose()

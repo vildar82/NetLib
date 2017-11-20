@@ -19,10 +19,9 @@ namespace NetLib.WPF.Controls.InfoDialogs
     /// </summary>
     internal partial class InfoDialogView
     {
-        public InfoDialogView(InfoDialogViewModel infoDlgVM)
+        public InfoDialogView(InfoDialogViewModel infoDlgVM) : base(infoDlgVM)
         {
             InitializeComponent();
-            DataContext = infoDlgVM;
         }
 
         private void OkClick(object sender, RoutedEventArgs e)

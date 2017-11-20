@@ -1,4 +1,4 @@
-﻿<controls:MetroWindow 
+﻿<wpf:BaseWindow 
 	x:Class="NetLib.WPF.Controls.InfoDialogs.InfoDialogView"
 	x:ClassModifier="internal"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -7,8 +7,8 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:local="clr-namespace:NetLib.WPF.Controls.InfoDialogs"
     xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
-	d:DataContext="{d:DesignInstance local:InfoDialogViewModel}"
-	GlowBrush="{DynamicResource AccentColorBrush}"
+    xmlns:wpf="clr-namespace:NetLib.WPF"
+    d:DataContext="{d:DesignInstance local:InfoDialogViewModel}"
 	WindowStartupLocation="CenterScreen"
 	SizeToContent="WidthAndHeight"
     mc:Ignorable="d"
@@ -19,13 +19,6 @@
 	Topmost="True"
 	ShowMinButton="False"
     Title="{Binding Title}">
-	<controls:MetroWindow.Resources>
-		<ResourceDictionary>
-			<ResourceDictionary.MergedDictionaries>
-				<ResourceDictionary Source="../../../Style.xaml"/>
-			</ResourceDictionary.MergedDictionaries>
-		</ResourceDictionary>
-	</controls:MetroWindow.Resources>
 	<Grid Margin="1">
         <Grid.RowDefinitions>
 			<RowDefinition/>
@@ -39,5 +32,7 @@
 			<Button Content="Прервать" IsCancel="True" Margin="2"/>
 		</StackPanel>
 	</Grid>
-</controls:MetroWindow>
+</wpf:BaseWindow>
+
+
 
