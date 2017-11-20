@@ -14,9 +14,9 @@ namespace NetLib.WPF
 
         static StyleSettings()
         {
-            accent = GetAccent(Properties.Settings.Default.Accent);
-            theme = GetTheme(Properties.Settings.Default.Theme);
             WindowsThemes = LoadWindowsThemes();
+            accent = GetAccent(WindowsThemes.Accent);
+            theme = GetTheme(WindowsThemes.Theme);
         }
 
         public static WindowsThemes WindowsThemes { get; set; }
@@ -40,8 +40,6 @@ namespace NetLib.WPF
                 }
                 windowTheme.Theme = wTheme.Name;
                 windowTheme.Accent = wAccent.Name;
-                var file = GetWindowsThemesFile();
-                    WindowsThemes.Serialize(file);
             }
             else
             {
@@ -52,11 +50,12 @@ namespace NetLib.WPF
                 }
                 accent = wAccent;
                 theme = wTheme;
-                Properties.Settings.Default.Accent = accent.Name;
-                Properties.Settings.Default.Theme = theme.Name;
-                Properties.Settings.Default.Save();
+                WindowsThemes.Accent = accent.Name;
+                WindowsThemes.Theme = theme.Name;
                 Change?.Invoke(null, EventArgs.Empty);
             }
+            var file = GetWindowsThemesFile();
+            WindowsThemes.Serialize(file);
         }
 
         internal static (AppTheme Theme, Accent Accent, bool FindWindowTheme)

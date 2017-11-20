@@ -10,6 +10,7 @@
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Blue.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml" />
         <ResourceDictionary>
+            <!--Если textBox в ListBox - выделяется весь элемент-->
             <Style x:Key="TextboxListBoxStyle" TargetType="{x:Type TextBox}" BasedOn="{StaticResource MetroTextBox}">
                 <Setter Property="IsHitTestVisible" Value="False" />
                 <Style.Triggers>
