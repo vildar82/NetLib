@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Linq;
 using MahApps.Metro;
+using NLog;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 
@@ -10,6 +11,8 @@ namespace NetLib.WPF.Theme
 {
     public class StyleSettingsViewModel : BaseViewModel
     {
+        private static Logger Logger { get; } = LogManager.GetCurrentClassLogger();
+
         public StyleSettingsViewModel(IBaseViewModel parent) : base(parent)
         {
             Themes = StyleSettings.GetThemes().Select(s => new ThemeViewModel(s)).ToList();
@@ -53,5 +56,7 @@ namespace NetLib.WPF.Theme
         {
             StyleSettings.SaveWindowTheme(Parent.Window, SelectedTheme.Theme, SelectedAccent.Accent, IsOnlyThisWindow);
         }
+
+        
     }
 }
