@@ -20,6 +20,13 @@
                     </DataTrigger>
                 </Style.Triggers>
             </Style>
+            <Style TargetType="TextBlock" BasedOn="{StaticResource MetroTextBlock}">
+                <Setter Property="VerticalAlignment" Value="Center"/>
+            </Style>
+            <Style TargetType="Button" BasedOn="{StaticResource MetroButton}"> 
+                <Setter Property="Margin" Value="1"/>
+            </Style>
         </ResourceDictionary>
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>
+
