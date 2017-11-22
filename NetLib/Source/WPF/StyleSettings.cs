@@ -1,10 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using MahApps.Metro;
+﻿using MahApps.Metro;
 using NetLib.IO;
 using NetLib.WPF.Theme;
 using NLog;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Windows.Media;
 
 namespace NetLib.WPF
 {
@@ -159,6 +160,8 @@ namespace NetLib.WPF
         private static void LoadThemesAndColors()
         {
             ThemeManager.AddAppTheme("DarkBlue", new Uri("pack://application:,,,/NetLib;component/Source/WPF/Theme/DarkBlue.xaml"));
+            ThemeManager.AddAppTheme("Gray", new Uri("pack://application:,,,/NetLib;component/Source/WPF/Theme/Gray.xaml"));
+            ThemeManager.AddAccent("Gray", new Uri("pack://application:,,,/NetLib;component/Source/WPF/Theme/Accents/GrayAccent.xaml"));
             ThemeManager.AddAccent("mdAmber", new Uri("pack://application:,,,/NetLib;component/Source/WPF/Theme/Accents/mdAmber.xaml"));
             ThemeManager.AddAccent("mdBlue", new Uri("pack://application:,,,/NetLib;component/Source/WPF/Theme/Accents/mdBlue.xaml"));
             ThemeManager.AddAccent("mdBlueGrey", new Uri("pack://application:,,,/NetLib;component/Source/WPF/Theme/Accents/mdBlueGrey.xaml"));
@@ -178,6 +181,27 @@ namespace NetLib.WPF
             ThemeManager.AddAccent("mdRed", new Uri("pack://application:,,,/NetLib;component/Source/WPF/Theme/Accents/mdRed.xaml"));
             ThemeManager.AddAccent("mdTeal", new Uri("pack://application:,,,/NetLib;component/Source/WPF/Theme/Accents/mdTeal.xaml"));
             ThemeManager.AddAccent("mdYellow", new Uri("pack://application:,,,/NetLib;component/Source/WPF/Theme/Accents/mdYellow.xaml"));
+        }
+
+        /// <summary>
+        /// Determining Ideal Text Color Based on Specified Background Color
+        /// http://www.codeproject.com/KB/GDI-plus/IdealTextColor.aspx
+        /// </summary>
+        /// <param name = "color">The bg.</param>
+        /// <returns></returns>
+        public static Color IdealTextColor(Color color)
+        {
+            const int nThreshold = 105;
+            var bgDelta = Convert.ToInt32(color.R * 0.299 + color.G * 0.587 + color.B * 0.114);
+            var foreColor = 255 - bgDelta < nThreshold ? Colors.Black : Colors.White;
+            return foreColor;
+        }
+
+        public static SolidColorBrush GetSolidColorBrush(Color color, double opacity = 1d)
+        {
+            var brush = new SolidColorBrush(color) { Opacity = opacity };
+            brush.Freeze();
+            return brush;
         }
     }
 }
