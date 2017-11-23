@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -19,18 +21,35 @@ namespace WpfApp1
 {
     public class Model : BaseViewModel
     {
-        [Reactive] public string Value { get;set; }
-	    public RelayCommand Start => new RelayCommand(StartExec);
+        [Reactive] public double? Value { get;set; }
+        public RelayCommand Start => new RelayCommand(StartExec);
+        [Reactive] public ObservableCollection<double> Values { get; set; }
+        public Class1 Class1 { get; set; }
 
-	    public Model()
-	    {
-	        var r = this.Changed;
-	    }
+        public Model()
+        {
+            Class1 = new Class1();
+	        Value = 1111;
+            Values = new ObservableCollection<double>(new [] {0d,1d,2d,3d,4d,5d}) ;
+	        Values.CollectionChanged += (s, a) =>
+	        {
+	            if (Math.Abs(Values.Last()) > 0.0001)
+	            {
+	                Values.Add(0);
+	            }
+            };
+	        this.WhenAnyValue(w => w.Values).Subscribe(s =>
+	        {
+	            if (Math.Abs(Values.Last()) > 0.0001)
+	            {
+	                Values.Add(0);
+	            }
+            });
+        }
 
 	    private void StartExec()
 	    {
-	        Value = "12345";
-            var msg = File.ReadAllText(@"C:\temp\test\infoDialog.txt");
+	        var msg = File.ReadAllText(@"C:\temp\test\infoDialog.txt");
 	        if (InfoDialog.ShowDialog("Продолжить?", msg))
 	        {
 	            

@@ -8,12 +8,14 @@ using System;
 using System.Collections;
 using System.Collections.Concurrent;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 
 namespace NetLib.WPF
 {
+    /// <inheritdoc cref="IBaseViewModel" />
     /// <summary>
     /// ReactiveUI ViewModel, +FluentValidator (должен быть класс с таким же именем +Validator).
     /// </summary>
@@ -23,18 +25,25 @@ namespace NetLib.WPF
         protected readonly IDialogCoordinator dialogCoordinator = DialogCoordinator.Instance;
         private ValidationResult validationResult;
         private IValidator validator;
+
         private static readonly ConcurrentDictionary<RuntimeTypeHandle, IValidator> validators =
             new ConcurrentDictionary<RuntimeTypeHandle, IValidator>();
+
+        static BaseViewModel()
+        {
+            validators[typeof(BaseViewModel).TypeHandle] = null;
+        }
 
         public BaseViewModel(IBaseViewModel parent)
         {
             Parent = parent;
             PropertyChanged += Validate;
+            InitValidator();
+            ThrownExceptions.Subscribe(CommandException);
         }
 
         public BaseViewModel() : this(null)
         {
-
         }
 
         public BaseWindow Window { get; set; }
@@ -47,15 +56,32 @@ namespace NetLib.WPF
         /// <summary>
         /// Если модель передана в конструктор окна BaseWindow, то этот метод вызывается после инициализации окна.
         /// </summary>
-        public virtual async void OnInitialize()
+        public virtual  void OnInitialize()
         {
-            validator = await GetValidator(GetType());
-            validationResult = validator?.Validate(this);
+            
         }
 
         public virtual void OnClosed()
         {
 
+        }
+
+        private async void InitValidator()
+        {
+            Debug.WriteLine($"InitValidator for {GetType().Name}");
+            validator = await GetValidator(GetType());
+            Debug.WriteLine($"Validator for {GetType().Name} = {validator}");
+            if (validator != null)
+            {
+                validationResult = validator.Validate(this);
+                if (validationResult.Errors?.Any() == true)
+                {
+                    foreach (var error in validationResult.Errors)
+                    {
+                        RaiseErrorsChanged(error.PropertyName);
+                    }
+                }
+            }
         }
 
         public IDisposable HideWindow()
@@ -114,7 +140,7 @@ namespace NetLib.WPF
             }
         }
 
-        private void RaiseErrorsChanged(string propertyName)
+        public void RaiseErrorsChanged(string propertyName)
         {
             ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(propertyName));
         }
@@ -123,19 +149,19 @@ namespace NetLib.WPF
         {
             return await Task.Run(() =>
             {
+                if (validators.TryGetValue(modelType.TypeHandle, out var validator)) return validator;
+                var typeName = $"{modelType.Namespace}.{modelType.Name}Validator";
                 try
                 {
-                    if (validators.TryGetValue(modelType.TypeHandle, out IValidator validator)) return validator;
-                    var typeName = $"{modelType.Namespace}.{modelType.Name}Validator";
                     var type = modelType.Assembly.GetType(typeName, true);
-                    validators[modelType.TypeHandle] = validator = (IValidator) Activator.CreateInstance(type);
-                    return validator;
+                    validator = (IValidator)Activator.CreateInstance(type);
                 }
-                catch (Exception ex)
+                catch
                 {
-                    Logger.Error(ex, $"No Validator in {modelType.FullName}.");
-                    return null;
+                    Logger.Error($"No Validator in {modelType.FullName}.");
                 }
+                validators[modelType.TypeHandle] = validator;
+                return validator;
             });
         }
 

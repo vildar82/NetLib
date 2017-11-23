@@ -34,6 +34,12 @@ namespace NetLib.WPF.Theme
             });
         }
 
+        public List<ThemeViewModel> Themes { get; set; }
+        [Reactive] public ThemeViewModel SelectedTheme { get; set; }
+        public List<AccentViewModel> Accents { get; set; }
+        [Reactive] public AccentViewModel SelectedAccent { get; set; }
+        [Reactive] public bool IsOnlyThisWindow { get; set; }
+
         public override void OnInitialize()
         {
             try
@@ -46,17 +52,9 @@ namespace NetLib.WPF.Theme
             }
         }
 
-        public List<ThemeViewModel> Themes { get; set; }
-        [Reactive] public ThemeViewModel SelectedTheme { get; set; }
-        public List<AccentViewModel> Accents { get; set; }
-        [Reactive] public AccentViewModel SelectedAccent { get; set; }
-        [Reactive] public bool IsOnlyThisWindow { get; set; }
-
         public override void OnClosed()
         {
             StyleSettings.SaveWindowTheme(Parent.Window, SelectedTheme.Theme, SelectedAccent.Accent, IsOnlyThisWindow);
         }
-
-        
     }
 }

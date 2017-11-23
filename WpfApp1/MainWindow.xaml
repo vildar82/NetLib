@@ -7,10 +7,40 @@
         xmlns:local="clr-namespace:WpfApp1"
         xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
         xmlns:wpf="clr-namespace:NetLib.WPF;assembly=NetLib"
+        xmlns:xcdg="http://schemas.xceed.com/wpf/xaml/datagrid"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         d:DataContext="{d:DesignInstance Type=local:Model, IsDesignTimeCreatable=True}"
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
-    <StackPanel>
+    <Window.Resources>
+        <ResourceDictionary>
+            <DataTemplate DataType="{x:Type local:Class1}">
+                <StackPanel Orientation="Horizontal">
+                    <ComboBox ItemsSource="{Binding Values}" IsEditable="{Binding AllowCustomValue}"
+                              SelectedItem="{Binding SelectedValue}" VerticalAlignment="Center"
+                              TextSearch.TextPath="Value2" Text="{Binding CustomValue.Value2}">
+                    <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Value2}" 
+                                           TextWrapping="Wrap" MaxWidth="300"/>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                </StackPanel>
+            </DataTemplate>
+        </ResourceDictionary>
+    </Window.Resources>
+    <StackPanel Margin="10">
+        <TextBox Text="{Binding Class1.Value1}"/>
+        <ContentPresenter Content="{Binding Class1}" Margin="1"/>
+        <ListBox ItemsSource="{Binding Values}" HorizontalAlignment="Center">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <xctk:DoubleUpDown Value="{Binding .}" Increment="0.1"/>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <CheckBox IsThreeState="True"> fghfghgfhfg</CheckBox>
         <TextBox Text="{Binding Value, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
         <TextBox/>
 		<Button Content="Start" Command="{Binding Start}"/>

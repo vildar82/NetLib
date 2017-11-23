@@ -26,6 +26,9 @@
             <Style TargetType="Button" BasedOn="{StaticResource MetroButton}"> 
                 <Setter Property="Margin" Value="1"/>
             </Style>
+            <Style TargetType="CheckBox" BasedOn="{StaticResource MetroCheckBox}">
+                <Setter Property="Validation.ErrorTemplate" Value="{DynamicResource ValidationErrorTemplate}" />
+            </Style>
         </ResourceDictionary>
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

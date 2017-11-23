@@ -7,11 +7,5 @@ using FluentValidation;
 
 namespace WpfApp1
 {
-    public class ModelValidator : AbstractValidator<Model>
-    {
-        public ModelValidator()
-        {
-            RuleFor(x => x.Value).MinimumLength(5).WithMessage("Минимум 5");
-        }
-    }
+    
 }
