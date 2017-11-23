@@ -107,6 +107,7 @@ namespace NetLib.WPF
 
         public void CommandException(Exception e)
         {
+            if (e is OperationCanceledException) return;
             Logger.Error(e, "CommandException");
             ShowMessage(e.Message);
         }

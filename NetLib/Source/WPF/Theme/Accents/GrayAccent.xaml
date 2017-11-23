@@ -3,11 +3,11 @@
                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                     xmlns:options="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options">
     <Color x:Key="HighlightColor">#ffffff</Color>
-    <Color x:Key="AccentBaseColor">#5c5c5c</Color>
-    <Color x:Key="AccentColor">#4A4A4A</Color>
+    <Color x:Key="AccentBaseColor">#4A4A4A</Color>
+    <Color x:Key="AccentColor">#3B3B3B</Color>
     <Color x:Key="AccentColor2">#3B3B3B</Color>
     <Color x:Key="AccentColor3">#9D9D9D</Color>
-    <Color x:Key="AccentColor4">#A5A5A5</Color>
+    <Color x:Key="AccentColor4">#777777</Color>
     <SolidColorBrush x:Key="HighlightBrush" options:Freeze="True" Color="{StaticResource HighlightColor}"/>
     <SolidColorBrush x:Key="AccentBaseColorBrush" options:Freeze="True" Color="{StaticResource AccentBaseColor}"/>
     <SolidColorBrush x:Key="AccentColorBrush" options:Freeze="True" Color="{StaticResource AccentColor}"/>

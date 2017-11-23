@@ -25,6 +25,7 @@ namespace WpfApp1
         public RelayCommand Start => new RelayCommand(StartExec);
         [Reactive] public ObservableCollection<double> Values { get; set; }
         public Class1 Class1 { get; set; }
+        public string Layer { get; set; } = "fgh_gfh";
 
         public Model()
         {
