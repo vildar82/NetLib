@@ -38,6 +38,9 @@
     <NoWarn>CS1591</NoWarn>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EPPlus, Version=4.1.1.0, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL">
+      <HintPath>..\..\Packages\EPPlus.4.1.1\lib\net40\EPPlus.dll</HintPath>
+    </Reference>
     <Reference Include="FluentValidation, Version=7.0.0.0, Culture=neutral, PublicKeyToken=7de548da2fbae0f0, processorArchitecture=MSIL">
       <HintPath>..\..\Packages\FluentValidation.7.2.1\lib\net45\FluentValidation.dll</HintPath>
     </Reference>
@@ -148,6 +151,8 @@
     <Compile Include="Source\Errors\UI\View\ErrorsView.xaml.cs">
       <DependentUpon>ErrorsView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Source\Excel\ExcelExt.cs" />
+    <Compile Include="Source\Excel\ExportExcelBase.cs" />
     <Compile Include="Source\Files\JsonExt.cs" />
     <Compile Include="Source\Files\SerializerXml.cs" />
     <Compile Include="Source\General.cs" />

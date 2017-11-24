@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -9,6 +10,11 @@ namespace NetLib
 {
     public static class StringExt
     {
+        public static string ToFileName(this DateTime date)
+        {
+            return date.ToString("MM.dd.yyyy HH.mm.ss");
+        }
+
         /// <summary>
         /// Соединение списка объектов в одну строку, с разделителем. 
         /// Строка из T.ToString()
