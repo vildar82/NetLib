@@ -28,8 +28,10 @@
 		</Grid.RowDefinitions>
 		<TextBlock Grid.Row="0" Text="{Binding Name}" TextWrapping="Wrap" Margin="5" HorizontalAlignment="Center"
 				   Visibility="{Binding HasName, Converter={converters:BooleanToCollapseVisibilityConverter}}"/>
-		<ListBox Grid.Row="1" ItemsSource="{Binding ItemsView}" SelectedItem="{Binding Selected}" Margin="12" 
-				 MouseDoubleClick="OkClick">
+		<ListBox Grid.Row="1" ItemsSource="{Binding ItemsView}" SelectedItem="{Binding Selected}" Margin="12">
+            <ListBox.InputBindings>
+                <MouseBinding Gesture="LeftDoubleClick" Command="{Binding OK}"/>
+            </ListBox.InputBindings>
 			<ListBox.ItemTemplate>
 				<DataTemplate>
 					<TextBlock Text="{Binding Name}" Margin="3"/>
@@ -40,7 +42,7 @@
 				 Controls:TextBoxHelper.Watermark="Фильтр" Controls:TextBoxHelper.UseFloatingWatermark="True" Margin="1"
 				 HorizontalAlignment="Center" Visibility="{Binding HasFilter, Converter={converters:BooleanToCollapseVisibilityConverter}}"/>
 		<StackPanel Grid.Row="3" Orientation="Horizontal" Margin="5" HorizontalAlignment="Center">
-			<Button Content="ОК" Command="{Binding OK}" Click="OkClick" Width="60" Margin="5"/>
+			<Button Content="ОК" Command="{Binding OK}" IsDefault="True" Width="60" Margin="5"/>
 			<Button Content="Отмена" IsCancel="True" Width="60" Margin="5"/>
 		</StackPanel>
 	</Grid>

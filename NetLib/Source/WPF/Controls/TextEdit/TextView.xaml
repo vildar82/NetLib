@@ -28,7 +28,7 @@
             <TextBox Name="tbValue"  Text="{Binding Value, UpdateSourceTrigger=PropertyChanged}" Margin="5"/>
         </StackPanel>
         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" MinWidth="50" Margin="5">
-            <Button Content="OK" Click="Button_Click" Command="{Binding OK}" IsDefault="True" Margin="5" MinWidth="50"/>
+            <Button Content="OK" Command="{Binding OK}" IsDefault="True" Margin="5" MinWidth="50"/>
             <Button Content="Отмена" IsCancel="True" Margin="5"/>
         </StackPanel>
     </Grid>

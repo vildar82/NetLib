@@ -1,10 +1,6 @@
-﻿using System;
+﻿using NetLib.WPF;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MicroMvvm;
-using NetLib.WPF;
 
 namespace NetLib.Errors.UI.ViewModel
 {
@@ -15,7 +11,7 @@ namespace NetLib.Errors.UI.ViewModel
             CollapseDialogButtons = !isDialog;
             Title = title;
             Errors = new List<BaseViewModel>();
-            foreach (var grouping in errors.GroupBy(g=>g.Group))
+            foreach (var grouping in errors.GroupBy(g => g.Group))
             {
                 if (grouping.Skip(1).Any())
                 {
@@ -29,7 +25,7 @@ namespace NetLib.Errors.UI.ViewModel
         }
 
         public string Title { get; set; }
-        public List<BaseViewModel> Errors { get; set; }
+        public new List<BaseViewModel> Errors { get; set; }
         public bool CollapseDialogButtons { get; set; }
     }
 }

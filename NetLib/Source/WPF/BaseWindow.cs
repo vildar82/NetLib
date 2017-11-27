@@ -1,4 +1,9 @@
-﻿using System;
+﻿using MahApps.Metro.Controls;
+using MahApps.Metro.Controls.Dialogs;
+using MahApps.Metro.IconPacks;
+using NetLib.WPF.Theme;
+using NLog;
+using System;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
@@ -6,18 +11,13 @@ using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
-using FluentValidation;
-using MahApps.Metro.Controls;
-using MahApps.Metro.Controls.Dialogs;
-using MahApps.Metro.IconPacks;
-using MicroMvvm;
-using NetLib.WPF.Theme;
-using NLog;
 
 namespace NetLib.WPF
 {
     public class BaseWindow : MetroWindow
     {
+        private static readonly FieldInfo _showingAsDialogField = typeof(Window)
+            .GetField("_showingAsDialog", BindingFlags.Instance | BindingFlags.NonPublic);
         protected static Logger Logger { get; } = LogManager.GetCurrentClassLogger();
         protected bool isDialog;
         /// <summary>
@@ -77,8 +77,7 @@ namespace NetLib.WPF
             SaveWindowPosition = true;
             PreviewKeyDown += BaseWindow_PreviewKeyDown;
             MouseDown += BaseWindow_MouseDown;
-            Activated += (s, a) => isDialog = (bool)typeof(Window)
-                .GetField("_showingAsDialog", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(this);
+            Activated += (s, a) => isDialog = (bool)_showingAsDialogField.GetValue(this);
         }
 
         private void Dispatcher_UnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)

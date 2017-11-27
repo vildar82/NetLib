@@ -1,10 +1,7 @@
-﻿using MicroMvvm;
+﻿using ReactiveUI;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Validar;
+using System.Reactive.Linq;
 
 namespace NetLib.WPF.Controls
 {
@@ -12,46 +9,47 @@ namespace NetLib.WPF.Controls
     /// Текстовое значение
     /// </summary>
     public class TextVM : BaseViewModel
-	{
-		private readonly Predicate<string> allowValue;
+    {
+        private readonly Predicate<string> allowValue;
 
-		/// <summary>
-		/// Заголовок, имя и значение
-		/// </summary>
-		/// <param name="title">Заголовок окна</param>
-		/// <param name="name">Название значения</param>
-		/// <param name="value">Значение редактируемое</param>
-		/// <param name="allowValue">Проверка введенного значения</param>
-		public TextVM(string title, string name, string value, Predicate<string> allowValue)
-		{
-			Title = title;
-			Name = name;
-			Value = value;
-			OK = new RelayCommand(OkExecute, CanOkExecute);
-			this.allowValue = allowValue;
-		}
+        /// <summary>
+        /// Заголовок, имя и значение
+        /// </summary>
+        /// <param name="title">Заголовок окна</param>
+        /// <param name="name">Название значения</param>
+        /// <param name="value">Значение редактируемое</param>
+        /// <param name="allowValue">Проверка введенного значения</param>
+        public TextVM(string title, string name, string value, Predicate<string> allowValue)
+        {
+            Title = title;
+            Name = name;
+            Value = value;
+            OK = CreateCommand(OkExecute, this.WhenAnyValue(w => w.Value).Select(s => allowValue(s)));
+            this.allowValue = allowValue;
+        }
 
-		public string Title { get; set; }
-		public string Name { get; set; }
-		public string Value { get; set; }
+        public string Title { get; set; }
+        public string Name { get; set; }
+        public string Value { get; set; }
 
-		public RelayCommand OK { get; }
+        public ReactiveCommand OK { get; }
 
-		private bool CanOkExecute()
-		{
-			return allowValue(Value);
-		}
+        private bool CanOkExecute()
+        {
+            return allowValue(Value);
+        }
 
-		private void OkExecute()
-		{
-		}
-	}
+        private void OkExecute()
+        {
+            DialogResult = true;
+        }
+    }
 
-	public class DesignTextVM : TextVM
-	{
-		public DesignTextVM() 
-			: base("Новый объект", "Название объекта", "Вася", s=> !string.IsNullOrEmpty(s))
-		{
-		}
-	}
+    public class DesignTextVM : TextVM
+    {
+        public DesignTextVM()
+            : base("Новый объект", "Название объекта", "Вася", s => !string.IsNullOrEmpty(s))
+        {
+        }
+    }
 }

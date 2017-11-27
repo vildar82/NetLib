@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MicroMvvm;
-
-namespace NetLib.WPF.Controls.InfoDialogs
+﻿namespace NetLib.WPF.Controls.InfoDialogs
 {
     internal class InfoDialogViewModel : BaseViewModel
     {

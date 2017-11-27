@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MahApps.Metro.IconPacks;
+using NetLib.WPF;
 using System.Windows.Controls;
 using System.Windows.Media;
-using MahApps.Metro.IconPacks;
-using MicroMvvm;
-using NetLib.WPF;
 
 namespace NetLib.Errors.UI.ViewModel
 {

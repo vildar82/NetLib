@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
-using MicroMvvm;
 using NetLib.WPF;
 
 namespace NetLib.Errors.UI.ViewModel
