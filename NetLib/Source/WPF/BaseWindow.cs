@@ -18,7 +18,7 @@ namespace NetLib.WPF
 {
     public class BaseWindow : MetroWindow
     {
-        private static Logger Logger { get; } = LogManager.GetCurrentClassLogger();
+        protected static Logger Logger { get; } = LogManager.GetCurrentClassLogger();
         protected bool isDialog;
         /// <summary>
         /// DataContext

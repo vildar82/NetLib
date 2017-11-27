@@ -1,17 +1,20 @@
 ﻿using FluentValidation;
 using FluentValidation.Results;
 using MahApps.Metro.Controls.Dialogs;
-using NLog;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 using System;
 using System.Collections;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
+using System.Reactive.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using NetLib.Locks;
+using NLog;
 
 namespace NetLib.WPF
 {
@@ -21,7 +24,7 @@ namespace NetLib.WPF
     /// </summary>
     public abstract class BaseViewModel : ReactiveObject, IBaseViewModel
     {
-        private static Logger Logger { get; } = LogManager.GetCurrentClassLogger();
+        protected static Logger Logger { get; } = LogManager.GetCurrentClassLogger();
         protected readonly IDialogCoordinator dialogCoordinator = DialogCoordinator.Instance;
         private ValidationResult validationResult;
         private IValidator validator;
@@ -37,7 +40,9 @@ namespace NetLib.WPF
         public BaseViewModel(IBaseViewModel parent)
         {
             Parent = parent;
-            PropertyChanged += Validate;
+            Changed.Where(w => !w.PropertyName.EqualsAny("Window", "Parent", "Hide", "DialogResult", "HasErrors",
+                "Errors")).Throttle(TimeSpan.FromMilliseconds(500)).Delay(TimeSpan.FromMilliseconds(100))
+                .Subscribe(s => Validate(s.PropertyName));
             InitValidator();
             ThrownExceptions.Subscribe(CommandException);
         }
@@ -51,14 +56,15 @@ namespace NetLib.WPF
         [Reactive] public bool Hide { get; set; }
         [Reactive] public bool? DialogResult { get; set; }
         public bool HasErrors => validationResult?.Errors?.Count > 0;
+        [Reactive] public List<string> Errors { get; set; }
         public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
 
         /// <summary>
         /// Если модель передана в конструктор окна BaseWindow, то этот метод вызывается после инициализации окна.
         /// </summary>
-        public virtual  void OnInitialize()
+        public virtual void OnInitialize()
         {
-            
+
         }
 
         public virtual void OnClosed()
@@ -71,10 +77,21 @@ namespace NetLib.WPF
             Debug.WriteLine($"InitValidator for {GetType().Name}");
             validator = await GetValidator(GetType());
             Debug.WriteLine($"Validator for {GetType().Name} = {validator}");
-            if (validator != null)
+            await Task.Delay(100);
+            Validate(null);
+        }
+
+        private async void Validate(string propName)
+        {
+            if (validator == null) return;
+            await Task.Run(() =>
             {
                 validationResult = validator.Validate(this);
-                if (validationResult.Errors?.Any() == true)
+                Errors = new List<string>(validationResult.Errors.Select(s => s.ErrorMessage).ToList());
+            });
+            if (propName == null)
+            {
+                if (validationResult?.Errors?.Any() == true)
                 {
                     foreach (var error in validationResult.Errors)
                     {
@@ -82,6 +99,11 @@ namespace NetLib.WPF
                     }
                 }
             }
+            else
+            {
+                RaiseErrorsChanged(propName);
+            }
+            Logger.Debug($"Validate {this}");
         }
 
         public IDisposable HideWindow()
@@ -108,7 +130,7 @@ namespace NetLib.WPF
         public void CommandException(Exception e)
         {
             if (e is OperationCanceledException) return;
-            Logger.Error(e, "CommandException");
+            Logger.Error("CommandException", e);
             ShowMessage(e.Message);
         }
 
@@ -117,10 +139,31 @@ namespace NetLib.WPF
             try
             {
                 dialogCoordinator.ShowMessageAsync(this, title, msg);
+                return;
             }
             catch
             {
+                //
+            }
+            if (Parent != null)
+            {
+                try
+                {
+                    Parent.ShowMessage(msg, title);
+                    return;
+                }
+                catch
+                {
+                    //
+                }
+            }
+            try
+            {
                 MessageBox.Show(msg, title);
+            }
+            catch
+            {
+                //
             }
         }
 
@@ -129,16 +172,6 @@ namespace NetLib.WPF
             return validationResult?.Errors?
                 .Where(x => x.PropertyName == propertyName)
                 .Select(x => x.ErrorMessage);
-        }
-
-        private void Validate(object sender, PropertyChangedEventArgs e)
-        {
-            if (validator == null) return;
-            validationResult = validator.Validate(this);
-            foreach (var error in validationResult.Errors)
-            {
-                RaiseErrorsChanged(error.PropertyName);
-            }
         }
 
         public void RaiseErrorsChanged(string propertyName)

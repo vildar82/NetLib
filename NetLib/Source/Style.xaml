@@ -12,7 +12,7 @@
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml" />
         <ResourceDictionary>
             <!--Если textBox в ListBox - выделяется весь элемент-->
-            <Style x:Key="TextBoxListBoxStyle" TargetType="{x:Type TextBox}" BasedOn="{StaticResource MetroTextBox}">
+            <Style x:Key="TextBoxListBoxStyle" TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}">
                 <Setter Property="IsHitTestVisible" Value="False" />
                 <Style.Triggers>
                     <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource FindAncestor, 
@@ -21,27 +21,22 @@
                     </DataTrigger>
                 </Style.Triggers>
             </Style>
-            <Style TargetType="TextBlock" BasedOn="{StaticResource MetroTextBlock}">
+            <Style TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
                 <Setter Property="VerticalAlignment" Value="Center"/>
             </Style>
-            <Style TargetType="Button" BasedOn="{StaticResource MetroButton}"> 
+            <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}"> 
                 <Setter Property="Margin" Value="1"/>
             </Style>
-            <Style TargetType="CheckBox" BasedOn="{StaticResource MetroCheckBox}">
+            <Style TargetType="xctk:DoubleUpDown" BasedOn="{StaticResource {x:Type xctk:DoubleUpDown}}">
+                <Setter Property="Background" Value="{DynamicResource ControlBackgroundBrush}" />
+                <Setter Property="Foreground" Value="{DynamicResource HighlightColor}" />
                 <Setter Property="Validation.ErrorTemplate" Value="{DynamicResource ValidationErrorTemplate}" />
             </Style>
-            <Style TargetType="{x:Type xctk:DoubleUpDown}" BasedOn="{StaticResource {x:Type xctk:DoubleUpDown}}">
+            <Style TargetType="xctk:IntegerUpDown" BasedOn="{StaticResource {x:Type xctk:IntegerUpDown}}">
                 <Setter Property="Background" Value="{DynamicResource ControlBackgroundBrush}" />
                 <Setter Property="Foreground" Value="{DynamicResource HighlightColor}" />
+                <Setter Property="Validation.ErrorTemplate" Value="{DynamicResource ValidationErrorTemplate}" />
             </Style>
-            <Style TargetType="{x:Type xctk:IntegerUpDown}" BasedOn="{StaticResource {x:Type xctk:IntegerUpDown}}">
-                <Setter Property="Background" Value="{DynamicResource ControlBackgroundBrush}" />
-                <Setter Property="Foreground" Value="{DynamicResource HighlightColor}" />
-            </Style>
-            <!--<Style TargetType="{x:Type xctk:InputBase}" BasedOn="{StaticResource xctk:InputBase}">
-                <Setter Property="Background" Value="{DynamicResource ControlBackgroundBrush}" />
-                <Setter Property="Foreground" Value="{DynamicResource IdealForegroundColorBrush}" />
-            </Style>-->
         </ResourceDictionary>
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

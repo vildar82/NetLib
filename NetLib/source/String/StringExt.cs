@@ -70,6 +70,10 @@ namespace NetLib
             return source.IndexOf(toCheck, comp) >= 0;
         }
 
+        public static bool EqualsAny(this string value, params string[] values)
+        {
+            return values.Contains(value);
+        }
         public static bool EqualsAny(this string value, IEqualityComparer<string> comparer, params string[] values)
         {
             return EqualsAny(value, comparer, (IEnumerable<string>)values);
