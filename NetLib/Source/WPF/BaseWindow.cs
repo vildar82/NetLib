@@ -20,10 +20,21 @@ namespace NetLib.WPF
             .GetField("_showingAsDialog", BindingFlags.Instance | BindingFlags.NonPublic);
         protected static Logger Logger { get; } = LogManager.GetCurrentClassLogger();
         protected bool isDialog;
+        private IBaseViewModel model;
+
         /// <summary>
         /// DataContext
         /// </summary>
-        public IBaseViewModel Model { get; set; }
+        public IBaseViewModel Model
+        {
+            get => model;
+            set
+            {
+                model = value;
+                DataContext = model;
+            }
+        }
+
         /// <summary>
         /// Изменилась тема оформления окна
         /// </summary>
@@ -45,10 +56,10 @@ namespace NetLib.WPF
 
         public BaseWindow(IBaseViewModel model)
         {
+            AddStyleResouse();
             Model = model;
             if (Model != null)
             {
-                DataContext = Model;
                 Model.Window = this;
             }
             // Скрытие окна
@@ -92,7 +103,6 @@ namespace NetLib.WPF
 
         protected override void OnInitialized(EventArgs e)
         {
-            DataContext = Model;
             AddStyleResouse();
             // Применение темы оформления
             ApplyTheme();
@@ -176,19 +186,22 @@ namespace NetLib.WPF
                 }
                 e.Handled = true;
             }
-            else if (FocusManager.GetFocusedElement(this) == null &&
-                     CloseWindowByEnterOrSpace && e.Key == Key.Enter || e.Key == Key.Space)
+            else if (CloseWindowByEnterOrSpace && e.Key == Key.Enter || e.Key == Key.Space)
             {
-                OnEnterOrSpace?.Invoke();
-                if (isDialog)
+                var focusedElem = FocusManager.GetFocusedElement(this);
+                if (focusedElem == null)
                 {
-                    DialogResult = true;
+                    OnEnterOrSpace?.Invoke();
+                    if (isDialog)
+                    {
+                        DialogResult = true;
+                    }
+                    else
+                    {
+                        Close();
+                    }
+                    e.Handled = true;
                 }
-                else
-                {
-                    Close();
-                }
-                e.Handled = true;
             }
         }
     }

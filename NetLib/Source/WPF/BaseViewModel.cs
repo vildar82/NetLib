@@ -24,10 +24,12 @@ namespace NetLib.WPF
     /// </summary>
     public abstract class BaseViewModel : ReactiveObject, IBaseViewModel
     {
+        private static readonly HashSet<string> ignoreProps= new HashSet<string> { "Hide", "DialogResult", "Errors" };
+        private ValidationResult validationResult;
+
         protected static Logger Logger { get; } = LogManager.GetCurrentClassLogger();
         protected readonly IDialogCoordinator dialogCoordinator = DialogCoordinator.Instance;
-        private ValidationResult validationResult;
-        private IValidator validator;
+        protected IValidator validator;
 
         private static readonly ConcurrentDictionary<RuntimeTypeHandle, IValidator> validators =
             new ConcurrentDictionary<RuntimeTypeHandle, IValidator>();
@@ -39,12 +41,13 @@ namespace NetLib.WPF
 
         public BaseViewModel(IBaseViewModel parent)
         {
-            Parent = parent;
-            Changed.Where(w => !w.PropertyName.EqualsAny("Window", "Parent", "Hide", "DialogResult", "HasErrors",
-                "Errors")).Throttle(TimeSpan.FromMilliseconds(500)).Delay(TimeSpan.FromMilliseconds(100))
-                .Subscribe(s => Validate(s.PropertyName));
             InitValidator();
-            ThrownExceptions.Subscribe(CommandException);
+            using (SuppressChangeNotifications())
+            {
+                Parent = parent;
+                PropertyChanged += BaseViewModel_PropertyChanged;
+                ThrownExceptions.Subscribe(CommandException);
+            }
         }
 
         public BaseViewModel() : this(null)
@@ -57,14 +60,23 @@ namespace NetLib.WPF
         [Reactive] public bool? DialogResult { get; set; }
         public bool HasErrors => validationResult?.Errors?.Count > 0;
         [Reactive] public List<string> Errors { get; set; }
+        public bool IsValidated { get; private set; }
         public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
+
+        private void BaseViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (!ignoreProps.Contains(e.PropertyName))
+            {
+                Validate(e.PropertyName);
+            }
+        }
 
         /// <summary>
         /// Если модель передана в конструктор окна BaseWindow, то этот метод вызывается после инициализации окна.
         /// </summary>
         public virtual void OnInitialize()
         {
-
+            
         }
 
         public virtual void OnClosed()
@@ -72,38 +84,42 @@ namespace NetLib.WPF
 
         }
 
-        private async void InitValidator()
+        private void InitValidator()
         {
-            Debug.WriteLine($"InitValidator for {GetType().Name}");
-            validator = await GetValidator(GetType());
-            Debug.WriteLine($"Validator for {GetType().Name} = {validator}");
-            await Task.Delay(100);
-            Validate(null);
+            var modelType = GetType();
+            if (!validators.TryGetValue(modelType.TypeHandle, out validator))
+            {
+                FindValidator(modelType);
+            }
         }
 
-        private async void Validate(string propName)
+        /// <summary>
+        /// Валидация. 
+        /// </summary>
+        public async void Validate(string propName = null)
         {
             if (validator == null) return;
             await Task.Run(() =>
             {
                 validationResult = validator.Validate(this);
                 Errors = new List<string>(validationResult.Errors.Select(s => s.ErrorMessage).ToList());
-            });
-            if (propName == null)
-            {
-                if (validationResult?.Errors?.Any() == true)
+                if (propName == null)
                 {
-                    foreach (var error in validationResult.Errors)
+                    if (validationResult?.Errors?.Any() == true)
                     {
-                        RaiseErrorsChanged(error.PropertyName);
+                        foreach (var error in validationResult.Errors)
+                        {
+                            RaiseErrorsChanged(error.PropertyName);
+                        }
                     }
                 }
-            }
-            else
-            {
-                RaiseErrorsChanged(propName);
-            }
-            Logger.Debug($"Validate {this}");
+                else
+                {
+                    RaiseErrorsChanged(propName);
+                }
+                IsValidated = true;
+                Logger.Debug($"Validate {this}");
+            });
         }
 
         public IDisposable HideWindow()
@@ -126,11 +142,17 @@ namespace NetLib.WPF
             command.ThrownExceptions.Subscribe(CommandException);
             return command;
         }
+        public ReactiveCommand CreateCommand<T>(Action<T> execute, IObservable<bool> canExecute = null)
+        {
+            var command = ReactiveCommand.Create(execute, canExecute);
+            command.ThrownExceptions.Subscribe(CommandException);
+            return command;
+        }
 
         public void CommandException(Exception e)
         {
             if (e is OperationCanceledException) return;
-            Logger.Error("CommandException", e);
+            Logger.Error(e, "CommandException");
             ShowMessage(e.Message);
         }
 
@@ -179,11 +201,10 @@ namespace NetLib.WPF
             ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(propertyName));
         }
 
-        private static async Task<IValidator> GetValidator(Type modelType)
+        private void FindValidator(Type modelType)
         {
-            return await Task.Run(() =>
+            Task.Run(() =>
             {
-                if (validators.TryGetValue(modelType.TypeHandle, out var validator)) return validator;
                 var typeName = $"{modelType.Namespace}.{modelType.Name}Validator";
                 try
                 {
@@ -195,7 +216,7 @@ namespace NetLib.WPF
                     Logger.Error($"No Validator in {modelType.FullName}.");
                 }
                 validators[modelType.TypeHandle] = validator;
-                return validator;
+                Validate();
             });
         }
 
