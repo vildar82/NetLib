@@ -1,36 +1,34 @@
-﻿using System;
+﻿using NCalc;
+using NetLib.Comparers;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using NCalc;
-using NetLib.Comparers;
 
 namespace NetLib
 {
     public static class MathExt
     {
         public static DoubleEqualityComparer AngleComparer = new DoubleEqualityComparer();
-		/// <summary>
-		/// 2 ПИ - 6.28...радиан, (360 градусов)
-		/// </summary>
+        /// <summary>
+        /// 2 ПИ - 6.28...радиан, (360 градусов)
+        /// </summary>
         public const double PI2 = Math.PI * 2;
-		/// <summary>
-		/// Пи/2 - 1,57...радиан, (90 градусов)
-		/// </summary>
-        public const double PIHalf = Math.PI *0.5;
-		/// <summary>
-		/// Пи/4 - 0,78...радиан, (45 градусов)
-		/// </summary>
+        /// <summary>
+        /// Пи/2 - 1,57...радиан, (90 градусов)
+        /// </summary>
+        public const double PIHalf = Math.PI * 0.5;
+        /// <summary>
+        /// Пи/4 - 0,78...радиан, (45 градусов)
+        /// </summary>
         public const double PIQuart = Math.PI * 0.25;
-		/// <summary>
-		/// ПИ/180 - для преобразования градусов в радианы
-		/// </summary>
+        /// <summary>
+        /// ПИ/180 - для преобразования градусов в радианы
+        /// </summary>
         public const double RatioDegreeToRadian = Math.PI / 180;
-		/// <summary>
-		/// 180/Пи - для преобразования радиан в градусы
-		/// </summary>
+        /// <summary>
+        /// 180/Пи - для преобразования радиан в градусы
+        /// </summary>
         public const double RatioRadianToDegree = 180 / Math.PI;
 
         public static object EvaluateString(string expression)
@@ -51,8 +49,8 @@ namespace NetLib
         /// </summary>
         /// <param name="angle">Исходный угол в радианах</param>
         /// <returns>Угол в радианах соответствующий исходному углу, но в пределах от 0 до 2pi (круг)</returns>
-        public static double FixedAngle (this double angle)
-        {            
+        public static double FixedAngle(this double angle)
+        {
             if (angle < 0)
             {
                 angle = PI2 + angle % PI2;
@@ -64,20 +62,20 @@ namespace NetLib
             return angle;
         }
 
-        public static string ToHours (this int min)
+        public static string ToHours(this int min)
         {
             //return Math.Round(min * 0.01667, 1);
             return ToHours((double)min);
         }
-        public static string ToHours (this double min)
+        public static string ToHours(this double min)
         {
             //return Math.Round(min *0.01667, 1);
-            TimeSpan span = TimeSpan.FromMinutes(min);
-            string label = $"{span.Hours}ч.{span.Minutes}м.";
+            var span = TimeSpan.FromMinutes(min);
+            var label = $"{span.Hours}ч.{span.Minutes}м.";
             return label;
         }
 
-        public static double ToMin (this double h)
+        public static double ToMin(this double h)
         {
             return h * 60;
         }
@@ -85,7 +83,7 @@ namespace NetLib
         /// <summary>
         /// Это нечетное число
         /// </summary>        
-        public static bool IsOdd (this int value)
+        public static bool IsOdd(this int value)
         {
             return value % 2 != 0;
         }
@@ -96,7 +94,7 @@ namespace NetLib
         /// <param name="value">Проверяемое значение</param>
         /// <param name="tolerance">Допуск</param>
         /// <returns>Да или нет - если от заданного значения до целого числа меньше либо равно допуску</returns>
-        public static bool IsWholeNumber (this double value, double tolerance=0.001)
+        public static bool IsWholeNumber(this double value, double tolerance = 0.001)
         {
             return Math.Abs(value % 1) <= tolerance;
         }
@@ -104,7 +102,7 @@ namespace NetLib
         /// <summary>
         /// Это четное число
         /// </summary>        
-        public static bool IsEven (this int value)
+        public static bool IsEven(this int value)
         {
             return value % 2 == 0;
         }
@@ -116,7 +114,7 @@ namespace NetLib
         /// <param name="other">Второе число</param>
         /// <param name="precision">Допуск разницы</param>
         /// <returns>true - равны, false - не равны</returns>
-        public static bool IsEqual (this double d, double other, double precision = double.Epsilon)
+        public static bool IsEqual(this double d, double other, double precision = double.Epsilon)
         {
             return Math.Abs(d - other) <= precision;
         }
@@ -158,7 +156,7 @@ namespace NetLib
         /// <param name="angleDeg">Проверяемый угол</param>
         /// <param name="angteToOrtho">На сколько его нужно повернуть до ортогональности (положительный угол - против часовой стрелки)</param>
         /// <returns>Да - это ортогональный угол. Нет - не ортогональный, и угол на который необходимо повернуть</returns>
-        public static bool IsOrthoAngle(this double angle, out double angteToOrtho, bool isRadians = true,double tolerance = 0.01)
+        public static bool IsOrthoAngle(this double angle, out double angteToOrtho, bool isRadians = true, double tolerance = 0.01)
         {
             if (!isRadians)
             {
@@ -171,7 +169,7 @@ namespace NetLib
                 return true;
             }
             var np = PIHalf - p;
-            angteToOrtho = p < (np) ? -p : np;
+            angteToOrtho = p < np ? -p : np;
             return false;
         }
 
@@ -192,7 +190,7 @@ namespace NetLib
         /// <returns>Угол в градусах</returns>
         public static double ToDegrees(this double radian)
         {
-            return (radian % PI2) * RatioRadianToDegree;// 180.0 / Math.PI;
+            return radian % PI2 * RatioRadianToDegree;// 180.0 / Math.PI;
         }
 
         /// <summary>
@@ -202,8 +200,7 @@ namespace NetLib
         {
             if (i % 5 != 0)
             {
-                var temp = ((i + 5) / 5);
-                i = ((i + 5) / 5) * 5;
+                i = (i + 5) / 5 * 5;
             }
             return i;
         }
@@ -215,7 +212,7 @@ namespace NetLib
         {
             if (i % 10 != 0)
             {
-                i = ((i + 5) / 10) * 10;
+                i = (i + 5) / 10 * 10;
             }
             return i;
         }
@@ -227,7 +224,7 @@ namespace NetLib
         {
             if (i % 100 != 0)
             {
-                i = ((i + 50) / 100) * 100;
+                i = (i + 50) / 100 * 100;
             }
             return i;
         }
@@ -243,10 +240,10 @@ namespace NetLib
         {
             // int[] paleNumbersInt = new[] { 1, 2, 3, 4, 5, 7, 8, 10, 15, 16, 100, 101, 102, 103, 105, 106, 107, 109 };
             // res = 1-8,10,15,16,100-107,109
-            bool isFirstEnter = true;
-            bool isWas = false;
-            string mark = string.Empty;
-            for (int i = 0; i < ints.Length; i++)
+            var isFirstEnter = true;
+            var isWas = false;
+            var mark = string.Empty;
+            for (var i = 0; i < ints.Length; i++)
             {
                 if (i == ints.Length - 1)
                 {
@@ -260,7 +257,7 @@ namespace NetLib
                     break;
 
                 }
-                if ((i == 0) || (isFirstEnter))
+                if (i == 0 || isFirstEnter)
                 {
                     mark += ints[i].ToString();
                     isFirstEnter = false;
@@ -272,23 +269,19 @@ namespace NetLib
                     isWas = true;
                     continue;
                 }
+                if (mark[mark.Length - 1] != '-') mark += ",";
+                if (!isWas) mark += ints[i] + ",";
                 else
                 {
-                    if (mark[mark.Length - 1] != '-') mark += ",";
-                    if (!isWas) mark += ints[i].ToString() + ",";
-                    else
-                    {
-                        isWas = false;
-                        mark += ints[i].ToString() + ",";
-                    }
-
-                    isFirstEnter = true;
+                    isWas = false;
+                    mark += ints[i] + ",";
                 }
+                isFirstEnter = true;
             }
             mark = mark.Replace(",,", ",");
             return mark;
         }
-        
+
         /// <summary>
         /// Список чисел в строку, с групперовкой последовательных номеров
         /// ints = 1, 2, 3, 4, 5, 7, 8, 10, 15, 16, 100, 101, 102, 103, 105, 106, 107, 109
@@ -297,8 +290,8 @@ namespace NetLib
         public static string IntsToStringSequence(int[] ints)
         {
             var uniqints = ints.Distinct();
-            string res = string.Empty;
-            IntSequence seq = new IntSequence(uniqints.First());
+            var res = string.Empty;
+            var seq = new IntSequence(uniqints.First());
             foreach (var n in uniqints.Skip(1))
             {
                 if (!seq.AddInt(n))
@@ -310,7 +303,7 @@ namespace NetLib
             if (!seq.IsNull())
             {
                 SetSeq(ref res, ref seq);
-            }            
+            }
             return res;
         }
 
@@ -323,14 +316,14 @@ namespace NetLib
             else
             {
                 res += ", " + seq.GetSeq();
-            }            
+            }
         }
 
         struct IntSequence
         {
-            int start;
-            int end;
-            bool has;
+            private readonly int start;
+            private int end;
+            private bool has;
 
             public IntSequence(int start)
             {
@@ -344,46 +337,42 @@ namespace NetLib
                 return !has;
             }
 
-            public bool AddInt (int next)
+            public bool AddInt(int next)
             {
-                if (next-end ==1)
+                if (next - end == 1)
                 {
                     end = next;
                     return true;
                 }
-                else
-                {
-                    return false;
-                }
+                return false;
             }
 
             public string GetSeq()
             {
-                string res = string.Empty;
+                var res = string.Empty;
                 has = false;
                 if (end == start)
                 {
                     res = start.ToString();
                 }
-                else if (end-start==1)
+                else if (end - start == 1)
                 {
                     res = start + ", " + end;
                 }
                 else
                 {
                     res = start + "-" + end;
-                }                
-                return res;                
+                }
+                return res;
             }
         }
 
-        public static double ToDouble (this string val)
-        {            
+        public static double ToDouble(this string val)
+        {
             if (string.IsNullOrEmpty(val))
             {
                 return 0;
             }
-            double d;
             val = val.Trim();
             try
             {
@@ -398,8 +387,8 @@ namespace NetLib
                 }
             }
             catch { }
-            
-            if (!double.TryParse(val, out d))
+
+            if (!double.TryParse(val, out var d))
             {
                 if (val.IndexOf(",") != -1)
                 {
@@ -421,10 +410,7 @@ namespace NetLib
             {
                 return res.Value;
             }
-            else
-            {
-                throw new Exception(res.Error);
-            }
+            throw new Exception(res.Error);
         }
     }
 }

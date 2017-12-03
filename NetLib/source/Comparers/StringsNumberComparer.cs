@@ -13,37 +13,23 @@ namespace NetLib.Comparers
    {
       public int Compare(string x, string y)
       {
-         int numberX;
-         if (int.TryParse(x, out numberX))
-         {
-            // x - число numberX
-            int numberY;
-            if (int.TryParse(y, out numberY))
+            if (int.TryParse(x, out var numberX))
             {
-               // y - число numberY
-               return numberX.CompareTo(numberY);
+                // x - число numberX
+                if (int.TryParse(y, out var numberY))
+                {
+                    // y - число numberY
+                    return numberX.CompareTo(numberY);
+                }
+                // y - строка.
+                return -1; // число numberX меньше строки y
             }
             else
             {
-               // y - строка.
-               return -1; // число numberX меньше строки y
+                // x - строка
+                return int.TryParse(y, out var numberY) ? 1 : x.CompareTo(y);
+                // y - строка.               
             }
-         }
-         else
-         {
-            // x - строка
-            int numberY;
-            if (int.TryParse(y, out numberY))
-            {
-               // y - число numberY
-               return 1; // число numberY меньше строки x
-            }
-            else
-            {
-               // y - строка.               
-               return x.CompareTo(y);
-            }
-         }
-      }
+        }
    }
 }

@@ -4,6 +4,7 @@ using MahApps.Metro.IconPacks;
 using NetLib.WPF.Theme;
 using NLog;
 using System;
+using System.ComponentModel;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
@@ -18,6 +19,7 @@ namespace NetLib.WPF
     {
         private static readonly FieldInfo _showingAsDialogField = typeof(Window)
             .GetField("_showingAsDialog", BindingFlags.Instance | BindingFlags.NonPublic);
+
         protected static Logger Logger { get; } = LogManager.GetCurrentClassLogger();
         protected bool isDialog;
         private IBaseViewModel model;
@@ -39,10 +41,16 @@ namespace NetLib.WPF
         /// Изменилась тема оформления окна
         /// </summary>
         public event EventHandler ChangeTheme;
+
         /// <summary>
         /// Закрытие окна по нажатия Enter или Space (пробел) - DialogResult true
         /// </summary>
         public bool CloseWindowByEnterOrSpace { get; set; } = true;
+        /// <summary>
+        /// Вызывать ли закрытие окна или нет. (Если сохранять в памяти и показывать снова)
+        /// </summary>
+        public bool IsUnclosing { get; set; }
+
         /// <summary>
         /// Дествие при нажатии OK/Space
         /// </summary>
@@ -66,7 +74,7 @@ namespace NetLib.WPF
             var hideBinding = new Binding("Hide");
             SetBinding(VisibilityHelper.IsHiddenProperty, hideBinding);
             // Регистрация окна в MahApps
-            var dialogRegBinding = new Binding { Source = model };
+            var dialogRegBinding = new Binding {Source = model};
             SetBinding(DialogParticipation.RegisterProperty, dialogRegBinding);
             // DialogResult
             var dialogResultBinding = new Binding("DialogResult");
@@ -88,7 +96,7 @@ namespace NetLib.WPF
             SaveWindowPosition = true;
             PreviewKeyDown += BaseWindow_PreviewKeyDown;
             MouseDown += BaseWindow_MouseDown;
-            Activated += (s, a) => isDialog = (bool)_showingAsDialogField.GetValue(this);
+            Activated += (s, a) => isDialog = (bool) _showingAsDialogField.GetValue(this);
         }
 
         private void Dispatcher_UnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
@@ -120,7 +128,7 @@ namespace NetLib.WPF
             {
                 var buttonTheme = new Button
                 {
-                    Content = new PackIconOcticons { Kind = PackIconOcticonsKind.Paintcan },
+                    Content = new PackIconOcticons {Kind = PackIconOcticonsKind.Paintcan},
                     ToolTip = "Настройка тем оформления окон"
                 };
                 buttonTheme.Click += ButtonTheme_Click;
@@ -149,6 +157,19 @@ namespace NetLib.WPF
             var styleSettingsVM = new StyleSettingsViewModel(Model);
             var styleSettingsView = new StyleSettingsView(styleSettingsVM);
             styleSettingsView.ShowDialog();
+        }
+
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            if (IsUnclosing)
+            {
+                e.Cancel = true;
+                Hide();
+            }
+            else
+            {
+                base.OnClosing(e);
+            }
         }
 
         protected override void OnClosed(EventArgs e)
@@ -186,22 +207,19 @@ namespace NetLib.WPF
                 }
                 e.Handled = true;
             }
-            else if (CloseWindowByEnterOrSpace && e.Key == Key.Enter || e.Key == Key.Space)
+            else if (FocusManager.GetFocusedElement(this) == null &&
+                     (CloseWindowByEnterOrSpace && e.Key == Key.Enter || e.Key == Key.Space))
             {
-                var focusedElem = FocusManager.GetFocusedElement(this);
-                if (focusedElem == null)
+                OnEnterOrSpace?.Invoke();
+                if (isDialog)
                 {
-                    OnEnterOrSpace?.Invoke();
-                    if (isDialog)
-                    {
-                        DialogResult = true;
-                    }
-                    else
-                    {
-                        Close();
-                    }
-                    e.Handled = true;
+                    DialogResult = true;
                 }
+                else
+                {
+                    Close();
+                }
+                e.Handled = true;
             }
         }
     }
