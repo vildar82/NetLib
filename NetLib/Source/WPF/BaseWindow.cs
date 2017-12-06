@@ -207,8 +207,8 @@ namespace NetLib.WPF
                 }
                 e.Handled = true;
             }
-            else if (FocusManager.GetFocusedElement(this) == null &&
-                     (CloseWindowByEnterOrSpace && e.Key == Key.Enter || e.Key == Key.Space))
+            else if (CloseWindowByEnterOrSpace && 
+                (e.Key == Key.Enter || FocusManager.GetFocusedElement(this) == null && e.Key == Key.Space))
             {
                 OnEnterOrSpace?.Invoke();
                 if (isDialog)
