@@ -1,6 +1,7 @@
 ﻿using FluentValidation;
 using FluentValidation.Results;
 using MahApps.Metro.Controls.Dialogs;
+using NLog;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 using System;
@@ -8,13 +9,9 @@ using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Linq;
-using System.Reactive.Linq;
 using System.Threading.Tasks;
 using System.Windows;
-using NetLib.Locks;
-using NLog;
 
 namespace NetLib.WPF
 {
@@ -24,7 +21,7 @@ namespace NetLib.WPF
     /// </summary>
     public abstract class BaseViewModel : ReactiveObject, IBaseViewModel
     {
-        private static readonly HashSet<string> ignoreProps= new HashSet<string> { "Hide", "DialogResult", "Errors" };
+        private static readonly HashSet<string> ignoreProps = new HashSet<string> { "Hide", "DialogResult", "Errors" };
         private ValidationResult validationResult;
 
         protected static Logger Logger { get; } = LogManager.GetCurrentClassLogger();
@@ -76,7 +73,7 @@ namespace NetLib.WPF
         /// </summary>
         public virtual void OnInitialize()
         {
-            
+
         }
 
         public virtual void OnClosed()
@@ -218,6 +215,15 @@ namespace NetLib.WPF
                 validators[modelType.TypeHandle] = validator;
                 Validate();
             });
+        }
+
+        /// <summary>
+        /// для propertyChanged (не уверен что очень нужно)
+        /// </summary>
+        /// <param name="args"></param>
+        public void RaisePropertyChanged(PropertyChangedEventArgs args)
+        {
+            ((IReactiveObject)this).RaisePropertyChanged(args);
         }
 
         public virtual void Dispose()

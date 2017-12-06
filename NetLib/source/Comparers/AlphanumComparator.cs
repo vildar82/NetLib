@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace NetLib.Comparers
 {
@@ -12,19 +8,19 @@ namespace NetLib.Comparers
     /// </summary>
     public class AlphanumComparator : IComparer<string>
     {
-	    public static AlphanumComparator New { get; } = new AlphanumComparator ();
+        public static AlphanumComparator New { get; } = new AlphanumComparator();
 
-	    public int Compare(string s1, string s2)
+        public int Compare(string s1, string s2)
         {
             var null1 = string.IsNullOrEmpty(s1);
             var null2 = string.IsNullOrEmpty(s2);
             if (null1)
             {
-                return null2 ? 0: -1;
+                return null2 ? 0 : -1;
             }
-            else if (null2)
+            if (null2)
             {
-                return null1 ? 0 : 1;
+                return 1;
             }
 
             var len1 = s1.Length;
@@ -101,7 +97,7 @@ namespace NetLib.Comparers
                 }
             }
             return len1 - len2;
-        }        
+        }
 
         public int GetHashCode(string obj)
         {
