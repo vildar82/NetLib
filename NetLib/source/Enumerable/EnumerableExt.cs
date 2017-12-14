@@ -25,7 +25,7 @@ namespace NetLib
         public static IEnumerable<TRes> SelectManyNulless<TSource, TRes>(this IEnumerable<TSource> list,
             Func<TSource, IEnumerable<TRes>> selector)
         {
-            return list.Where(w => w != null && selector(w) != null).SelectMany(selector).Where(w => w != null);
+            return list.Where(w => w != null).SelectMany(selector).Where(w => w != null);
         }
 
         /// <summary>

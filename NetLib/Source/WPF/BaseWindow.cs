@@ -20,18 +20,20 @@ namespace NetLib.WPF
         private static readonly FieldInfo _showingAsDialogField = typeof(Window)
             .GetField("_showingAsDialog", BindingFlags.Instance | BindingFlags.NonPublic);
 
+        // ReSharper disable once MemberCanBePrivate.Global
         protected static Logger Logger { get; } = LogManager.GetCurrentClassLogger();
+        // ReSharper disable once MemberCanBePrivate.Global
         protected bool isDialog;
         private IBaseViewModel model;
 
         /// <summary>
         /// DataContext
         /// </summary>
+        // ReSharper disable once MemberCanBePrivate.Global
         public IBaseViewModel Model
         {
             get => model;
-            set
-            {
+            set {
                 model = value;
                 DataContext = model;
             }
@@ -45,15 +47,19 @@ namespace NetLib.WPF
         /// <summary>
         /// Закрытие окна по нажатия Enter или Space (пробел) - DialogResult true
         /// </summary>
+        // ReSharper disable once MemberCanBePrivate.Global
         public bool CloseWindowByEnterOrSpace { get; set; } = true;
+
         /// <summary>
         /// Вызывать ли закрытие окна или нет. (Если сохранять в памяти и показывать снова)
         /// </summary>
+        // ReSharper disable once MemberCanBePrivate.Global
         public bool IsUnclosing { get; set; }
 
         /// <summary>
         /// Дествие при нажатии OK/Space
         /// </summary>
+        // ReSharper disable once MemberCanBePrivate.Global
         public Action OnEnterOrSpace { get; set; }
 
         [Obsolete("Лучше не использовать. Не забудь присвоить Model и Model.Window.")]
@@ -62,7 +68,7 @@ namespace NetLib.WPF
 
         }
 
-        public BaseWindow(IBaseViewModel model)
+        protected BaseWindow(IBaseViewModel model)
         {
             AddStyleResouse();
             Model = model;
@@ -74,7 +80,7 @@ namespace NetLib.WPF
             var hideBinding = new Binding("Hide");
             SetBinding(VisibilityHelper.IsHiddenProperty, hideBinding);
             // Регистрация окна в MahApps
-            var dialogRegBinding = new Binding {Source = model};
+            var dialogRegBinding = new Binding { Source = model };
             SetBinding(DialogParticipation.RegisterProperty, dialogRegBinding);
             // DialogResult
             var dialogResultBinding = new Binding("DialogResult");
@@ -96,7 +102,7 @@ namespace NetLib.WPF
             SaveWindowPosition = true;
             PreviewKeyDown += BaseWindow_PreviewKeyDown;
             MouseDown += BaseWindow_MouseDown;
-            Activated += (s, a) => isDialog = (bool) _showingAsDialogField.GetValue(this);
+            Activated += (s, a) => isDialog = (bool)_showingAsDialogField.GetValue(this);
         }
 
         private void Dispatcher_UnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
@@ -128,7 +134,7 @@ namespace NetLib.WPF
             {
                 var buttonTheme = new Button
                 {
-                    Content = new PackIconOcticons {Kind = PackIconOcticonsKind.Paintcan},
+                    Content = new PackIconOcticons { Kind = PackIconOcticonsKind.Paintcan },
                     ToolTip = "Настройка тем оформления окон"
                 };
                 buttonTheme.Click += ButtonTheme_Click;
@@ -207,7 +213,7 @@ namespace NetLib.WPF
                 }
                 e.Handled = true;
             }
-            else if (CloseWindowByEnterOrSpace && 
+            else if (CloseWindowByEnterOrSpace &&
                 (e.Key == Key.Enter || FocusManager.GetFocusedElement(this) == null && e.Key == Key.Space))
             {
                 OnEnterOrSpace?.Invoke();
