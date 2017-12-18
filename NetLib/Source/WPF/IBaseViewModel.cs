@@ -15,6 +15,8 @@ namespace NetLib.WPF
         ReactiveCommand CreateCommand(Action execute, IObservable<bool> canExecute = null);
         void CommandException(Exception e);
         IDisposable HideWindow();
+        void HideMe();
+        void VisibleMe();
         void OnClosed();
         void OnInitialize();
         void ShowMessage(string msg, string title = "Ошибка");

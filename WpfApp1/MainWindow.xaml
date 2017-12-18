@@ -12,36 +12,7 @@
         d:DataContext="{d:DesignInstance Type=local:Model, IsDesignTimeCreatable=True}"
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
-	<Window.Resources>
-		<ResourceDictionary>
-			<DataTemplate DataType="{x:Type local:Class1}">
-				<StackPanel Orientation="Horizontal">
-					<ComboBox ItemsSource="{Binding Values}" IsEditable="{Binding AllowCustomValue}"
-                              SelectedItem="{Binding SelectedValue}" VerticalAlignment="Center">
-						<ComboBox.ItemTemplate>
-							<DataTemplate>
-								<controls:NumericUpDown Value="{Binding Value2}" Margin="1" MinWidth="50"	
-																Minimum="1" Maximum="10" UpDownButtonsWidth="500" />
-							</DataTemplate>
-						</ComboBox.ItemTemplate>
-					</ComboBox>
-				</StackPanel>
-			</DataTemplate>
-		</ResourceDictionary>
-	</Window.Resources>
 	<StackPanel Margin="10">
-		<TextBox Text="{Binding Class1.Value1}"/>
-		<ContentPresenter Content="{Binding Class1}" Margin="1"/>
-		<ListBox ItemsSource="{Binding Values}" HorizontalAlignment="Center">
-			<ListBox.ItemTemplate>
-				<DataTemplate>
-					<controls:NumericUpDown Value="{Binding .}" />
-				</DataTemplate>
-			</ListBox.ItemTemplate>
-		</ListBox>
-		<CheckBox IsThreeState="True" Content="{Binding Layer}"/>
-		<TextBox Text="{Binding Value, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
-		<TextBox/>
-		<Button Content="Start" Command="{Binding Start}"/>
+		<Button Content="Test" Command="{Binding Test}"/>
 	</StackPanel>
 </wpf:BaseWindow>

@@ -5,6 +5,7 @@ using NetLib.WPF.Theme;
 using NLog;
 using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
@@ -36,6 +37,10 @@ namespace NetLib.WPF
             set {
                 model = value;
                 DataContext = model;
+                if (model != null)
+                {
+                    model.Window = this;
+                }
             }
         }
 
@@ -102,7 +107,11 @@ namespace NetLib.WPF
             SaveWindowPosition = true;
             PreviewKeyDown += BaseWindow_PreviewKeyDown;
             MouseDown += BaseWindow_MouseDown;
-            Activated += (s, a) => isDialog = (bool)_showingAsDialogField.GetValue(this);
+            Activated += (s, a) =>
+            {
+                isDialog = (bool) _showingAsDialogField.GetValue(this);
+                Debug.WriteLine($"{Model} - {Model.Hide}");
+            };
         }
 
         private void Dispatcher_UnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)

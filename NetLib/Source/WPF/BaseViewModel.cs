@@ -10,6 +10,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Reactive.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -53,6 +54,7 @@ namespace NetLib.WPF
 
         public BaseWindow Window { get; set; }
         public IBaseViewModel Parent { get; set; }
+        [Obsolete("Use Hide()")]
         [Reactive] public bool Hide { get; set; }
         [Reactive] public bool? DialogResult { get; set; }
         public bool HasErrors => validationResult?.Errors?.Count > 0;
@@ -90,6 +92,18 @@ namespace NetLib.WPF
             }
         }
 
+        public void HideMe()
+        {
+            if (Window != null) Window.Visibility = Visibility.Hidden;
+            else Parent?.HideMe();
+        }
+
+        public void VisibleMe()
+        {
+            if (Window != null) Window.Visibility = Visibility.Visible;
+            else Parent?.VisibleMe();
+        }
+
         /// <summary>
         /// Валидация. 
         /// </summary>
@@ -121,7 +135,7 @@ namespace NetLib.WPF
 
         public IDisposable HideWindow()
         {
-            return new BoolUsage(Hide, true, h => Hide = h);
+            return new ActionUsage(HideMe, VisibleMe);
         }
 
         /// <summary>
