@@ -1,10 +1,17 @@
 ﻿using NetLib.WPF.Converters;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace NetLib
 {
     public static class EnumExt
     {
+        public static List<string> GetEnumDesciptionValues(this Enum value)
+        {
+            return Enum.GetValues(value.GetType()).Cast<Enum>().Select(s => s.Description()).ToList();
+        }
+
         /// <summary>
         /// Есть ли хоть один совпадающий флаг в enum1 и enum2
         /// </summary>
