@@ -32,7 +32,7 @@ namespace NetLib
         {
             return string.Join(delimeter, array.SelectNulless(getString));
         }
-
+        
         public static bool IsNullOrEmpty([CanBeNull] this string str)
         {
             return string.IsNullOrEmpty(str);
@@ -66,9 +66,9 @@ namespace NetLib
         /// <summary>
         /// IndexOf(toCheck, comp) >= 0
         /// </summary>        
-        public static bool Contains([NotNull] this string source, [NotNull] string toCheck, StringComparison comp)
+        public static bool Contains([CanBeNull] this string source, [NotNull] string toCheck, StringComparison comp)
         {
-            return source.IndexOf(toCheck, comp) >= 0;
+            return source?.IndexOf(toCheck, comp) >= 0;
         }
 
         public static bool EqualsAny(this string value, [NotNull] params string[] values)
