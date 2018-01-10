@@ -110,7 +110,6 @@ namespace NetLib.WPF
             Activated += (s, a) =>
             {
                 isDialog = (bool) _showingAsDialogField.GetValue(this);
-                Debug.WriteLine($"{Model} - {Model.Hide}");
             };
         }
 

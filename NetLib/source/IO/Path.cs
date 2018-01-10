@@ -76,11 +76,11 @@ namespace NetLib.IO
 
         public static void CopyDirectory(string sourceDir, string destDir)
         {
-            foreach (string dirPath in Directory.GetDirectories(sourceDir, "*", SearchOption.AllDirectories))
+            foreach (var dirPath in Directory.GetDirectories(sourceDir, "*", SearchOption.AllDirectories))
             {
                 Directory.CreateDirectory(dirPath.Replace(sourceDir, destDir));
             }
-            foreach (string newPath in Directory.GetFiles(sourceDir, "*.*", SearchOption.AllDirectories))
+            foreach (var newPath in Directory.GetFiles(sourceDir, "*.*", SearchOption.AllDirectories))
             {
                 try
                 {
@@ -88,6 +88,7 @@ namespace NetLib.IO
                 }
                 catch
                 {
+                    //
                 }
             }
         }

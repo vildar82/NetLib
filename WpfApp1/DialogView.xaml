@@ -1,0 +1,10 @@
+﻿<wpf:BaseWindow x:Class="WpfApp1.DialogView" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		xmlns:wpf="clr-namespace:NetLib.WPF;assembly=NetLib" xmlns:wpfApp1="clr-namespace:WpfApp1" mc:Ignorable="d"
+		d:DataContext="{d:DesignInstance wpfApp1:DialogViewModel, d:IsDesignTimeCreatable=True}" Title="DialogView" Height="300"
+		Width="300">
+	<Grid>
+		<Button Content="Test Hide" Command="{Binding TestHide}" VerticalAlignment="Center" HorizontalAlignment="Center" />
+	</Grid>
+</wpf:BaseWindow>
