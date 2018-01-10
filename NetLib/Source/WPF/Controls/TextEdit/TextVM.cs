@@ -1,6 +1,5 @@
 ﻿using ReactiveUI;
 using System;
-using System.Linq;
 using System.Reactive.Linq;
 
 namespace NetLib.WPF.Controls
@@ -10,8 +9,6 @@ namespace NetLib.WPF.Controls
     /// </summary>
     public class TextVM : BaseViewModel
     {
-        private readonly Predicate<string> allowValue;
-
         /// <summary>
         /// Заголовок, имя и значение
         /// </summary>
@@ -25,7 +22,6 @@ namespace NetLib.WPF.Controls
             Name = name;
             Value = value;
             OK = CreateCommand(OkExecute, this.WhenAnyValue(w => w.Value).Select(s => allowValue(s)));
-            this.allowValue = allowValue;
         }
 
         public string Title { get; set; }
@@ -33,11 +29,6 @@ namespace NetLib.WPF.Controls
         public string Value { get; set; }
 
         public ReactiveCommand OK { get; }
-
-        private bool CanOkExecute()
-        {
-            return allowValue(Value);
-        }
 
         private void OkExecute()
         {

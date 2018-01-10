@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using JetBrains.Annotations;
+using System;
 
 namespace NetLib
 {
@@ -10,7 +7,7 @@ namespace NetLib
     {
         private readonly Action after;
 
-        public ActionUsage(Action before,Action after)
+        public ActionUsage([NotNull] Action before, Action after)
         {
             before();
             this.after = after;

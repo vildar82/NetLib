@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using JetBrains.Annotations;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -20,7 +16,7 @@ namespace NetLib.WPF.Behaviors
 
         private static void BindableColumnsPropertyChanged(DependencyObject source, DependencyPropertyChangedEventArgs e)
         {
-            var dataGrid = source as DataGrid;
+            if (!(source is DataGrid dataGrid)) return;
             var columns = e.NewValue as ObservableCollection<DataGridColumn>;
             dataGrid.Columns.Clear();
             if (columns == null)
@@ -35,49 +31,47 @@ namespace NetLib.WPF.Behaviors
                 }
                 catch
                 {
-                    
+                    // ignored
                 }
             }
             columns.CollectionChanged += (sender, e2) =>
             {
-                var ne = e2 as NotifyCollectionChangedEventArgs;
-                if (ne.Action == NotifyCollectionChangedAction.Reset)
+                var ne = e2;
+                switch (ne.Action)
                 {
-                    dataGrid.Columns.Clear();
-                    foreach (DataGridColumn column in ne.NewItems)
-                    {
-                        dataGrid.Columns.Add(column);
-                    }
-                }
-                else if (ne.Action == NotifyCollectionChangedAction.Add)
-                {
-                    foreach (DataGridColumn column in ne.NewItems)
-                    {
-                        dataGrid.Columns.Add(column);
-                    }
-                }
-                else if (ne.Action == NotifyCollectionChangedAction.Move)
-                {
-                    dataGrid.Columns.Move(ne.OldStartingIndex, ne.NewStartingIndex);
-                }
-                else if (ne.Action == NotifyCollectionChangedAction.Remove)
-                {
-                    foreach (DataGridColumn column in ne.OldItems)
-                    {
-                        dataGrid.Columns.Remove(column);
-                    }
-                }
-                else if (ne.Action == NotifyCollectionChangedAction.Replace)
-                {
-                    dataGrid.Columns[ne.NewStartingIndex] = ne.NewItems[0] as DataGridColumn;
+                    case NotifyCollectionChangedAction.Reset:
+                        dataGrid.Columns.Clear();
+                        foreach (DataGridColumn column in ne.NewItems)
+                        {
+                            dataGrid.Columns.Add(column);
+                        }
+                        break;
+                    case NotifyCollectionChangedAction.Add:
+                        foreach (DataGridColumn column in ne.NewItems)
+                        {
+                            dataGrid.Columns.Add(column);
+                        }
+                        break;
+                    case NotifyCollectionChangedAction.Move:
+                        dataGrid.Columns.Move(ne.OldStartingIndex, ne.NewStartingIndex);
+                        break;
+                    case NotifyCollectionChangedAction.Remove:
+                        foreach (DataGridColumn column in ne.OldItems)
+                        {
+                            dataGrid.Columns.Remove(column);
+                        }
+                        break;
+                    case NotifyCollectionChangedAction.Replace:
+                        dataGrid.Columns[ne.NewStartingIndex] = ne.NewItems[0] as DataGridColumn;
+                        break;
                 }
             };
         }
-        public static void SetBindableColumns(DependencyObject element, ObservableCollection<DataGridColumn> value)
+        public static void SetBindableColumns([NotNull] DependencyObject element, ObservableCollection<DataGridColumn> value)
         {
             element.SetValue(BindableColumnsProperty, value);
         }
-        public static ObservableCollection<DataGridColumn> GetBindableColumns(DependencyObject element)
+        public static ObservableCollection<DataGridColumn> GetBindableColumns([NotNull] DependencyObject element)
         {
             return (ObservableCollection<DataGridColumn>)element.GetValue(BindableColumnsProperty);
         }

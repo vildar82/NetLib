@@ -1,17 +1,17 @@
-﻿using System;
+﻿using JetBrains.Annotations;
+using MahApps.Metro;
+using ReactiveUI;
+using ReactiveUI.Fody.Helpers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Linq;
-using MahApps.Metro;
-using NLog;
-using ReactiveUI;
-using ReactiveUI.Fody.Helpers;
 
 namespace NetLib.WPF.Theme
 {
     public class StyleSettingsViewModel : BaseViewModel
     {
-        public StyleSettingsViewModel(IBaseViewModel parent) : base(parent)
+        public StyleSettingsViewModel([CanBeNull] IBaseViewModel parent) : base(parent)
         {
             Themes = StyleSettings.GetThemes().Select(s => new ThemeViewModel(s)).ToList();
             Accents = StyleSettings.Getaccents().Select(s => new AccentViewModel(s)).ToList();
@@ -19,7 +19,7 @@ namespace NetLib.WPF.Theme
             SelectedTheme = Themes.FirstOrDefault(t => t.Theme == windowTheme.Theme);
             SelectedAccent = Accents.FirstOrDefault(t => t.Accent == windowTheme.Accent);
             IsOnlyThisWindow = windowTheme.FindWindowTheme;
-            
+
             this.WhenAnyValue(w => w.SelectedTheme, w => w.SelectedAccent).Skip(1).Subscribe(s =>
             {
                 StyleSettings.SaveWindowTheme(Parent.Window, s.Item1.Theme, s.Item2.Accent, IsOnlyThisWindow);

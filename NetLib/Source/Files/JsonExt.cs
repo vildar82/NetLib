@@ -1,23 +1,24 @@
-﻿using Newtonsoft.Json;
+﻿using JetBrains.Annotations;
+using Newtonsoft.Json;
 using System.IO;
 
 namespace NetLib
 {
     public static class JsonExt
     {
-        public static T Deserialize<T>(this string file)
+        public static T Deserialize<T>([NotNull] this string file)
         {
             var bsJson = ReadTextFile(file);
             return JsonConvert.DeserializeObject<T>(bsJson);
         }
 
-        public static void Serialize<T>(this T item, string file)
+        public static void Serialize<T>(this T item, [NotNull] string file)
         {
             var json = JsonConvert.SerializeObject(item);
             WriteText(file, json);
         }
 
-        private static void WriteText(string file, string json)
+        private static void WriteText([NotNull] string file, string json)
         {
             using (var sw = new StreamWriter(file, false))
             {
@@ -25,7 +26,8 @@ namespace NetLib
             }
         }
 
-        private static string ReadTextFile(string filePath)
+        [NotNull]
+        private static string ReadTextFile([NotNull] string filePath)
         {
             var tempFile = Path.GetTempFileName();
             File.Copy(filePath, tempFile, true);

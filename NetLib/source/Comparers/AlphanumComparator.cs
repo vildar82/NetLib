@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using JetBrains.Annotations;
+using System.Collections.Generic;
 
 namespace NetLib.Comparers
 {
@@ -88,6 +89,7 @@ namespace NetLib.Comparers
                 }
                 else
                 {
+                    // ReSharper disable once StringCompareIsCultureSpecific.3
                     result = string.Compare(str1, str2, true);
                 }
 
@@ -99,7 +101,7 @@ namespace NetLib.Comparers
             return len1 - len2;
         }
 
-        public int GetHashCode(string obj)
+        public int GetHashCode([CanBeNull] string obj)
         {
             if (obj == null) return 0;
             return obj.GetHashCode();

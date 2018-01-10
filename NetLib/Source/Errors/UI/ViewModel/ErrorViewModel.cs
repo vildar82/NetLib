@@ -1,4 +1,5 @@
-﻿using MahApps.Metro.IconPacks;
+﻿using JetBrains.Annotations;
+using MahApps.Metro.IconPacks;
 using NetLib.WPF;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -7,11 +8,8 @@ namespace NetLib.Errors.UI.ViewModel
 {
     public class ErrorViewModel : BaseViewModel
     {
-        private readonly IError error;
-
-        public ErrorViewModel(IError error)
+        public ErrorViewModel([NotNull] IError error)
         {
-            this.error = error;
             Message = error.Message;
             Icon = GetIcon(error);
         }
@@ -19,7 +17,8 @@ namespace NetLib.Errors.UI.ViewModel
         public string Message { get; set; }
         public Control Icon { get; set; }
 
-        private static Control GetIcon(IError error)
+        [CanBeNull]
+        private static Control GetIcon([NotNull] IError error)
         {
             switch (error.Level)
             {

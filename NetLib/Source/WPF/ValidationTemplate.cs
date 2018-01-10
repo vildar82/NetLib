@@ -1,10 +1,11 @@
-﻿using System;
+﻿using FluentValidation;
+using FluentValidation.Results;
+using JetBrains.Annotations;
+using System;
 using System.Collections;
 using System.Collections.Concurrent;
 using System.ComponentModel;
 using System.Linq;
-using FluentValidation;
-using FluentValidation.Results;
 
 namespace NetLib.WPF
 {
@@ -16,7 +17,7 @@ namespace NetLib.WPF
         private static readonly ConcurrentDictionary<RuntimeTypeHandle, IValidator> validators =
             new ConcurrentDictionary<RuntimeTypeHandle, IValidator>();
 
-        public ValidationTemplate(INotifyPropertyChanged target)
+        public ValidationTemplate([NotNull] INotifyPropertyChanged target)
         {
             this.target = target;
             validator = GetValidator(target.GetType());
@@ -24,7 +25,7 @@ namespace NetLib.WPF
             target.PropertyChanged += Validate;
         }
 
-        public static IValidator GetValidator(Type modelType)
+        public static IValidator GetValidator([NotNull] Type modelType)
         {
             if (validators.TryGetValue(modelType.TypeHandle, out IValidator validator)) return validator;
             var typeName = $"{modelType.Namespace}.{modelType.Name}Validator";
@@ -42,6 +43,7 @@ namespace NetLib.WPF
             }
         }
 
+        [NotNull]
         public IEnumerable GetErrors(string propertyName)
         {
             return validationResult.Errors

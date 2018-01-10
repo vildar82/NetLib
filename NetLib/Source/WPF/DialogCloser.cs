@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using JetBrains.Annotations;
+using System.Windows;
 
 namespace NetLib.WPF
 {
@@ -21,7 +22,7 @@ namespace NetLib.WPF
             }
         }
 
-        public static void SetDialogResult(Window target, bool? value)
+        public static void SetDialogResult([NotNull] Window target, bool? value)
         {
             target.SetValue(DialogResultProperty, value);
         }

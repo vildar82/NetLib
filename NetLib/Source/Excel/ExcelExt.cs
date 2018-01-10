@@ -1,24 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using JetBrains.Annotations;
 using OfficeOpenXml;
 using OfficeOpenXml.Style;
-using OfficeOpenXml.Style.XmlAccess;
+using System.Drawing;
 
 namespace NetLib.Excel
 {
     public static class ExcelExt
     {
-        public static void SetColor(this ExcelRange cell, Color color)
+        public static void SetColor([NotNull] this ExcelRange cell, Color color)
         {
             cell.Style.Fill.PatternType = ExcelFillStyle.Solid;
             cell.Style.Fill.BackgroundColor.SetColor(color);
         }
 
-        public static void SetStyleCenterAlignment(this ExcelStyle style)
+        public static void SetStyleCenterAlignment([NotNull] this ExcelStyle style)
         {
             style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
             style.VerticalAlignment = ExcelVerticalAlignment.Center;
@@ -37,11 +32,11 @@ namespace NetLib.Excel
             }
             catch
             {
-                
+                //
             }
         }
 
-        public static void SetCellCenter(this ExcelRange cell)
+        public static void SetCellCenter([NotNull] this ExcelRange cell)
         {
             cell.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
             cell.Style.VerticalAlignment = ExcelVerticalAlignment.Center;

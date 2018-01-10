@@ -1,11 +1,8 @@
-﻿using System;
+﻿using JetBrains.Annotations;
+using System;
 using System.Collections.Generic;
-using System.DirectoryServices;
 using System.DirectoryServices.AccountManagement;
 using System.Linq;
-using System.Security.AccessControl;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NetLib.AD
 {
@@ -19,7 +16,8 @@ namespace NetLib.AD
         /// <summary>
         /// Группы текущего пользователя
         /// </summary>        
-        public static List<string> GetCurrentUserADGroups(out string fio)
+        [NotNull]
+        public static List<string> GetCurrentUserADGroups([CanBeNull] out string fio)
         {
             using (var adUtils = new ADUtils())
             {
@@ -27,52 +25,59 @@ namespace NetLib.AD
             }
         }
 
-	    public static string GetUserFIO(string login)
-	    {
-			using (var adUtils = new ADUtils())
-			{
-				return adUtils.GetFIO(login);
-			}
-		}
-
-		public static bool IsLoginCorrect(string login)
-		{
-			return !string.IsNullOrEmpty(login) && !login.Any(char.IsWhiteSpace);
-		}
-
-	    /// <summary>
-		/// Получить базовый основной контекст
-		/// </summary>        
-		private PrincipalContext GetPrincipalContext(string domain = null)
+        [CanBeNull]
+        public static string GetUserFIO([NotNull] string login)
         {
-            if (domain == null) return new PrincipalContext(ContextType.Domain);
-            return new PrincipalContext(ContextType.Domain, domain);
+            using (var adUtils = new ADUtils())
+            {
+                return adUtils.GetFIO(login);
+            }
+        }
+
+        public static bool IsLoginCorrect([CanBeNull] string login)
+        {
+            return !string.IsNullOrEmpty(login) && !login.Any(char.IsWhiteSpace);
+        }
+
+        /// <summary>
+        /// Получить базовый основной контекст
+        /// </summary>        
+        [NotNull]
+        private PrincipalContext GetPrincipalContext([CanBeNull] string domain = null)
+        {
+            return domain == null ? new PrincipalContext(ContextType.Domain) : new PrincipalContext(ContextType.Domain, domain);
         }
 
         /// <summary>
         /// Получить указанного пользователя Active Directory
         /// </summary>
-        /// <param name="sUserName">Имя пользователя для извлечения</param>        
-        private UserPrincipal GetUser(string sUserName, string domain)
+        /// <param name="sUserName">Имя пользователя для извлечения</param>
+        /// <param name="domain">Домен</param>        
+        [CanBeNull]
+        private UserPrincipal GetUser([NotNull] string sUserName, string domain)
         {
             context = GetPrincipalContext(domain);
             var user = UserPrincipal.FindByIdentity(context, IdentityType.SamAccountName, sUserName);
-	        return user;
+            return user;
         }
 
         /// <summary>
         /// Список групп пользователя
         /// </summary>        
-        public List<string> GetCurrentUserGroups(out string fio)
+        [NotNull]
+        public List<string> GetCurrentUserGroups([CanBeNull] out string fio)
         {
             var userGroups = new List<string>();
             using (var user = GetUser(Environment.UserName, Environment.UserDomainName))
             {
                 using (var groups = user?.GetGroups())
                 {
-                    foreach (var group in groups)
+                    if (groups != null)
                     {
-                        userGroups.Add(group.Name);
+                        foreach (var group in groups)
+                        {
+                            userGroups.Add(@group.Name);
+                        }
                     }
                 }
                 fio = user?.DisplayName;
@@ -80,18 +85,19 @@ namespace NetLib.AD
             return userGroups;
         }
 
-	    private string GetFIO(string login)
-	    {
-		    using (var user = GetUser(login, Environment.UserDomainName))
-		    {
-			    return user?.DisplayName;
-		    }
-		}
+        [CanBeNull]
+        private string GetFIO([NotNull] string login)
+        {
+            using (var user = GetUser(login, Environment.UserDomainName))
+            {
+                return user?.DisplayName;
+            }
+        }
 
-		/// <summary>
-		/// Очистка контекста AD
-		/// </summary>
-		public void Dispose()
+        /// <summary>
+        /// Очистка контекста AD
+        /// </summary>
+        public void Dispose()
         {
             context?.Dispose();
         }

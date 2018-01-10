@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using JetBrains.Annotations;
+using System;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Markup;
@@ -11,29 +8,30 @@ using System.Windows.Markup;
 namespace NetLib.WPF.Converters
 {
     [MarkupExtensionReturnType(typeof(IValueConverter))]
-    public abstract class ConvertorBase : MarkupExtension, IValueConverter        
+    public abstract class ConvertorBase : MarkupExtension, IValueConverter
     {
         /// <summary>
         /// Must be implemented in inheritor.
         /// </summary>
-        public abstract object Convert (object value, Type targetType, object parameter,
+        public abstract object Convert(object value, Type targetType, object parameter,
             CultureInfo culture);
 
         /// <summary>
         /// Override if needed.
         /// </summary>
-        public virtual object ConvertBack (object value, Type targetType, object parameter,
+        public virtual object ConvertBack(object value, Type targetType, object parameter,
             CultureInfo culture)
         {
             throw new NotImplementedException($"ConvertBack в ConvertorBase - из значения {value} в {targetType}");
         }
 
-        public override object ProvideValue (IServiceProvider serviceProvider)
+        [NotNull]
+        public override object ProvideValue(IServiceProvider serviceProvider)
         {
             return this;
         }
 
-        object IValueConverter.Convert (object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        object IValueConverter.Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             try
             {
@@ -45,7 +43,7 @@ namespace NetLib.WPF.Converters
             }
         }
 
-        object IValueConverter.ConvertBack (object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        object IValueConverter.ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             try
             {

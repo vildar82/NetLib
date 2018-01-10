@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using NetLib.WPF.Controls.InfoDialogs;
+﻿using NetLib.WPF.Controls.InfoDialogs;
 
 // ReSharper disable once CheckNamespace
 namespace NetLib.WPF.Controls

@@ -1,4 +1,5 @@
-﻿using ReactiveUI;
+﻿using JetBrains.Annotations;
+using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 using System.Collections.Generic;
 using System.Reactive.Linq;
@@ -15,7 +16,7 @@ namespace NetLib.WPF.Controls.Select
     {
         private string filter;
 
-        public SelectListVM(List<SelectListItem<T>> items, string title, string name = null)
+        public SelectListVM([NotNull] List<SelectListItem<T>> items, string title, [CanBeNull] string name = null)
         {
             Title = title;
             Name = name;
@@ -62,6 +63,7 @@ namespace NetLib.WPF.Controls.Select
         {
         }
 
+        [NotNull]
         private static List<SelectListItem<int>> GetItems()
         {
             return new List<SelectListItem<int>>

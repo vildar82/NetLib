@@ -1,4 +1,5 @@
-﻿using System;
+﻿using JetBrains.Annotations;
+using System;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -17,7 +18,7 @@ namespace NetLib.WPF.Behaviors
         /// </summary>
         /// <param name="obj">The dependency-object whichs value should be returned</param>
         /// <returns>The value of the given property</returns>
-        public static bool GetAutoScrollToCurrentItem(DependencyObject obj)
+        public static bool GetAutoScrollToCurrentItem([NotNull] DependencyObject obj)
         {
             return (bool)obj.GetValue(AutoScrollToCurrentItemProperty);
         }
@@ -27,7 +28,7 @@ namespace NetLib.WPF.Behaviors
         /// </summary>
         /// <param name="obj">The dependency-object whichs value should be set</param>
         /// <param name="value">The value which should be assigned to the AutoScrollToCurrentItemProperty</param>
-        public static void SetAutoScrollToCurrentItem(DependencyObject obj, bool value)
+        public static void SetAutoScrollToCurrentItem([NotNull] DependencyObject obj, bool value)
         {
             obj.SetValue(AutoScrollToCurrentItemProperty, value);
         }
@@ -61,7 +62,7 @@ namespace NetLib.WPF.Behaviors
         /// </summary>
         /// <param name="listBox">The ListBox which should be scrolled</param>
         /// <param name="index">The index of the item to which it should be scrolled</param>
-        public static void OnAutoScrollToCurrentItem(ListBox listBox, int index)
+        public static void OnAutoScrollToCurrentItem([CanBeNull] ListBox listBox, int index)
         {
             if (listBox?.Items != null && listBox.Items.Count > index && index >= 0)
             {

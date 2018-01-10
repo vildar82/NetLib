@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using JetBrains.Annotations;
 using Microsoft.Win32;
 using OfficeOpenXml;
 using OfficeOpenXml.Style;
 using OfficeOpenXml.Style.XmlAccess;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 
 namespace NetLib.Excel
 {
@@ -32,7 +30,7 @@ namespace NetLib.Excel
                 // Диалог выбора места сохранения файла
                 var dlg = new SaveFileDialog
                 {
-                    InitialDirectory = Path.GetDirectoryName(DefFileName),
+                    InitialDirectory = Path.GetDirectoryName(DefFileName) ?? throw new InvalidOperationException(),
                     FileName = DefFileName,
                     DefaultExt = ".xlsx",
                     AddExtension = true,
@@ -62,8 +60,9 @@ namespace NetLib.Excel
 
         protected abstract void FillSheet(string name, ExcelWorksheet wb);
 
-        public static ExcelNamedStyleXml AddStyle(ExcelWorkbook wb, string name,
-            ExcelBorderStyle borderStyle = ExcelBorderStyle.Medium, 
+        [NotNull]
+        public static ExcelNamedStyleXml AddStyle([NotNull] ExcelWorkbook wb, string name,
+            ExcelBorderStyle borderStyle = ExcelBorderStyle.Medium,
             System.Drawing.Color? bckColor = null, int size = 11, bool bold = false,
             bool borderByGost = true, bool center = true)
         {
@@ -78,11 +77,11 @@ namespace NetLib.Excel
             }
             if (borderByGost)
             {
-                style.Style.SetBorderByGost(vertic:borderStyle);
+                style.Style.SetBorderByGost(borderStyle);
             }
             else
             {
-                style.Style.SetBorderByGost(vertic: borderStyle, hor:borderStyle);
+                style.Style.SetBorderByGost(borderStyle, borderStyle);
             }
             if (bckColor != null)
             {

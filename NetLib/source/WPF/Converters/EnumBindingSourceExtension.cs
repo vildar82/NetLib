@@ -1,4 +1,5 @@
-﻿using System;
+﻿using JetBrains.Annotations;
+using System;
 using System.ComponentModel;
 using System.Windows.Markup;
 
@@ -35,6 +36,7 @@ namespace NetLib.WPF.Converters
             EnumType = enumType;
         }
 
+        [NotNull]
         public override object ProvideValue(IServiceProvider serviceProvider)
         {
             if (null == _enumType)
@@ -78,7 +80,7 @@ namespace NetLib.WPF.Converters
                 : base.ConvertTo(context, culture, value, destinationType);
         }
 
-        public static string GetEnumDescription(object enumValue)
+        public static string GetEnumDescription([CanBeNull] object enumValue)
         {
             if (enumValue == null) return null;
             var fi = enumValue.GetType().GetField(enumValue.ToString());

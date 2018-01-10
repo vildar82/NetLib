@@ -1,4 +1,5 @@
-﻿using System;
+﻿using JetBrains.Annotations;
+using System;
 using System.IO;
 using System.Xml;
 using System.Xml.Serialization;
@@ -14,7 +15,7 @@ namespace NetLib
             _settingsFile = settingsFile;
         }
 
-        public void SerializeList<T>(T settings)
+        public void SerializeList<T>([NotNull] T settings)
         {
             using (var fs = new FileStream(_settingsFile, FileMode.Create, FileAccess.Write))
             {
@@ -23,7 +24,7 @@ namespace NetLib
             }
         }
 
-        public void SerializeList<T>(T settings, params Type[] types)
+        public void SerializeList<T>([NotNull] T settings, [NotNull] params Type[] types)
         {
             using (var fs = new FileStream(_settingsFile, FileMode.Create, FileAccess.Write))
             {
@@ -41,7 +42,7 @@ namespace NetLib
             }
         }
 
-        public T DeserializeXmlFile<T>(params Type[] types)
+        public T DeserializeXmlFile<T>([NotNull] params Type[] types)
         {
             var ser = new XmlSerializer(typeof(T), types);
             using (var reader = XmlReader.Create(_settingsFile))
@@ -63,7 +64,7 @@ namespace NetLib
             return res;
         }
 
-        public static T Load<T>(string file, params Type[] types) where T : class, new()
+        public static T Load<T>(string file, [NotNull] params Type[] types) where T : class, new()
         {
             var ser = new SerializerXml(file);
             var res = ser.DeserializeXmlFile<T>(types);
@@ -77,13 +78,13 @@ namespace NetLib
         /// <typeparam name="T">Тип объекта</typeparam>
         /// <param name="file">Файл</param>
         /// <param name="obj">Объект</param>
-        public static void Save<T>(string file, T obj)
+        public static void Save<T>(string file, [NotNull] T obj)
         {
             var ser = new SerializerXml(file);
             ser.SerializeList(obj);
         }
 
-        public static void Save<T>(string file, T obj, params Type[] types)
+        public static void Save<T>(string file, [NotNull] T obj, [NotNull] params Type[] types)
         {
             var ser = new SerializerXml(file);
             ser.SerializeList(obj, types);

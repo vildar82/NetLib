@@ -1,10 +1,8 @@
-﻿using System;
+﻿using JetBrains.Annotations;
+using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NetLib.IO
 {
@@ -12,24 +10,26 @@ namespace NetLib.IO
     {
         public DllResolve(string dllFile)
         {
-            this.DllFile = dllFile;
+            DllFile = dllFile;
             DllName = System.IO.Path.GetFileNameWithoutExtension(dllFile);
         }
 
         public string DllFile { get; set; }
-        public string DllName { get; set; }        
+        public string DllName { get; set; }
 
-        public bool IsResolve(string dllRequest)
+        public bool IsResolve([NotNull] string dllRequest)
         {
             return dllRequest.StartsWith($"{DllName},", StringComparison.OrdinalIgnoreCase);
         }
 
+        [NotNull]
         public Assembly LoadAssembly()
         {
             return Assembly.LoadFrom(DllFile);
         }
 
-        public static List<DllResolve> GetDllResolve(string dllFolder, SearchOption mode)
+        [NotNull]
+        public static List<DllResolve> GetDllResolve([NotNull] string dllFolder, SearchOption mode)
         {
             var dllResolves = new List<DllResolve>();
             foreach (var dllFile in Directory.EnumerateFiles(dllFolder, "*.dll", mode))

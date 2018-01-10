@@ -1,15 +1,14 @@
-﻿using System;
+﻿using JetBrains.Annotations;
+using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace NetLib
 {
     public static class StringExt
     {
+        [NotNull]
         public static string ToFileName(this DateTime date)
         {
             return date.ToString("MM.dd.yyyy HH.mm.ss");
@@ -19,45 +18,47 @@ namespace NetLib
         /// Соединение списка объектов в одну строку, с разделителем. 
         /// Строка из T.ToString()
         /// </summary>
-        public static string JoinToString<T>(this IEnumerable<T> array, string delimeter = ",")
+        [NotNull]
+        public static string JoinToString<T>([NotNull] this IEnumerable<T> array, string delimeter = ",")
         {
-            return JoinToString(array, t=> t.ToString(), delimeter);
+            return JoinToString(array, t => t.ToString(), delimeter);
         }
 
         /// <summary>
         /// Объекдинение списка объектов в одну строку, с разделителем и методом получения строки из объекта.
         /// </summary>
-        public static string JoinToString<T>(this IEnumerable<T> array, Func<T, string> getString, string delimeter =",")
+        [NotNull]
+        public static string JoinToString<T>([NotNull] this IEnumerable<T> array, [NotNull] Func<T, string> getString, string delimeter = ",")
         {
             return string.Join(delimeter, array.SelectNulless(getString));
         }
 
-	    public static bool IsNullOrEmpty(this string str)
-	    {
-		    return string.IsNullOrEmpty(str);
-	    }
+        public static bool IsNullOrEmpty([CanBeNull] this string str)
+        {
+            return string.IsNullOrEmpty(str);
+        }
 
-	    public static bool IsNullOrWhiteSpace(this string str)
-	    {
-		    return string.IsNullOrWhiteSpace(str);
-	    }
+        public static bool IsNullOrWhiteSpace([CanBeNull] this string str)
+        {
+            return string.IsNullOrWhiteSpace(str);
+        }
 
-		/// <summary>
-		/// Сравнение строк без учета регистра. 
-		/// Внимание! null, "", и строка только с пробелами считаются равными!
-		/// </summary>
-		public static bool EqualsIgnoreCase(this string string1, string string2)
-		{
-			return string.Equals(string1, string2, StringComparison.OrdinalIgnoreCase) ||
-			       IsBothStringsIsNullOrEmpty(string1, string2);
-		}
+        /// <summary>
+        /// Сравнение строк без учета регистра. 
+        /// Внимание! null, "", и строка только с пробелами считаются равными!
+        /// </summary>
+        public static bool EqualsIgnoreCase(this string string1, string string2)
+        {
+            return string.Equals(string1, string2, StringComparison.OrdinalIgnoreCase) ||
+                   IsBothStringsIsNullOrEmpty(string1, string2);
+        }
 
         /// <summary>
         /// Есть ли в строке кирилические символы (русские буквы)
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        public static bool HasCyrilic(this string input)
+        public static bool HasCyrilic([NotNull] this string input)
         {
             return Regex.IsMatch(input, @"\p{IsCyrillic}");
         }
@@ -65,28 +66,28 @@ namespace NetLib
         /// <summary>
         /// IndexOf(toCheck, comp) >= 0
         /// </summary>        
-        public static bool Contains(this string source, string toCheck, StringComparison comp)
+        public static bool Contains([NotNull] this string source, [NotNull] string toCheck, StringComparison comp)
         {
             return source.IndexOf(toCheck, comp) >= 0;
         }
 
-        public static bool EqualsAny(this string value, params string[] values)
+        public static bool EqualsAny(this string value, [NotNull] params string[] values)
         {
             return values.Contains(value);
         }
-        public static bool EqualsAny(this string value, IEqualityComparer<string> comparer, params string[] values)
+        public static bool EqualsAny(this string value, IEqualityComparer<string> comparer, [NotNull] params string[] values)
         {
             return EqualsAny(value, comparer, (IEnumerable<string>)values);
         }
-        public static bool EqualsAnyIgnoreCase(this string value, params string[] values)
+        public static bool EqualsAnyIgnoreCase(this string value, [NotNull] params string[] values)
         {
             return EqualsAny(value, StringComparer.OrdinalIgnoreCase, (IEnumerable<string>)values);
         }
-        public static bool EqualsAny(this string target, IEqualityComparer<string> comparer, IEnumerable<string> values)
+        public static bool EqualsAny(this string target, IEqualityComparer<string> comparer, [NotNull] IEnumerable<string> values)
         {
             return values.Contains(target, comparer);
         }
-        public static bool EqualsAnyIgnoreCase(this string target, IEnumerable<string> values)
+        public static bool EqualsAnyIgnoreCase(this string target, [NotNull] IEnumerable<string> values)
         {
             return values.Contains(target, StringComparer.OrdinalIgnoreCase);
         }
@@ -96,11 +97,12 @@ namespace NetLib
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        public static string ClearString(this string input)
+        [NotNull]
+        public static string ClearString([NotNull] this string input)
         {
             //return Regex.Replace(input, @"\r\n?|\n", "");
-            return input.Trim().Replace("\r\n", " ").Replace("\n", " ").Replace("\r", " ").Replace(Convert.ToChar(160),' ');
-        }                
+            return input.Trim().Replace("\r\n", " ").Replace("\n", " ").Replace("\r", " ").Replace(Convert.ToChar(160), ' ');
+        }
 
         /// <summary>
         /// Определение числа из строки начинающейся числом.
@@ -108,12 +110,13 @@ namespace NetLib
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        public static Result<int> GetStartInteger(this string input)
+        [NotNull]
+        public static Result<int> GetStartInteger([NotNull] this string input)
         {
             var match = Regex.Match(input, @"^\d*");
             if (match.Success)
             {
-                if (int.TryParse(match.Value, out int value))
+                if (int.TryParse(match.Value, out var _))
                 {
                     return Result.Ok(0);
                 }
@@ -127,7 +130,7 @@ namespace NetLib
         /// <param name="value1">Первая строка</param>
         /// <param name="value2">Вторая строка</param>
         /// <returns>Равны или нет</returns>
-        public static bool EqualsIgroreCaseAndSpecChars (this string value1, string value2)
+        public static bool EqualsIgroreCaseAndSpecChars([NotNull] this string value1, [NotNull] string value2)
         {
             // Удаление спец символов
             string normalS1 = Regex.Replace(value1, @"\s", "");
@@ -135,22 +138,24 @@ namespace NetLib
             return normalS1.Equals(normalS2, StringComparison.OrdinalIgnoreCase);
         }
 
-        public static string RemoveSpecChars(this string str)
+        [NotNull]
+        public static string RemoveSpecChars([NotNull] this string str)
         {
             return Regex.Replace(str, @"\s", "");
         }
 
-	    public static bool IsBothStringsIsNullOrEmpty(this string s1, string s2)
-	    {
-		    return string.IsNullOrEmpty(s1) && string.IsNullOrEmpty(s2);
-	    }
+        public static bool IsBothStringsIsNullOrEmpty([CanBeNull] this string s1, [CanBeNull] string s2)
+        {
+            return string.IsNullOrEmpty(s1) && string.IsNullOrEmpty(s2);
+        }
 
-	    private static readonly Random random = new Random();
-	    public static string RandomString(int length)
-	    {
-		    const string chars = " qwerty uiop as df ghj klz xcv bnm AB CD EFG HIJK LMN OP QRS TUVWX YZ0123 456789";
-		    return new string(Enumerable.Repeat(chars, length)
-			    .Select(s => s[random.Next(s.Length)]).ToArray());
-	    }
-	}
+        private static readonly Random random = new Random();
+        [NotNull]
+        public static string RandomString(int length)
+        {
+            const string chars = " qwerty uiop as df ghj klz xcv bnm AB CD EFG HIJK LMN OP QRS TUVWX YZ0123 456789";
+            return new string(Enumerable.Repeat(chars, length)
+                .Select(s => s[random.Next(s.Length)]).ToArray());
+        }
+    }
 }

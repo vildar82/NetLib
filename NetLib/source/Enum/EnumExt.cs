@@ -1,4 +1,5 @@
-﻿using NetLib.WPF.Converters;
+﻿using JetBrains.Annotations;
+using NetLib.WPF.Converters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,8 @@ namespace NetLib
 {
     public static class EnumExt
     {
-        public static List<string> GetEnumDesciptionValues(this Enum value)
+        [NotNull]
+        public static List<string> GetEnumDesciptionValues([NotNull] this Enum value)
         {
             return Enum.GetValues(value.GetType()).Cast<Enum>().Select(s => s.Description()).ToList();
         }
@@ -27,7 +29,8 @@ namespace NetLib
         /// Конвертация строки в соответствующее значение перечисления enum
         /// Выбрасывает исключение при несоответствии
         /// </summary>        
-        public static T ToEnum<T>(this string value)
+        [NotNull]
+        public static T ToEnum<T>([NotNull] this string value)
         {
             return (T)Enum.Parse(typeof(T), value, true);
         }
@@ -36,7 +39,7 @@ namespace NetLib
         /// Конвертация строки в соответствующее значение перечисления enum.
         /// Ичключение не выбрасывапется. (если, только, T не структура)
         /// </summary>        
-        public static T ToEnum<T>(this string value, T defaultValue) where T : struct
+        public static T ToEnum<T>([CanBeNull] this string value, T defaultValue) where T : struct
         {
             if (string.IsNullOrEmpty(value))
             {
@@ -51,7 +54,8 @@ namespace NetLib
         /// </summary>
         /// <param name="enumValue">Enum значение</param>
         /// <returns>Подаись в атрибуте Descrip</returns>
-        public static string Description(this object enumValue)
+        [CanBeNull]
+        public static string Description([CanBeNull] this object enumValue)
         {
             return enumValue == null ? null : EnumDescriptionTypeConverter.GetEnumDescription(enumValue);
         }

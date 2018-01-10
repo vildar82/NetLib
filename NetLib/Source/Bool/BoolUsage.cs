@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using JetBrains.Annotations;
+using System;
 
 namespace NetLib
 {
@@ -11,7 +8,7 @@ namespace NetLib
         private readonly bool oldValue;
         private readonly Action<bool> setValue;
 
-        public BoolUsage(bool curValue, bool newValue, Action<bool> setValue)
+        public BoolUsage(bool curValue, bool newValue, [NotNull] Action<bool> setValue)
         {
             oldValue = curValue;
             this.setValue = setValue;

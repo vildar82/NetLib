@@ -1,17 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using JetBrains.Annotations;
+using System;
 using System.ComponentModel;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Data;
 
 namespace NetLib.WPF.Converters
 {
     public class UniversalValueConverter : ConvertorBase
     {
-        public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        public override object Convert(object value, [NotNull] Type targetType, object parameter, CultureInfo culture)
         {
             // obtain the conveter for the target type
             var converter = TypeDescriptor.GetConverter(targetType);

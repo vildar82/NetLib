@@ -1,4 +1,5 @@
-﻿using NCalc;
+﻿using JetBrains.Annotations;
+using NCalc;
 using NetLib.Comparers;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ namespace NetLib
 {
     public static class MathExt
     {
-        public static DoubleEqualityComparer AngleComparer = new DoubleEqualityComparer();
+        public static readonly DoubleEqualityComparer AngleComparer = new DoubleEqualityComparer();
         /// <summary>
         /// 2 ПИ - 6.28...радиан, (360 градусов)
         /// </summary>
@@ -62,11 +63,13 @@ namespace NetLib
             return angle;
         }
 
+        [NotNull]
         public static string ToHours(this int min)
         {
             //return Math.Round(min * 0.01667, 1);
             return ToHours((double)min);
         }
+        [NotNull]
         public static string ToHours(this double min)
         {
             //return Math.Round(min *0.01667, 1);
@@ -123,7 +126,8 @@ namespace NetLib
         /// Превращает строки с диапазоном чисел в последовательность чисел.
         /// Например "1-5, 8,9" - {1,2,3,4,5,8,9}
         /// </summary>        
-        public static List<int> ParseRangeNumbers(string text)
+        [NotNull]
+        public static List<int> ParseRangeNumbers([NotNull] string text)
         {
             var query =
                 from x in text.Split(',')
@@ -153,8 +157,10 @@ namespace NetLib
         /// <summary>
         /// Проверка - это ортогональный угол. И на сколько его нужно повернуть до ортогональности
         /// </summary>
-        /// <param name="angleDeg">Проверяемый угол</param>
+        /// <param name="angle">Проверяемый угол</param>
         /// <param name="angteToOrtho">На сколько его нужно повернуть до ортогональности (положительный угол - против часовой стрелки)</param>
+        /// <param name="isRadians">Угол в радианах</param>
+        /// <param name="tolerance">Допуск</param>
         /// <returns>Да - это ортогональный угол. Нет - не ортогональный, и угол на который необходимо повернуть</returns>
         public static bool IsOrthoAngle(this double angle, out double angteToOrtho, bool isRadians = true, double tolerance = 0.01)
         {
@@ -186,7 +192,7 @@ namespace NetLib
         /// <summary>
         /// Преобразование радиан в градусы (180.0*angleDegrees/Math.PI)
         /// </summary>
-        /// <param name="angleRadian">Угол в радианах</param>
+        /// <param name="radian">Угол в радианах</param>
         /// <returns>Угол в градусах</returns>
         public static double ToDegrees(this double radian)
         {
@@ -236,7 +242,8 @@ namespace NetLib
         /// </summary>
         /// <param name="ints"></param>
         /// <returns></returns>
-        public static string IntsToStringSequenceAnton(int[] ints)
+        [NotNull]
+        public static string IntsToStringSequenceAnton([NotNull] int[] ints)
         {
             // int[] paleNumbersInt = new[] { 1, 2, 3, 4, 5, 7, 8, 10, 15, 16, 100, 101, 102, 103, 105, 106, 107, 109 };
             // res = 1-8,10,15,16,100-107,109
@@ -287,9 +294,10 @@ namespace NetLib
         /// ints = 1, 2, 3, 4, 5, 7, 8, 10, 15, 16, 100, 101, 102, 103, 105, 106, 107, 109
         /// res = "1-8, 10, 15, 16, 100-107, 109"
         /// </summary>        
-        public static string IntsToStringSequence(int[] ints)
+        [NotNull]
+        public static string IntsToStringSequence([NotNull] int[] ints)
         {
-            var uniqints = ints.Distinct();
+            var uniqints = ints.Distinct().ToList();
             var res = string.Empty;
             var seq = new IntSequence(uniqints.First());
             foreach (var n in uniqints.Skip(1))
@@ -307,7 +315,7 @@ namespace NetLib
             return res;
         }
 
-        private static void SetSeq(ref string res, ref IntSequence seq)
+        private static void SetSeq([NotNull] ref string res, ref IntSequence seq)
         {
             if (res == string.Empty)
             {
@@ -328,7 +336,7 @@ namespace NetLib
             public IntSequence(int start)
             {
                 this.start = start;
-                this.end = start;
+                end = start;
                 has = true;
             }
 
@@ -347,9 +355,10 @@ namespace NetLib
                 return false;
             }
 
+            [NotNull]
             public string GetSeq()
             {
-                var res = string.Empty;
+                string res;
                 has = false;
                 if (end == start)
                 {
@@ -386,24 +395,21 @@ namespace NetLib
                     val = val.Replace(',', '.');
                 }
             }
-            catch { }
+            catch
+            {
+                // ignored
+            }
 
             if (!double.TryParse(val, out var d))
             {
-                if (val.IndexOf(",") != -1)
-                {
-                    val = val.Replace(",", ".");
-                }
-                else
-                {
-                    val = val.Replace(".", ",");
-                }
+                // ReSharper disable once StringIndexOfIsCultureSpecific.1
+                val = val.IndexOf(",") != -1 ? val.Replace(",", ".") : val.Replace(".", ",");
                 d = double.Parse(val);
             }
-            return d.Round(4);
+            return d.Round();
         }
 
-        public static int GetStartInt(this string input)
+        public static int GetStartInt([NotNull] this string input)
         {
             var res = input.GetStartInteger();
             if (res.Success)

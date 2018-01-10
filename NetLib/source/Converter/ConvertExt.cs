@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using JetBrains.Annotations;
+using System;
 using System.Drawing;
-using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NetLib
 {
@@ -28,16 +24,16 @@ namespace NetLib
                 if (s.IsNullOrEmpty()) return default;
                 if (typeT == typeof(double))
                 {
-                    value = ((string) value).ToDouble();
-                    return (T) value;
+                    value = ((string)value).ToDouble();
+                    return (T)value;
                 }
             }
             // Округление числа до 4 знаков
-            if(value is double && typeT == typeof(double))
+            if (value is double && typeT == typeof(double))
             {
-                value = ((double)value).Round(4);
+                value = ((double)value).Round();
                 return (T)value;
-            } 
+            }
             if (typeT.IsEnum)
             {
                 return (T)value;
@@ -73,14 +69,14 @@ namespace NetLib
             }
         }
 
-        public static string ColorToString (this System.Drawing.Color color)
+        public static string ColorToString(this Color color)
         {
-            return System.Drawing.ColorTranslator.ToHtml(color); 
+            return ColorTranslator.ToHtml(color);
         }
-        public static System.Drawing.Color StringToColor (this string color)
+        public static Color StringToColor([CanBeNull] this string color)
         {
             if (string.IsNullOrEmpty(color)) return Color.Empty;
-            return System.Drawing.ColorTranslator.FromHtml(color);
+            return ColorTranslator.FromHtml(color);
         }
     }
 }

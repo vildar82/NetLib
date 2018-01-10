@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using FluentValidation.Results;
+using JetBrains.Annotations;
 using MahApps.Metro.Controls.Dialogs;
 using NLog;
 using ReactiveUI;
@@ -10,7 +11,6 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Reactive.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -55,14 +55,15 @@ namespace NetLib.WPF
         public BaseWindow Window { get; set; }
         public IBaseViewModel Parent { get; set; }
         [Obsolete("Use Hide()")]
-        [Reactive] public bool Hide { get; set; }
+        [Reactive]
+        public bool Hide { get; set; }
         [Reactive] public bool? DialogResult { get; set; }
         public bool HasErrors => validationResult?.Errors?.Count > 0;
         [Reactive] public List<string> Errors { get; set; }
         public bool IsValidated { get; private set; }
         public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
 
-        private void BaseViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        private void BaseViewModel_PropertyChanged(object sender, [NotNull] PropertyChangedEventArgs e)
         {
             if (!ignoreProps.Contains(e.PropertyName))
             {
@@ -107,7 +108,7 @@ namespace NetLib.WPF
         /// <summary>
         /// Валидация. 
         /// </summary>
-        public async void Validate(string propName = null)
+        public async void Validate([CanBeNull] string propName = null)
         {
             if (validator == null) return;
             await Task.Run(() =>
@@ -133,6 +134,7 @@ namespace NetLib.WPF
             });
         }
 
+        [NotNull]
         public IDisposable HideWindow()
         {
             return new ActionUsage(HideMe, VisibleMe);
@@ -141,26 +143,29 @@ namespace NetLib.WPF
         /// <summary>
         /// Добавление команды - ThrownExceptions.Subscribe.
         /// </summary>
-        public ReactiveCommand AddCommand(ReactiveCommand command)
+        [NotNull]
+        public ReactiveCommand AddCommand([NotNull] ReactiveCommand command)
         {
             command.ThrownExceptions.Subscribe(CommandException);
             return command;
         }
 
-        public ReactiveCommand CreateCommand(Action execute, IObservable<bool> canExecute = null)
+        [NotNull]
+        public ReactiveCommand CreateCommand(Action execute, [CanBeNull] IObservable<bool> canExecute = null)
         {
             var command = ReactiveCommand.Create(execute, canExecute);
             command.ThrownExceptions.Subscribe(CommandException);
             return command;
         }
-        public ReactiveCommand CreateCommand<T>(Action<T> execute, IObservable<bool> canExecute = null)
+        [NotNull]
+        public ReactiveCommand CreateCommand<T>(Action<T> execute, [CanBeNull] IObservable<bool> canExecute = null)
         {
             var command = ReactiveCommand.Create(execute, canExecute);
             command.ThrownExceptions.Subscribe(CommandException);
             return command;
         }
 
-        public void CommandException(Exception e)
+        public void CommandException([NotNull] Exception e)
         {
             if (e is OperationCanceledException) return;
             Logger.Error(e, "CommandException");
@@ -200,6 +205,7 @@ namespace NetLib.WPF
             }
         }
 
+        [CanBeNull]
         public IEnumerable GetErrors(string propertyName)
         {
             return validationResult?.Errors?

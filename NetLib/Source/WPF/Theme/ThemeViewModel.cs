@@ -1,11 +1,12 @@
-﻿using MahApps.Metro;
+﻿using JetBrains.Annotations;
+using MahApps.Metro;
 using ReactiveUI;
 
 namespace NetLib.WPF.Theme
 {
     public class ThemeViewModel : ReactiveObject
     {
-        public ThemeViewModel(AppTheme theme)
+        public ThemeViewModel([NotNull] AppTheme theme)
         {
             Theme = theme;
             Name = theme.Name;

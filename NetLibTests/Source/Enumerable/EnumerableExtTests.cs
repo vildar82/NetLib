@@ -1,17 +1,14 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NetLib;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NetLib;
 
-namespace NetLib.Tests
+namespace NetLibTests.Source.Enumerable
 {
-	[TestClass()]
+	[TestClass]
 	public class EnumerableExtTests
 	{
-		[TestMethod()]
+		[TestMethod]
 		public void SelectNullesTest()
 		{
 			var list = new List<string> { null, null, "gfh", null, "ftgyh", null };

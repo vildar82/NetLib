@@ -1,11 +1,11 @@
-﻿using MahApps.Metro.Controls;
+﻿using JetBrains.Annotations;
+using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using MahApps.Metro.IconPacks;
 using NetLib.WPF.Theme;
 using NLog;
 using System;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
@@ -73,7 +73,7 @@ namespace NetLib.WPF
 
         }
 
-        protected BaseWindow(IBaseViewModel model)
+        protected BaseWindow([CanBeNull] IBaseViewModel model)
         {
             AddStyleResouse();
             Model = model;
@@ -109,11 +109,11 @@ namespace NetLib.WPF
             MouseDown += BaseWindow_MouseDown;
             Activated += (s, a) =>
             {
-                isDialog = (bool) _showingAsDialogField.GetValue(this);
+                isDialog = (bool)_showingAsDialogField.GetValue(this);
             };
         }
 
-        private void Dispatcher_UnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
+        private void Dispatcher_UnhandledException(object sender, [NotNull] DispatcherUnhandledExceptionEventArgs e)
         {
             if (!(e.Exception is OperationCanceledException))
             {
@@ -207,7 +207,7 @@ namespace NetLib.WPF
             Keyboard.ClearFocus(); // remove keyboard focus
         }
 
-        private void BaseWindow_PreviewKeyDown(object sender, KeyEventArgs e)
+        private void BaseWindow_PreviewKeyDown(object sender, [NotNull] KeyEventArgs e)
         {
             if (e.Key == Key.Escape)
             {

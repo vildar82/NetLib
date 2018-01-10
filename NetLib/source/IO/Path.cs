@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using JetBrains.Annotations;
+using System;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NetLib.IO
 {
@@ -15,7 +12,8 @@ namespace NetLib.IO
         /// <param name="plugin">Имя плагина</param>
         /// <param name="fileName">Имя файла</param>
         /// <returns>Полный путь к файлу</returns>
-        public static string GetUserPluginFile(string plugin, string fileName)
+        [NotNull]
+        public static string GetUserPluginFile([NotNull] string plugin, [NotNull] string fileName)
         {
             var pluginFolder = GetUserPluginFolder(plugin);
             return System.IO.Path.Combine(pluginFolder, fileName);
@@ -26,7 +24,8 @@ namespace NetLib.IO
         /// </summary>
         /// <param name="plugin">Имя плагина - имя папки</param>
         /// <returns>Полный путь</returns>
-        public static string GetUserPluginFolder(string plugin)
+        [NotNull]
+        public static string GetUserPluginFolder([NotNull] string plugin)
         {
             var companyFolder = GetUserPikFolder();
             var pluginFolder = System.IO.Path.Combine(companyFolder, plugin);
@@ -39,6 +38,7 @@ namespace NetLib.IO
         /// Пользовательская папка настроек
         /// </summary>
         /// <returns></returns>
+        [NotNull]
         public static string GetUserPikFolder()
         {
             var appData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData, Environment.SpecialFolderOption.Create);
@@ -68,13 +68,14 @@ namespace NetLib.IO
         /// <summary>
         /// Возвращает путь к временному файлу
         /// </summary>        
-        /// <param name="ext">Расширение, если нужно</param>
-        public static string GetTempFile(string extWithDot = null)
-        {            
+        /// <param name="extWithDot">Расширение, если нужно, начиная с точки.</param>
+        [NotNull]
+        public static string GetTempFile([CanBeNull] string extWithDot = null)
+        {
             return System.IO.Path.GetTempPath() + Guid.NewGuid().ToString() + (extWithDot ?? ".tmp");
         }
 
-        public static void CopyDirectory(string sourceDir, string destDir)
+        public static void CopyDirectory([NotNull] string sourceDir, string destDir)
         {
             foreach (var dirPath in Directory.GetDirectories(sourceDir, "*", SearchOption.AllDirectories))
             {
@@ -93,16 +94,16 @@ namespace NetLib.IO
             }
         }
 
-	    public static void TryDeleteFile(string file)
-	    {
-		    try
-		    {
-			    File.Delete(file);
-		    }
-		    catch
-		    {
-			    //
-		    }
-	    }
+        public static void TryDeleteFile(string file)
+        {
+            try
+            {
+                File.Delete(file);
+            }
+            catch
+            {
+                //
+            }
+        }
     }
 }

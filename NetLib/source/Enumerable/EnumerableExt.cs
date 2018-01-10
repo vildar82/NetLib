@@ -1,4 +1,5 @@
-﻿using System;
+﻿using JetBrains.Annotations;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -6,7 +7,8 @@ namespace NetLib
 {
     public static class EnumerableExt
     {
-        public static List<List<T>> ChunkBy<T>(this List<T> source, int chunkSize)
+        [NotNull]
+        public static List<List<T>> ChunkBy<T>([NotNull] this List<T> source, int chunkSize)
         {
             return source
                 .Select((x, i) => new { Index = i, Value = x })
@@ -15,23 +17,27 @@ namespace NetLib
                 .ToList();
         }
 
-        public static IEnumerable<IEnumerable<T>> SplitParts<T>(this IEnumerable<T> list, int parts)
+        [NotNull]
+        public static IEnumerable<IEnumerable<T>> SplitParts<T>([NotNull] this IEnumerable<T> list, int parts)
         {
             var i = 0;
             var splits = list.GroupBy(item => i++ % parts).Select(part => part.AsEnumerable());
             return splits;
         }
 
-        public static IEnumerable<TRes> SelectManyNulless<TSource, TRes>(this IEnumerable<TSource> list,
-            Func<TSource, IEnumerable<TRes>> selector)
+        [NotNull]
+        public static IEnumerable<TRes> SelectManyNulless<TSource, TRes>([NotNull] this IEnumerable<TSource> list,
+            [NotNull] Func<TSource, IEnumerable<TRes>> selector)
         {
+            // ReSharper disable CompareNonConstrainedGenericWithNull
             return list.Where(w => w != null).SelectMany(selector).Where(w => w != null);
         }
 
         /// <summary>
         /// Select без Null
         /// </summary>
-        public static IEnumerable<TRes> SelectNulless<TSource, TRes>(this IEnumerable<TSource> list, Func<TSource, TRes> selector)
+        [NotNull]
+        public static IEnumerable<TRes> SelectNulless<TSource, TRes>([NotNull] this IEnumerable<TSource> list, [NotNull] Func<TSource, TRes> selector)
         {
             return list.Where(w => w != null).Select(selector).Where(w => w != null);
         }

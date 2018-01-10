@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using JetBrains.Annotations;
 using NetLib.Errors.UI.View;
 using NetLib.Errors.UI.ViewModel;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Windows;
 
 namespace NetLib.Errors
 {
@@ -25,7 +24,7 @@ namespace NetLib.Errors
 
         public string Title { get; set; }
 
-        public void AddError(IError error)
+        public void AddError([CanBeNull] IError error)
         {
             if (error == null) return;
             errors.Add(error);
@@ -33,10 +32,10 @@ namespace NetLib.Errors
 
         public void AddError(string group, string msg, ErrorLevel level = ErrorLevel.Error)
         {
-            AddError(new Error {Group = group, Message = msg, Level = level});
+            AddError(new Error { Group = group, Message = msg, Level = level });
         }
 
-        public void AddError(Exception ex, string group)
+        public void AddError([NotNull] Exception ex, string group)
         {
             AddError(new Error { Group = group, Message = ex.Message });
         }
@@ -47,6 +46,7 @@ namespace NetLib.Errors
             view?.Show();
         }
 
+        [CanBeNull]
         public Window GetWindow()
         {
             if (!HasError) return null;

@@ -1,4 +1,5 @@
-﻿using NetLib.WPF;
+﻿using JetBrains.Annotations;
+using NetLib.WPF;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -6,7 +7,7 @@ namespace NetLib.Errors.UI.ViewModel
 {
     public class ErrorsViewModel : BaseViewModel
     {
-        public ErrorsViewModel(List<IError> errors, string title, bool isDialog)
+        public ErrorsViewModel([NotNull] List<IError> errors, string title, bool isDialog)
         {
             CollapseDialogButtons = !isDialog;
             Title = title;
