@@ -9,9 +9,9 @@ namespace NetLib.WPF.Behaviors
 	/// <ListBox ItemsSource="{Binding Path=MyList}"
 	/// SelectedItem="{Binding Path=MyItem, Mode=TwoWay}"
 	/// SelectionMode="Single">
-	/// <i:Interaction.Behaviors>
-	/// <Behaviors:ScrollIntoViewForListBox />
-	/// </i:Interaction.Behaviors>
+	/// i:Interaction.Behaviors>
+	/// Behaviors:ScrollIntoViewForListBox />
+	/// i:Interaction.Behaviors>
 	/// </ListBox>
 	/// </summary>
 	public class ScrollIntoViewForListBox : Behavior<ListBox>
