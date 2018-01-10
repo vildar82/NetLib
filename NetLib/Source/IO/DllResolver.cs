@@ -6,6 +6,9 @@ using System.Reflection;
 
 namespace NetLib.IO
 {
+    /// <summary>
+    /// Разрешение сборки
+    /// </summary>
     public class DllResolve
     {
         public DllResolve(string dllFile)
