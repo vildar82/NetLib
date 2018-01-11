@@ -5,6 +5,7 @@ using System.Windows.Data;
 
 namespace NetLib.WPF.Converters
 {
+    [PublicAPI]
     [ValueConversion(typeof(string), typeof(double))]
     public class DoubleConverter : ConvertorBase
     {

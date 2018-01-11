@@ -101,10 +101,10 @@ namespace NetLib.Comparers
             return len1 - len2;
         }
 
+        [PublicAPI]
         public int GetHashCode([CanBeNull] string obj)
         {
-            if (obj == null) return 0;
-            return obj.GetHashCode();
+            return obj == null ? 0 : obj.GetHashCode();
         }
     }
 }

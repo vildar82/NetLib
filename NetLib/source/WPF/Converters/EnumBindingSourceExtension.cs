@@ -7,8 +7,9 @@ namespace NetLib.WPF.Converters
 {
     /// <inheritdoc />
     /// <summary>
-    /// ComboBox ItemsSource="{Binding Source={local:EnumBindingSource {x:Type local:MyEnum}}}"    /// 
+    /// ComboBox ItemsSource="{Binding Source={local:EnumBindingSource {x:Type local:MyEnum}}}"    ///
     /// </summary>
+    [PublicAPI]
     public class EnumBindingSourceExtension : MarkupExtension
     {
         private Type _enumType;
@@ -29,7 +30,9 @@ namespace NetLib.WPF.Converters
             }
         }
 
-        public EnumBindingSourceExtension() { }
+        public EnumBindingSourceExtension()
+        {
+        }
 
         public EnumBindingSourceExtension(Type enumType)
         {
@@ -73,12 +76,6 @@ namespace NetLib.WPF.Converters
             : base(type)
         {
         }
-        public override object ConvertTo(ITypeDescriptorContext context, System.Globalization.CultureInfo culture, object value, Type destinationType)
-        {
-            return destinationType == typeof(string)
-                ? GetEnumDescription(value)
-                : base.ConvertTo(context, culture, value, destinationType);
-        }
 
         public static string GetEnumDescription([CanBeNull] object enumValue)
         {
@@ -87,6 +84,13 @@ namespace NetLib.WPF.Converters
             if (fi == null) return enumValue.ToString();
             var attributes = (DescriptionAttribute[])fi.GetCustomAttributes(typeof(DescriptionAttribute), false);
             return attributes.Length > 0 ? attributes[0].Description : enumValue.ToString();
+        }
+
+        public override object ConvertTo(ITypeDescriptorContext context, System.Globalization.CultureInfo culture, object value, Type destinationType)
+        {
+            return destinationType == typeof(string)
+                ? GetEnumDescription(value)
+                : base.ConvertTo(context, culture, value, destinationType);
         }
     }
 }

@@ -11,18 +11,19 @@ namespace NetLib.Errors
     /// <summary>
     /// Сбор ошибок и отображение
     /// </summary>
+    [PublicAPI]
     public class Inspector
     {
         private readonly List<IError> errors = new List<IError>();
+
+        public bool HasError => errors.Any();
+
+        public string Title { get; set; }
 
         public Inspector(string title = "Инфо")
         {
             Title = title;
         }
-
-        public bool HasError => errors.Any();
-
-        public string Title { get; set; }
 
         public void AddError([CanBeNull] IError error)
         {
@@ -40,18 +41,18 @@ namespace NetLib.Errors
             AddError(new Error { Group = group, Message = ex.Message });
         }
 
-        public void Show()
-        {
-            var view = GetWindow();
-            view?.Show();
-        }
-
         [CanBeNull]
         public Window GetWindow()
         {
             if (!HasError) return null;
             var errorsVM = new ErrorsViewModel(errors, Title, false);
             return new ErrorsView(errorsVM);
+        }
+
+        public void Show()
+        {
+            var view = GetWindow();
+            view?.Show();
         }
     }
 }

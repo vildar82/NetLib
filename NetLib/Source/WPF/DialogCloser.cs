@@ -8,11 +8,17 @@ namespace NetLib.WPF
     /// xmlns:xc="clr-namespace:ExCastle.Wpf"
     /// xc:DialogCloser.DialogResult="{Binding DialogResult}">
     /// </summary>
+    [PublicAPI]
     public static class DialogCloser
     {
         public static readonly DependencyProperty DialogResultProperty =
             DependencyProperty.RegisterAttached("DialogResult", typeof(bool?), typeof(DialogCloser),
                 new PropertyMetadata(DialogResultChanged));
+
+        public static void SetDialogResult([NotNull] Window target, bool? value)
+        {
+            target.SetValue(DialogResultProperty, value);
+        }
 
         private static void DialogResultChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
@@ -20,11 +26,6 @@ namespace NetLib.WPF
             {
                 window.DialogResult = e.NewValue as bool?;
             }
-        }
-
-        public static void SetDialogResult([NotNull] Window target, bool? value)
-        {
-            target.SetValue(DialogResultProperty, value);
         }
     }
 }

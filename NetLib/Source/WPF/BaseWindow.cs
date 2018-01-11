@@ -16,17 +16,32 @@ using System.Windows.Threading;
 
 namespace NetLib.WPF
 {
+    [PublicAPI]
     public class BaseWindow : MetroWindow
     {
-        private static readonly FieldInfo _showingAsDialogField = typeof(Window)
-            .GetField("_showingAsDialog", BindingFlags.Instance | BindingFlags.NonPublic);
-
-        // ReSharper disable once MemberCanBePrivate.Global
-        protected static Logger Logger { get; } = LogManager.GetCurrentClassLogger();
         // ReSharper disable once MemberCanBePrivate.Global
         protected bool isDialog;
+
+        private static readonly FieldInfo _showingAsDialogField = typeof(Window)
+                    .GetField("_showingAsDialog", BindingFlags.Instance | BindingFlags.NonPublic);
+
         private IBaseViewModel model;
 
+        /// <summary>
+        /// Изменилась тема оформления окна
+        /// </summary>
+        public event EventHandler ChangeTheme;
+
+        /// <summary>
+        /// Закрытие окна по нажатия Enter или Space (пробел) - DialogResult true
+        /// </summary>
+        // ReSharper disable once MemberCanBePrivate.Global
+        public bool CloseWindowByEnterOrSpace { get; set; } = true;
+        /// <summary>
+        /// Вызывать ли закрытие окна или нет. (Если сохранять в памяти и показывать снова)
+        /// </summary>
+        // ReSharper disable once MemberCanBePrivate.Global
+        public bool IsUnclosing { get; set; }
         /// <summary>
         /// DataContext
         /// </summary>
@@ -43,34 +58,17 @@ namespace NetLib.WPF
                 }
             }
         }
-
-        /// <summary>
-        /// Изменилась тема оформления окна
-        /// </summary>
-        public event EventHandler ChangeTheme;
-
-        /// <summary>
-        /// Закрытие окна по нажатия Enter или Space (пробел) - DialogResult true
-        /// </summary>
-        // ReSharper disable once MemberCanBePrivate.Global
-        public bool CloseWindowByEnterOrSpace { get; set; } = true;
-
-        /// <summary>
-        /// Вызывать ли закрытие окна или нет. (Если сохранять в памяти и показывать снова)
-        /// </summary>
-        // ReSharper disable once MemberCanBePrivate.Global
-        public bool IsUnclosing { get; set; }
-
         /// <summary>
         /// Дествие при нажатии OK/Space
         /// </summary>
         // ReSharper disable once MemberCanBePrivate.Global
         public Action OnEnterOrSpace { get; set; }
+        // ReSharper disable once MemberCanBePrivate.Global
+        protected static Logger Logger { get; } = LogManager.GetCurrentClassLogger();
 
         [Obsolete("Лучше не использовать. Не забудь присвоить Model и Model.Window.")]
         public BaseWindow() : this(null)
         {
-
         }
 
         protected BaseWindow([CanBeNull] IBaseViewModel model)
@@ -113,14 +111,33 @@ namespace NetLib.WPF
             };
         }
 
-        private void Dispatcher_UnhandledException(object sender, [NotNull] DispatcherUnhandledExceptionEventArgs e)
+        internal void OnChangeTheme()
         {
-            if (!(e.Exception is OperationCanceledException))
+            ChangeTheme?.Invoke(this, EventArgs.Empty);
+        }
+
+        protected virtual void ApplyTheme()
+        {
+            StyleSettings.ApplyWindowTheme(this);
+        }
+
+        protected override void OnClosed(EventArgs e)
+        {
+            Model?.OnClosed();
+            base.OnClosed(e);
+        }
+
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            if (IsUnclosing)
             {
-                Logger.Fatal(e.Exception, "UnhandledException");
-                Model?.ShowMessage(e.Exception.Message);
+                e.Cancel = true;
+                Hide();
             }
-            e.Handled = true;
+            else
+            {
+                base.OnClosing(e);
+            }
         }
 
         protected override void OnInitialized(EventArgs e)
@@ -154,42 +171,6 @@ namespace NetLib.WPF
             }
             base.OnInitialized(e);
             Model?.OnInitialize();
-        }
-
-        internal void OnChangeTheme()
-        {
-            ChangeTheme?.Invoke(this, EventArgs.Empty);
-        }
-
-        protected virtual void ApplyTheme()
-        {
-            StyleSettings.ApplyWindowTheme(this);
-        }
-
-        private void ButtonTheme_Click(object sender, RoutedEventArgs e)
-        {
-            var styleSettingsVM = new StyleSettingsViewModel(Model);
-            var styleSettingsView = new StyleSettingsView(styleSettingsVM);
-            styleSettingsView.ShowDialog();
-        }
-
-        protected override void OnClosing(CancelEventArgs e)
-        {
-            if (IsUnclosing)
-            {
-                e.Cancel = true;
-                Hide();
-            }
-            else
-            {
-                base.OnClosing(e);
-            }
-        }
-
-        protected override void OnClosed(EventArgs e)
-        {
-            Model?.OnClosed();
-            base.OnClosed(e);
         }
 
         private void AddStyleResouse()
@@ -235,6 +216,23 @@ namespace NetLib.WPF
                 }
                 e.Handled = true;
             }
+        }
+
+        private void ButtonTheme_Click(object sender, RoutedEventArgs e)
+        {
+            var styleSettingsVM = new StyleSettingsViewModel(Model);
+            var styleSettingsView = new StyleSettingsView(styleSettingsVM);
+            styleSettingsView.ShowDialog();
+        }
+
+        private void Dispatcher_UnhandledException(object sender, [NotNull] DispatcherUnhandledExceptionEventArgs e)
+        {
+            if (!(e.Exception is OperationCanceledException))
+            {
+                Logger.Fatal(e.Exception, "UnhandledException");
+                Model?.ShowMessage(e.Exception.Message);
+            }
+            e.Handled = true;
         }
     }
 }

@@ -6,6 +6,7 @@ using System.Windows.Media;
 
 namespace NetLib.WPF.Converters
 {
+    [PublicAPI]
     [ValueConversion(typeof(Color), typeof(SolidColorBrush))]
     [ValueConversion(typeof(System.Drawing.Color), typeof(SolidColorBrush))]
     public class ColorToBrushConverter : ConvertorBase

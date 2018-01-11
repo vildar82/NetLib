@@ -10,10 +10,42 @@ using System.IO;
 
 namespace NetLib.Excel
 {
+    [PublicAPI]
     public abstract class ExportExcelBase
     {
         protected abstract string DefFileName { get; set; }
         protected abstract List<string> SheetNames { get; set; }
+
+        [NotNull]
+        public static ExcelNamedStyleXml AddStyle([NotNull] ExcelWorkbook wb, string name,
+            ExcelBorderStyle borderStyle = ExcelBorderStyle.Medium,
+            System.Drawing.Color? bckColor = null, int size = 11, bool bold = false,
+            bool borderByGost = true, bool center = true)
+        {
+            var style = wb.Styles.CreateNamedStyle(name);
+            style.Style.Font.Name = "Arial";
+            style.Style.Font.Size = size;
+            style.Style.WrapText = true;
+            style.Style.Font.Bold = bold;
+            if (center)
+            {
+                style.Style.SetStyleCenterAlignment();
+            }
+            if (borderByGost)
+            {
+                style.Style.SetBorderByGost(borderStyle);
+            }
+            else
+            {
+                style.Style.SetBorderByGost(borderStyle, borderStyle);
+            }
+            if (bckColor != null)
+            {
+                style.Style.Fill.PatternType = ExcelFillStyle.Solid;
+                style.Style.Fill.BackgroundColor.SetColor(bckColor.Value);
+            }
+            return style;
+        }
 
         public void Export()
         {
@@ -59,36 +91,5 @@ namespace NetLib.Excel
         }
 
         protected abstract void FillSheet(string name, ExcelWorksheet wb);
-
-        [NotNull]
-        public static ExcelNamedStyleXml AddStyle([NotNull] ExcelWorkbook wb, string name,
-            ExcelBorderStyle borderStyle = ExcelBorderStyle.Medium,
-            System.Drawing.Color? bckColor = null, int size = 11, bool bold = false,
-            bool borderByGost = true, bool center = true)
-        {
-            var style = wb.Styles.CreateNamedStyle(name);
-            style.Style.Font.Name = "Arial";
-            style.Style.Font.Size = size;
-            style.Style.WrapText = true;
-            style.Style.Font.Bold = bold;
-            if (center)
-            {
-                style.Style.SetStyleCenterAlignment();
-            }
-            if (borderByGost)
-            {
-                style.Style.SetBorderByGost(borderStyle);
-            }
-            else
-            {
-                style.Style.SetBorderByGost(borderStyle, borderStyle);
-            }
-            if (bckColor != null)
-            {
-                style.Style.Fill.PatternType = ExcelFillStyle.Solid;
-                style.Style.Fill.BackgroundColor.SetColor(bckColor.Value);
-            }
-            return style;
-        }
     }
 }

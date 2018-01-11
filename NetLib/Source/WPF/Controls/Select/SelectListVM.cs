@@ -8,55 +8,7 @@ using System.Windows.Data;
 
 namespace NetLib.WPF.Controls.Select
 {
-    /// <summary>
-    /// Использование - SelectList.Select()
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
-    internal class SelectListVM<T> : BaseViewModel
-    {
-        private string filter;
-
-        public SelectListVM([NotNull] List<SelectListItem<T>> items, string title, [CanBeNull] string name = null)
-        {
-            Title = title;
-            Name = name;
-            HasName = !string.IsNullOrEmpty(name);
-            ItemsView = new ListCollectionView(items)
-            {
-                Filter = FilterPredicate
-            };
-            HasFilter = items.Count > 10;
-            OK = CreateCommand(OkExecute, this.WhenAnyValue(w => w.Selected).Select(s => s != null));
-        }
-
-        public string Title { get; set; }
-        public string Name { get; set; }
-        public bool HasName { get; set; }
-        public ListCollectionView ItemsView { get; set; }
-        [Reactive] public SelectListItem<T> Selected { get; set; }
-
-        public string Filter
-        {
-            get => filter;
-            set { filter = value; ItemsView.Refresh(); }
-        }
-
-        public bool HasFilter { get; set; }
-        public ReactiveCommand OK { get; set; }
-
-        private bool FilterPredicate(object obj)
-        {
-            if (string.IsNullOrEmpty(Filter)) return true;
-            var item = (SelectListItem<T>)obj;
-            return Regex.IsMatch(item.Name, Filter, RegexOptions.IgnoreCase);
-        }
-
-        private void OkExecute()
-        {
-            DialogResult = true;
-        }
-    }
-
+    // ReSharper disable once ClassNeverInstantiated.Global
     internal class SelectListDesignVM : SelectListVM<int>
     {
         public SelectListDesignVM() : base(GetItems(), "Выбор сети", "Сети в текущем чертеже")
@@ -73,6 +25,60 @@ namespace NetLib.WPF.Controls.Select
                 new SelectListItem<int>("U2-1", 25),
                 new SelectListItem<int>("I6-1", 1)
             };
+        }
+    }
+
+    /// <summary>
+    /// Использование - SelectList.Select()
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    internal class SelectListVM<T> : BaseViewModel
+    {
+        private string filter;
+
+        public string Filter
+        {
+            get => filter;
+            set { filter = value; ItemsView.Refresh(); }
+        }
+
+        public bool HasFilter { get; set; }
+
+        public bool HasName { get; set; }
+
+        public ListCollectionView ItemsView { get; set; }
+
+        public string Name { get; set; }
+
+        public ReactiveCommand OK { get; set; }
+
+        [Reactive] public SelectListItem<T> Selected { get; set; }
+
+        public string Title { get; set; }
+
+        public SelectListVM([NotNull] List<SelectListItem<T>> items, string title, [CanBeNull] string name = null)
+        {
+            Title = title;
+            Name = name;
+            HasName = !string.IsNullOrEmpty(name);
+            ItemsView = new ListCollectionView(items)
+            {
+                Filter = FilterPredicate
+            };
+            HasFilter = items.Count > 10;
+            OK = CreateCommand(OkExecute, this.WhenAnyValue(w => w.Selected).Select(s => s != null));
+        }
+
+        private bool FilterPredicate(object obj)
+        {
+            if (string.IsNullOrEmpty(Filter)) return true;
+            var item = (SelectListItem<T>)obj;
+            return Regex.IsMatch(item.Name, Filter, RegexOptions.IgnoreCase);
+        }
+
+        private void OkExecute()
+        {
+            DialogResult = true;
         }
     }
 }

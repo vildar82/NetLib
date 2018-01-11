@@ -20,17 +20,29 @@ namespace NetLib.WPF
     /// <summary>
     /// ReactiveUI ViewModel, +FluentValidator (должен быть класс с таким же именем +Validator).
     /// </summary>
+    [PublicAPI]
     public abstract class BaseViewModel : ReactiveObject, IBaseViewModel
     {
-        private static readonly HashSet<string> ignoreProps = new HashSet<string> { "Hide", "DialogResult", "Errors" };
-        private ValidationResult validationResult;
-
-        protected static Logger Logger { get; } = LogManager.GetCurrentClassLogger();
         protected readonly IDialogCoordinator dialogCoordinator = DialogCoordinator.Instance;
         protected IValidator validator;
-
+        private static readonly HashSet<string> ignoreProps = new HashSet<string> { "Hide", "DialogResult", "Errors" };
         private static readonly ConcurrentDictionary<RuntimeTypeHandle, IValidator> validators =
             new ConcurrentDictionary<RuntimeTypeHandle, IValidator>();
+
+        private ValidationResult validationResult;
+
+        public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
+
+        [Reactive] public bool? DialogResult { get; set; }
+        [Reactive] public List<string> Errors { get; set; }
+        public bool HasErrors => validationResult?.Errors?.Count > 0;
+        [Obsolete("Use Hide()")]
+        [Reactive]
+        public bool Hide { get; set; }
+        public bool IsValidated { get; private set; }
+        public IBaseViewModel Parent { get; set; }
+        public BaseWindow Window { get; set; }
+        protected static Logger Logger { get; } = LogManager.GetCurrentClassLogger();
 
         static BaseViewModel()
         {
@@ -52,94 +64,6 @@ namespace NetLib.WPF
         {
         }
 
-        public BaseWindow Window { get; set; }
-        public IBaseViewModel Parent { get; set; }
-        [Obsolete("Use Hide()")]
-        [Reactive]
-        public bool Hide { get; set; }
-        [Reactive] public bool? DialogResult { get; set; }
-        public bool HasErrors => validationResult?.Errors?.Count > 0;
-        [Reactive] public List<string> Errors { get; set; }
-        public bool IsValidated { get; private set; }
-        public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
-
-        private void BaseViewModel_PropertyChanged(object sender, [NotNull] PropertyChangedEventArgs e)
-        {
-            if (!ignoreProps.Contains(e.PropertyName))
-            {
-                Validate(e.PropertyName);
-            }
-        }
-
-        /// <summary>
-        /// Если модель передана в конструктор окна BaseWindow, то этот метод вызывается после инициализации окна.
-        /// </summary>
-        public virtual void OnInitialize()
-        {
-
-        }
-
-        public virtual void OnClosed()
-        {
-
-        }
-
-        private void InitValidator()
-        {
-            var modelType = GetType();
-            if (!validators.TryGetValue(modelType.TypeHandle, out validator))
-            {
-                FindValidator(modelType);
-            }
-        }
-
-        public void HideMe()
-        {
-            if (Window != null) Window.Visibility = Visibility.Hidden;
-            else Parent?.HideMe();
-        }
-
-        public void VisibleMe()
-        {
-            if (Window != null) Window.Visibility = Visibility.Visible;
-            else Parent?.VisibleMe();
-        }
-
-        /// <summary>
-        /// Валидация. 
-        /// </summary>
-        public async void Validate([CanBeNull] string propName = null)
-        {
-            if (validator == null) return;
-            await Task.Run(() =>
-            {
-                validationResult = validator.Validate(this);
-                Errors = new List<string>(validationResult.Errors.Select(s => s.ErrorMessage).ToList());
-                if (propName == null)
-                {
-                    if (validationResult?.Errors?.Any() == true)
-                    {
-                        foreach (var error in validationResult.Errors)
-                        {
-                            RaiseErrorsChanged(error.PropertyName);
-                        }
-                    }
-                }
-                else
-                {
-                    RaiseErrorsChanged(propName);
-                }
-                IsValidated = true;
-                Logger.Debug($"Validate {this}");
-            });
-        }
-
-        [NotNull]
-        public IDisposable HideWindow()
-        {
-            return new ActionUsage(HideMe, VisibleMe);
-        }
-
         /// <summary>
         /// Добавление команды - ThrownExceptions.Subscribe.
         /// </summary>
@@ -150,6 +74,13 @@ namespace NetLib.WPF
             return command;
         }
 
+        public void CommandException([NotNull] Exception e)
+        {
+            if (e is OperationCanceledException) return;
+            Logger.Error(e, "CommandException");
+            ShowMessage(e.Message);
+        }
+
         [NotNull]
         public ReactiveCommand CreateCommand(Action execute, [CanBeNull] IObservable<bool> canExecute = null)
         {
@@ -157,6 +88,7 @@ namespace NetLib.WPF
             command.ThrownExceptions.Subscribe(CommandException);
             return command;
         }
+
         [NotNull]
         public ReactiveCommand CreateCommand<T>(Action<T> execute, [CanBeNull] IObservable<bool> canExecute = null)
         {
@@ -165,11 +97,53 @@ namespace NetLib.WPF
             return command;
         }
 
-        public void CommandException([NotNull] Exception e)
+        public virtual void Dispose()
         {
-            if (e is OperationCanceledException) return;
-            Logger.Error(e, "CommandException");
-            ShowMessage(e.Message);
+        }
+
+        [CanBeNull]
+        public IEnumerable GetErrors(string propertyName)
+        {
+            return validationResult?.Errors?
+                .Where(x => x.PropertyName == propertyName)
+                .Select(x => x.ErrorMessage);
+        }
+
+        public void HideMe()
+        {
+            if (Window != null) Window.Visibility = Visibility.Hidden;
+            else Parent?.HideMe();
+        }
+
+        [NotNull]
+        public IDisposable HideWindow()
+        {
+            return new ActionUsage(HideMe, VisibleMe);
+        }
+
+        public virtual void OnClosed()
+        {
+        }
+
+        /// <summary>
+        /// Если модель передана в конструктор окна BaseWindow, то этот метод вызывается после инициализации окна.
+        /// </summary>
+        public virtual void OnInitialize()
+        {
+        }
+
+        public void RaiseErrorsChanged(string propertyName)
+        {
+            ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(propertyName));
+        }
+
+        /// <summary>
+        /// для propertyChanged (не уверен что очень нужно)
+        /// </summary>
+        /// <param name="args"></param>
+        public void RaisePropertyChanged(PropertyChangedEventArgs args)
+        {
+            ((IReactiveObject)this).RaisePropertyChanged(args);
         }
 
         public void ShowMessage(string msg, string title = "Ошибка")
@@ -205,17 +179,47 @@ namespace NetLib.WPF
             }
         }
 
-        [CanBeNull]
-        public IEnumerable GetErrors(string propertyName)
+        /// <summary>
+        /// Валидация.
+        /// </summary>
+        public async void Validate([CanBeNull] string propName = null)
         {
-            return validationResult?.Errors?
-                .Where(x => x.PropertyName == propertyName)
-                .Select(x => x.ErrorMessage);
+            if (validator == null) return;
+            await Task.Run(() =>
+            {
+                validationResult = validator.Validate(this);
+                Errors = new List<string>(validationResult.Errors.Select(s => s.ErrorMessage).ToList());
+                if (propName == null)
+                {
+                    if (validationResult?.Errors?.Any() == true)
+                    {
+                        foreach (var error in validationResult.Errors)
+                        {
+                            RaiseErrorsChanged(error.PropertyName);
+                        }
+                    }
+                }
+                else
+                {
+                    RaiseErrorsChanged(propName);
+                }
+                IsValidated = true;
+                Logger.Debug($"Validate {this}");
+            });
         }
 
-        public void RaiseErrorsChanged(string propertyName)
+        public void VisibleMe()
         {
-            ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(propertyName));
+            if (Window != null) Window.Visibility = Visibility.Visible;
+            else Parent?.VisibleMe();
+        }
+
+        private void BaseViewModel_PropertyChanged(object sender, [NotNull] PropertyChangedEventArgs e)
+        {
+            if (!ignoreProps.Contains(e.PropertyName))
+            {
+                Validate(e.PropertyName);
+            }
         }
 
         private void FindValidator(Type modelType)
@@ -237,17 +241,13 @@ namespace NetLib.WPF
             });
         }
 
-        /// <summary>
-        /// для propertyChanged (не уверен что очень нужно)
-        /// </summary>
-        /// <param name="args"></param>
-        public void RaisePropertyChanged(PropertyChangedEventArgs args)
+        private void InitValidator()
         {
-            ((IReactiveObject)this).RaisePropertyChanged(args);
-        }
-
-        public virtual void Dispose()
-        {
+            var modelType = GetType();
+            if (!validators.TryGetValue(modelType.TypeHandle, out validator))
+            {
+                FindValidator(modelType);
+            }
         }
     }
 }

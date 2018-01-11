@@ -5,6 +5,7 @@ using System.Windows.Data;
 
 namespace NetLib.WPF.Converters
 {
+    [PublicAPI]
     [ValueConversion(typeof(int), typeof(string))]
     [ValueConversion(typeof(double), typeof(string))]
     public class RadiansToDegreeConverterExtension : ConvertorBase
@@ -15,6 +16,7 @@ namespace NetLib.WPF.Converters
             double date = System.Convert.ToDouble(value);
             return date.ToDegrees().ToString("N2");
         }
+
         [NotNull]
         public override object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {

@@ -8,6 +8,7 @@ namespace NetLib.WPF.Converters
     /// <summary>
     /// True - если объект null
     /// </summary>
+    [PublicAPI]
     [ValueConversion(typeof(object), typeof(bool))]
     public class IsNullConverter : ConvertorBase
     {

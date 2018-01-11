@@ -3,6 +3,7 @@ using System;
 
 namespace NetLib
 {
+    [PublicAPI]
     public class BoolUsage : IDisposable
     {
         private readonly bool oldValue;

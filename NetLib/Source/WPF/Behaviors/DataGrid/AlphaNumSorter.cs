@@ -1,8 +1,10 @@
 ﻿using NetLib.Comparers;
 using System.ComponentModel;
+using JetBrains.Annotations;
 
 namespace NetLib.WPF.Behaviors
 {
+    [PublicAPI]
     public class AlphaNumSorter : ICustomSorter
     {
         public ListSortDirection SortDirection { get; set; }

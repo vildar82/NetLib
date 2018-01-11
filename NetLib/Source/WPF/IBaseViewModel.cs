@@ -1,9 +1,11 @@
 ﻿using ReactiveUI;
 using System;
 using System.ComponentModel;
+using JetBrains.Annotations;
 
 namespace NetLib.WPF
 {
+    [PublicAPI]
     public interface IBaseViewModel : INotifyDataErrorInfo, IDisposable
     {
         bool? DialogResult { get; set; }
@@ -12,13 +14,21 @@ namespace NetLib.WPF
         BaseWindow Window { get; set; }
 
         ReactiveCommand AddCommand(ReactiveCommand command);
-        ReactiveCommand CreateCommand(Action execute, IObservable<bool> canExecute = null);
+
         void CommandException(Exception e);
-        IDisposable HideWindow();
+
+        ReactiveCommand CreateCommand(Action execute, IObservable<bool> canExecute = null);
+
         void HideMe();
-        void VisibleMe();
+
+        IDisposable HideWindow();
+
         void OnClosed();
+
         void OnInitialize();
+
         void ShowMessage(string msg, string title = "Ошибка");
+
+        void VisibleMe();
     }
 }

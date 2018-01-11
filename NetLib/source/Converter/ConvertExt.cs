@@ -6,6 +6,12 @@ namespace NetLib
 {
     public static class ConvertExt
     {
+        [PublicAPI]
+        public static string ColorToString(this Color color)
+        {
+            return ColorTranslator.ToHtml(color);
+        }
+
         /// <summary>
         /// Приведение типа объекта, к заданному типу, через Convert.ChangeType.
         /// Если value строка, а T double, то учитывается разделитель ,
@@ -40,23 +46,34 @@ namespace NetLib
             }
             if (typeT == typeof(bool))
             {
-                if (value is bool) return (T)value;
-                if (value is int valI)
+                switch (value)
                 {
-                    value = valI == 1;
-                }
-                else if (value is string valS)
-                {
-                    value = valS.EqualsAnyIgnoreCase("Да", "Yes", "1", "+");
-                }
-                else if (value is double valD)
-                {
-                    value = Math.Abs(valD - 1) < 0.0001;
+                    case bool _:
+                        return (T)value;
+
+                    case int valI:
+                        value = valI == 1;
+                        break;
+
+                    case string valS:
+                        value = valS.EqualsAnyIgnoreCase("Да", "Yes", "1", "+");
+                        break;
+
+                    case double valD:
+                        value = Math.Abs(valD - 1) < 0.0001;
+                        break;
                 }
             }
             return (T)Convert.ChangeType(value, typeof(T));
         }
 
+        [PublicAPI]
+        public static Color StringToColor([CanBeNull] this string color)
+        {
+            return string.IsNullOrEmpty(color) ? Color.Empty : ColorTranslator.FromHtml(color);
+        }
+
+        [PublicAPI]
         public static T TryGetValue<T>(this object value, T defaultValue)
         {
             try
@@ -67,16 +84,6 @@ namespace NetLib
             {
                 return defaultValue;
             }
-        }
-
-        public static string ColorToString(this Color color)
-        {
-            return ColorTranslator.ToHtml(color);
-        }
-        public static Color StringToColor([CanBeNull] this string color)
-        {
-            if (string.IsNullOrEmpty(color)) return Color.Empty;
-            return ColorTranslator.FromHtml(color);
         }
     }
 }

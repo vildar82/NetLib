@@ -5,6 +5,7 @@ using System.Windows.Controls;
 
 namespace NetLib.WPF.Behaviors
 {
+    [PublicAPI]
     public class ListBoxAutoScrollBehavior
     {
         public static readonly DependencyProperty AutoScrollToCurrentItemProperty
@@ -24,13 +25,17 @@ namespace NetLib.WPF.Behaviors
         }
 
         /// <summary>
-        /// Sets the value of the AutoScrollToCurrentItemProperty
+        /// This method will be called when the ListBox should
+        /// be scrolled to the given index
         /// </summary>
-        /// <param name="obj">The dependency-object whichs value should be set</param>
-        /// <param name="value">The value which should be assigned to the AutoScrollToCurrentItemProperty</param>
-        public static void SetAutoScrollToCurrentItem([NotNull] DependencyObject obj, bool value)
+        /// <param name="listBox">The ListBox which should be scrolled</param>
+        /// <param name="index">The index of the item to which it should be scrolled</param>
+        public static void OnAutoScrollToCurrentItem([CanBeNull] ListBox listBox, int index)
         {
-            obj.SetValue(AutoScrollToCurrentItemProperty, value);
+            if (listBox?.Items != null && listBox.Items.Count > index && index >= 0)
+            {
+                listBox.ScrollIntoView(listBox.Items[index]);
+            }
         }
 
         /// <summary>
@@ -57,17 +62,13 @@ namespace NetLib.WPF.Behaviors
         }
 
         /// <summary>
-        /// This method will be called when the ListBox should
-        /// be scrolled to the given index
+        /// Sets the value of the AutoScrollToCurrentItemProperty
         /// </summary>
-        /// <param name="listBox">The ListBox which should be scrolled</param>
-        /// <param name="index">The index of the item to which it should be scrolled</param>
-        public static void OnAutoScrollToCurrentItem([CanBeNull] ListBox listBox, int index)
+        /// <param name="obj">The dependency-object whichs value should be set</param>
+        /// <param name="value">The value which should be assigned to the AutoScrollToCurrentItemProperty</param>
+        public static void SetAutoScrollToCurrentItem([NotNull] DependencyObject obj, bool value)
         {
-            if (listBox?.Items != null && listBox.Items.Count > index && index >= 0)
-            {
-                listBox.ScrollIntoView(listBox.Items[index]);
-            }
+            obj.SetValue(AutoScrollToCurrentItemProperty, value);
         }
     }
 }

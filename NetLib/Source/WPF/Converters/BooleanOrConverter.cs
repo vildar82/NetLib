@@ -7,6 +7,7 @@ using System.Windows.Markup;
 
 namespace NetLib.WPF.Converters
 {
+    [PublicAPI]
     [MarkupExtensionReturnType(typeof(IValueConverter))]
     public class BooleanOrConverter : MarkupExtension, IMultiValueConverter
     {
@@ -15,6 +16,7 @@ namespace NetLib.WPF.Converters
         {
             return values.Any(value => (bool)value);
         }
+
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
         {
             throw new NotSupportedException();

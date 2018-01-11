@@ -6,6 +6,7 @@ using System.Windows.Data;
 
 namespace NetLib.WPF.Converters
 {
+    [PublicAPI]
     [ValueConversion(typeof(double), typeof(GridLength))]
     public class GridLengthConverter : ConvertorBase
     {

@@ -8,6 +8,7 @@ namespace NetLib
     /// <summary>
     /// Повторение операции, за заданное время и количество попыток.
     /// </summary>
+    [PublicAPI]
     public static class Retry
     {
         /// <summary>

@@ -6,6 +6,7 @@ using System.Xml.Serialization;
 
 namespace NetLib
 {
+    [PublicAPI]
     public class SerializerXml
     {
         private readonly string _settingsFile;
@@ -13,42 +14,6 @@ namespace NetLib
         public SerializerXml(string settingsFile)
         {
             _settingsFile = settingsFile;
-        }
-
-        public void SerializeList<T>([NotNull] T settings)
-        {
-            using (var fs = new FileStream(_settingsFile, FileMode.Create, FileAccess.Write))
-            {
-                var ser = new XmlSerializer(typeof(T));
-                ser.Serialize(fs, settings);
-            }
-        }
-
-        public void SerializeList<T>([NotNull] T settings, [NotNull] params Type[] types)
-        {
-            using (var fs = new FileStream(_settingsFile, FileMode.Create, FileAccess.Write))
-            {
-                var ser = new XmlSerializer(typeof(T), types);
-                ser.Serialize(fs, settings);
-            }
-        }
-
-        public T DeserializeXmlFile<T>()
-        {
-            var ser = new XmlSerializer(typeof(T));
-            using (var reader = XmlReader.Create(_settingsFile))
-            {
-                return (T)ser.Deserialize(reader);
-            }
-        }
-
-        public T DeserializeXmlFile<T>([NotNull] params Type[] types)
-        {
-            var ser = new XmlSerializer(typeof(T), types);
-            using (var reader = XmlReader.Create(_settingsFile))
-            {
-                return (T)ser.Deserialize(reader);
-            }
         }
 
         /// <summary>
@@ -88,6 +53,42 @@ namespace NetLib
         {
             var ser = new SerializerXml(file);
             ser.SerializeList(obj, types);
+        }
+
+        public T DeserializeXmlFile<T>()
+        {
+            var ser = new XmlSerializer(typeof(T));
+            using (var reader = XmlReader.Create(_settingsFile))
+            {
+                return (T)ser.Deserialize(reader);
+            }
+        }
+
+        public T DeserializeXmlFile<T>([NotNull] params Type[] types)
+        {
+            var ser = new XmlSerializer(typeof(T), types);
+            using (var reader = XmlReader.Create(_settingsFile))
+            {
+                return (T)ser.Deserialize(reader);
+            }
+        }
+
+        public void SerializeList<T>([NotNull] T settings)
+        {
+            using (var fs = new FileStream(_settingsFile, FileMode.Create, FileAccess.Write))
+            {
+                var ser = new XmlSerializer(typeof(T));
+                ser.Serialize(fs, settings);
+            }
+        }
+
+        public void SerializeList<T>([NotNull] T settings, [NotNull] params Type[] types)
+        {
+            using (var fs = new FileStream(_settingsFile, FileMode.Create, FileAccess.Write))
+            {
+                var ser = new XmlSerializer(typeof(T), types);
+                ser.Serialize(fs, settings);
+            }
         }
     }
 }

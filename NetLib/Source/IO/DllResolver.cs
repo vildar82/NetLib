@@ -9,26 +9,17 @@ namespace NetLib.IO
     /// <summary>
     /// Разрешение сборки
     /// </summary>
+    [PublicAPI]
     public class DllResolve
     {
+        public string DllFile { get; set; }
+
+        public string DllName { get; set; }
+
         public DllResolve(string dllFile)
         {
             DllFile = dllFile;
             DllName = System.IO.Path.GetFileNameWithoutExtension(dllFile);
-        }
-
-        public string DllFile { get; set; }
-        public string DllName { get; set; }
-
-        public bool IsResolve([NotNull] string dllRequest)
-        {
-            return dllRequest.StartsWith($"{DllName},", StringComparison.OrdinalIgnoreCase);
-        }
-
-        [NotNull]
-        public Assembly LoadAssembly()
-        {
-            return Assembly.LoadFrom(DllFile);
         }
 
         [NotNull]
@@ -41,6 +32,17 @@ namespace NetLib.IO
                 dllResolves.Add(dllResolve);
             }
             return dllResolves;
+        }
+
+        public bool IsResolve([NotNull] string dllRequest)
+        {
+            return dllRequest.StartsWith($"{DllName},", StringComparison.OrdinalIgnoreCase);
+        }
+
+        [NotNull]
+        public Assembly LoadAssembly()
+        {
+            return Assembly.LoadFrom(DllFile);
         }
     }
 }

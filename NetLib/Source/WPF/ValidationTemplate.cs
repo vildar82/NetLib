@@ -9,13 +9,19 @@ using System.Linq;
 
 namespace NetLib.WPF
 {
+    [PublicAPI]
     public class ValidationTemplate : INotifyDataErrorInfo
     {
+        private static readonly ConcurrentDictionary<RuntimeTypeHandle, IValidator> validators =
+            new ConcurrentDictionary<RuntimeTypeHandle, IValidator>();
+
         private readonly INotifyPropertyChanged target;
         private readonly IValidator validator;
         private ValidationResult validationResult;
-        private static readonly ConcurrentDictionary<RuntimeTypeHandle, IValidator> validators =
-            new ConcurrentDictionary<RuntimeTypeHandle, IValidator>();
+
+        public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
+
+        public bool HasErrors => validationResult.Errors.Count > 0;
 
         public ValidationTemplate([NotNull] INotifyPropertyChanged target)
         {
@@ -34,15 +40,6 @@ namespace NetLib.WPF
             return validator;
         }
 
-        private void Validate(object sender, PropertyChangedEventArgs e)
-        {
-            validationResult = validator.Validate(target);
-            foreach (var error in validationResult.Errors)
-            {
-                RaiseErrorsChanged(error.PropertyName);
-            }
-        }
-
         [NotNull]
         public IEnumerable GetErrors(string propertyName)
         {
@@ -51,13 +48,18 @@ namespace NetLib.WPF
                 .Select(x => x.ErrorMessage);
         }
 
-        public bool HasErrors => validationResult.Errors.Count > 0;
-
-        public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
-
         private void RaiseErrorsChanged(string propertyName)
         {
             ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(propertyName));
+        }
+
+        private void Validate(object sender, PropertyChangedEventArgs e)
+        {
+            validationResult = validator.Validate(target);
+            foreach (var error in validationResult.Errors)
+            {
+                RaiseErrorsChanged(error.PropertyName);
+            }
         }
     }
 }

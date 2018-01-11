@@ -6,6 +6,7 @@ using System.Windows.Data;
 
 namespace NetLib.WPF.Converters
 {
+    [PublicAPI]
     [ValueConversion(typeof(bool), typeof(FontWeights))]
     public class BooleanToFontBoldConverter : ConvertorBase
     {

@@ -1,14 +1,32 @@
 ﻿using ReactiveUI;
 using System;
 using System.Reactive.Linq;
+using JetBrains.Annotations;
 
 namespace NetLib.WPF.Controls
 {
+    public class DesignTextVM : TextVM
+    {
+        public DesignTextVM()
+            : base("Новый объект", "Название объекта", "Вася", s => !string.IsNullOrEmpty(s))
+        {
+        }
+    }
+
     /// <summary>
     /// Текстовое значение
     /// </summary>
+    [PublicAPI]
     public class TextVM : BaseViewModel
     {
+        public string Name { get; set; }
+
+        public ReactiveCommand OK { get; }
+
+        public string Title { get; set; }
+
+        public string Value { get; set; }
+
         /// <summary>
         /// Заголовок, имя и значение
         /// </summary>
@@ -24,23 +42,9 @@ namespace NetLib.WPF.Controls
             OK = CreateCommand(OkExecute, this.WhenAnyValue(w => w.Value).Select(s => allowValue(s)));
         }
 
-        public string Title { get; set; }
-        public string Name { get; set; }
-        public string Value { get; set; }
-
-        public ReactiveCommand OK { get; }
-
         private void OkExecute()
         {
             DialogResult = true;
-        }
-    }
-
-    public class DesignTextVM : TextVM
-    {
-        public DesignTextVM()
-            : base("Новый объект", "Название объекта", "Вася", s => !string.IsNullOrEmpty(s))
-        {
         }
     }
 }

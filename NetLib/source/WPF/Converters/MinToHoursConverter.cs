@@ -5,6 +5,7 @@ using System.Windows.Data;
 
 namespace NetLib.WPF.Converters
 {
+    [PublicAPI]
     [ValueConversion(typeof(int), typeof(double))]
     [ValueConversion(typeof(double), typeof(double))]
     public class MinToHoursConverter : ConvertorBase

@@ -6,6 +6,7 @@ using System.Windows.Data;
 
 namespace NetLib.WPF.Converters
 {
+    [PublicAPI]
     [ValueConversion(typeof(object), typeof(Visibility))]
     public class NullCollapseVisibilityConverter : ConvertorBase
     {

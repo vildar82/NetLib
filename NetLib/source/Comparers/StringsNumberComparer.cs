@@ -1,10 +1,12 @@
 ﻿using System.Collections.Generic;
+using JetBrains.Annotations;
 
 namespace NetLib.Comparers
 {
     /// <summary>
     /// Сравнение строк как чисел
     /// </summary>
+    [PublicAPI]
     public class StringsNumberComparer : IComparer<string>
     {
         public int Compare(string x, string y)
@@ -20,13 +22,10 @@ namespace NetLib.Comparers
                 // y - строка.
                 return -1; // число numberX меньше строки y
             }
-            else
-            {
-                // x - строка
-                // ReSharper disable once StringCompareIsCultureSpecific.1
-                return int.TryParse(y, out var _) ? 1 : string.Compare(x, y);
-                // y - строка.               
-            }
+            // x - строка
+            // ReSharper disable once StringCompareIsCultureSpecific.1
+            return int.TryParse(y, out var _) ? 1 : string.Compare(x, y);
+            // y - строка.
         }
     }
 }

@@ -9,13 +9,14 @@ namespace NetLib.AD
     /// <summary>
     /// Работа с Active Directory - получение групп пользователя
     /// </summary>
+    [PublicAPI]
     public class ADUtils : IDisposable
     {
         public PrincipalContext context;
 
         /// <summary>
         /// Группы текущего пользователя
-        /// </summary>        
+        /// </summary>
         [NotNull]
         public static List<string> GetCurrentUserADGroups([CanBeNull] out string fio)
         {
@@ -40,30 +41,16 @@ namespace NetLib.AD
         }
 
         /// <summary>
-        /// Получить базовый основной контекст
-        /// </summary>        
-        [NotNull]
-        private PrincipalContext GetPrincipalContext([CanBeNull] string domain = null)
-        {
-            return domain == null ? new PrincipalContext(ContextType.Domain) : new PrincipalContext(ContextType.Domain, domain);
-        }
-
-        /// <summary>
-        /// Получить указанного пользователя Active Directory
+        /// Очистка контекста AD
         /// </summary>
-        /// <param name="sUserName">Имя пользователя для извлечения</param>
-        /// <param name="domain">Домен</param>        
-        [CanBeNull]
-        private UserPrincipal GetUser([NotNull] string sUserName, string domain)
+        public void Dispose()
         {
-            context = GetPrincipalContext(domain);
-            var user = UserPrincipal.FindByIdentity(context, IdentityType.SamAccountName, sUserName);
-            return user;
+            context?.Dispose();
         }
 
         /// <summary>
         /// Список групп пользователя
-        /// </summary>        
+        /// </summary>
         [NotNull]
         public List<string> GetCurrentUserGroups([CanBeNull] out string fio)
         {
@@ -95,11 +82,25 @@ namespace NetLib.AD
         }
 
         /// <summary>
-        /// Очистка контекста AD
+        /// Получить базовый основной контекст
         /// </summary>
-        public void Dispose()
+        [NotNull]
+        private PrincipalContext GetPrincipalContext([CanBeNull] string domain = null)
         {
-            context?.Dispose();
+            return domain == null ? new PrincipalContext(ContextType.Domain) : new PrincipalContext(ContextType.Domain, domain);
+        }
+
+        /// <summary>
+        /// Получить указанного пользователя Active Directory
+        /// </summary>
+        /// <param name="sUserName">Имя пользователя для извлечения</param>
+        /// <param name="domain">Домен</param>
+        [CanBeNull]
+        private UserPrincipal GetUser([NotNull] string sUserName, string domain)
+        {
+            context = GetPrincipalContext(domain);
+            var user = UserPrincipal.FindByIdentity(context, IdentityType.SamAccountName, sUserName);
+            return user;
         }
     }
 }

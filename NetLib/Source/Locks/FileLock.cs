@@ -4,10 +4,17 @@ using System.IO;
 
 namespace NetLib.Locks
 {
+    [PublicAPI]
     public class FileLock : ILockItem
     {
-        private FileStream stream;
         private readonly string file;
+        private FileStream stream;
+        /// <summary>
+        /// Информация из файла блокировки
+        /// </summary>
+        public LockInfo Info { get; private set; }
+
+        public bool IsLockSuccess { get; }
 
         public FileLock(string file)
         {
@@ -33,11 +40,18 @@ namespace NetLib.Locks
             }
         }
 
-        public bool IsLockSuccess { get; }
-        /// <summary>
-        /// Информация из файла блокировки
-        /// </summary>
-        public LockInfo Info { get; private set; }
+        public void Dispose()
+        {
+            try
+            {
+                stream?.Dispose();
+                File.Delete(file);
+            }
+            catch
+            {
+                // ignored
+            }
+        }
 
         /// <summary>
         /// строка для сообщения о блокировке - Пользователь, дата
@@ -53,19 +67,6 @@ namespace NetLib.Locks
             Info = new LockInfo { Login = Environment.UserName, Date = DateTime.Now };
             Info.Serialize(file);
             stream = new FileStream(file, FileMode.Open, FileAccess.Read, FileShare.Read);
-        }
-
-        public void Dispose()
-        {
-            try
-            {
-                stream?.Dispose();
-                File.Delete(file);
-            }
-            catch
-            {
-                // ignored
-            }
         }
     }
 }

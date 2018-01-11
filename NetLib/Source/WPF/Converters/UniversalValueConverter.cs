@@ -5,6 +5,7 @@ using System.Globalization;
 
 namespace NetLib.WPF.Converters
 {
+    [PublicAPI]
     public class UniversalValueConverter : ConvertorBase
     {
         public override object Convert(object value, [NotNull] Type targetType, object parameter, CultureInfo culture)

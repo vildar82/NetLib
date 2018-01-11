@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Globalization;
 using System.Windows.Data;
+using JetBrains.Annotations;
 
 namespace NetLib.WPF.Converters
 {
+    [PublicAPI]
     [ValueConversion(typeof(bool), typeof(bool))]
     public class BooleanToOppositeBooleanConverter : ConvertorBase
     {

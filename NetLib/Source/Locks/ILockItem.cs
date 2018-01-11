@@ -1,11 +1,14 @@
 ﻿using System;
+using JetBrains.Annotations;
 
 namespace NetLib.Locks
 {
-	public interface ILockItem : IDisposable
-	{
-		bool IsLockSuccess { get; }
-		LockInfo Info { get; }
-		string GetMessage();
-	}
+    [PublicAPI]
+    public interface ILockItem : IDisposable
+    {
+        LockInfo Info { get; }
+        bool IsLockSuccess { get; }
+
+        string GetMessage();
+    }
 }

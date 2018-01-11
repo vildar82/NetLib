@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 namespace NetLib.WPF.Controls.Select
 {
+    [PublicAPI]
     public static class SelectList
     {
         public static T Select<T>([NotNull] List<SelectListItem<T>> items, string title, [CanBeNull] string name = null)
