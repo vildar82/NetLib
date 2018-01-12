@@ -241,19 +241,31 @@ namespace NetLib.WPF
         /// <param name="inMainThread">Выполнять в основном потоке (обязательно для AutoCAD/Revit,
         /// т.к. любые операции с чертежом нужно делать из основного потока).
         /// При этом нужно периодически выполнять прокачку очереди сообщений (DoEvents)</param>
-        public async void ShowProgressDialog([NotNull] Action<ProgressDialogController> job, string title, string msg,
+        public async Task ShowProgressDialog([NotNull] Action<ProgressDialogController> job, string title, string msg,
             bool inMainThread = true)
         {
+            Exception jobEx = null;
             var controller = await Task.Run(() => dialogCoordinator.ShowProgressAsync(context, title, msg));
             if (inMainThread)
             {
-                job(controller);
+                try
+                {
+                    job(controller);
+                }
+                catch (Exception ex)
+                {
+                    jobEx = ex;
+                }
             }
             else
             {
                 await Task.Run(() => job(controller));
             }
             await controller.CloseAsync();
+            if (jobEx != null)
+            {
+                throw jobEx;
+            }
         }
 
         /// <summary>
