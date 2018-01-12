@@ -27,8 +27,10 @@ namespace WpfApp1
             dialogView.ShowDialog();
         }
 
-        private void TestProgressExec()
+        private async void TestProgressExec()
         {
+            var res = await ShowMessage("Test", "Msg", "Yes", "No");
+            res = await ShowMessage("Test", "Msg", "Yes", "No", "Cancel");
             Debug.WriteLine($"{Thread.CurrentThread.ManagedThreadId} TestProgressExec start");
             ShowProgressDialog(c =>
             {

@@ -24,7 +24,7 @@ namespace NetLib.WPF
     [PublicAPI]
     public abstract class BaseViewModel : ReactiveObject, IBaseViewModel
     {
-        internal readonly IDialogCoordinator dialogCoordinator = DialogCoordinator.Instance;
+        public readonly IDialogCoordinator dialogCoordinator = DialogCoordinator.Instance;
         protected IValidator validator;
         private static readonly HashSet<string> ignoreProps = new HashSet<string> { "Hide", "DialogResult", "Errors" };
         private static readonly ConcurrentDictionary<RuntimeTypeHandle, IValidator> validators =
@@ -195,6 +195,40 @@ namespace NetLib.WPF
             catch
             {
                 //
+            }
+        }
+
+        /// <summary>
+        /// Запрос ответа у пользователя с утвердительным или отрицательным ответом
+        /// </summary>
+        /// <param name="title">Заголовок</param>
+        /// <param name="msg">Вопрос</param>
+        /// <param name="affirmativeBtn">Надпись для кнопки утвердительного ответа</param>
+        /// <param name="negateBtn">Надпись для кнопки отрицательного ответа</param>
+        /// <param name="auxiliaryBtn">Дополнительноая кнопка (возвращается null)</param>
+        /// <returns></returns>
+        public async Task<bool?> ShowMessage(string title, string msg, string affirmativeBtn, string negateBtn,
+            [CanBeNull] string auxiliaryBtn = null)
+        {
+            if (auxiliaryBtn == null)
+            {
+                var dlgRes = await dialogCoordinator.ShowMessageAsync(context, title, msg,
+                    MessageDialogStyle.AffirmativeAndNegative,
+                    new MetroDialogSettings { AffirmativeButtonText = affirmativeBtn, NegativeButtonText = negateBtn });
+                return dlgRes == MessageDialogResult.Affirmative;
+            }
+            else
+            {
+                var dlgRes = await dialogCoordinator.ShowMessageAsync(context, title, msg,
+                    MessageDialogStyle.AffirmativeAndNegativeAndSingleAuxiliary,
+                    new MetroDialogSettings
+                    {
+                        AffirmativeButtonText = affirmativeBtn,
+                        NegativeButtonText = negateBtn,
+                        FirstAuxiliaryButtonText = auxiliaryBtn
+                    });
+                if (dlgRes == MessageDialogResult.FirstAuxiliary) return null;
+                return dlgRes == MessageDialogResult.Affirmative;
             }
         }
 
