@@ -13,6 +13,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Threading;
 
 namespace NetLib.WPF
 {
@@ -23,12 +24,14 @@ namespace NetLib.WPF
     [PublicAPI]
     public abstract class BaseViewModel : ReactiveObject, IBaseViewModel
     {
-        protected readonly IDialogCoordinator dialogCoordinator = DialogCoordinator.Instance;
+        internal readonly IDialogCoordinator dialogCoordinator = DialogCoordinator.Instance;
         protected IValidator validator;
         private static readonly HashSet<string> ignoreProps = new HashSet<string> { "Hide", "DialogResult", "Errors" };
         private static readonly ConcurrentDictionary<RuntimeTypeHandle, IValidator> validators =
             new ConcurrentDictionary<RuntimeTypeHandle, IValidator>();
 
+        private static Dispatcher dispatcher = Dispatcher.CurrentDispatcher;
+        private readonly object context;
         private ValidationResult validationResult;
 
         public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
@@ -49,12 +52,19 @@ namespace NetLib.WPF
             validators[typeof(BaseViewModel).TypeHandle] = null;
         }
 
-        public BaseViewModel(IBaseViewModel parent)
+        public BaseViewModel([CanBeNull] IBaseViewModel parent)
         {
+            context = this;
             InitValidator();
             using (SuppressChangeNotifications())
             {
                 Parent = parent;
+                if (Window == null && parent is BaseViewModel parentVM)
+                {
+                    context = parentVM;
+                    Window = parent.Window;
+                    dialogCoordinator = parentVM.dialogCoordinator;
+                }
                 PropertyChanged += BaseViewModel_PropertyChanged;
                 ThrownExceptions.Subscribe(CommandException);
             }
@@ -62,6 +72,15 @@ namespace NetLib.WPF
 
         public BaseViewModel() : this(null)
         {
+        }
+
+        /// <summary>
+        /// Прокачка очереди сообщений
+        /// </summary>
+        public static void DoEvents()
+        {
+            dispatcher.Invoke(DispatcherPriority.Background,
+                new Action(delegate { }));
         }
 
         /// <summary>
@@ -177,6 +196,30 @@ namespace NetLib.WPF
             {
                 //
             }
+        }
+
+        /// <summary>
+        /// Запуск окна ожидания длительного процесса
+        /// </summary>
+        /// <param name="job">Работа</param>
+        /// <param name="title">Заголовок</param>
+        /// <param name="msg">сообщение</param>
+        /// <param name="inMainThread">Выполнять в основном потоке (обязательно для AutoCAD/Revit,
+        /// т.к. любые операции с чертежом нужно делать из основного потока).
+        /// При этом нужно периодически выполнять прокачку очереди сообщений (DoEvents)</param>
+        public async void ShowProgressDialog([NotNull] Action<ProgressDialogController> job, string title, string msg,
+            bool inMainThread = true)
+        {
+            var controller = await Task.Run(() => dialogCoordinator.ShowProgressAsync(context, title, msg));
+            if (inMainThread)
+            {
+                job(controller);
+            }
+            else
+            {
+                await Task.Run(() => job(controller));
+            }
+            await controller.CloseAsync();
         }
 
         /// <summary>

@@ -6,25 +6,13 @@ using System.Threading;
 
 namespace WpfApp1
 {
-    public class MainViewModel : BaseViewModel
+    public class UserControlViewModel : BaseViewModel
     {
-        public ReactiveCommand ShowDialog { get; set; }
-
         public ReactiveCommand TestProgress { get; set; }
 
-        public UserControlViewModel UserControl { get; set; }
-
-        public MainViewModel()
+        public UserControlViewModel(MainViewModel parent) : base(parent)
         {
-            UserControl = new UserControlViewModel(this);
-            ShowDialog = CreateCommand(ShowDialogExec);
             TestProgress = CreateCommand(TestProgressExec);
-        }
-
-        private void ShowDialogExec()
-        {
-            var dialogView = new DialogView(new DialogViewModel());
-            dialogView.ShowDialog();
         }
 
         private void TestProgressExec()
@@ -34,9 +22,8 @@ namespace WpfApp1
             {
                 c.SetIndeterminate();
                 Debug.WriteLine($"{Thread.CurrentThread.ManagedThreadId} TestProgressExec progress start");
-                for (var i = 0; i < 200000000; i++)
+                for (var i = 0; i < 100000000; i++)
                 {
-                    if (i % 10000000 == 0) DoEvents();
                     // ReSharper disable once ReturnValueOfPureMethodIsNotUsed
                     Math.Sqrt(i);
                     // ReSharper disable once ReturnValueOfPureMethodIsNotUsed
@@ -45,7 +32,7 @@ namespace WpfApp1
                     Math.Sqrt(i * i);
                 }
                 Debug.WriteLine($"{Thread.CurrentThread.ManagedThreadId} TestProgressExec progress end");
-            }, "Заголовок", "Сообщение", false);
+            }, "title", "message", false);
             Debug.WriteLine($"{Thread.CurrentThread.ManagedThreadId} TestProgressExec end");
         }
     }

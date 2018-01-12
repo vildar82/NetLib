@@ -5,6 +5,23 @@
 		d:DataContext="{d:DesignInstance wpfApp1:MainViewModel, d:IsDesignTimeCreatable=True}" Title="MainView" Height="600"
 		Width="600">
 	<Grid>
-		<Button Content="ShowDialog" Command="{Binding ShowDialog}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+		<Grid.RowDefinitions>
+			<RowDefinition />
+			<RowDefinition />
+		</Grid.RowDefinitions>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="*" />
+			<ColumnDefinition Width="Auto" />
+			<ColumnDefinition Width="Auto" />
+		</Grid.ColumnDefinitions>
+		<TextBlock Grid.Row="0" Grid.Column="0" Text="dfghdgh dfgh fdgh dfgh efgh dfgh dfgh ddh d " Margin="10" />
+		<Button Grid.Row="0" Grid.Column="1" Content="Progress" Command="{Binding TestProgress}" VerticalAlignment="Center"
+				Margin="10" />
+		<Button Grid.Row="0" Grid.Column="2" Content="ShowDialog" Command="{Binding ShowDialog}" VerticalAlignment="Center"
+				Margin="10" HorizontalAlignment="Center" />
+		<StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3">
+			<TextBlock Text="User Control" />
+			<wpfApp1:UserControl1 DataContext="{Binding UserControl}" />
+		</StackPanel>
 	</Grid>
 </wpf:BaseWindow>
