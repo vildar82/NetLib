@@ -1,4 +1,5 @@
-﻿using JetBrains.Annotations;
+﻿using System;
+using JetBrains.Annotations;
 using System.Collections.Generic;
 
 namespace NetLib.Comparers
@@ -76,9 +77,8 @@ namespace NetLib.Comparers
 
                 // If we have collected numbers, compare them numerically.
                 // Otherwise, if we have strings, compare them alphabetically.
-                var str1 = new string(space1);
-                var str2 = new string(space2);
-
+                var str1 = new string(space1).Trim('\0');
+                var str2 = new string(space2).Trim('\0');
                 int result;
 
                 if (char.IsDigit(space1[0]) && char.IsDigit(space2[0]))
@@ -89,8 +89,7 @@ namespace NetLib.Comparers
                 }
                 else
                 {
-                    // ReSharper disable once StringCompareIsCultureSpecific.3
-                    result = string.Compare(str1, str2, true);
+                    result = string.Compare(str1, str2, StringComparison.OrdinalIgnoreCase);
                 }
 
                 if (result != 0)
