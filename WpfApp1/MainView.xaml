@@ -8,6 +8,7 @@
 		<Grid.RowDefinitions>
 			<RowDefinition />
 			<RowDefinition />
+			<RowDefinition />
 		</Grid.RowDefinitions>
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="*" />
@@ -22,6 +23,9 @@
 		<StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3">
 			<TextBlock Text="User Control" />
 			<wpfApp1:UserControl1 DataContext="{Binding UserControl}" />
+		</StackPanel>
+		<StackPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3">
+			<Button Content="Window1" Command="{Binding ShowWindow1}" />
 		</StackPanel>
 	</Grid>
 </wpf:BaseWindow>

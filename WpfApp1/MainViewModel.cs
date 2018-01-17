@@ -10,6 +10,7 @@ namespace WpfApp1
     {
         public ReactiveCommand ShowDialog { get; set; }
 
+        public ReactiveCommand ShowWindow1 { get; set; }
         public ReactiveCommand TestProgress { get; set; }
 
         public UserControlViewModel UserControl { get; set; }
@@ -19,6 +20,7 @@ namespace WpfApp1
             UserControl = new UserControlViewModel(this);
             ShowDialog = CreateCommand(ShowDialogExec);
             TestProgress = CreateCommand(TestProgressExec);
+            ShowWindow1 = CreateCommand(ShowWindow1Exec);
         }
 
         private void ShowDialogExec()
@@ -27,12 +29,20 @@ namespace WpfApp1
             dialogView.ShowDialog();
         }
 
+        private void ShowWindow1Exec()
+        {
+            var win = new Window1();
+            win.Show();
+        }
+
         private async void TestProgressExec()
         {
+            // ReSharper disable once NotAccessedVariable
             var res = await ShowMessage("Test", "Msg", "Yes", "No");
+            // ReSharper disable once RedundantAssignment
             res = await ShowMessage("Test", "Msg", "Yes", "No", "Cancel");
             Debug.WriteLine($"{Thread.CurrentThread.ManagedThreadId} TestProgressExec start");
-            ShowProgressDialog(c =>
+            await ShowProgressDialog(c =>
             {
                 c.SetIndeterminate();
                 Debug.WriteLine($"{Thread.CurrentThread.ManagedThreadId} TestProgressExec progress start");

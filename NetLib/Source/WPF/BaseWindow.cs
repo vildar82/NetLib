@@ -19,7 +19,6 @@ namespace NetLib.WPF
     [PublicAPI]
     public class BaseWindow : MetroWindow
     {
-        // ReSharper disable once MemberCanBePrivate.Global
         protected bool isDialog;
 
         private static readonly FieldInfo _showingAsDialogField = typeof(Window)
@@ -35,17 +34,14 @@ namespace NetLib.WPF
         /// <summary>
         /// Закрытие окна по нажатия Enter или Space (пробел) - DialogResult true
         /// </summary>
-        // ReSharper disable once MemberCanBePrivate.Global
-        public bool CloseWindowByEnterOrSpace { get; set; } = true;
+        public bool CloseWindowByEnterOrSpace { get; set; }
         /// <summary>
         /// Вызывать ли закрытие окна или нет. (Если сохранять в памяти и показывать снова)
         /// </summary>
-        // ReSharper disable once MemberCanBePrivate.Global
         public bool IsUnclosing { get; set; }
         /// <summary>
         /// DataContext
         /// </summary>
-        // ReSharper disable once MemberCanBePrivate.Global
         public IBaseViewModel Model
         {
             get => model;
@@ -61,9 +57,7 @@ namespace NetLib.WPF
         /// <summary>
         /// Дествие при нажатии OK/Space
         /// </summary>
-        // ReSharper disable once MemberCanBePrivate.Global
         public Action OnEnterOrSpace { get; set; }
-        // ReSharper disable once MemberCanBePrivate.Global
         protected static Logger Logger { get; } = LogManager.GetCurrentClassLogger();
 
         [Obsolete("Лучше не использовать. Не забудь присвоить Model и Model.Window.")]

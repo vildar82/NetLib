@@ -75,8 +75,8 @@ namespace NetLib
         public static bool EqualsIgroreCaseAndSpecChars([NotNull] this string value1, [NotNull] string value2)
         {
             // Удаление спец символов
-            string normalS1 = Regex.Replace(value1, @"\s", "");
-            string normalS2 = Regex.Replace(value2, @"\s", "");
+            var normalS1 = Regex.Replace(value1, @"\s", "");
+            var normalS2 = Regex.Replace(value2, @"\s", "");
             return normalS1.Equals(normalS2, StringComparison.OrdinalIgnoreCase);
         }
 

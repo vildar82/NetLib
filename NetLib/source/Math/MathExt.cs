@@ -69,6 +69,7 @@ namespace NetLib
             return angle;
         }
 
+        [Obsolete("Use StringExt.GetStartInteger()")]
         public static int GetStartInt([NotNull] this string input)
         {
             var res = input.GetStartInteger();
