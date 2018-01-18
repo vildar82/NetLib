@@ -311,40 +311,39 @@ namespace NetLib
             try
             {
                 var sep = CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator;
-                if (sep == ",")
+                switch (sep)
                 {
-                    val = val.Replace('.', ',');
-                }
-                else if (sep == ".")
-                {
-                    val = val.Replace(',', '.');
+                    case ",":
+                        val = val.Replace('.', ',');
+                        break;
+
+                    case ".":
+                        val = val.Replace(',', '.');
+                        break;
                 }
             }
             catch
             {
                 // ignored
             }
-
             if (!double.TryParse(val, out var d))
             {
                 // ReSharper disable once StringIndexOfIsCultureSpecific.1
                 val = val.IndexOf(",") != -1 ? val.Replace(",", ".") : val.Replace(".", ",");
                 d = double.Parse(val);
             }
-            return d.Round();
+            return d;
         }
 
         [NotNull]
         public static string ToHours(this int min)
         {
-            //return Math.Round(min * 0.01667, 1);
             return ToHours((double)min);
         }
 
         [NotNull]
         public static string ToHours(this double min)
         {
-            //return Math.Round(min *0.01667, 1);
             var span = TimeSpan.FromMinutes(min);
             var label = $"{span.Hours}ч.{span.Minutes}м.";
             return label;
