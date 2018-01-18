@@ -83,15 +83,21 @@ namespace NetLib.Comparers
 
                 if (char.IsDigit(space1[0]) && char.IsDigit(space2[0]))
                 {
-                    var thisNumericChunk = int.Parse(str1);
-                    var thatNumericChunk = int.Parse(str2);
-                    result = thisNumericChunk.CompareTo(thatNumericChunk);
+                    try
+                    {
+                        var thisNumericChunk = int.Parse(str1);
+                        var thatNumericChunk = int.Parse(str2);
+                        result = thisNumericChunk.CompareTo(thatNumericChunk);
+                    }
+                    catch
+                    {
+                        result = string.Compare(str1, str2, StringComparison.OrdinalIgnoreCase);
+                    }
                 }
                 else
                 {
                     result = string.Compare(str1, str2, StringComparison.OrdinalIgnoreCase);
                 }
-
                 if (result != 0)
                 {
                     return result;
