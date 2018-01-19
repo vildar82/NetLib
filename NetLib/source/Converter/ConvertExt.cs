@@ -20,11 +20,15 @@ namespace NetLib
         /// <param name="value">Значение</param>
         /// <returns>Значение приведенное к заданному типу.</returns>
         /// <exception cref="InvalidCastException">Это и другие исключения от Convert.ChangeType</exception>
+        [CanBeNull]
         public static T GetValue<T>(this object value)
         {
+            switch (value)
+            {
+                case null: return default;
+                case T vt: return vt;
+            }
             var typeT = typeof(T);
-
-            // Из строки в число - разделитель точка или запятая
             if (value is string s)
             {
                 if (s.IsNullOrEmpty()) return default;
@@ -34,6 +38,7 @@ namespace NetLib
                     return (T)value;
                 }
             }
+            // Из строки в число - разделитель точка или запятая
             // Округление числа до 4 знаков
             if (value is double && typeT == typeof(double))
             {
