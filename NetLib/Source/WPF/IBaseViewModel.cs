@@ -23,7 +23,11 @@ namespace NetLib.WPF
 
         IDisposable HideWindow();
 
+        void OnActivated();
+
         void OnClosed();
+
+        void OnClosing();
 
         void OnInitialize();
 

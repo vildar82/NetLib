@@ -140,7 +140,15 @@ namespace NetLib.WPF
             return new ActionUsage(HideMe, VisibleMe);
         }
 
+        public virtual void OnActivated()
+        {
+        }
+
         public virtual void OnClosed()
+        {
+        }
+
+        public virtual void OnClosing()
         {
         }
 

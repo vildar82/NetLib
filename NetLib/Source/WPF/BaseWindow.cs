@@ -102,7 +102,13 @@ namespace NetLib.WPF
             Activated += (s, a) =>
             {
                 isDialog = (bool)_showingAsDialogField.GetValue(this);
+                OnActivated();
             };
+        }
+
+        public virtual void OnActivated()
+        {
+            model?.OnActivated();
         }
 
         internal void OnChangeTheme()
@@ -123,6 +129,7 @@ namespace NetLib.WPF
 
         protected override void OnClosing(CancelEventArgs e)
         {
+            model?.OnClosing();
             if (IsUnclosing)
             {
                 e.Cancel = true;

@@ -48,7 +48,15 @@ namespace NetLib.IO
         [NotNull]
         public static string GetTempFile([CanBeNull] string extWithDot = null)
         {
-            return System.IO.Path.GetTempPath() + Guid.NewGuid().ToString() + (extWithDot ?? ".tmp");
+            return System.IO.Path.GetTempPath() + Guid.NewGuid() + (extWithDot ?? ".tmp");
+        }
+
+        [NotNull]
+        public static string GetTemporaryDirectory()
+        {
+            var tempDirectory = System.IO.Path.Combine(System.IO.Path.GetTempPath(), System.IO.Path.GetRandomFileName());
+            Directory.CreateDirectory(tempDirectory);
+            return tempDirectory;
         }
 
         /// <summary>
