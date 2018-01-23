@@ -47,6 +47,7 @@ namespace NetLib
             }
             if (typeT.IsEnum)
             {
+                // ReSharper disable once PossibleInvalidCastException
                 return (T)value;
             }
             if (typeT == typeof(bool))
@@ -54,6 +55,7 @@ namespace NetLib
                 switch (value)
                 {
                     case bool _:
+                        // ReSharper disable once PossibleInvalidCastException
                         return (T)value;
 
                     case int valI:

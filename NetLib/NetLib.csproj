@@ -199,6 +199,7 @@
     <Compile Include="Source\WPF\Controls\TextEdit\TextVM.cs" />
     <Compile Include="Source\WPF\Converters\BooleanOrConverter.cs" />
     <Compile Include="Source\WPF\Converters\BoolToYesNoConverter.cs" />
+    <Compile Include="Source\WPF\Converters\EnumDescriptionTypeConverter.cs" />
     <Compile Include="Source\WPF\Converters\GridLengthConverter.cs" />
     <Compile Include="Source\WPF\Converters\NullCollapseVisibilityConverter.cs" />
     <Compile Include="Source\WPF\Converters\BooleanToCollapseVisibilityConverter.cs" />
