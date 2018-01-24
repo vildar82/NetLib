@@ -230,6 +230,10 @@
     <Compile Include="Source\WPF\ValidationTemplate.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Source\WPF\Styles\ScrollBarIOS.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Source\WPF\Theme\Accents\GrayAccent.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

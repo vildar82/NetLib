@@ -176,7 +176,7 @@ namespace NetLib.WPF
 
         private void AddStyleResouse()
         {
-            Resources.MergedDictionaries.Add(new ResourceDictionary()
+            Resources.MergedDictionaries.Add(new ResourceDictionary
             {
                 Source = new Uri("pack://application:,,,/NetLib;component/Source/Style.xaml")
             });
