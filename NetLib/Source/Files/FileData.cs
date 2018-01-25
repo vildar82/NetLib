@@ -43,6 +43,11 @@ namespace NetLib
 
         public void Save()
         {
+            var serverDir = Path.GetDirectoryName(ServerFile);
+            if (!Directory.Exists(serverDir))
+            {
+                Directory.CreateDirectory(serverDir ?? throw new InvalidOperationException());
+            }
             Serialize();
             Copy();
         }
