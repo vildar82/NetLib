@@ -44,7 +44,6 @@ namespace NetLib
         public void Save()
         {
             Serialize();
-
             Copy();
         }
 

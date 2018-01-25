@@ -1,0 +1,55 @@
+﻿using JetBrains.Annotations;
+using System;
+using System.IO;
+using System.Reactive;
+using System.Reactive.Linq;
+
+namespace NetLib
+{
+    [PublicAPI]
+    public class FileWatcherRx
+    {
+        public IObservable<EventPattern<FileSystemEventArgs>> Changed { get; }
+
+        public IObservable<EventPattern<FileSystemEventArgs>> Created { get; }
+
+        public IObservable<EventPattern<FileSystemEventArgs>> Deleted { get; }
+
+        public IObservable<EventPattern<ErrorEventArgs>> Error { get; set; }
+
+        public IObservable<EventPattern<RenamedEventArgs>> Renamed { get; set; }
+
+        public FileSystemWatcher Watcher { get; }
+
+        public FileWatcherRx(string path, string filter,
+                    NotifyFilters notifyFilters = NotifyFilters.LastWrite,
+            WatcherChangeTypes changeTypes = WatcherChangeTypes.Changed)
+        {
+            Watcher = new FileSystemWatcher
+            {
+                Path = path,
+                IncludeSubdirectories = false,
+                NotifyFilter = notifyFilters,
+                Filter = filter,
+                EnableRaisingEvents = true
+            };
+            if (changeTypes.HasFlag(WatcherChangeTypes.Changed))
+            {
+                Changed = Observable.FromEventPattern<FileSystemEventArgs>(Watcher, "Changed");
+            }
+            if (changeTypes.HasFlag(WatcherChangeTypes.Created))
+            {
+                Created = Observable.FromEventPattern<FileSystemEventArgs>(Watcher, "Created");
+            }
+            if (changeTypes.HasFlag(WatcherChangeTypes.Deleted))
+            {
+                Deleted = Observable.FromEventPattern<FileSystemEventArgs>(Watcher, "Deleted");
+            }
+            if (changeTypes.HasFlag(WatcherChangeTypes.Renamed))
+            {
+                Renamed = Observable.FromEventPattern<RenamedEventArgs>(Watcher, "Renamed");
+            }
+            Error = Observable.FromEventPattern<ErrorEventArgs>(Watcher, nameof(Watcher.Error));
+        }
+    }
+}
