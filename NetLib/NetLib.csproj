@@ -180,6 +180,7 @@
     <Compile Include="Source\WPF\Behaviors\ListBoxAutoScrollBehavior.cs" />
     <Compile Include="Source\WPF\Behaviors\ScrollIntoViewForListBox.cs" />
     <Compile Include="Source\WPF\Behaviors\TreeView\BindableSelectedItemBehavior.cs" />
+    <Compile Include="Source\WPF\Controls\CustomRichTextBox.cs" />
     <Compile Include="Source\WPF\Controls\InfoDialogs\InfoDialog.cs" />
     <Compile Include="Source\WPF\Controls\InfoDialogs\InfoDialogView.xaml.cs">
       <DependentUpon>InfoDialogView.xaml</DependentUpon>

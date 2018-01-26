@@ -9,6 +9,8 @@ namespace NetLib.IO
         [PublicAPI]
         public static void CopyDirectory([NotNull] string sourceDir, string destDir)
         {
+            sourceDir = sourceDir.TrimEnd(System.IO.Path.DirectorySeparatorChar);
+            destDir = destDir.TrimEnd(System.IO.Path.DirectorySeparatorChar);
             foreach (var dirPath in Directory.GetDirectories(sourceDir, "*", SearchOption.AllDirectories))
             {
                 Directory.CreateDirectory(dirPath.Replace(sourceDir, destDir));
