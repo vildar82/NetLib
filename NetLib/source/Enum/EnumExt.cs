@@ -35,7 +35,7 @@ namespace NetLib
             if (!typeof(T).IsEnum) throw new ArgumentException("Это не enum");
             var v1 = Convert.ToInt32(enum1);
             var v2 = Convert.ToInt32(enum2);
-            return (v1 & v2) > 0;
+            return v1 == 0 || v2 == 0 || (v1 & v2) > 0;
         }
 
         /// <summary>

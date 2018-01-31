@@ -17,7 +17,9 @@ namespace NetLib.WPF
 
         void CommandException(Exception e);
 
-        ReactiveCommand CreateCommand(Action execute, IObservable<bool> canExecute = null);
+        ReactiveCommand CreateCommand(Action execute, [CanBeNull] IObservable<bool> canExecute = null);
+
+        ReactiveCommand CreateCommand<T>(Action<T> execute, [CanBeNull] IObservable<bool> canExecute = null);
 
         void HideMe();
 
