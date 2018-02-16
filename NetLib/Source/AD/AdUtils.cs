@@ -1,13 +1,16 @@
-﻿using JetBrains.Annotations;
+﻿// Khisyametdinovvt Хисяметдинов Вильдар Тямильевич
+// 2017 04 12 20:36
+
 using System;
 using System.Collections.Generic;
 using System.DirectoryServices.AccountManagement;
 using System.Linq;
+using JetBrains.Annotations;
 
 namespace NetLib.AD
 {
     /// <summary>
-    /// Работа с Active Directory - получение групп пользователя
+    ///     Работа с Active Directory - получение групп пользователя
     /// </summary>
     [PublicAPI]
     public class ADUtils : IDisposable
@@ -15,7 +18,15 @@ namespace NetLib.AD
         public PrincipalContext context;
 
         /// <summary>
-        /// Группы текущего пользователя
+        ///     Очистка контекста AD
+        /// </summary>
+        public void Dispose()
+        {
+            context?.Dispose();
+        }
+
+        /// <summary>
+        ///     Группы текущего пользователя
         /// </summary>
         [NotNull]
         public static List<string> GetCurrentUserADGroups([CanBeNull] out string fio)
@@ -41,35 +52,19 @@ namespace NetLib.AD
         }
 
         /// <summary>
-        /// Очистка контекста AD
-        /// </summary>
-        public void Dispose()
-        {
-            context?.Dispose();
-        }
-
-        /// <summary>
-        /// Список групп пользователя
+        ///     Список групп пользователя
         /// </summary>
         [NotNull]
         public List<string> GetCurrentUserGroups([CanBeNull] out string fio)
         {
-            var userGroups = new List<string>();
             using (var user = GetUser(Environment.UserName, Environment.UserDomainName))
             {
+                fio = user?.DisplayName;
                 using (var groups = user?.GetGroups())
                 {
-                    if (groups != null)
-                    {
-                        foreach (var group in groups)
-                        {
-                            userGroups.Add(@group.Name);
-                        }
-                    }
+                    return groups?.Select(s => s.Name).ToList() ?? new List<string>();
                 }
-                fio = user?.DisplayName;
             }
-            return userGroups;
         }
 
         [CanBeNull]
@@ -82,16 +77,18 @@ namespace NetLib.AD
         }
 
         /// <summary>
-        /// Получить базовый основной контекст
+        ///     Получить базовый основной контекст
         /// </summary>
         [NotNull]
         private PrincipalContext GetPrincipalContext([CanBeNull] string domain = null)
         {
-            return domain == null ? new PrincipalContext(ContextType.Domain) : new PrincipalContext(ContextType.Domain, domain);
+            return domain == null
+                ? new PrincipalContext(ContextType.Domain)
+                : new PrincipalContext(ContextType.Domain, domain);
         }
 
         /// <summary>
-        /// Получить указанного пользователя Active Directory
+        ///     Получить указанного пользователя Active Directory
         /// </summary>
         /// <param name="sUserName">Имя пользователя для извлечения</param>
         /// <param name="domain">Домен</param>

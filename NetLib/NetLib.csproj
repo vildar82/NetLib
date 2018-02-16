@@ -144,6 +144,7 @@
     <Compile Include="Source\Comparers\IntEqualityComparer.cs" />
     <Compile Include="Source\Comparers\StringsNumberComparer.cs" />
     <Compile Include="Source\Converter\ConvertExt.cs" />
+    <Compile Include="Source\Data\DataExt.cs" />
     <Compile Include="Source\Enumerable\EnumerableExt.cs" />
     <Compile Include="Source\Enum\EnumExt.cs" />
     <Compile Include="Source\Errors\Error.cs" />

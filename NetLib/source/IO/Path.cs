@@ -6,6 +6,13 @@ namespace NetLib.IO
 {
     public static class Path
     {
+        public static bool IsEqualsDataDir([NotNull] string sourceDir, [NotNull] string destDir)
+        {
+            var diSrc = new DirectoryInfo(sourceDir);
+            var diDest = new DirectoryInfo(destDir);
+            return diSrc.LastWriteTimeUtc.IsEquals(diDest.LastWriteTimeUtc);
+        }
+
         [PublicAPI]
         public static void CopyDirectory([NotNull] string sourceDir, string destDir)
         {
