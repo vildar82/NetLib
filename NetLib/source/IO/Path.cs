@@ -4,6 +4,7 @@ using System.IO;
 
 namespace NetLib.IO
 {
+    [PublicAPI]
     public static class Path
     {
         public static bool IsEqualsDataDir([NotNull] string sourceDir, [NotNull] string destDir)

@@ -101,7 +101,7 @@ namespace NetLib.WPF
         }
 
         [NotNull]
-        public ReactiveCommand CreateCommand(Action execute, [CanBeNull] IObservable<bool> canExecute = null)
+        public ReactiveCommand CreateCommand(Action execute, IObservable<bool> canExecute = null)
         {
             var command = ReactiveCommand.Create(execute, canExecute);
             command.ThrownExceptions.Subscribe(CommandException);
@@ -109,7 +109,7 @@ namespace NetLib.WPF
         }
 
         [NotNull]
-        public ReactiveCommand CreateCommand<T>(Action<T> execute, [CanBeNull] IObservable<bool> canExecute = null)
+        public ReactiveCommand CreateCommand<T>(Action<T> execute, IObservable<bool> canExecute = null)
         {
             var command = ReactiveCommand.Create(execute, canExecute);
             command.ThrownExceptions.Subscribe(CommandException);
