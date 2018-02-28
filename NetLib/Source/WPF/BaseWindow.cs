@@ -97,6 +97,7 @@ namespace NetLib.WPF
             ShowMinButton = false;
             ShowMaxRestoreButton = false;
             SaveWindowPosition = true;
+            SetResourceReference(GlowBrushProperty, FindResource("AccentColorBrush"));
             PreviewKeyDown += BaseWindow_PreviewKeyDown;
             MouseDown += BaseWindow_MouseDown;
             Activated += (s, a) =>
