@@ -181,6 +181,7 @@
     <Compile Include="Source\Loops\Retry.cs" />
     <Compile Include="Source\Math\DoubleExt.cs" />
     <Compile Include="Source\Math\MathExt.cs" />
+    <Compile Include="Source\Monad\MonadExt.cs" />
     <Compile Include="Source\Result.cs" />
     <Compile Include="Source\String\StringExt.cs" />
     <Compile Include="Source\WPF\BaseViewModel.cs" />
