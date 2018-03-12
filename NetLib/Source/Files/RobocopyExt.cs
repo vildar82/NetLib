@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using JetBrains.Annotations;
 
+// ReSharper disable once CheckNamespace
 namespace NetLib.Files
 {
     public static class RobocopyExt
@@ -34,7 +31,7 @@ namespace NetLib.Files
                 RedirectStandardOutput = true,
                 RedirectStandardError = true
             };
-            var p = Process.Start(startInfo);
+            var p = Process.Start(startInfo) ?? throw new InvalidOperationException();
             var err = p.StandardError.ReadToEnd();
             if (!err.IsNullOrEmpty())
             {
