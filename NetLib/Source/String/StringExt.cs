@@ -92,9 +92,9 @@ namespace NetLib
             var match = Regex.Match(input, @"^\d*");
             if (match.Success)
             {
-                if (int.TryParse(match.Value, out var _))
+                if (int.TryParse(match.Value, out var v))
                 {
-                    return Result.Ok(0);
+                    return Result.Ok(v);
                 }
             }
             return Result.Fail<int>($"Не определено целое число из строки - {input}");

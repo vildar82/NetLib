@@ -34,7 +34,7 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>..\..\..\Autodesk\AutoCAD\Pik\Settings\Dll\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
+    <DefineConstants>TRACE;JETBRAINS_ANNOTATIONS</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>C:\Autodesk\AutoCAD\Pik\Settings\Dll\NetLib.xml</DocumentationFile>
@@ -60,7 +60,7 @@
       <HintPath>..\packages\EPPlus.4.1.1\lib\net40\EPPlus.dll</HintPath>
     </Reference>
     <Reference Include="FluentValidation, Version=7.0.0.0, Culture=neutral, PublicKeyToken=7de548da2fbae0f0, processorArchitecture=MSIL">
-      <HintPath>..\packages\FluentValidation.7.5.0\lib\net45\FluentValidation.dll</HintPath>
+      <HintPath>..\packages\FluentValidation.7.5.1\lib\net45\FluentValidation.dll</HintPath>
     </Reference>
     <Reference Include="JetBrains.Annotations, Version=11.1.0.0, Culture=neutral, PublicKeyToken=1010a0d8d6380325, processorArchitecture=MSIL">
       <HintPath>..\packages\JetBrains.Annotations.11.1.0\lib\net20\JetBrains.Annotations.dll</HintPath>
@@ -151,7 +151,7 @@
     <Compile Include="Source\Comparers\IntEqualityComparer.cs" />
     <Compile Include="Source\Comparers\StringsNumberComparer.cs" />
     <Compile Include="Source\Converter\ConvertExt.cs" />
-    <Compile Include="Source\Data\DataExt.cs" />
+    <Compile Include="Source\Date\DateExt.cs" />
     <Compile Include="Source\Enumerable\EnumerableExt.cs" />
     <Compile Include="Source\Enum\EnumExt.cs" />
     <Compile Include="Source\Errors\Error.cs" />
@@ -184,6 +184,7 @@
     <Compile Include="Source\Monad\MonadExt.cs" />
     <Compile Include="Source\Result.cs" />
     <Compile Include="Source\String\StringExt.cs" />
+    <Compile Include="Source\WPF\BaseModel.cs" />
     <Compile Include="Source\WPF\BaseViewModel.cs" />
     <Compile Include="Source\WPF\BaseWindow.cs" />
     <Compile Include="Source\WPF\Behaviors\DataGrid\AlphaNumSorter.cs" />
@@ -231,6 +232,7 @@
     <Compile Include="Source\WPF\Converters\RadiansToDegreeConverterExtension.cs" />
     <Compile Include="Source\WPF\Converters\UniversalValueConverter.cs" />
     <Compile Include="Source\WPF\DialogCloser.cs" />
+    <Compile Include="Source\WPF\IBaseModel.cs" />
     <Compile Include="Source\WPF\IBaseViewModel.cs" />
     <Compile Include="Source\WPF\StyleSettings.cs" />
     <Compile Include="Source\WPF\Theme\AccentViewModel.cs" />
@@ -384,10 +386,10 @@
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\NETStandard.Library.2.0.1\build\NETStandard.Library.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\NETStandard.Library.2.0.1\build\NETStandard.Library.targets'))" />
-    <Error Condition="!Exists('..\packages\Fody.2.4.4\build\Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Fody.2.4.4\build\Fody.targets'))" />
+    <Error Condition="!Exists('..\packages\Fody.2.4.6\build\Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Fody.2.4.6\build\Fody.targets'))" />
   </Target>
   <Import Project="..\packages\NETStandard.Library.2.0.1\build\NETStandard.Library.targets" Condition="Exists('..\packages\NETStandard.Library.2.0.1\build\NETStandard.Library.targets')" />
-  <Import Project="..\packages\Fody.2.4.4\build\Fody.targets" Condition="Exists('..\packages\Fody.2.4.4\build\Fody.targets')" />
+  <Import Project="..\packages\Fody.2.4.6\build\Fody.targets" Condition="Exists('..\packages\Fody.2.4.6\build\Fody.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
