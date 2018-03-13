@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using JetBrains.Annotations;
 using NLog;
 
@@ -20,6 +22,18 @@ namespace NetLib.Monad
                 else exception(obj, ex);
             }
             return obj;
+        }
+
+        public static TRes Try<T,TRes>(this T obj, Func<T, TRes> func, Func<Exception, TRes> exception)
+        {
+            try
+            {
+                return func(obj);
+            }
+            catch (Exception ex)
+            {
+                return exception(ex);
+            }
         }
     }
 }
