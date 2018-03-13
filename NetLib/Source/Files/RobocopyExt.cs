@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
+using System.Text;
 using JetBrains.Annotations;
+using Path = NetLib.IO.Path;
 
 // ReSharper disable once CheckNamespace
 namespace NetLib.Files
@@ -20,24 +22,32 @@ namespace NetLib.Files
         {
             if (!Directory.Exists(sourceDir)) throw new DirectoryNotFoundException(sourceDir);
             if (!Directory.Exists(destDir)) Directory.CreateDirectory(destDir);
+            const string logFile = "robocopy.log";
             var startInfo = new ProcessStartInfo
             {
                 FileName = "robocopy.exe",
                 // R - число попыток
                 // FP - Включать в вывод полные пути файлов.
-                Arguments = $@"""{sourceDir}"" ""{destDir}"" /R:0 /MIR /FP",
+                Arguments = $@"""{sourceDir}"" ""{destDir}"" /R:0 /MIR /FP /LOG:{logFile}",
+                ErrorDialog = false,
+                LoadUserProfile = false,
                 UseShellExecute = false,
                 CreateNoWindow = true,
-                RedirectStandardOutput = true,
+                //RedirectStandardOutput = true,
                 RedirectStandardError = true
             };
-            var p = Process.Start(startInfo) ?? throw new InvalidOperationException();
-            var err = p.StandardError.ReadToEnd();
-            if (!err.IsNullOrEmpty())
+            using (var p = Process.Start(startInfo) ?? throw new InvalidOperationException())
             {
-                throw new Exception(err);
+                p.WaitForExit();
+                var err = p.StandardError.ReadToEnd();
+                if (!err.IsNullOrEmpty())
+                {
+                    throw new Exception(err);
+                }
+                var res = File.ReadAllText(logFile, Encoding.GetEncoding(866));
+                Path.TryDeleteFile(logFile);
+                return res;
             }
-            return p.StandardOutput.ReadToEnd();
         }
     }
 }

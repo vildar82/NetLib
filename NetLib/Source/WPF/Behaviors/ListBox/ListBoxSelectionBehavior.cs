@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections;
 using System.Collections.Specialized;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Interactivity;
@@ -33,10 +29,7 @@ namespace NetLib.WPF.Behaviors
         {
             var behavior = (ListBoxSelectionBehavior) sender;
             if (behavior._modelHandled) return;
-
-            if (behavior.AssociatedObject == null)
-                return;
-
+            if (behavior.AssociatedObject == null) return;
             behavior._modelHandled = true;
             behavior.SelectItems();
             behavior._modelHandled = false;
@@ -61,7 +54,6 @@ namespace NetLib.WPF.Behaviors
                 foreach (var item in SelectedItems)
                     AssociatedObject.SelectedItems.Add(item);
             }
-
             _viewHandled = false;
         }
 
@@ -84,7 +76,6 @@ namespace NetLib.WPF.Behaviors
         protected override void OnAttached()
         {
             base.OnAttached();
-
             AssociatedObject.SelectionChanged += OnListBoxSelectionChanged;
             ((INotifyCollectionChanged) AssociatedObject.Items).CollectionChanged += OnListBoxItemsChanged;
         }
@@ -93,7 +84,6 @@ namespace NetLib.WPF.Behaviors
         protected override void OnDetaching()
         {
             base.OnDetaching();
-
             if (AssociatedObject != null)
             {
                 AssociatedObject.SelectionChanged -= OnListBoxSelectionChanged;
