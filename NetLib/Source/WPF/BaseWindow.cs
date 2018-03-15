@@ -94,7 +94,7 @@ namespace NetLib.WPF
             }
             Dispatcher.UnhandledException += Dispatcher_UnhandledException;
             // Скрыть кнопки свернуть/минимизировать
-            ShowMinButton = false;
+            //ShowMinButton = false;
             ShowMaxRestoreButton = false;
             SaveWindowPosition = true;
             SetResourceReference(GlowBrushProperty, FindResource("AccentColorBrush"));
