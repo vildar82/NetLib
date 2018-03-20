@@ -180,6 +180,7 @@
     <Compile Include="Source\Locks\LockInfo.cs" />
     <Compile Include="Source\Loops\Retry.cs" />
     <Compile Include="Source\Math\DoubleExt.cs" />
+    <Compile Include="Source\Math\Interval.cs" />
     <Compile Include="Source\Math\MathExt.cs" />
     <Compile Include="Source\Monad\MonadExt.cs" />
     <Compile Include="Source\Result.cs" />
