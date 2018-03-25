@@ -25,6 +25,7 @@ namespace NetLib
         /// <returns>Округленное число</returns>
         public static double Round(this double value, int digits = 4)
         {
+            // ReSharper disable once round
             return Math.Round(value, digits, MidpointRounding.AwayFromZero);
         }
     }

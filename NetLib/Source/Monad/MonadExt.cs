@@ -1,11 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using JetBrains.Annotations;
 using NLog;
 
 namespace NetLib.Monad
 {
+    [PublicAPI]
     public static class MonadExt
     {
         private static ILogger Logger { get; } = LogManager.GetCurrentClassLogger();
