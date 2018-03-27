@@ -9,6 +9,31 @@ namespace NetLib.Monad
     {
         private static ILogger Logger { get; } = LogManager.GetCurrentClassLogger();
 
+        public static void Try(this Action action, [CanBeNull] Action<Exception> exception = null)
+        {
+            try
+            {
+                action();
+            }
+            catch (Exception ex)
+            {
+                if (exception == null) Logger.Error(ex);
+                else exception(ex);
+            }
+        }
+
+        public static T Try<T>(this Func<T> action, Func<Exception, T> exception)
+        {
+            try
+            {
+                return action();
+            }
+            catch (Exception ex)
+            {
+                return exception(ex);
+            }
+        }
+
         /// <summary>
         /// Попытка работы с объектом, возвращается сам объект
         /// </summary>

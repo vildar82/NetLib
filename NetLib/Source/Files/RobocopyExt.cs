@@ -22,13 +22,13 @@ namespace NetLib.Files
         {
             if (!Directory.Exists(sourceDir)) throw new DirectoryNotFoundException(sourceDir);
             if (!Directory.Exists(destDir)) Directory.CreateDirectory(destDir);
-            const string logFile = "robocopy.log";
+            var logFile = "robocopy.log";
             var startInfo = new ProcessStartInfo
             {
                 FileName = "robocopy.exe",
                 // R - число попыток
                 // FP - Включать в вывод полные пути файлов.
-                Arguments = $@"""{sourceDir}"" ""{destDir}"" /R:0 /MIR /FP /LOG:{logFile}",
+                Arguments = $@"""{sourceDir}"" ""{destDir}"" /R:0 /MIR /FP /LOG:""{logFile}""",
                 ErrorDialog = false,
                 LoadUserProfile = false,
                 UseShellExecute = false,
@@ -44,9 +44,16 @@ namespace NetLib.Files
                 {
                     throw new Exception(err);
                 }
+            }
+            try
+            {
                 var res = File.ReadAllText(logFile, Encoding.GetEncoding(866));
                 Path.TryDeleteFile(logFile);
                 return res;
+            }
+            catch
+            {
+                return "";
             }
         }
     }
