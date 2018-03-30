@@ -37,6 +37,11 @@ namespace NetLib
                     value = ((string)value).ToDouble();
                     return (T)value;
                 }
+                if (typeT == typeof(int))
+                {
+                    value = int.Parse((string) value);
+                    return (T)value;
+                }
             }
             // Из строки в число - разделитель точка или запятая
             // Округление числа до 4 знаков
