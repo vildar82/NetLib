@@ -8,6 +8,7 @@ namespace NetLib
     {
         public T Start { get; private set; }
         public T End { get; private set; }
+        public object Tag { get; set; }
 
         public bool HasStart { get; private set; }
         public bool HasEnd { get; private set; }
