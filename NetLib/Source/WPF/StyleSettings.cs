@@ -14,7 +14,7 @@ namespace NetLib.WPF
     public static class StyleSettings
     {
         private static Logger Logger { get; } = LogManager.GetCurrentClassLogger();
-        private static Accent accent;
+        internal static Accent accent;
         private static AppTheme theme;
         private static readonly WindowsThemes windowsThemes;
         private static readonly ApplicationThemes applicationTheme;

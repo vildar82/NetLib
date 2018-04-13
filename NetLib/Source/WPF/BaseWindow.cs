@@ -26,6 +26,8 @@ namespace NetLib.WPF
 
         private IBaseViewModel model;
 
+        public bool ShowThemeButton { get; set; } = true;
+
         /// <summary>
         /// Изменилась тема оформления окна
         /// </summary>
@@ -154,10 +156,10 @@ namespace NetLib.WPF
                 OnChangeTheme();
             };
             SaveWindowPosition = true;
-            GlowBrush = Resources["AccentColorBrush"] as Brush;
 
             // Кнопка настроек темы оформления
-            if (!(Model is StyleSettingsViewModel))
+
+            if (ShowThemeButton && !(Model is StyleSettingsViewModel))
             {
                 var buttonTheme = new Button
                 {

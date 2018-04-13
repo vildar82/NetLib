@@ -1,34 +1,12 @@
-﻿<Window x:Class="WpfApp1.MainView" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+﻿<wpf:BaseWindow x:Class="WpfApp1.MainView" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:controls1="clr-namespace:ColorPickerLib.Controls;assembly=ColorPickerLib" xmlns:wpfApp1="clr-namespace:WpfApp1"
-        mc:Ignorable="d" d:DataContext="{d:DesignInstance wpfApp1:MainViewModel, d:IsDesignTimeCreatable=True}" Title="MainView"
-        Height="600" Width="600" Name="window">
+                                   xmlns:wpf="clr-namespace:NetLib.WPF;assembly=NetLib"
+                                   mc:Ignorable="d" 
+                d:DataContext="{d:DesignInstance wpfApp1:MainViewModel, d:IsDesignTimeCreatable=True}" Title="MainView"
+        Name="window">
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition />
-            <RowDefinition Height="Auto" />
-        </Grid.RowDefinitions>
-        <ListBox Grid.Row="0" ItemsSource="{Binding ColorsNCS}" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
-            <ListBox.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <WrapPanel IsItemsHost="True" />
-                </ItemsPanelTemplate>
-            </ListBox.ItemsPanel>
-            <ListBox.ItemTemplate>
-                <DataTemplate DataType="wpfApp1:ColorNCS">
-                    <Button Background="{Binding ColorBrush}" Width="100" Margin="2"
-                            Command="{Binding DataContext.SelectColor, ElementName=window}" CommandParameter="{Binding}">
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="{Binding Article}" Margin="2" />
-                            <TextBlock Text="{Binding NCS}" Margin="2" />
-                        </StackPanel>
-                    </Button>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
-        <StackPanel Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <Button Background="{Binding ColorBrush}" Margin="10" Width="80" Height="30" />
-        </StackPanel>
-    </Grid>
-</Window>
+		<Button Content="Test" Command="{Binding Test}" Margin="10" Width="80" Height="30" />
+	</Grid>
+</wpf:BaseWindow>

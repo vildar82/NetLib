@@ -7,10 +7,9 @@ namespace WpfApp1
     /// </summary>
     public partial class MainView
     {
-        public MainView()
+        public MainView() : base (new MainViewModel())
         {
             InitializeComponent();
-            DataContext = new MainViewModel();
         }
     }
 }

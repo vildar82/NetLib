@@ -210,6 +210,9 @@
     <Compile Include="Source\WPF\Controls\PathSelector\PathSelector.xaml.cs">
       <DependentUpon>PathSelector.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Source\WPF\Controls\Progress\ProgressView.xaml.cs">
+      <DependentUpon>ProgressView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Source\WPF\Controls\Select\SelectList.cs" />
     <Compile Include="Source\WPF\Controls\Select\SelectListItem.cs" />
     <Compile Include="Source\WPF\Controls\Select\SelectListView.xaml.cs">
@@ -254,6 +257,10 @@
     <Compile Include="Source\WPF\ValidationTemplate.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Source\WPF\Controls\Progress\ProgressView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Source\WPF\Styles\ScrollBarIOS.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

@@ -38,6 +38,20 @@ namespace NetLib
 
         public static readonly DoubleEqualityComparer AngleComparer = new DoubleEqualityComparer();
 
+        /// <summary>
+        /// Линейная интерполяция
+        /// </summary>
+        /// <param name="x0">Начальное X</param>
+        /// <param name="y0">Начальное Y</param>
+        /// <param name="x1">Конечное X</param>
+        /// <param name="y1">Конечное Y</param>
+        /// <param name="x">Промежуточное X для котрого нужно интерполировать Y</param>
+        /// <returns></returns>
+        public static double Interpolate(double x0, double y0, double x1, double y1, double x)
+        {
+            return y0 * (x - x1) / (x0 - x1) + y1 * (x - x0) / (x1 - x0);
+        }
+
         public static object EvaluateString(string expression)
         {
             var expr = new Expression(expression);
