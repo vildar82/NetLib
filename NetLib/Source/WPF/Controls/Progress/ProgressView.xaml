@@ -29,7 +29,6 @@
 	ShowThemeButton="False"
 	BorderBrush="Transparent">
 	<Grid>
-		<mah:ProgressRing />
+		<mah:ProgressRing Width="150" Height="150"/>
 	</Grid>
 </wpf:BaseWindow>
-
