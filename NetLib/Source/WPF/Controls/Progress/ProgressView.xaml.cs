@@ -22,6 +22,8 @@ namespace NetLib.WPF.Controls.Progress
     /// </summary>
     public partial class ProgressView : IDisposable
     {
+        private BackgroundWorker worker;
+
         public ProgressView() : base(new ProgressVM())
         {
             InitializeComponent();
@@ -29,8 +31,12 @@ namespace NetLib.WPF.Controls.Progress
 
         internal void InternalExecute(Action operation)
         {
-            var worker = new BackgroundWorker();
-            worker.DoWork += (s, e) => operation();
+            worker = new BackgroundWorker {WorkerSupportsCancellation = true};
+            worker.DoWork += (s, e) =>
+            {
+                operation();
+                Thread.Sleep(500);
+            };
             worker.RunWorkerCompleted +=
                 (s, e) =>
                 {

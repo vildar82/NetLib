@@ -16,13 +16,13 @@ namespace NetLib.WPF
         private static Logger Logger { get; } = LogManager.GetCurrentClassLogger();
         internal static Accent accent;
         private static AppTheme theme;
-        private static readonly WindowsThemes windowsThemes;
+        //private static readonly WindowsThemes windowsThemes;
         private static readonly ApplicationThemes applicationTheme;
 
         static StyleSettings()
         {
             LoadThemesAndColors();
-            windowsThemes = LoadWindowsThemes();
+            var windowsThemes = LoadWindowsThemes();
             if (windowsThemes.Applications == null)
             {
                 windowsThemes.Applications = new List<ApplicationThemes>();
@@ -83,6 +83,7 @@ namespace NetLib.WPF
         {
             try
             {
+                var windowsThemes = LoadWindowsThemes();
                 if (isOnlyThisWindow && window != null)
                 {
                     var windowTheme = FindWindowTheme(window);

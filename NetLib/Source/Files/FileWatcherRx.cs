@@ -1,5 +1,6 @@
 ﻿using JetBrains.Annotations;
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Reactive;
 using System.Reactive.Linq;
@@ -9,15 +10,15 @@ namespace NetLib
     [PublicAPI]
     public class FileWatcherRx
     {
-        public IObservable<EventPattern<FileSystemEventArgs>> Changed { get; }
+        public IObservable<EventPattern<FileSystemEventArgs>> Changed { get; } = Observable.Empty<EventPattern<FileSystemEventArgs>>();
 
-        public IObservable<EventPattern<FileSystemEventArgs>> Created { get; }
+        public IObservable<EventPattern<FileSystemEventArgs>> Created { get; }= Observable.Empty<EventPattern<FileSystemEventArgs>>();
 
-        public IObservable<EventPattern<FileSystemEventArgs>> Deleted { get; }
+        public IObservable<EventPattern<FileSystemEventArgs>> Deleted { get; }= Observable.Empty<EventPattern<FileSystemEventArgs>>();
 
         public IObservable<EventPattern<ErrorEventArgs>> Error { get; set; }
 
-        public IObservable<EventPattern<RenamedEventArgs>> Renamed { get; set; }
+        public IObservable<EventPattern<RenamedEventArgs>> Renamed { get; set; }= Observable.Empty<EventPattern<RenamedEventArgs>>();
 
         public FileSystemWatcher Watcher { get; }
 
