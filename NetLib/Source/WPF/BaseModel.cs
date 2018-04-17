@@ -33,5 +33,10 @@ namespace NetLib.WPF
         {
             BaseVm.ShowMessage(msg, title);
         }
+
+        public virtual void OnPropertyChanged(string propertyName)
+        {
+            this.RaisePropertyChanged(propertyName);
+        }
     }
 }

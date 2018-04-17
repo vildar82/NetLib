@@ -346,5 +346,10 @@ namespace NetLib.WPF
                 FindValidator(modelType);
             }
         }
+
+        public virtual void OnPropertyChanged(string propertyName)
+        {
+            this.RaisePropertyChanged(propertyName);
+        }
     }
 }
