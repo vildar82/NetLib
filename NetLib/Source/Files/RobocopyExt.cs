@@ -31,19 +31,19 @@ namespace NetLib.Files
                 Arguments = $@"""{sourceDir}"" ""{destDir}"" /R:0 /MIR /FP /LOG:""{logFile}""",
                 ErrorDialog = false,
                 LoadUserProfile = false,
-                UseShellExecute = false,
-                CreateNoWindow = true,
+                UseShellExecute = true,
+                CreateNoWindow = false,
                 //RedirectStandardOutput = true,
-                RedirectStandardError = true
+                //RedirectStandardError = true
             };
             using (var p = Process.Start(startInfo) ?? throw new InvalidOperationException())
             {
                 p.WaitForExit();
-                var err = p.StandardError.ReadToEnd();
-                if (!err.IsNullOrEmpty())
-                {
-                    throw new Exception(err);
-                }
+                //var err = p.StandardError.ReadToEnd();
+                //if (!err.IsNullOrEmpty())
+                //{
+                //    throw new Exception(err);
+                //}
             }
             try
             {
