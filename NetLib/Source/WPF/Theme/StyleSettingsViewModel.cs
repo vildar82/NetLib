@@ -1,7 +1,6 @@
 ﻿using JetBrains.Annotations;
 using MahApps.Metro;
 using ReactiveUI;
-using ReactiveUI.Fody.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,10 +32,10 @@ namespace NetLib.WPF.Theme
         }
 
         public List<ThemeViewModel> Themes { get; set; }
-        [Reactive] public ThemeViewModel SelectedTheme { get; set; }
+         public ThemeViewModel SelectedTheme { get; set; }
         public List<AccentViewModel> Accents { get; set; }
-        [Reactive] public AccentViewModel SelectedAccent { get; set; }
-        [Reactive] public bool IsOnlyThisWindow { get; set; }
+         public AccentViewModel SelectedAccent { get; set; }
+         public bool IsOnlyThisWindow { get; set; }
 
         public override void OnInitialize()
         {

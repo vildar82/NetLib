@@ -1,10 +1,9 @@
 ﻿using JetBrains.Annotations;
 using MahApps.Metro;
-using ReactiveUI;
 
 namespace NetLib.WPF.Theme
 {
-    public class AccentViewModel : ReactiveObject
+    public class AccentViewModel : BaseModel
     {
         public AccentViewModel([NotNull] Accent accent)
         {

@@ -1,15 +1,14 @@
-﻿using System;
+﻿using JetBrains.Annotations;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 
 namespace ProgressUtils
 {
+    [PublicAPI]
     [TemplateVisualState(Name = "Large", GroupName = "SizeStates")]
     [TemplateVisualState(Name = "Small", GroupName = "SizeStates")]
     [TemplateVisualState(Name = "Inactive", GroupName = "ActiveStates")]
@@ -37,20 +36,15 @@ namespace ProgressUtils
             DefaultStyleKeyProperty.OverrideMetadata(typeof(ProgressRing), new FrameworkPropertyMetadata(typeof(ProgressRing)));
             VisibilityProperty.OverrideMetadata(typeof(ProgressRing),
                                                 new FrameworkPropertyMetadata(
-                                                    new PropertyChangedCallback(
-                                                        (ringObject, e) => {
-                                                            if (e.NewValue != e.OldValue) {
-                                                                var ring = (ProgressRing)ringObject;
-                                                                //auto set IsActive to false if we're hiding it.
-                                                                if ((Visibility)e.NewValue != Visibility.Visible) {
-                                                                    //sets the value without overriding it's binding (if any).
-                                                                    ring.SetCurrentValue(ProgressRing.IsActiveProperty, false);
-                                                                } else {
-                                                                    // #1105 don't forget to re-activate
-                                                                    ring.SetCurrentValue(ProgressRing.IsActiveProperty, true);
-                                                                }
-                                                            }
-                                                        })));
+                                                    (ringObject, e) => {
+                                                        if (e.NewValue != e.OldValue)
+                                                        {
+                                                            var ring = (ProgressRing)ringObject;
+                                                            //auto set IsActive to false if we're hiding it.
+                                                            ring.SetCurrentValue(IsActiveProperty,
+                                                                (Visibility) e.NewValue == Visibility.Visible);
+                                                        }
+                                                    }));
         }
 
         public ProgressRing()
@@ -60,44 +54,44 @@ namespace ProgressUtils
 
         public double MaxSideLength
         {
-            get { return (double)GetValue(MaxSideLengthProperty); }
-            private set { SetValue(MaxSideLengthProperty, value); }
+            get => (double)GetValue(MaxSideLengthProperty);
+            private set => SetValue(MaxSideLengthProperty, value);
         }
 
         public double EllipseDiameter
         {
-            get { return (double)GetValue(EllipseDiameterProperty); }
-            private set { SetValue(EllipseDiameterProperty, value); }
+            get => (double)GetValue(EllipseDiameterProperty);
+            private set => SetValue(EllipseDiameterProperty, value);
         }
 
         public double EllipseDiameterScale
         {
-            get { return (double)GetValue(EllipseDiameterScaleProperty); }
-            set { SetValue(EllipseDiameterScaleProperty, value); }
+            get => (double)GetValue(EllipseDiameterScaleProperty);
+            set => SetValue(EllipseDiameterScaleProperty, value);
         }
 
         public Thickness EllipseOffset
         {
-            get { return (Thickness)GetValue(EllipseOffsetProperty); }
-            private set { SetValue(EllipseOffsetProperty, value); }
+            get => (Thickness)GetValue(EllipseOffsetProperty);
+            private set => SetValue(EllipseOffsetProperty, value);
         }
 
         public double BindableWidth
         {
-            get { return (double)GetValue(BindableWidthProperty); }
-            private set { SetValue(BindableWidthProperty, value); }
+            get => (double)GetValue(BindableWidthProperty);
+            private set => SetValue(BindableWidthProperty, value);
         }
 
         public bool IsActive
         {
-            get { return (bool)GetValue(IsActiveProperty); }
-            set { SetValue(IsActiveProperty, value); }
+            get => (bool)GetValue(IsActiveProperty);
+            set => SetValue(IsActiveProperty, value);
         }
 
         public bool IsLarge
         {
-            get { return (bool)GetValue(IsLargeProperty); }
-            set { SetValue(IsLargeProperty, value); }
+            get => (bool)GetValue(IsLargeProperty);
+            set => SetValue(IsLargeProperty, value);
         }
 
         private static void BindableWidthCallback(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)

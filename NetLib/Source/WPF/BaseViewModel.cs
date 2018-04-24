@@ -4,13 +4,13 @@ using JetBrains.Annotations;
 using MahApps.Metro.Controls.Dialogs;
 using NLog;
 using ReactiveUI;
-using ReactiveUI.Fody.Helpers;
 using System;
 using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Threading;
@@ -36,11 +36,10 @@ namespace NetLib.WPF
 
         public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
 
-        [Reactive] public bool? DialogResult { get; set; }
-        [Reactive] public List<string> Errors { get; set; }
+        public bool? DialogResult { get; set; }
+        public List<string> Errors { get; set; }
         public bool HasErrors => validationResult?.Errors?.Count > 0;
         [Obsolete("Use Hide()")]
-        [Reactive]
         public bool Hide { get; set; }
         public bool IsValidated { get; private set; }
         public IBaseViewModel Parent { get; set; }
@@ -347,9 +346,14 @@ namespace NetLib.WPF
             }
         }
 
-        public virtual void OnPropertyChanged(string propertyName)
+        public virtual void OnPropertyChanged([CanBeNull] [CallerMemberName] string propertyName = null)
         {
             this.RaisePropertyChanged(propertyName);
+        }
+
+        protected void OnPropertyChanged([NotNull] PropertyChangedEventArgs eventArgs)
+        {
+            this.RaisePropertyChanged(eventArgs.PropertyName);
         }
     }
 }

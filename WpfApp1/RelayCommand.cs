@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
+using JetBrains.Annotations;
 
 namespace WpfApp1
 {
@@ -27,12 +24,12 @@ namespace WpfApp1
 
         private event EventHandler CanExecuteChangedInternal;
 
-        public RelayCommand(Action<object> execute)
+        public RelayCommand([NotNull] Action<object> execute)
             : this(execute, DefaultCanExecute)
         {
         }
 
-        public RelayCommand(Action<object> execute, Predicate<object> canExecute)
+        public RelayCommand([NotNull] Action<object> execute, [NotNull] Predicate<object> canExecute)
         {
             this.execute = execute ?? throw new ArgumentNullException(nameof(execute));
             this.canExecute = canExecute ?? throw new ArgumentNullException(nameof(canExecute));

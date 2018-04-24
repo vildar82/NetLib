@@ -14,7 +14,7 @@ namespace NetLib.WPF.Converters
         public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             var min = System.Convert.ToInt32(value);
-            var hours = Math.Round(min / 60d, 1);
+            var hours =(min / 60d).Round(1);
             return hours;
         }
     }

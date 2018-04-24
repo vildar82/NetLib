@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.CompilerServices;
 using JetBrains.Annotations;
 using ReactiveUI;
 
@@ -10,6 +11,11 @@ namespace NetLib.WPF
     [PublicAPI]
     public abstract class BaseModel : ReactiveObject, IBaseModel
     {
+        protected BaseModel()
+        {
+            
+        }
+
         protected BaseModel(IBaseViewModel baseVM)
         {
             BaseVm = baseVM;
@@ -34,7 +40,7 @@ namespace NetLib.WPF
             BaseVm.ShowMessage(msg, title);
         }
 
-        public virtual void OnPropertyChanged(string propertyName)
+        public virtual void OnPropertyChanged([CanBeNull] [CallerMemberName] string propertyName = null)
         {
             this.RaisePropertyChanged(propertyName);
         }

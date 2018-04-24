@@ -11,7 +11,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Threading;
 
 namespace NetLib.WPF
@@ -99,6 +98,7 @@ namespace NetLib.WPF
             //ShowMinButton = false;
             ShowMaxRestoreButton = false;
             SaveWindowPosition = true;
+            ResizeMode = ResizeMode.CanResizeWithGrip;
             SetResourceReference(GlowBrushProperty, FindResource("AccentColorBrush"));
             PreviewKeyDown += BaseWindow_PreviewKeyDown;
             MouseDown += BaseWindow_MouseDown;

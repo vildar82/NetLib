@@ -1,6 +1,4 @@
-﻿using ColorPickerLib.Controls;
-
-namespace WpfApp1
+﻿namespace WpfApp1
 {
     /// <summary>
     /// Interaction logic for MainView.xaml

@@ -1,6 +1,5 @@
 ﻿using JetBrains.Annotations;
 using ReactiveUI;
-using ReactiveUI.Fody.Helpers;
 using System.Collections.Generic;
 using System.Reactive.Linq;
 using System.Text.RegularExpressions;
@@ -52,7 +51,7 @@ namespace NetLib.WPF.Controls.Select
 
         public ReactiveCommand OK { get; set; }
 
-        [Reactive] public SelectListItem<T> Selected { get; set; }
+         public SelectListItem<T> Selected { get; set; }
 
         public string Title { get; set; }
 
