@@ -28,7 +28,7 @@ namespace NetLib.Files
                 FileName = "robocopy.exe",
                 // R - число попыток
                 // FP - Включать в вывод полные пути файлов.
-                Arguments = $@"""{sourceDir}"" ""{destDir}"" /R:0 /MIR /FP /LOG:""{logFile}""",
+                Arguments = $@"""{sourceDir}"" ""{destDir}"" /R:0 /MIR /FP /TEE /LOG:""{logFile}""",
                 ErrorDialog = false,
                 LoadUserProfile = false,
                 UseShellExecute = true,
