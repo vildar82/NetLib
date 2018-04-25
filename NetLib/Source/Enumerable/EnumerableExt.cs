@@ -44,6 +44,27 @@ namespace NetLib
             return list1.All(list2.Contains) && list1.Count == list2.Count;
         }
 
+        [NotNull]
+        public static IEnumerable<TRes> SelectTry<TSource, TRes>([NotNull] this IEnumerable<TSource> list, 
+            [NotNull] Func<TSource, TRes> selector, [CanBeNull] Action<Exception> onException = null)
+        {
+            foreach (var item in list)
+            {
+                TRes res;
+                try
+                {
+                    res = selector(item);
+                    if (res == null) continue;
+                }
+                catch (Exception ex)
+                {
+                    onException?.Invoke(ex);
+                    continue;
+                }
+                yield return res;
+            }
+        }
+
         [PublicAPI]
         [NotNull]
         public static IEnumerable<TRes> SelectManyNulless<TSource, TRes>([NotNull] this IEnumerable<TSource> list,

@@ -15,10 +15,11 @@ namespace NetLib.Files
         /// </summary>
         /// <param name="sourceDir"></param>
         /// <param name="destDir"></param>
+        /// <param name="showConsole"></param>
         /// <exception cref="Exception">StandardError</exception>
         /// <returns>Output</returns>
         [NotNull]
-        public static string Mirror([NotNull] string sourceDir, [NotNull] string destDir)
+        public static string Mirror([NotNull] string sourceDir, [NotNull] string destDir, bool showConsole = false)
         {
             if (!Directory.Exists(sourceDir)) throw new DirectoryNotFoundException(sourceDir);
             if (!Directory.Exists(destDir)) Directory.CreateDirectory(destDir);
@@ -32,7 +33,7 @@ namespace NetLib.Files
                 ErrorDialog = false,
                 LoadUserProfile = false,
                 UseShellExecute = true,
-                CreateNoWindow = false,
+                CreateNoWindow = !showConsole,
                 //RedirectStandardOutput = true,
                 //RedirectStandardError = true
             };
