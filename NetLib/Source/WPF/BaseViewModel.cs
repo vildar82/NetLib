@@ -1,5 +1,4 @@
 ﻿using FluentValidation;
-using FluentValidation.Results;
 using JetBrains.Annotations;
 using MahApps.Metro.Controls.Dialogs;
 using NLog;
@@ -13,7 +12,10 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Threading;
+using ControlzEx;
+using ValidationResult = FluentValidation.Results.ValidationResult;
 
 namespace NetLib.WPF
 {
@@ -71,6 +73,18 @@ namespace NetLib.WPF
 
         public BaseViewModel() : this(null)
         {
+        }
+
+        public void AddWindowButton(string toolTip, PackIconBase icon,Action onClick)
+        {
+            if (Window == null) return;
+            var button = new Button
+            {
+                Content = icon,
+                ToolTip = toolTip
+            };
+            button.Click +=(o,s) => onClick();
+            Window.AddWindowButton(button);
         }
 
         /// <summary>

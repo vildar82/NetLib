@@ -158,7 +158,6 @@ namespace NetLib.WPF
             SaveWindowPosition = true;
 
             // Кнопка настроек темы оформления
-
             if (ShowThemeButton && !(Model is StyleSettingsViewModel))
             {
                 var buttonTheme = new Button
@@ -167,14 +166,16 @@ namespace NetLib.WPF
                     ToolTip = "Настройка тем оформления окон"
                 };
                 buttonTheme.Click += ButtonTheme_Click;
-                if (RightWindowCommands == null)
-                {
-                    RightWindowCommands = new WindowCommands();
-                }
-                RightWindowCommands.Items.Add(buttonTheme);
+                AddWindowButton(buttonTheme);
             }
             base.OnInitialized(e);
             Model?.OnInitialize();
+        }
+
+        public void AddWindowButton(object button)
+        {
+            if (RightWindowCommands == null) RightWindowCommands = new WindowCommands();
+            RightWindowCommands.Items.Add(button);
         }
 
         private void AddStyleResouse()
