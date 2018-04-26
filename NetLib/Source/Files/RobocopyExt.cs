@@ -32,7 +32,7 @@ namespace NetLib.Files
                 Arguments = $@"""{sourceDir}"" ""{destDir}"" /R:0 /MIR /FP /TEE /LOG:""{logFile}""",
                 ErrorDialog = false,
                 LoadUserProfile = false,
-                UseShellExecute = true,
+                UseShellExecute = showConsole,
                 CreateNoWindow = !showConsole,
                 //RedirectStandardOutput = true,
                 //RedirectStandardError = true
