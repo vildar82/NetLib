@@ -9,6 +9,11 @@ namespace NetLib.Monad
     {
         private static ILogger Logger { get; } = LogManager.GetCurrentClassLogger();
 
+        public static T To<T>(this object obj)
+        {
+            return (T) obj;
+        }
+
         [CanBeNull]
         public static TRes With<T,TRes>([CanBeNull] this T obj, Func<T,TRes> func)
         {
