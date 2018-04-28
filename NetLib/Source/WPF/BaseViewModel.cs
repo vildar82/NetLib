@@ -337,14 +337,10 @@ namespace NetLib.WPF
             Task.Run(() =>
             {
                 var typeName = $"{modelType.Namespace}.{modelType.Name}Validator";
-                try
+                var type = modelType.Assembly.GetType(typeName, false);
+                if (type != null)
                 {
-                    var type = modelType.Assembly.GetType(typeName, true);
-                    validator = (IValidator)Activator.CreateInstance(type);
-                }
-                catch
-                {
-                    Logger.Error($"No Validator in {modelType.FullName}.");
+                    validator = (IValidator) Activator.CreateInstance(type);
                 }
                 validators[modelType.TypeHandle] = validator;
                 Validate();
