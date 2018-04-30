@@ -11,6 +11,8 @@ namespace NetLib
     [PublicAPI]
     public class LocalFileData<T> where T : class, new()
     {
+        private DateTime fileLastWrite;
+            
         public readonly string LocalFile;
         private readonly bool isXmlOrJson;
         public T Data { get; set; }
@@ -29,12 +31,18 @@ namespace NetLib
             this.isXmlOrJson = isXmlOrJson;
         }
 
+        public bool HasChanges()
+        {
+            return File.GetLastWriteTime(LocalFile) > fileLastWrite;
+        }
+
         /// <summary>
         ///
         /// </summary>
         public void Load()
         {
             Data = !File.Exists(LocalFile) ? default : Deserialize();
+            fileLastWrite = File.GetLastWriteTime(LocalFile);
         }
 
         public void Save()
