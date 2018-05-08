@@ -11,6 +11,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
+using System.Windows.Media;
 using System.Windows.Threading;
 
 namespace NetLib.WPF
@@ -93,13 +94,13 @@ namespace NetLib.WPF
             {
                 WindowStartupLocation = WindowStartupLocation.CenterScreen;
             }
+            if (Resources["AccentColorBrush"] is Brush glowBrush) GlowBrush = glowBrush;
             Dispatcher.UnhandledException += Dispatcher_UnhandledException;
             // Скрыть кнопки свернуть/минимизировать
             //ShowMinButton = false;
             ShowMaxRestoreButton = false;
             SaveWindowPosition = true;
             ResizeMode = ResizeMode.CanResizeWithGrip;
-            SetResourceReference(GlowBrushProperty, FindResource("AccentColorBrush"));
             PreviewKeyDown += BaseWindow_PreviewKeyDown;
             MouseDown += BaseWindow_MouseDown;
             Activated += (s, a) =>

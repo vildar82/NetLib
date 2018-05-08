@@ -86,7 +86,7 @@ namespace NetLib
         }
 
         [PublicAPI]
-        public static T TryGetValue<T>(this object value, T defaultValue)
+        public static T TryGetValue<T>(this object value, T defaultValue = default)
         {
             try
             {
