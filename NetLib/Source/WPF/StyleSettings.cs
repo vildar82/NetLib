@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Windows.Controls;
 using System.Windows.Media;
 
 namespace NetLib.WPF
@@ -79,6 +80,12 @@ namespace NetLib.WPF
             ThemeManager.ChangeAppStyle(window.Resources, windowTheme.Accent, windowTheme.Theme);
         }
 
+        public static void ApplyWindowTheme([NotNull] UserControl control)
+        {
+            var windowTheme = GetWindowTheme(control.GetType().FullName);
+            ThemeManager.ChangeAppStyle(control.Resources, windowTheme.Accent, windowTheme.Theme);
+        }
+
         internal static void SaveWindowTheme([CanBeNull] BaseWindow window, AppTheme wTheme, Accent wAccent, bool isOnlyThisWindow)
         {
             try
@@ -120,9 +127,15 @@ namespace NetLib.WPF
         internal static (AppTheme Theme, Accent Accent, bool FindWindowTheme)
             GetWindowTheme(BaseWindow window)
         {
+            return GetWindowTheme(GetWindowName(window));
+        }
+
+        internal static (AppTheme Theme, Accent Accent, bool FindWindowTheme)
+            GetWindowTheme(string windowName)
+        {
             AppTheme wTheme;
             Accent wAccent;
-            var windowTheme = FindWindowTheme(window);
+            var windowTheme = FindWindowTheme(windowName);
             bool findWindowTheme;
             if (windowTheme != null)
             {
@@ -137,6 +150,13 @@ namespace NetLib.WPF
                 wAccent = accent;
             }
             return (wTheme, wAccent, findWindowTheme);
+        }
+
+        [CanBeNull]
+        private static WindowTheme FindWindowTheme([CanBeNull] string wName)
+        {
+            if (wName == null) return null;
+            return applicationTheme.Windows.FirstOrDefault(f => f.Window.Equals(wName));
         }
 
         [CanBeNull]

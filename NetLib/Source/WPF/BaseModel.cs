@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using JetBrains.Annotations;
 using NLog;
 using ReactiveUI;
@@ -25,6 +28,13 @@ namespace NetLib.WPF
             BaseVm = baseVM;
         }
 
+        protected BaseModel(UserControl userControl, IBaseViewModel baseVM)
+        {
+            UserControl = userControl;
+            BaseVm = baseVM;
+        }
+
+        public UserControl UserControl { get; set; }
         public IBaseViewModel BaseVm { get; set; }
 
         [NotNull]
@@ -41,6 +51,41 @@ namespace NetLib.WPF
         {
             if (BaseVm != null) return BaseVm.CreateCommand(execute, canExecute);
             var command = ReactiveCommand.Create(execute, canExecute);
+            command.ThrownExceptions.Subscribe(CommandException);
+            return command;
+        }
+
+        [NotNull]
+        public ReactiveCommand CreateCommandAsync(Func<CancellationToken,Task> execute, [CanBeNull] IObservable<bool> canExecute = null)
+        {
+            if (BaseVm != null) return BaseVm.CreateCommandAsync(execute, canExecute);
+            var command = ReactiveCommand.CreateFromTask(execute, canExecute);
+            command.ThrownExceptions.Subscribe(CommandException);
+            return command;
+        }
+
+        [NotNull]
+        public ReactiveCommand CreateCommandAsync(Func<Task> execute, [CanBeNull] IObservable<bool> canExecute = null)
+        {
+            if (BaseVm != null) return BaseVm.CreateCommandAsync(execute, canExecute);
+            var command = ReactiveCommand.CreateFromTask(execute, canExecute);
+            command.ThrownExceptions.Subscribe(CommandException);
+            return command;
+        }
+
+        [NotNull]
+        public ReactiveCommand CreateCommandAsync<TParam>(Func<TParam, Task> execute, [CanBeNull] IObservable<bool> canExecute = null)
+        {
+            if (BaseVm != null) return BaseVm.CreateCommandAsync(execute, canExecute);
+            var command = ReactiveCommand.CreateFromTask(execute, canExecute);
+            command.ThrownExceptions.Subscribe(CommandException);
+            return command;
+        }
+        [NotNull]
+        public ReactiveCommand CreateCommandAsync<TParam>(Func<TParam, CancellationToken, Task> execute, [CanBeNull] IObservable<bool> canExecute = null)
+        {
+            if (BaseVm != null) return BaseVm.CreateCommandAsync(execute, canExecute);
+            var command = ReactiveCommand.CreateFromTask(execute, canExecute);
             command.ThrownExceptions.Subscribe(CommandException);
             return command;
         }

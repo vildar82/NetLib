@@ -69,7 +69,6 @@ namespace NetLib.WPF
 
         protected BaseWindow([CanBeNull] IBaseViewModel model)
         {
-            AddStyleResouse();
             Model = model;
             if (Model != null)
             {
@@ -84,7 +83,6 @@ namespace NetLib.WPF
             // DialogResult
             var dialogResultBinding = new Binding("DialogResult");
             SetBinding(DialogCloser.DialogResultProperty, dialogResultBinding);
-
             if (model?.Parent?.Window != null)
             {
                 Owner = model.Parent.Window;
@@ -94,7 +92,7 @@ namespace NetLib.WPF
             {
                 WindowStartupLocation = WindowStartupLocation.CenterScreen;
             }
-            if (Resources["AccentColorBrush"] is Brush glowBrush) GlowBrush = glowBrush;
+            
             Dispatcher.UnhandledException += Dispatcher_UnhandledException;
             // Скрыть кнопки свернуть/минимизировать
             //ShowMinButton = false;
@@ -147,7 +145,7 @@ namespace NetLib.WPF
 
         protected override void OnInitialized(EventArgs e)
         {
-            AddStyleResouse();
+            AddStyleResouse(Resources);
             // Применение темы оформления
             ApplyTheme();
             // При изменении темы
@@ -157,6 +155,7 @@ namespace NetLib.WPF
                 OnChangeTheme();
             };
             SaveWindowPosition = true;
+            if (Resources["AccentColorBrush"] is Brush glowBrush) GlowBrush = glowBrush;
 
             // Кнопка настроек темы оформления
             if (ShowThemeButton && !(Model is StyleSettingsViewModel))
@@ -179,9 +178,9 @@ namespace NetLib.WPF
             RightWindowCommands.Items.Add(button);
         }
 
-        private void AddStyleResouse()
+        public static void AddStyleResouse([NotNull] ResourceDictionary resources)
         {
-            Resources.MergedDictionaries.Add(new ResourceDictionary
+            resources.MergedDictionaries.Add(new ResourceDictionary
             {
                 Source = new Uri("pack://application:,,,/NetLib;component/Source/Style.xaml")
             });

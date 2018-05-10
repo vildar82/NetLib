@@ -1,12 +1,14 @@
 ﻿using JetBrains.Annotations;
 using System;
 using System.IO;
+using NLog;
 
 namespace NetLib.Locks
 {
     [PublicAPI]
     public class FileLock : ILockItem
     {
+        private static ILogger Log { get; } = LogManager.GetCurrentClassLogger();
         private readonly string file;
         private FileStream stream;
         /// <summary>
@@ -25,8 +27,9 @@ namespace NetLib.Locks
                 IsLockSuccess = true;
                 WriteLockInfo();
             }
-            catch
+            catch(Exception ex)
             {
+                Log.Error(ex);
                 // Заблокировано
                 try
                 {

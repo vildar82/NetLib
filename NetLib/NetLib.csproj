@@ -126,6 +126,7 @@
     <Compile Include="Source\Result.cs" />
     <Compile Include="Source\String\StringExt.cs" />
     <Compile Include="Source\WPF\BaseModel.cs" />
+    <Compile Include="Source\WPF\BaseUserControl.cs" />
     <Compile Include="Source\WPF\BaseViewModel.cs" />
     <Compile Include="Source\WPF\BaseWindow.cs" />
     <Compile Include="Source\WPF\Behaviors\DataGrid\AlphaNumSorter.cs" />
