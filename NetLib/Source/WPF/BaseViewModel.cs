@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -111,6 +112,37 @@ namespace NetLib.WPF
             if (e is OperationCanceledException) return;
             Logger.Error(e, "CommandException");
             ShowMessage(e.Message);
+        }
+
+        [NotNull]
+        public ReactiveCommand CreateCommandAsync(Func<CancellationToken,Task> execute, [CanBeNull] IObservable<bool> canExecute = null)
+        {
+            var command = ReactiveCommand.CreateFromTask(execute, canExecute);
+            command.ThrownExceptions.Subscribe(CommandException);
+            return command;
+        }
+
+        [NotNull]
+        public ReactiveCommand CreateCommandAsync(Func<Task> execute, [CanBeNull] IObservable<bool> canExecute = null)
+        {
+            var command = ReactiveCommand.CreateFromTask(execute, canExecute);
+            command.ThrownExceptions.Subscribe(CommandException);
+            return command;
+        }
+
+        [NotNull]
+        public ReactiveCommand CreateCommandAsync<TParam>(Func<TParam, Task> execute, [CanBeNull] IObservable<bool> canExecute = null)
+        {
+            var command = ReactiveCommand.CreateFromTask(execute, canExecute);
+            command.ThrownExceptions.Subscribe(CommandException);
+            return command;
+        }
+        [NotNull]
+        public ReactiveCommand CreateCommandAsync<TParam>(Func<TParam, CancellationToken, Task> execute, [CanBeNull] IObservable<bool> canExecute = null)
+        {
+            var command = ReactiveCommand.CreateFromTask(execute, canExecute);
+            command.ThrownExceptions.Subscribe(CommandException);
+            return command;
         }
 
         [NotNull]

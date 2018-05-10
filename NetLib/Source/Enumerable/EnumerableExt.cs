@@ -5,6 +5,7 @@ using System.Linq;
 
 namespace NetLib
 {
+    [PublicAPI]
     public static class EnumerableExt
     {
         /// <summary>
