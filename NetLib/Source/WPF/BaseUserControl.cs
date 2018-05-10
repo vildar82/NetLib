@@ -9,22 +9,27 @@ namespace NetLib.WPF
     {
         private IBaseModel model;
 
-        protected BaseUserControl(IBaseModel baseModel)
+        public BaseUserControl()
+        {
+            
+        }
+
+        public BaseUserControl(IBaseModel baseModel)
         {
             DataContext = baseModel;
             Model = baseModel;
-            // При изменении темы
-            StyleSettings.Change += (s, a) =>
-            {
-                ApplyTheme();
-            };
         }
 
         protected override void OnInitialized(EventArgs e)
         {
             base.OnInitialized(e);
+            // При изменении темы
+            StyleSettings.Change += (s, a) =>
+            {
+                ApplyTheme();
+            };
             BaseWindow.AddStyleResouse(Resources);
-            StyleSettings.ApplyWindowTheme(this);
+            ApplyTheme();
         }
 
         public IBaseModel Model
