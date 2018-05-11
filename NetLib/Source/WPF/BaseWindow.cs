@@ -69,6 +69,7 @@ namespace NetLib.WPF
 
         protected BaseWindow([CanBeNull] IBaseViewModel model)
         {
+            AddStyleResouse(Resources);
             Model = model;
             if (Model != null)
             {
@@ -145,7 +146,6 @@ namespace NetLib.WPF
 
         protected override void OnInitialized(EventArgs e)
         {
-            AddStyleResouse(Resources);
             // Применение темы оформления
             ApplyTheme();
             // При изменении темы

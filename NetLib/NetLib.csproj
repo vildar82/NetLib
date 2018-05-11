@@ -360,7 +360,7 @@
       <Version>4.5.4</Version>
     </PackageReference>
     <PackageReference Include="PropertyChanged.Fody">
-      <Version>2.5.5</Version>
+      <Version>2.5.6</Version>
     </PackageReference>
     <PackageReference Include="reactiveui">
       <Version>7.4.0</Version>

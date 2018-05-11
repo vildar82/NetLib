@@ -40,5 +40,6 @@ namespace NetLib
             // ReSharper disable once round
             return Math.Round(value, digits, MidpointRounding.AwayFromZero);
         }
+        
     }
 }
