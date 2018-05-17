@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Reactive.Concurrency;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Threading;
 using JetBrains.Annotations;
 using NLog;
 using ReactiveUI;
@@ -41,7 +43,7 @@ namespace NetLib.WPF
         public ReactiveCommand CreateCommand(Action execute, IObservable<bool> canExecute = null)
         {
              if (BaseVm != null) return BaseVm.CreateCommand(execute, canExecute);
-            var command = ReactiveCommand.Create(execute, canExecute);
+            var command = ReactiveCommand.Create(execute, canExecute, new DispatcherScheduler(Dispatcher.CurrentDispatcher));
             command.ThrownExceptions.Subscribe(CommandException);
             return command;
         }
@@ -50,7 +52,7 @@ namespace NetLib.WPF
         public ReactiveCommand CreateCommand<T>(Action<T> execute, IObservable<bool> canExecute = null)
         {
             if (BaseVm != null) return BaseVm.CreateCommand(execute, canExecute);
-            var command = ReactiveCommand.Create(execute, canExecute);
+            var command = ReactiveCommand.Create(execute, canExecute, new DispatcherScheduler(Dispatcher.CurrentDispatcher));
             command.ThrownExceptions.Subscribe(CommandException);
             return command;
         }
@@ -59,7 +61,7 @@ namespace NetLib.WPF
         public ReactiveCommand CreateCommandAsync(Func<CancellationToken,Task> execute, [CanBeNull] IObservable<bool> canExecute = null)
         {
             if (BaseVm != null) return BaseVm.CreateCommandAsync(execute, canExecute);
-            var command = ReactiveCommand.CreateFromTask(execute, canExecute);
+            var command = ReactiveCommand.CreateFromTask(execute, canExecute, new DispatcherScheduler(Dispatcher.CurrentDispatcher));
             command.ThrownExceptions.Subscribe(CommandException);
             return command;
         }
@@ -68,7 +70,7 @@ namespace NetLib.WPF
         public ReactiveCommand CreateCommandAsync(Func<Task> execute, [CanBeNull] IObservable<bool> canExecute = null)
         {
             if (BaseVm != null) return BaseVm.CreateCommandAsync(execute, canExecute);
-            var command = ReactiveCommand.CreateFromTask(execute, canExecute);
+            var command = ReactiveCommand.CreateFromTask(execute, canExecute, new DispatcherScheduler(Dispatcher.CurrentDispatcher));
             command.ThrownExceptions.Subscribe(CommandException);
             return command;
         }
@@ -77,7 +79,7 @@ namespace NetLib.WPF
         public ReactiveCommand CreateCommandAsync<TParam>(Func<TParam, Task> execute, [CanBeNull] IObservable<bool> canExecute = null)
         {
             if (BaseVm != null) return BaseVm.CreateCommandAsync(execute, canExecute);
-            var command = ReactiveCommand.CreateFromTask(execute, canExecute);
+            var command = ReactiveCommand.CreateFromTask(execute, canExecute, new DispatcherScheduler(Dispatcher.CurrentDispatcher));
             command.ThrownExceptions.Subscribe(CommandException);
             return command;
         }
@@ -85,7 +87,7 @@ namespace NetLib.WPF
         public ReactiveCommand CreateCommandAsync<TParam>(Func<TParam, CancellationToken, Task> execute, [CanBeNull] IObservable<bool> canExecute = null)
         {
             if (BaseVm != null) return BaseVm.CreateCommandAsync(execute, canExecute);
-            var command = ReactiveCommand.CreateFromTask(execute, canExecute);
+            var command = ReactiveCommand.CreateFromTask(execute, canExecute, new DispatcherScheduler(Dispatcher.CurrentDispatcher));
             command.ThrownExceptions.Subscribe(CommandException);
             return command;
         }

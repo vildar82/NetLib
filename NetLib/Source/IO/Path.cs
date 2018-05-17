@@ -8,11 +8,18 @@ namespace NetLib.IO
     [PublicAPI]
     public static class Path
     {
+        public static bool IsEqualsDateaFile([NotNull] string file1, [NotNull] string file2)
+        {
+            var f1Date =File.GetLastWriteTime(file1);
+            var f2Date = File.GetLastWriteTime(file2);
+            return f1Date.IsEquals(f2Date);
+        }
+
         public static bool IsEqualsDataDir([NotNull] string sourceDir, [NotNull] string destDir)
         {
-            var diSrc = new DirectoryInfo(sourceDir);
-            var diDest = new DirectoryInfo(destDir);
-            return diSrc.LastWriteTimeUtc.IsEquals(diDest.LastWriteTimeUtc);
+            var dateSrc = Directory.GetLastWriteTime(sourceDir);
+            var dateDest = Directory.GetLastWriteTime(destDir);
+            return dateSrc.IsEquals(dateDest);
         }
 
         [PublicAPI]

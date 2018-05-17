@@ -14,7 +14,7 @@ namespace NetLib.WPF.Converters
         public override object Convert([NotNull] object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value is double d) return new GridLength(d);
-            throw new ArgumentException($"Ожидается double");
+            throw new ArgumentException("Ожидается double");
         }
 
         [NotNull]

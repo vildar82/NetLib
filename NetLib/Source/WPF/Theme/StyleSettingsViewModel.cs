@@ -15,9 +15,9 @@ namespace NetLib.WPF.Theme
             Themes = StyleSettings.GetThemes().Select(s => new ThemeViewModel(s)).ToList();
             Accents = StyleSettings.Getaccents().Select(s => new AccentViewModel(s)).ToList();
             var windowTheme = StyleSettings.GetWindowTheme(parent?.Window);
-            SelectedTheme = Themes.FirstOrDefault(t => t.Theme == windowTheme.Theme);
-            SelectedAccent = Accents.FirstOrDefault(t => t.Accent == windowTheme.Accent);
-            IsOnlyThisWindow = windowTheme.FindWindowTheme;
+            SelectedTheme = Themes.FirstOrDefault(t => t.Theme == windowTheme.Item1);
+            SelectedAccent = Accents.FirstOrDefault(t => t.Accent == windowTheme.Item2);
+            IsOnlyThisWindow = windowTheme.Item3;
 
             this.WhenAnyValue(w => w.SelectedTheme, w => w.SelectedAccent).Skip(1).Subscribe(s =>
             {

@@ -77,13 +77,13 @@ namespace NetLib.WPF
         public static void ApplyWindowTheme([NotNull] BaseWindow window)
         {
             var windowTheme = GetWindowTheme(window);
-            ThemeManager.ChangeAppStyle(window.Resources, windowTheme.Accent, windowTheme.Theme);
+            ThemeManager.ChangeAppStyle(window.Resources, windowTheme.Item2, windowTheme.Item1);
         }
 
         public static void ApplyWindowTheme([NotNull] UserControl control)
         {
             var windowTheme = GetWindowTheme(control.GetType().FullName);
-            ThemeManager.ChangeAppStyle(control.Resources, windowTheme.Accent, windowTheme.Theme);
+            ThemeManager.ChangeAppStyle(control.Resources, windowTheme.Item2, windowTheme.Item1);
         }
 
         internal static void SaveWindowTheme([CanBeNull] BaseWindow window, AppTheme wTheme, Accent wAccent, bool isOnlyThisWindow)
@@ -124,13 +124,13 @@ namespace NetLib.WPF
             }
         }
 
-        internal static (AppTheme Theme, Accent Accent, bool FindWindowTheme)
+        internal static Tuple<AppTheme, Accent, bool>
             GetWindowTheme(BaseWindow window)
         {
             return GetWindowTheme(GetWindowName(window));
         }
 
-        internal static (AppTheme Theme, Accent Accent, bool FindWindowTheme)
+        internal static Tuple<AppTheme, Accent, bool>
             GetWindowTheme(string windowName)
         {
             AppTheme wTheme;
@@ -149,7 +149,7 @@ namespace NetLib.WPF
                 wTheme = theme;
                 wAccent = accent;
             }
-            return (wTheme, wAccent, findWindowTheme);
+            return new Tuple<AppTheme, Accent, bool>(wTheme, wAccent, findWindowTheme);
         }
 
         [CanBeNull]
