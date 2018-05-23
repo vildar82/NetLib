@@ -174,6 +174,7 @@ namespace NetLib.Notification
                 cfg.LifetimeSupervisor = new TimeAndCountBasedLifetimeSupervisor(opt.LifeTime,
                     MaximumNotificationCount.FromCount(opt.MaxCount));
                 cfg.Dispatcher = dispatcher;
+                cfg.DisplayOptions.Width = 400;
             });
         }
     }

@@ -34,7 +34,7 @@ namespace NetLib.WPF
         private static readonly ConcurrentDictionary<RuntimeTypeHandle, IValidator> validators =
             new ConcurrentDictionary<RuntimeTypeHandle, IValidator>();
 
-        private static Dispatcher dispatcher = Dispatcher.CurrentDispatcher;
+        public static Dispatcher dispatcher = Dispatcher.CurrentDispatcher;
         private readonly object context;
         private ValidationResult validationResult;
 
