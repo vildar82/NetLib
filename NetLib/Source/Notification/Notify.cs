@@ -38,8 +38,10 @@ namespace NetLib.Notification
         /// <param name="offsetX">Отступ X</param>
         /// <param name="offsetY">Отступ Y</param>
         /// <param name="maxCount">Максимальное кол-во уведомлений</param>
+        /// <param name="with">Ширина уведомления</param>
         public NotifyOptions(TimeSpan lifeTime = default, Window parent = null,
-            NotifyCorner corner = NotifyCorner.TopRight, double offsetX = 50, double offsetY = 50, int maxCount = 5)
+            NotifyCorner corner = NotifyCorner.TopRight, double offsetX = 50, double offsetY = 50, int maxCount = 5,
+            double with = 250)
         {
             LifeTime = lifeTime == default ? TimeSpan.FromSeconds(5) : lifeTime;
             Parent = parent;
@@ -47,14 +49,16 @@ namespace NetLib.Notification
             OffsetX = offsetX;
             OffsetY = offsetY;
             MaxCount = maxCount;
+            With = with;
         }
 
-        public TimeSpan LifeTime { get; set; } = default;
-        public Window Parent { get; set; } = null;
-        public NotifyCorner Corner { get; set; } = NotifyCorner.TopRight;
-        public double OffsetX { get; set; } = 50;
-        public double OffsetY { get; set; } = 150;
-        public int MaxCount { get; set; } = 5;
+        public TimeSpan LifeTime { get; set; }
+        public Window Parent { get; set; }
+        public NotifyCorner Corner { get; set; }
+        public double OffsetX { get; set; }
+        public double OffsetY { get; set; }
+        public int MaxCount { get; set; }
+        public double With { get; set; }
     }
 
     public class NotifyMessageOptions
@@ -74,7 +78,7 @@ namespace NetLib.Notification
     [PublicAPI]
     public class Notify
     {
-        private static readonly Notify notifyScreen;
+        private static Notify notifyScreen;
         private readonly Notifier notifier;
         private static readonly Dispatcher dispatcher;
 
@@ -82,6 +86,15 @@ namespace NetLib.Notification
         {
             dispatcher = Dispatcher.CurrentDispatcher;
             notifyScreen = new Notify(new NotifyOptions());
+        }
+
+        /// <summary>
+        /// Настройка уведомлений на основном экране (без окна).
+        /// </summary>
+        /// <param name="opt">Настройки уведомлений</param>
+        public static void SetScreenSettings(NotifyOptions opt)
+        {
+            notifyScreen = new Notify(opt);
         }
 
         /// <summary>
@@ -99,7 +112,7 @@ namespace NetLib.Notification
         /// <param name="message">Сообщение</param>
         /// <param name="type">Тип</param>
         /// <param name="msgOpt">настройки сообщения</param>
-        public static void ShowScreenNotify(string message, NotifyType type = NotifyType.Information,
+        public static void ShowOnScreen(string message, NotifyType type = NotifyType.Information,
             [CanBeNull] NotifyMessageOptions msgOpt = null)
         {
             Show(message, notifyScreen, msgOpt, type);
@@ -111,7 +124,7 @@ namespace NetLib.Notification
         /// <param name="message">Сообщение</param>
         /// <param name="type">Тип</param>
         /// <param name="msgOpt">настройки сообщения</param>
-        public void ShowNotify(string message, NotifyType type = NotifyType.Information, 
+        public void Show(string message, NotifyType type = NotifyType.Information, 
             [CanBeNull] NotifyMessageOptions msgOpt = null)
         {
             Show(message, this, null, type);
@@ -127,7 +140,6 @@ namespace NetLib.Notification
                 {
                     CloseClickAction = n =>
                     {
-                        n.Close();
                         nMsgOpt.CloseClickAction?.Invoke();
                     },
                     UnfreezeOnMouseLeave = nMsgOpt.UnfreezeOnMouseLeave,
@@ -137,7 +149,6 @@ namespace NetLib.Notification
                     Tag = nMsgOpt.Tag,
                     NotificationClickAction = n =>
                     {
-                        n.Close();
                         nMsgOpt.NotificationClickAction?.Invoke();
                     }
                 };
@@ -174,7 +185,7 @@ namespace NetLib.Notification
                 cfg.LifetimeSupervisor = new TimeAndCountBasedLifetimeSupervisor(opt.LifeTime,
                     MaximumNotificationCount.FromCount(opt.MaxCount));
                 cfg.Dispatcher = dispatcher;
-                cfg.DisplayOptions.Width = 400;
+                cfg.DisplayOptions.Width = opt.With;
             });
         }
     }
