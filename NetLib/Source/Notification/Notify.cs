@@ -149,6 +149,8 @@ namespace NetLib.Notification
                     Tag = nMsgOpt.Tag,
                     NotificationClickAction = n =>
                     {
+                        n.CanClose = true;
+                        n.Close();
                         nMsgOpt.NotificationClickAction?.Invoke();
                     }
                 };
