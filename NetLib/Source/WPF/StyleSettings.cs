@@ -1,14 +1,15 @@
 ﻿using JetBrains.Annotations;
 using MahApps.Metro;
-using NetLib.IO;
 using NetLib.WPF.Theme;
 using NLog;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Windows.Controls;
 using System.Windows.Media;
+using Path = NetLib.IO.Path;
 
 namespace NetLib.WPF
 {
@@ -18,18 +19,15 @@ namespace NetLib.WPF
         internal static Accent accent;
         private static AppTheme theme;
         //private static readonly WindowsThemes windowsThemes;
-        private static readonly ApplicationThemes applicationTheme;
+        private static ApplicationThemes applicationTheme;
+        private static readonly string applicationName;
 
         static StyleSettings()
         {
+            applicationName = GetAppName();
             LoadThemesAndColors();
             var windowsThemes = LoadWindowsThemes();
-            if (windowsThemes.Applications == null)
-            {
-                windowsThemes.Applications = new List<ApplicationThemes>();
-            }
-            var applicationName = GetAppName();
-            Debug.WriteLine($"applicationName={applicationName}");
+            if (windowsThemes.Applications == null) windowsThemes.Applications = new List<ApplicationThemes>();
             // перенос старой настройки тем автакада в настройки приложения
             if (applicationName.EqualsIgnoreCase("acad") &&
                 !windowsThemes.Applications.Any(a => a.Name.EqualsIgnoreCase("acad")))
@@ -44,18 +42,26 @@ namespace NetLib.WPF
 #pragma warning restore 612
                 };
                 windowsThemes.Applications.Add(applicationTheme);
+                Save(GetWindowsThemesFile(), windowsThemes);
             }
-            else
+            applicationTheme = FindApplication(windowsThemes, applicationName);
+            if (applicationTheme == null)
             {
-                applicationTheme = windowsThemes.Applications.FirstOrDefault(a => a.Name.Equals(applicationName));
-                if (applicationTheme == null)
+                applicationTheme = new ApplicationThemes
                 {
-                    applicationTheme = new ApplicationThemes { Name = applicationName };
-                    windowsThemes.Applications.Add(applicationTheme);
-                }
+                    Name = applicationName,
+                    Accent = "Blue",
+                    Theme = "BaseLight",
+                };
+                Save(GetWindowsThemesFile(), windowsThemes);
             }
-            accent = GetAccent(applicationTheme.Accent);
-            theme = GetTheme(applicationTheme.Theme);
+            accent = GetAccent(applicationTheme?.Accent ?? "Blue");
+            theme = GetTheme(applicationTheme?.Theme ?? "BaseLight");
+        }
+
+        private static ApplicationThemes FindApplication(WindowsThemes windowsThemes, string appName)
+        {
+            return windowsThemes.Applications.FirstOrDefault(a => a.Name.Equals(appName));
         }
 
         [NotNull]
@@ -91,6 +97,17 @@ namespace NetLib.WPF
             try
             {
                 var windowsThemes = LoadWindowsThemes();
+                applicationTheme = FindApplication(windowsThemes, applicationName);
+                if (applicationTheme == null)
+                {
+                    applicationTheme = new ApplicationThemes
+                    {
+                        Name = applicationName,
+                        Accent = "Blue",
+                        Theme = "BaseLight"
+                    };
+                    windowsThemes.Applications.Add(applicationTheme);
+                }
                 if (isOnlyThisWindow && window != null)
                 {
                     var windowTheme = FindWindowTheme(window);
@@ -98,6 +115,7 @@ namespace NetLib.WPF
                     {
                         windowTheme = new WindowTheme { Window = GetWindowName(window) };
                         applicationTheme.Windows.Add(windowTheme);
+                        AddApplication(windowsThemes, applicationTheme);
                     }
                     windowTheme.Theme = wTheme.Name;
                     windowTheme.Accent = wAccent.Name;
@@ -116,11 +134,31 @@ namespace NetLib.WPF
                     Change?.Invoke(null, EventArgs.Empty);
                 }
                 var file = GetWindowsThemesFile();
-                windowsThemes.Serialize(file);
+                Save(file, windowsThemes);
             }
             catch (Exception ex)
             {
                 Logger.Error(ex, "SaveWindowTheme");
+            }
+        }
+
+        private static void AddApplication(WindowsThemes windowsThemes, ApplicationThemes applicationThemes)
+        {
+            if (windowsThemes.Applications.All(a => a.Name != applicationThemes.Name))
+            {
+                windowsThemes.Applications.Add(applicationThemes);
+            }
+        }
+
+        private static void Save(string file, WindowsThemes data)
+        {
+            try
+            {
+                data.Serialize(file);
+            }
+            catch (Exception ex)
+            {
+                Logger.Error(ex);
             }
         }
 
@@ -156,7 +194,7 @@ namespace NetLib.WPF
         private static WindowTheme FindWindowTheme([CanBeNull] string wName)
         {
             if (wName == null) return null;
-            return applicationTheme.Windows.FirstOrDefault(f => f.Window.Equals(wName));
+            return applicationTheme?.Windows?.FirstOrDefault(f => f.Window.Equals(wName));
         }
 
         [CanBeNull]
@@ -164,7 +202,7 @@ namespace NetLib.WPF
         {
             if (window == null) return null;
             var wName = GetWindowName(window);
-            return applicationTheme.Windows.FirstOrDefault(f => f.Window.Equals(wName));
+            return applicationTheme?.Windows?.FirstOrDefault(f => f.Window.Equals(wName));
         }
 
         [CanBeNull]
@@ -204,12 +242,16 @@ namespace NetLib.WPF
             try
             {
                 var file = GetWindowsThemesFile();
-                return file.Deserialize<WindowsThemes>();
+                if (File.Exists(file))
+                {
+                    return file.Deserialize<WindowsThemes>();
+                }
             }
-            catch
+            catch (Exception ex)
             {
-                return new WindowsThemes();
+                Logger.Error(ex);
             }
+            return new WindowsThemes();
         }
 
         [NotNull]
