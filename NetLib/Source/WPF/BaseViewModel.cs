@@ -101,6 +101,7 @@ namespace NetLib.WPF
         /// <summary>
         /// Добавление команды - ThrownExceptions.Subscribe.
         /// </summary>
+        [Obsolete("Use CreateCommand")]
         [NotNull]
         public ReactiveCommand AddCommand([NotNull] ReactiveCommand command)
         {
