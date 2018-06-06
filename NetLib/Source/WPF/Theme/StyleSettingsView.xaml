@@ -9,25 +9,20 @@
     d:DataContext="{d:DesignInstance local:StyleSettingsViewModel, d:IsDesignTimeCreatable=True}"
     Topmost="True"
     mc:Ignorable="d"
-    x:Name="rfty"
+    ResizeMode="NoResize"
+    WindowStartupLocation="CenterScreen"
     Title="Настройки оформления" Height="300" Width="300">
-    <wpf:BaseWindow.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary>
-                    <DataTemplate DataType="{x:Type local:ThemeViewModel}">
-                        <TextBlock Text="{Binding Name}" VerticalAlignment="Center" Margin="1"/>
-                    </DataTemplate>
-                    <DataTemplate DataType="{x:Type local:AccentViewModel}">
-                        <Grid Background="{Binding Color}" HorizontalAlignment="Stretch" MinWidth="100">
-                            <TextBlock Text="{Binding Name}" VerticalAlignment="Center" HorizontalAlignment="Stretch"
-                                       FontSize="12" Margin="3"/>
-                        </Grid>
-                    </DataTemplate>
-                </ResourceDictionary>
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
-    </wpf:BaseWindow.Resources>
+    <Window.Resources>
+        <DataTemplate DataType="{x:Type local:ThemeViewModel}">
+            <TextBlock Text="{Binding Name}" VerticalAlignment="Center" Margin="1"/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type local:AccentViewModel}">
+            <Grid Background="{Binding Color}" HorizontalAlignment="Stretch" MinWidth="100">
+                <TextBlock Text="{Binding Name}" VerticalAlignment="Center" HorizontalAlignment="Stretch"
+                           FontSize="12" Margin="3"/>
+            </Grid>
+        </DataTemplate>
+    </Window.Resources>
     <Grid>
         <StackPanel Grid.Row="0" Margin="5">
             <StackPanel Orientation="Vertical" Margin="5">

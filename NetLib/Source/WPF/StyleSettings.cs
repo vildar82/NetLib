@@ -276,6 +276,7 @@ namespace NetLib.WPF
             {
                 ThemeManager.AddAppTheme("DarkBlue", new Uri("pack://application:,,,/NetLib;component/Source/WPF/Theme/DarkBlue.xaml"));
                 ThemeManager.AddAppTheme("Gray", new Uri("pack://application:,,,/NetLib;component/Source/WPF/Theme/Gray.xaml"));
+                ThemeManager.AddAppTheme("AlabasterLight", new Uri("pack://application:,,,/NetLib;component/Source/WPF/Theme/AlabasterLight.xaml"));
                 ThemeManager.AddAccent("Gray", new Uri("pack://application:,,,/NetLib;component/Source/WPF/Theme/Accents/GrayAccent.xaml"));
                 ThemeManager.AddAccent("mdAmber", new Uri("pack://application:,,,/NetLib;component/Source/WPF/Theme/Accents/mdAmber.xaml"));
                 ThemeManager.AddAccent("mdBlue", new Uri("pack://application:,,,/NetLib;component/Source/WPF/Theme/Accents/mdBlue.xaml"));
@@ -296,6 +297,7 @@ namespace NetLib.WPF
                 ThemeManager.AddAccent("mdRed", new Uri("pack://application:,,,/NetLib;component/Source/WPF/Theme/Accents/mdRed.xaml"));
                 ThemeManager.AddAccent("mdTeal", new Uri("pack://application:,,,/NetLib;component/Source/WPF/Theme/Accents/mdTeal.xaml"));
                 ThemeManager.AddAccent("mdYellow", new Uri("pack://application:,,,/NetLib;component/Source/WPF/Theme/Accents/mdYellow.xaml"));
+                ThemeManager.AddAccent("Azure", new Uri("pack://application:,,,/NetLib;component/Source/WPF/Theme/Accents/Azure.xaml"));
             }
             catch (Exception ex)
             {
