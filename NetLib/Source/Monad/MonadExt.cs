@@ -84,7 +84,26 @@ namespace NetLib.Monad
             }
             catch (Exception ex)
             {
-                return exception == null ? default : exception(ex);
+                if (exception == null)
+                {
+                    Logger.Error(ex);
+                    return default;
+                }
+                return exception(ex);
+            }
+        }
+
+        public static TRes Try<T,TRes>(this T obj, Func<T, TRes> func, TRes defaultRes, [CanBeNull] Action<Exception> exception=null)
+        {
+            try
+            {
+                return func(obj);
+            }
+            catch (Exception ex)
+            {
+                if (exception == null) Logger.Error(ex);
+                else exception(ex);
+                return defaultRes;
             }
         }
     }

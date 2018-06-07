@@ -57,6 +57,7 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.DirectoryServices" />
     <Reference Include="System.DirectoryServices.AccountManagement" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.IO.Compression" />
@@ -86,6 +87,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
     <Compile Include="Source\AD\AdUtils.cs" />
+    <Compile Include="Source\AD\UserData.cs" />
     <Compile Include="Source\Bool\ActionUsage.cs" />
     <Compile Include="Source\Bool\BoolUsage.cs" />
     <Compile Include="Source\Notification\Notify.cs" />
@@ -184,6 +186,7 @@
     <Compile Include="Source\WPF\Converters\MinToHoursConverter.cs" />
     <Compile Include="Source\WPF\Converters\RadiansToDegreeConverterExtension.cs" />
     <Compile Include="Source\WPF\Converters\UniversalValueConverter.cs" />
+    <Compile Include="Source\WPF\Data\ImageExt.cs" />
     <Compile Include="Source\WPF\DialogCloser.cs" />
     <Compile Include="Source\WPF\IBaseModel.cs" />
     <Compile Include="Source\WPF\IBaseViewModel.cs" />

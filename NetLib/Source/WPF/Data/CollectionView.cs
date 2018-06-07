@@ -7,6 +7,7 @@ using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
 using System.Windows.Data;
+using JetBrains.Annotations;
 
 namespace NetLib.WPF.Data
 {
@@ -15,6 +16,7 @@ namespace NetLib.WPF.Data
         IEnumerable<T> SourceCollectionGeneric { get; }
     }
 
+    [PublicAPI]
     public class CollectionView<T> : ICollectionView<T>
     {
         private readonly ICollectionView _collectionView;
@@ -119,7 +121,6 @@ namespace NetLib.WPF.Data
             get => _collectionView.Filter;
             set => _collectionView.Filter = value;
         }
-
         public bool CanFilter => _collectionView.CanFilter;
 
         public SortDescriptionCollection SortDescriptions => _collectionView.SortDescriptions;

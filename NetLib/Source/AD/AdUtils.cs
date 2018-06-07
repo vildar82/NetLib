@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.DirectoryServices;
 using System.DirectoryServices.AccountManagement;
 using System.Linq;
 using JetBrains.Annotations;
@@ -98,6 +99,23 @@ namespace NetLib.AD
             context = GetPrincipalContext(domain);
             var user = UserPrincipal.FindByIdentity(context, IdentityType.SamAccountName, sUserName);
             return user;
+        }
+
+        public static UserData GetUserData(string login, string domain)
+        {
+            using (var utils = new ADUtils())
+            using (var user = utils.GetUser(login, domain))
+            {
+                var de = (DirectoryEntry)user.GetUnderlyingObject();
+                var department = de.Properties["department"];
+                var position = de.Properties["title"];
+                return new UserData
+                {
+                    Department = department.Value?.ToString(),
+                    Position = position.Value?.ToString(),
+                    Fio = user.DisplayName
+                };
+            }
         }
     }
 }
