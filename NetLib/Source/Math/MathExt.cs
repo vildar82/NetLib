@@ -249,7 +249,8 @@ namespace NetLib
         /// <returns>Да или нет - если от заданного значения до целого числа меньше либо равно допуску</returns>
         public static bool IsWholeNumber(this double value, double tolerance = 0.001)
         {
-            return Math.Abs(value % 1) <= tolerance;
+            return Math.Abs(value.Round(0) - value) <= tolerance;
+            //return Math.Abs(value % 1) <= tolerance;
         }
 
         /// <summary>

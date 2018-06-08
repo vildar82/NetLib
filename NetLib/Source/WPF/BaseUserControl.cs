@@ -7,6 +7,7 @@ namespace NetLib.WPF
     [PublicAPI]
     public class BaseUserControl : UserControl
     {
+        private readonly bool applyTheme;
         private IBaseModel model;
 
         public BaseUserControl()
@@ -14,8 +15,14 @@ namespace NetLib.WPF
             
         }
 
-        public BaseUserControl(IBaseModel baseModel)
+        public BaseUserControl(IBaseModel baseModel) : this(baseModel, true)
         {
+            
+        }
+
+        public BaseUserControl(IBaseModel baseModel, bool applyTheme)
+        {
+            this.applyTheme = applyTheme;
             DataContext = baseModel;
             Model = baseModel;
         }
@@ -24,12 +31,12 @@ namespace NetLib.WPF
         {
             base.OnInitialized(e);
             // При изменении темы
-            StyleSettings.Change += (s, a) =>
+            if (applyTheme)
             {
+                StyleSettings.Change += (s, a) => { ApplyTheme(); };
+                BaseWindow.AddStyleResouse(Resources);
                 ApplyTheme();
-            };
-            BaseWindow.AddStyleResouse(Resources);
-            ApplyTheme();
+            }
         }
 
         public IBaseModel Model
