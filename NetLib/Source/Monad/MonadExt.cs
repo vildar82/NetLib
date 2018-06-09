@@ -28,8 +28,7 @@ namespace NetLib.Monad
             }
             catch (Exception ex)
             {
-                if (exception == null) Logger.Error(ex);
-                else exception(ex);
+                exception?.Invoke(ex);
             }
         }
 
@@ -61,8 +60,7 @@ namespace NetLib.Monad
             }
             catch (Exception ex)
             {
-                if (exception == null) Logger.Error(ex);
-                else exception(obj, ex);
+                exception?.Invoke(obj, ex);
             }
             return obj;
         }
@@ -84,12 +82,7 @@ namespace NetLib.Monad
             }
             catch (Exception ex)
             {
-                if (exception == null)
-                {
-                    Logger.Error(ex);
-                    return default;
-                }
-                return exception(ex);
+                return exception == null ? default : exception(ex);
             }
         }
 
@@ -101,8 +94,7 @@ namespace NetLib.Monad
             }
             catch (Exception ex)
             {
-                if (exception == null) Logger.Error(ex);
-                else exception(ex);
+                exception?.Invoke(ex);
                 return defaultRes;
             }
         }
