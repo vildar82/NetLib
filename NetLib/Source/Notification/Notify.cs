@@ -40,10 +40,10 @@ namespace NetLib.Notification
         /// <param name="maxCount">Максимальное кол-во уведомлений</param>
         /// <param name="with">Ширина уведомления</param>
         public NotifyOptions(TimeSpan lifeTime = default, Window parent = null,
-            NotifyCorner corner = NotifyCorner.TopRight, double offsetX = 50, double offsetY = 50, int maxCount = 5,
+            NotifyCorner corner = NotifyCorner.TopRight, double offsetX = 50, double offsetY = 50, int maxCount = 3,
             double with = 250)
         {
-            LifeTime = lifeTime == default ? TimeSpan.FromSeconds(5) : lifeTime;
+            LifeTime = lifeTime == default ? TimeSpan.FromSeconds(7) : lifeTime;
             Parent = parent;
             Corner = corner;
             OffsetX = offsetX;
@@ -63,7 +63,7 @@ namespace NetLib.Notification
 
     public class NotifyMessageOptions
     {
-        public double? FontSize { get; set; }
+        public double? FontSize { get; set; } = 14;
         public bool ShowCloseButton { get; set; } = true;
         public object Tag { get; set; }
         public bool FreezeOnMouseEnter { get; set; } = true;
@@ -133,28 +133,22 @@ namespace NetLib.Notification
         private static void Show(string message, [NotNull] Notify notify, [CanBeNull] NotifyMessageOptions nMsgOpt, 
             NotifyType type)
         {
-            MessageOptions msgOpt = null;
-            if (nMsgOpt != null)
+            if (nMsgOpt == null) nMsgOpt = new NotifyMessageOptions();
+            var msgOpt = new MessageOptions
             {
-                msgOpt = new MessageOptions
+                CloseClickAction = n => { nMsgOpt.CloseClickAction?.Invoke(); },
+                UnfreezeOnMouseLeave = nMsgOpt.UnfreezeOnMouseLeave,
+                FontSize = nMsgOpt.FontSize,
+                FreezeOnMouseEnter = nMsgOpt.FreezeOnMouseEnter,
+                ShowCloseButton = nMsgOpt.ShowCloseButton,
+                Tag = nMsgOpt.Tag,
+                NotificationClickAction = n =>
                 {
-                    CloseClickAction = n =>
-                    {
-                        nMsgOpt.CloseClickAction?.Invoke();
-                    },
-                    UnfreezeOnMouseLeave = nMsgOpt.UnfreezeOnMouseLeave,
-                    FontSize = nMsgOpt.FontSize,
-                    FreezeOnMouseEnter = nMsgOpt.FreezeOnMouseEnter,
-                    ShowCloseButton = nMsgOpt.ShowCloseButton,
-                    Tag = nMsgOpt.Tag,
-                    NotificationClickAction = n =>
-                    {
-                        n.CanClose = true;
-                        n.Close();
-                        nMsgOpt.NotificationClickAction?.Invoke();
-                    }
-                };
-            }
+                    n.CanClose = true;
+                    n.Close();
+                    nMsgOpt.NotificationClickAction?.Invoke();
+                }
+            };
             switch (type)
             {
                 case NotifyType.Information:
