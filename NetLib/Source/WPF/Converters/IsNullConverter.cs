@@ -17,4 +17,17 @@ namespace NetLib.WPF.Converters
             return value == null;
         }
     }
+
+    /// <summary>
+    /// True - если объект null
+    /// </summary>
+    [PublicAPI]
+    [ValueConversion(typeof(object), typeof(bool))]
+    public class IsNull : ConvertorBase
+    {
+        public override object Convert([CanBeNull] object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return value == null;
+        }
+    }
 }

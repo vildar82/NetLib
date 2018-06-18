@@ -139,6 +139,7 @@
     <Compile Include="Source\WPF\Behaviors\DataGrid\CustomSortBehaviour.cs" />
     <Compile Include="Source\WPF\Behaviors\DataGrid\DataGridColumnsBehavior.cs" />
     <Compile Include="Source\WPF\Behaviors\DataGrid\ICustomSorter.cs" />
+    <Compile Include="Source\WPF\Controls\DatePickerCalendar.cs" />
     <Compile Include="Source\WPF\Data\CollectionView.cs" />
     <Compile Include="Source\WPF\Behaviors\ListBoxAutoScrollBehavior.cs" />
     <Compile Include="Source\WPF\Behaviors\ListBox\ListBoxSelectionBehavior.cs" />
@@ -349,13 +350,13 @@
       <Version>2.3.1</Version>
     </PackageReference>
     <PackageReference Include="EPPlus">
-      <Version>4.5.2</Version>
+      <Version>4.5.2.1</Version>
     </PackageReference>
     <PackageReference Include="FluentValidation">
-      <Version>7.5.2</Version>
+      <Version>7.6.103</Version>
     </PackageReference>
     <PackageReference Include="Fody">
-      <Version>3.0.3</Version>
+      <Version>3.0.4</Version>
     </PackageReference>
     <PackageReference Include="JetBrains.Annotations">
       <Version>11.1.0</Version>
@@ -376,10 +377,10 @@
       <Version>4.5.6</Version>
     </PackageReference>
     <PackageReference Include="PropertyChanged.Fody">
-      <Version>2.5.6</Version>
+      <Version>2.5.7</Version>
     </PackageReference>
     <PackageReference Include="reactiveui">
-      <Version>8.2.1</Version>
+      <Version>8.3.1</Version>
     </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
