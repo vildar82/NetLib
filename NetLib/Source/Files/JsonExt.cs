@@ -4,12 +4,24 @@ using System.IO;
 
 namespace NetLib
 {
+    [PublicAPI]
     public static class JsonExt
     {
         public static T Deserialize<T>([NotNull] this string file)
         {
             var bsJson = ReadTextFile(file);
             return JsonConvert.DeserializeObject<T>(bsJson);
+        }
+
+        public static T FromJson<T>([NotNull] this string json)
+        {
+            return JsonConvert.DeserializeObject<T>(json);
+        }
+
+        [NotNull]
+        public static string ToJson<T>(this T item)
+        {
+            return JsonConvert.SerializeObject(item);
         }
 
         public static void Serialize<T>(this T item, [NotNull] string file)
