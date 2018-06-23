@@ -11,14 +11,13 @@ namespace NetLib
     [PublicAPI]
     public class LocalFileData<T> where T : class, new()
     {
+        private static ILogger Logger { get; } = LogManager.GetCurrentClassLogger();
         private DateTime fileLastWrite;
             
         public readonly string LocalFile;
         private readonly bool isXmlOrJson;
+        [NotNull]
         public T Data { get; set; }
-
-        // ReSharper disable once StaticMemberInGenericType
-        private static ILogger Logger { get; } = LogManager.GetCurrentClassLogger();
 
         /// <summary>
         /// Данные хранимые в файле json на сервере, с локальным кэшем
@@ -41,13 +40,26 @@ namespace NetLib
         /// </summary>
         public void Load()
         {
-            Data = !File.Exists(LocalFile) ? default : Deserialize();
+            Data = Deserialize();
             fileLastWrite = File.GetLastWriteTime(LocalFile);
         }
 
         public void Save()
         {
             Serialize();
+        }
+
+        public void TryLoad(Func<T> onError)
+        {
+            try
+            {
+                Load();
+            }
+            catch (Exception ex)
+            {
+                Data = onError();
+                Logger.Error(ex);
+            }
         }
 
         public void TryLoad()

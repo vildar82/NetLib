@@ -1,26 +1,26 @@
-﻿using FluentValidation;
-using JetBrains.Annotations;
-using MahApps.Metro.Controls.Dialogs;
-using NLog;
-using ReactiveUI;
-using System;
-using System.Collections;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Reactive.Concurrency;
-using System.Runtime.CompilerServices;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Threading;
-using ControlzEx;
-using ValidationResult = FluentValidation.Results.ValidationResult;
-
-namespace NetLib.WPF
+﻿namespace NetLib.WPF
 {
+    using FluentValidation;
+    using JetBrains.Annotations;
+    using MahApps.Metro.Controls.Dialogs;
+    using NLog;
+    using ReactiveUI;
+    using System;
+    using System.Collections;
+    using System.Collections.Concurrent;
+    using System.Collections.Generic;
+    using System.ComponentModel;
+    using System.Linq;
+    using System.Reactive.Concurrency;
+    using System.Runtime.CompilerServices;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using System.Windows;
+    using System.Windows.Controls;
+    using System.Windows.Threading;
+    using ControlzEx;
+    using ValidationResult = FluentValidation.Results.ValidationResult;
+
     /// <inheritdoc cref="IBaseViewModel" />
     /// <summary>
     /// ReactiveUI ViewModel, +FluentValidator (должен быть класс с таким же именем +Validator).
@@ -77,7 +77,7 @@ namespace NetLib.WPF
         {
         }
 
-        public void AddWindowButton(string toolTip, PackIconBase icon,Action onClick)
+        public void AddWindowButton(string toolTip, PackIconBase icon, Action onClick)
         {
             if (Window == null) return;
             var button = new Button
@@ -85,7 +85,7 @@ namespace NetLib.WPF
                 Content = icon,
                 ToolTip = toolTip
             };
-            button.Click +=(o,s) => onClick();
+            button.Click += (o, s) => onClick();
             Window.AddWindowButton(button);
         }
 
@@ -117,7 +117,7 @@ namespace NetLib.WPF
         }
 
         [NotNull]
-        public ReactiveCommand CreateCommandAsync(Func<CancellationToken,Task> execute, IObservable<bool> canExecute = null)
+        public ReactiveCommand CreateCommandAsync(Func<CancellationToken, Task> execute, IObservable<bool> canExecute = null)
         {
             var command = ReactiveCommand.CreateFromTask(execute, canExecute, new DispatcherScheduler(Dispatcher.CurrentDispatcher));
             command.ThrownExceptions.Subscribe(CommandException);
@@ -231,6 +231,7 @@ namespace NetLib.WPF
             {
                 //
             }
+
             if (Parent != null)
             {
                 try
@@ -243,6 +244,7 @@ namespace NetLib.WPF
                     //
                 }
             }
+
             try
             {
                 MessageBox.Show(msg, title);
@@ -374,7 +376,7 @@ namespace NetLib.WPF
                 var type = modelType.Assembly.GetType(typeName, false);
                 if (type != null)
                 {
-                    validator = (IValidator) Activator.CreateInstance(type);
+                    validator = (IValidator)Activator.CreateInstance(type);
                 }
                 validators[modelType.TypeHandle] = validator;
                 Validate();

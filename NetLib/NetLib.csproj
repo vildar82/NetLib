@@ -140,6 +140,7 @@
     <Compile Include="Source\WPF\Behaviors\DataGrid\DataGridColumnsBehavior.cs" />
     <Compile Include="Source\WPF\Behaviors\DataGrid\ICustomSorter.cs" />
     <Compile Include="Source\WPF\Controls\DatePickerCalendar.cs" />
+    <Compile Include="Source\WPF\Converters\Negate.cs" />
     <Compile Include="Source\WPF\Data\CollectionView.cs" />
     <Compile Include="Source\WPF\Behaviors\ListBoxAutoScrollBehavior.cs" />
     <Compile Include="Source\WPF\Behaviors\ListBox\ListBoxSelectionBehavior.cs" />

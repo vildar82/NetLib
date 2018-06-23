@@ -22,7 +22,6 @@
 			</Style>
 			<Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource {x:Type TextBlock}}">
 				<Setter Property="VerticalAlignment" Value="Center" />
-				<Setter Property="Margin" Value="1"/>
 			</Style>
 			<DataTemplate x:Key="textBlockEnumDesc">
 				<TextBlock Text="{Binding Converter={converters:EnumDescriptionConverter}}" />
