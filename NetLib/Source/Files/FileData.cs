@@ -38,7 +38,7 @@ namespace NetLib
         public void Load()
         {
             Copy();
-            Data = !File.Exists(LocalFile) ? default : Deserialize();
+            Data = Deserialize();
         }
 
         public void Save()
