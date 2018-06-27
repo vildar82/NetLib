@@ -39,6 +39,22 @@ namespace NetLib
         public static readonly DoubleEqualityComparer AngleComparer = new DoubleEqualityComparer();
 
         /// <summary>
+        /// Bytes to readable string.
+        /// </summary>
+        /// <param name="byteCount">The byte count.</param>
+        /// <returns>5KB</returns>
+        public static string BytesToString(this long byteCount)
+        {
+            string[] suf = { "B", "KB", "MB", "GB", "TB", "PB", "EB" }; //Longs run out around EB
+            if (byteCount == 0)
+                return "0" + suf[0];
+            var bytes = Math.Abs(byteCount);
+            var place = Convert.ToInt32(Math.Floor(Math.Log(bytes, 1024)));
+            var num = Math.Round(bytes / Math.Pow(1024, place), 1);
+            return Math.Sign(byteCount) * num + suf[place];
+        }
+
+        /// <summary>
         /// Линейная интерполяция
         /// </summary>
         /// <param name="x0">Начальное X</param>
@@ -96,7 +112,7 @@ namespace NetLib
 
         /// <summary>
         /// Список чисел в строку, с групперовкой последовательных номеров
-        /// ints = 1, 2, 3, 4, 5, 7, 8, 10, 15, 16, 100, 101, 102, 103, 105, 106, 107, 109
+        /// int's = 1, 2, 3, 4, 5, 7, 8, 10, 15, 16, 100, 101, 102, 103, 105, 106, 107, 109
         /// res = "1-8, 10, 15, 16, 100-107, 109"
         /// </summary>
         [NotNull]
@@ -122,7 +138,7 @@ namespace NetLib
 
         /// <summary>
         /// Список чисел в строку, с групперовкой последовательных номеров
-        /// ints = 1, 2, 3, 4, 5, 7, 8, 10, 15, 16, 100, 101, 102, 103, 105, 106, 107, 109
+        /// int's = 1, 2, 3, 4, 5, 7, 8, 10, 15, 16, 100, 101, 102, 103, 105, 106, 107, 109
         /// res = "1-8,10,15,16,100-107,109"
         /// </summary>
         /// <param name="ints"></param>
@@ -156,7 +172,7 @@ namespace NetLib
                 }
                 if (ints[i + 1] - ints[i] == 1)
                 {
-                    if (mark[mark.Length - 1] != '-') mark += "-";// "," + ints[i] + "-";
+                    if (mark[mark.Length - 1] != '-') mark += "-";// "," + int's[i] + "-";
                     isWas = true;
                     continue;
                 }
