@@ -140,6 +140,7 @@
     <Compile Include="Source\WPF\Behaviors\DataGrid\DataGridColumnsBehavior.cs" />
     <Compile Include="Source\WPF\Behaviors\DataGrid\ICustomSorter.cs" />
     <Compile Include="Source\WPF\Controls\DatePickerCalendar.cs" />
+    <Compile Include="Source\WPF\Converters\Bytes.cs" />
     <Compile Include="Source\WPF\Converters\Negate.cs" />
     <Compile Include="Source\WPF\Data\CollectionView.cs" />
     <Compile Include="Source\WPF\Behaviors\ListBoxAutoScrollBehavior.cs" />
@@ -382,6 +383,9 @@
     </PackageReference>
     <PackageReference Include="reactiveui">
       <Version>8.3.1</Version>
+    </PackageReference>
+    <PackageReference Include="WindowsAPICodePack-Shell">
+      <Version>1.1.1</Version>
     </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

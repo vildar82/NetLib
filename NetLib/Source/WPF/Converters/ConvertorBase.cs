@@ -22,7 +22,7 @@ namespace NetLib.WPF.Converters
         public virtual object ConvertBack(object value, Type targetType, object parameter,
             CultureInfo culture)
         {
-            throw new NotImplementedException($"ConvertBack в ConvertorBase - из значения {value} в {targetType}");
+            throw new NotImplementedException($"ConvertBack из значения {value} в {targetType}");
         }
 
         [NotNull]

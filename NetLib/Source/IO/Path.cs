@@ -1,6 +1,8 @@
 ﻿using JetBrains.Annotations;
 using System;
+using System.Drawing;
 using System.IO;
+using Microsoft.WindowsAPICodePack.Shell;
 using NetLib.Date;
 
 namespace NetLib.IO
@@ -8,14 +10,25 @@ namespace NetLib.IO
     [PublicAPI]
     public static class Path
     {
-        public static bool IsEqualsDateaFile([NotNull] string file1, [NotNull] string file2)
+        /// <summary>
+        /// Gets the file thumbnail by Shell.
+        /// </summary>
+        /// <param name="file">The file.</param>
+        /// <returns>Image</returns>
+        public static Bitmap GetThumbnail(string file)
+        {
+            var shellFile = ShellFile.FromFilePath(file);
+            return shellFile.Thumbnail.ExtraLargeBitmap;
+        }
+
+        public static bool IsEqualsDateFile([NotNull] string file1, [NotNull] string file2)
         {
             var f1Date =File.GetLastWriteTime(file1);
             var f2Date = File.GetLastWriteTime(file2);
             return f1Date.IsEquals(f2Date);
         }
 
-        public static bool IsEqualsDataDir([NotNull] string sourceDir, [NotNull] string destDir)
+        public static bool IsEqualsDateDir([NotNull] string sourceDir, [NotNull] string destDir)
         {
             var dateSrc = Directory.GetLastWriteTime(sourceDir);
             var dateDest = Directory.GetLastWriteTime(destDir);
