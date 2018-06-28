@@ -4,12 +4,15 @@ using System.Drawing;
 using System.IO;
 using Microsoft.WindowsAPICodePack.Shell;
 using NetLib.Date;
+using NLog;
 
 namespace NetLib.IO
 {
     [PublicAPI]
     public static class Path
     {
+        private static ILogger Log { get; } = LogManager.GetCurrentClassLogger();
+
         /// <summary>
         /// Gets the file thumbnail by Shell.
         /// </summary>
@@ -28,6 +31,21 @@ namespace NetLib.IO
             return f1Date.IsEquals(f2Date);
         }
 
+        /// <summary>
+        /// Determines whether /[is newest file] [the specified file1].
+        /// </summary>
+        /// <param name="file1">The file1.</param>
+        /// <param name="file2">The file2.</param>
+        /// <returns>
+        ///   <c>true</c> if [is newest file] [the specified file1]; otherwise, <c>false</c>.
+        /// </returns>
+        public static bool IsNewestFile([NotNull] string file1, [NotNull] string file2)
+        {
+            var f1Date = File.GetLastWriteTime(file1);
+            var f2Date = File.GetLastWriteTime(file2);
+            return f1Date > f2Date;
+        }
+
         public static bool IsEqualsDateDir([NotNull] string sourceDir, [NotNull] string destDir)
         {
             var dateSrc = Directory.GetLastWriteTime(sourceDir);
@@ -35,24 +53,49 @@ namespace NetLib.IO
             return dateSrc.IsEquals(dateDest);
         }
 
+        /// <summary>
+        /// Копирование папки. Если файлы уже есть, то заменяются
+        /// </summary>
+        /// <param name="sourceDir">The source dir.</param>
+        /// <param name="destDir">The dest dir.</param>
         [PublicAPI]
         public static void CopyDirectory([NotNull] string sourceDir, string destDir)
         {
+            CopyDirectory(sourceDir, destDir, false);
+        }
+
+        /// <summary>
+        /// Копирование папки.
+        /// </summary>
+        /// <param name="sourceDir">The source dir.</param>
+        /// <param name="destDir">The dest dir.</param>
+        /// <param name="onlyNewest">if set to <c>true</c> [only newest].</param>
+        [PublicAPI]
+        public static void CopyDirectory([NotNull] string sourceDir, string destDir, bool onlyNewest)
+        {
             sourceDir = sourceDir.TrimEnd(System.IO.Path.DirectorySeparatorChar);
             destDir = destDir.TrimEnd(System.IO.Path.DirectorySeparatorChar);
+            if (!Directory.Exists(destDir))
+                Directory.CreateDirectory(destDir);
             foreach (var dirPath in Directory.GetDirectories(sourceDir, "*", SearchOption.AllDirectories))
             {
                 Directory.CreateDirectory(dirPath.Replace(sourceDir, destDir));
             }
-            foreach (var newPath in Directory.GetFiles(sourceDir, "*.*", SearchOption.AllDirectories))
+            foreach (var sourceFile in Directory.GetFiles(sourceDir, "*.*", SearchOption.AllDirectories))
             {
                 try
                 {
-                    File.Copy(newPath, newPath.Replace(sourceDir, destDir), true);
+                    var destFile = sourceFile.Replace(sourceDir, destDir);
+                    // Проверить, что копируемый файл новее
+                    if (onlyNewest && File.Exists(destFile) && !IsNewestFile(destFile, sourceFile))
+                    {
+                        continue;
+                    }
+                    File.Copy(sourceFile, destFile, true);
                 }
-                catch
+                catch (Exception ex)
                 {
-                    //
+                    Log.Error(ex, "CopyDirectory");
                 }
             }
         }
