@@ -127,7 +127,7 @@ namespace NetLib.Notification
         public void Show(string message, NotifyType type = NotifyType.Information, 
             [CanBeNull] NotifyMessageOptions msgOpt = null)
         {
-            Show(message, this, null, type);
+            Show(message, this, msgOpt, type);
         }
 
         private static void Show(string message, [NotNull] Notify notify, [CanBeNull] NotifyMessageOptions nMsgOpt, 

@@ -26,7 +26,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <LangVersion>latest</LangVersion>
-    <PlatformTarget>x64</PlatformTarget>
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DocumentationFile>..\..\..\Autodesk\AutoCAD\Pik\Settings\Dll\NetLib.xml</DocumentationFile>
     <NoWarn>CS1591</NoWarn>
   </PropertyGroup>
@@ -139,8 +139,10 @@
     <Compile Include="Source\WPF\Behaviors\DataGrid\CustomSortBehaviour.cs" />
     <Compile Include="Source\WPF\Behaviors\DataGrid\DataGridColumnsBehavior.cs" />
     <Compile Include="Source\WPF\Behaviors\DataGrid\ICustomSorter.cs" />
+    <Compile Include="Source\WPF\BindingProxy.cs" />
     <Compile Include="Source\WPF\Controls\DatePickerCalendar.cs" />
     <Compile Include="Source\WPF\Converters\Bytes.cs" />
+    <Compile Include="Source\WPF\Converters\DataGridLengthConverter.cs" />
     <Compile Include="Source\WPF\Converters\Negate.cs" />
     <Compile Include="Source\WPF\Data\CollectionView.cs" />
     <Compile Include="Source\WPF\Behaviors\ListBoxAutoScrollBehavior.cs" />

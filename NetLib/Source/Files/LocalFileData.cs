@@ -16,7 +16,6 @@ namespace NetLib
             
         public readonly string LocalFile;
         private readonly bool isXmlOrJson;
-        [NotNull]
         public T Data { get; set; }
 
         /// <summary>
@@ -58,7 +57,10 @@ namespace NetLib
             catch (Exception ex)
             {
                 Data = onError();
-                Logger.Error(ex);
+                if (!(ex is FileNotFoundException))
+                {
+                    Logger.Error(ex);
+                }
             }
         }
 
@@ -67,6 +69,10 @@ namespace NetLib
             try
             {
                 Load();
+            }
+            catch (FileNotFoundException)
+            {
+                // Файл не найден
             }
             catch (Exception ex)
             {
@@ -88,6 +94,8 @@ namespace NetLib
 
         private T Deserialize()
         {
+            if (!File.Exists(LocalFile))
+                throw new FileNotFoundException(LocalFile);
             return isXmlOrJson ? SerializerXml.Load<T>(LocalFile) : LocalFile.Deserialize<T>();
         }
 
