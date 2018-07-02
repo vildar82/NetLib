@@ -2,6 +2,7 @@
 using System;
 using System.Drawing;
 using System.IO;
+using System.Threading.Tasks;
 using Microsoft.WindowsAPICodePack.Shell;
 using NetLib.Date;
 using NLog;
@@ -12,6 +13,17 @@ namespace NetLib.IO
     public static class Path
     {
         private static ILogger Log { get; } = LogManager.GetCurrentClassLogger();
+
+        /// <summary>
+        /// Files the exists with timeout.
+        /// </summary>
+        /// <param name="file">The file.</param>
+        public static bool FileExists([NotNull] string file)
+        {
+            var task = Task.Run(() => File.Exists(file));
+            task.Wait(TimeSpan.FromMilliseconds(800));
+            return task.IsCompleted && task.Result;
+        }
 
         /// <summary>
         /// Gets the file thumbnail by Shell.
