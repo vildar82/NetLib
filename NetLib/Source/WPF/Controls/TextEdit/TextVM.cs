@@ -26,6 +26,7 @@ namespace NetLib.WPF.Controls
         public string Title { get; set; }
 
         public string Value { get; set; }
+        public string Error { get; set; }
 
         /// <summary>
         /// Заголовок, имя и значение
@@ -40,6 +41,25 @@ namespace NetLib.WPF.Controls
             Name = name;
             Value = value;
             OK = CreateCommand(OkExecute, this.WhenAnyValue(w => w.Value).Select(s => allowValue(s)));
+        }
+
+        public TextVM(string title, string name, string value, Func<string, string> allowValue)
+        {
+            Title = title;
+            Name = name;
+            Value = value;
+            var canOk = this.WhenAnyValue(w => w.Value).Select(s =>
+            {
+                var err = allowValue(s);
+                if (err.IsNullOrEmpty())
+                {
+                    Error = null;
+                    return true;
+                }
+                Error = err;
+                return false;
+            });
+            OK = CreateCommand(OkExecute, canOk);
         }
 
         private void OkExecute()

@@ -10,13 +10,18 @@
 	<Grid>
 		<Grid.RowDefinitions>
 			<RowDefinition Height="Auto" />
+		    <RowDefinition Height="Auto" />
 			<RowDefinition />
 			<RowDefinition Height="Auto" />
 			<RowDefinition Height="Auto" />
 		</Grid.RowDefinitions>
 		<TextBlock Grid.Row="0" Text="{Binding Name}" TextWrapping="Wrap" Margin="5" HorizontalAlignment="Center"
 				Visibility="{Binding HasName, Converter={converters:BooleanToCollapseVisibilityConverter}}" />
-		<ListBox Grid.Row="1" ItemsSource="{Binding ItemsView}" SelectedItem="{Binding Selected}" Margin="12">
+        <WrapPanel Grid.Row="1" Controls:VisibilityHelper.IsVisible="{Binding CanCustomValue}" Orientation="Horizontal">
+            <TextBlock Text="Свое значение:" Margin="1"/>
+            <ContentControl Content="{Binding CustomValue}" Margin="1"/>
+        </WrapPanel>
+		<ListBox Grid.Row="2" ItemsSource="{Binding ItemsView}" SelectedItem="{Binding Selected}" Margin="12">
 			<ListBox.InputBindings>
 				<MouseBinding Gesture="LeftDoubleClick" Command="{Binding OK}" />
 			</ListBox.InputBindings>
@@ -26,11 +31,11 @@
 				</DataTemplate>
 			</ListBox.ItemTemplate>
 		</ListBox>
-		<TextBox Grid.Row="2" Text="{Binding Filter, UpdateSourceTrigger=PropertyChanged}"
+		<TextBox Grid.Row="3" Text="{Binding Filter, UpdateSourceTrigger=PropertyChanged}"
 				Controls:TextBoxHelper.Watermark="Фильтр" Controls:TextBoxHelper.UseFloatingWatermark="True" Margin="1"
 				HorizontalAlignment="Center"
 				Visibility="{Binding HasFilter, Converter={converters:BooleanToCollapseVisibilityConverter}}" />
-		<StackPanel Grid.Row="3" Orientation="Horizontal" Margin="5" HorizontalAlignment="Center">
+		<StackPanel Grid.Row="4" Orientation="Horizontal" Margin="5" HorizontalAlignment="Center">
 			<Button Content="ОК" Command="{Binding OK}" IsDefault="True" Width="60" Margin="5" />
 			<Button Content="Отмена" IsCancel="True" Width="60" Margin="5" />
 		</StackPanel>

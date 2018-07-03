@@ -1,32 +1,14 @@
-﻿using JetBrains.Annotations;
+﻿using System;
+using JetBrains.Annotations;
 using ReactiveUI;
 using System.Collections.Generic;
 using System.Reactive.Linq;
 using System.Text.RegularExpressions;
+using System.Windows.Controls;
 using System.Windows.Data;
 
 namespace NetLib.WPF.Controls.Select
 {
-    // ReSharper disable once ClassNeverInstantiated.Global
-    internal class SelectListDesignVM : SelectListVM<int>
-    {
-        public SelectListDesignVM() : base(GetItems(), "Выбор сети", "Сети в текущем чертеже")
-        {
-        }
-
-        [NotNull]
-        private static List<SelectListItem<int>> GetItems()
-        {
-            return new List<SelectListItem<int>>
-            {
-                new SelectListItem<int>("K1-1", 5),
-                new SelectListItem<int>("T1-2", 1),
-                new SelectListItem<int>("U2-1", 25),
-                new SelectListItem<int>("I6-1", 1)
-            };
-        }
-    }
-
     /// <summary>
     /// Использование - SelectList.Select()
     /// </summary>
@@ -55,6 +37,19 @@ namespace NetLib.WPF.Controls.Select
 
         public string Title { get; set; }
 
+        public bool CanCustomValue { get; set; }
+        public Control CustomValue { get; set; }
+        public Func<string> IsCustomValueValid { get; set; }
+
+        public SelectListVM([NotNull] List<SelectListItem<T>> items, string title, Control customValue,
+            Func<string> isCustomValueValid,             [CanBeNull] string name = null) 
+            : this (items, title, name)
+        {
+            CanCustomValue = true;
+            CustomValue = customValue;
+            IsCustomValueValid = isCustomValueValid;
+        }
+
         public SelectListVM([NotNull] List<SelectListItem<T>> items, string title, [CanBeNull] string name = null)
         {
             Title = title;
@@ -65,7 +60,8 @@ namespace NetLib.WPF.Controls.Select
                 Filter = FilterPredicate
             };
             HasFilter = items.Count > 10;
-            OK = CreateCommand(OkExecute, this.WhenAnyValue(w => w.Selected).Select(s => s != null));
+            var canOk = this.WhenAnyValue(v => v.CanCustomValue, v => v.Selected).Select(s => s.Item2 != null && s.Item1);
+            OK = CreateCommand(OkExecute, canOk);
         }
 
         private bool FilterPredicate(object obj)
@@ -77,7 +73,35 @@ namespace NetLib.WPF.Controls.Select
 
         private void OkExecute()
         {
+            if (CanCustomValue && Selected == null)
+            {
+                var err = IsCustomValueValid();
+                if (!err.IsNullOrEmpty())
+                {
+                    ShowMessage($"Свое значение некорректно - {err}.");
+                    return;
+                }
+            }
             DialogResult = true;
+        }
+    }
+
+    internal class SelectListDesignVM : SelectListVM<int>
+    {
+        public SelectListDesignVM() : base(GetItems(), "Выбор сети", "Сети в текущем чертеже")
+        {
+        }
+
+        [NotNull]
+        private static List<SelectListItem<int>> GetItems()
+        {
+            return new List<SelectListItem<int>>
+            {
+                new SelectListItem<int>("K1-1", 5),
+                new SelectListItem<int>("T1-2", 1),
+                new SelectListItem<int>("U2-1", 25),
+                new SelectListItem<int>("I6-1", 1)
+            };
         }
     }
 }

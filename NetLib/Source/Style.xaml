@@ -1,31 +1,44 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:converters="clr-namespace:NetLib.WPF.Converters">
-	<ResourceDictionary.MergedDictionaries>
-		<!-- MahApps.Metro resource dictionaries. Make sure that all file names are Case Sensitive! -->
-		<ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
-		<ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
-		<ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colors.xaml" />
-		<!-- Accent and AppTheme setting -->
-		<ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Blue.xaml" />
-		<ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml" />
-		<ResourceDictionary Source="WPF/Styles/ScrollBarIOS.xaml" />
-		<ResourceDictionary>
-			<!--Если textBox в ListBox - выделяется весь элемент-->
-			<Style x:Key="TextBoxListBoxStyle" TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}">
-				<Setter Property="IsHitTestVisible" Value="False" />
-				<Style.Triggers>
-					<DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource FindAncestor,
-                    AncestorType={x:Type ListBoxItem}, AncestorLevel=1}}" Value="True">
-						<Setter Property="IsHitTestVisible" Value="True" />
-					</DataTrigger>
-				</Style.Triggers>
-			</Style>
-			<Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource {x:Type TextBlock}}">
-				<Setter Property="VerticalAlignment" Value="Center" />
-			</Style>
-			<DataTemplate x:Key="textBlockEnumDesc">
-				<TextBlock Text="{Binding Converter={converters:EnumDescriptionConverter}}" />
-			</DataTemplate>
-		</ResourceDictionary>
-	</ResourceDictionary.MergedDictionaries>
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:converters="clr-namespace:NetLib.WPF.Converters">
+    <ResourceDictionary.MergedDictionaries>
+        <!-- MahApps.Metro resource dictionaries. Make sure that all file names are Case Sensitive! -->
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colors.xaml" />
+        <!-- Accent and AppTheme setting -->
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Blue.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml" />
+        <ResourceDictionary Source="WPF/Styles/ScrollBarIOS.xaml" />
+        <ResourceDictionary>
+            <!--Если textBox в ListBox - выделяется весь элемент-->
+            <Style x:Key="TextBoxListBoxStyle" TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}">
+                <Setter Property="IsHitTestVisible" Value="False" />
+                <Style.Triggers>
+                    <DataTrigger
+                        Binding="{Binding IsSelected, RelativeSource={RelativeSource FindAncestor,
+                    AncestorType={x:Type ListBoxItem}, AncestorLevel=1}}"
+                        Value="True">
+                        <Setter Property="IsHitTestVisible" Value="True" />
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+            <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource {x:Type TextBlock}}">
+                <Setter Property="VerticalAlignment" Value="Center" />
+            </Style>
+            <DataTemplate x:Key="textBlockEnumDesc">
+                <TextBlock Text="{Binding Converter={converters:EnumDescriptionConverter}}" />
+            </DataTemplate>
+            <Style x:Key="ListBoxHiddenBtn" TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+                <Setter Property="Visibility" Value="Hidden" />
+                <Style.Triggers>
+                    <DataTrigger
+                        Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type ListBoxItem}},Path=IsMouseOver}"
+                        Value="True">
+                        <Setter Property="Visibility" Value="Visible" />
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+        </ResourceDictionary>
+    </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

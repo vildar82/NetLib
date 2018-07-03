@@ -11,6 +11,11 @@ namespace NetLib
     {
         private static readonly Random random = new Random();
 
+        public static bool HasCirilic(this string s)
+        {
+            return Regex.IsMatch(Regex.Escape(s), "([а-яА-Я])");
+        }
+
         /// <summary>
         /// Удаление разделителей строк и др. \r\n?|\n
         /// </summary>

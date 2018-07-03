@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfApp1", "WpfApp1\WpfApp1.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetLibTests", "NetLibTests\NetLibTests.csproj", "{5967F3A1-C604-4915-AEB5-B5772CD7682B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetLibTests1", "NetLibTests1\NetLibTests1.csproj", "{3C23CB37-F97B-4ED5-BAC2-3E40D3044C49}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{5967F3A1-C604-4915-AEB5-B5772CD7682B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5967F3A1-C604-4915-AEB5-B5772CD7682B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5967F3A1-C604-4915-AEB5-B5772CD7682B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3C23CB37-F97B-4ED5-BAC2-3E40D3044C49}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3C23CB37-F97B-4ED5-BAC2-3E40D3044C49}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3C23CB37-F97B-4ED5-BAC2-3E40D3044C49}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3C23CB37-F97B-4ED5-BAC2-3E40D3044C49}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
