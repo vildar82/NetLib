@@ -25,6 +25,12 @@ namespace NetLib.IO
             return task.IsCompleted && task.Result;
         }
 
+        [NotNull]
+        public static Task<bool> FileExistsAsync([NotNull] string file)
+        {
+            return Task.Run(() => File.Exists(file));
+        }
+
         /// <summary>
         /// Gets the file thumbnail by Shell.
         /// </summary>
