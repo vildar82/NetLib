@@ -162,7 +162,7 @@ namespace NetLib.WPF
             {
                 var buttonTheme = new Button
                 {
-                    Content = new PackIconOcticons { Kind = PackIconOcticonsKind.Paintcan },
+                    Content = new PackIconMaterial { Kind = PackIconMaterialKind.Palette },
                     ToolTip = "Настройка тем оформления окон"
                 };
                 buttonTheme.Click += ButtonTheme_Click;
