@@ -10,11 +10,11 @@ namespace NetLib.IO
     /// Разрешение сборки
     /// </summary>
     [PublicAPI]
+    [ToString]
     public class DllResolve
     {
-        public string DllFile { get; set; }
-
         public string DllName { get; set; }
+        public string DllFile { get; set; }
 
         public DllResolve(string dllFile)
         {
