@@ -20,6 +20,7 @@ namespace NetLib.WPF.Data
                 bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
                 bitmapImage.StreamSource = ms;
                 bitmapImage.EndInit();
+                bitmapImage.Freeze();
                 return bitmapImage;
             }
         }
