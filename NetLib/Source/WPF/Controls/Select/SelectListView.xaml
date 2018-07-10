@@ -4,7 +4,8 @@
 		xmlns:converters="clr-namespace:NetLib.WPF.Converters" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 		xmlns:select="clr-namespace:NetLib.WPF.Controls.Select" xmlns:wpf="clr-namespace:NetLib.WPF"
-		d:DataContext="{d:DesignInstance Type=select:SelectListDesignVM, IsDesignTimeCreatable=True}" Title="{Binding Title}"
+                xmlns:acb="clr-namespace:AttachedCommandBehavior;assembly=AttachedCommandBehavior"
+                d:DataContext="{d:DesignInstance Type=select:SelectListDesignVM, IsDesignTimeCreatable=True}" Title="{Binding Title}"
 		WindowStartupLocation="CenterScreen" SizeToContent="WidthAndHeight" Topmost="True" ShowMaxRestoreButton="False"
 		ShowMinButton="False" MinWidth="250" MaxHeight="600" mc:Ignorable="d">
 	<Grid>
@@ -21,10 +22,9 @@
             <TextBlock Text="Свое значение:" Margin="1"/>
             <ContentControl Content="{Binding CustomValue}" Margin="1"/>
         </WrapPanel>
-		<ListBox Grid.Row="2" ItemsSource="{Binding ItemsView}" SelectedItem="{Binding Selected}" Margin="12">
-			<ListBox.InputBindings>
-				<MouseBinding Gesture="LeftDoubleClick" Command="{Binding OK}" />
-			</ListBox.InputBindings>
+		<ListBox Grid.Row="2" ItemsSource="{Binding ItemsView}" SelectedItem="{Binding Selected}" Margin="12" 
+		         acb:CommandBehavior.Event="MouseDoubleClick"
+		         acb:CommandBehavior.Command="{Binding OK}">
 			<ListBox.ItemTemplate>
 				<DataTemplate>
 					<TextBlock Text="{Binding Name}" Margin="3" />

@@ -60,7 +60,7 @@ namespace NetLib.WPF.Controls.Select
                 Filter = FilterPredicate
             };
             HasFilter = items.Count > 10;
-            var canOk = this.WhenAnyValue(v => v.CanCustomValue, v => v.Selected).Select(s => s.Item2 != null && s.Item1);
+            var canOk = this.WhenAnyValue(v => v.CanCustomValue, v => v.Selected).Select(s => s.Item2 != null || s.Item1);
             OK = CreateCommand(OkExecute, canOk);
         }
 
