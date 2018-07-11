@@ -135,6 +135,7 @@
     <Compile Include="Source\WPF\BaseUserControl.cs" />
     <Compile Include="Source\WPF\BaseViewModel.cs" />
     <Compile Include="Source\WPF\BaseWindow.cs" />
+    <Compile Include="Source\WPF\Behaviors\EventToCommand.cs" />
     <Compile Include="Source\WPF\Behaviors\DataGrid\AlphaNumSorter.cs" />
     <Compile Include="Source\WPF\Behaviors\DataGrid\CustomSortBehaviour.cs" />
     <Compile Include="Source\WPF\Behaviors\DataGrid\DataGridColumnsRBehavior.cs" />
