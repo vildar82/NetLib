@@ -11,6 +11,16 @@ namespace NetLib
     {
         private static readonly Random random = new Random();
 
+        public static string Truncate(this string value, int maxLength)
+        {
+            if (string.IsNullOrEmpty(value)) return value;
+            if (value.Length <= maxLength)
+            {
+                return value;
+            }
+            return value.Substring(0, maxLength) + "...";
+        }
+
         public static bool HasCirilic(this string s)
         {
             return Regex.IsMatch(Regex.Escape(s), "([а-яА-Я])");
