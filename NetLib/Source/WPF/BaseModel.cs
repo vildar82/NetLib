@@ -109,5 +109,11 @@ namespace NetLib.WPF
         {
             this.RaisePropertyChanged(propertyName);
         }
+
+        [NotNull]
+        public IDisposable HideWindow()
+        {
+            return BaseVm.HideWindow();
+        }
     }
 }
