@@ -105,6 +105,22 @@ namespace NetLib.WPF
             else MessageBox.Show(msg, title);
         }
 
+        /// <summary>
+        /// Запрос ответа у пользователя с утвердительным или отрицательным ответом
+        /// </summary>
+        /// <param name="title">Заголовок</param>
+        /// <param name="msg">Вопрос</param>
+        /// <param name="affirmativeBtn">Надпись для кнопки утвердительного ответа</param>
+        /// <param name="negateBtn">Надпись для кнопки отрицательного ответа</param>
+        /// <param name="auxiliaryBtn">Дополнительноая кнопка (возвращается null)</param>
+        /// <returns></returns>
+        public Task<bool?> ShowMessage(string title, string msg, string affirmativeBtn, string negateBtn,
+            [CanBeNull] string auxiliaryBtn = null)
+        {
+            if (BaseVm == null) throw new Exception($"Не задана BaseViewModel - {this}.");
+            return BaseVm.ShowMessage(msg, title, affirmativeBtn, negateBtn, auxiliaryBtn);
+        }
+
         public virtual void OnPropertyChanged([CanBeNull] [CallerMemberName] string propertyName = null)
         {
             this.RaisePropertyChanged(propertyName);

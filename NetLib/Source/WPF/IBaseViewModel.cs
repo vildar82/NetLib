@@ -40,6 +40,9 @@ namespace NetLib.WPF
 
         void ShowMessage(string msg, string title = "Ошибка");
 
+        Task<bool?> ShowMessage(string title, string msg, string affirmativeBtn, string negateBtn,
+            [CanBeNull] string auxiliaryBtn = null);
+
         void VisibleMe();
     }
 }

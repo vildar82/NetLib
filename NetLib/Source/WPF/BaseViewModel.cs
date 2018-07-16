@@ -264,8 +264,7 @@
         /// <param name="negateBtn">Надпись для кнопки отрицательного ответа</param>
         /// <param name="auxiliaryBtn">Дополнительноая кнопка (возвращается null)</param>
         /// <returns></returns>
-        public async Task<bool?> ShowMessage(string title, string msg, string affirmativeBtn, string negateBtn,
-            [CanBeNull] string auxiliaryBtn = null)
+        public async Task<bool?> ShowMessage(string title, string msg, string affirmativeBtn, string negateBtn, string auxiliaryBtn = null)
         {
             if (auxiliaryBtn == null)
             {

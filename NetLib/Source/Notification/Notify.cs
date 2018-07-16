@@ -43,7 +43,7 @@ namespace NetLib.Notification
             NotifyCorner corner = NotifyCorner.TopRight, double offsetX = 50, double offsetY = 50, int maxCount = 3,
             double with = 250)
         {
-            LifeTime = lifeTime == default ? TimeSpan.FromSeconds(7) : lifeTime;
+            LifeTime = lifeTime;
             Parent = parent;
             Corner = corner;
             OffsetX = offsetX;
@@ -178,8 +178,15 @@ namespace NetLib.Notification
                 else
                     cfg.PositionProvider = new WindowPositionProvider(
                         opt.Parent, (Corner) opt.Corner, opt.OffsetX, opt.OffsetY);
-                cfg.LifetimeSupervisor = new TimeAndCountBasedLifetimeSupervisor(opt.LifeTime,
-                    MaximumNotificationCount.FromCount(opt.MaxCount));
+                if (opt.LifeTime.TotalMilliseconds < 100)
+                {
+                    cfg.LifetimeSupervisor = new CountBasedLifetimeSupervisor(MaximumNotificationCount.FromCount(opt.MaxCount));
+                }
+                else
+                {
+                    cfg.LifetimeSupervisor = new TimeAndCountBasedLifetimeSupervisor(opt.LifeTime,
+                        MaximumNotificationCount.FromCount(opt.MaxCount));
+                }
                 cfg.Dispatcher = dispatcher;
                 cfg.DisplayOptions.Width = opt.With;
             });
