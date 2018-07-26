@@ -2,13 +2,11 @@
 <package >
   <metadata>
     <id>NetLib</id>
-    <version>1.0.0</version>
-    <authors>khisyametdinovvt</authors>
-    <owners>khisyametdinovvt</owners>    
+    <version>$version$</version>
+    <authors>Vildar</authors>    
     <projectUrl>https://github.com/vildar82/NetLib</projectUrl>    
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>Dot Net c# Library</description>
-    <releaseNotes>Summary of changes made in this release of the package.</releaseNotes>
+    <description>Dot Net c# Library</description>    
     <copyright>Copyright 2018</copyright>
     <tags>C# Lib</tags>    
   </metadata>

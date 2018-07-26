@@ -1,5 +1,7 @@
 source https://api.nuget.org/v3/index.json
 
+framework: net462
+
 // NuGet packages
 nuget AttachedCommandBehavior ~> 2.0.0
 nuget Enums.NET ~> 2.3.2
