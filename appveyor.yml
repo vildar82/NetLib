@@ -15,3 +15,4 @@ deploy:
     secure: 3dkguU1xfhgsgGezjNpbdWGMiFrlqPCi/ZhTCt5MCmSJ6cS3sXtQqTU+t86tErvN
   on:
     branch: master
+  artifact: /.*\.nupkg/
