@@ -71,11 +71,13 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="ToastNotifications">
-      <HintPath>\\picompany.ru\pikp\Dep\SR\IRA\02_DLL\ToastNotifications\ToastNotifications.dll</HintPath>
+    <Reference Include="ToastNotifications, Version=2.2.143.4, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\refs\ToastNotifications.dll</HintPath>
     </Reference>
-    <Reference Include="ToastNotifications.Messages">
-      <HintPath>\\picompany.ru\pikp\Dep\SR\IRA\02_DLL\ToastNotifications\ToastNotifications.Messages.dll</HintPath>
+    <Reference Include="ToastNotifications.Messages, Version=2.2.143.4, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\refs\ToastNotifications.Messages.dll</HintPath>
     </Reference>
     <Reference Include="WindowsBase" />
   </ItemGroup>
