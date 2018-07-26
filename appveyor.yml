@@ -8,11 +8,11 @@ before_build:
 - cmd: nuget restore
 build:
   project: NetLib/NetLib.csproj
+  publish_nuget: true
   verbosity: minimal
 deploy:
 - provider: NuGet
   api_key:
     secure: 3dkguU1xfhgsgGezjNpbdWGMiFrlqPCi/ZhTCt5MCmSJ6cS3sXtQqTU+t86tErvN
   on:
-    branch: master
-  artifact: /.*\.nupkg/
+    branch: master  
