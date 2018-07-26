@@ -4,10 +4,8 @@
     <id>NetLib</id>
     <version>1.0.0</version>
     <authors>khisyametdinovvt</authors>
-    <owners>khisyametdinovvt</owners>
-    <licenseUrl>http://LICENSE_URL_HERE_OR_DELETE_THIS_LINE</licenseUrl>
-    <projectUrl>http://PROJECT_URL_HERE_OR_DELETE_THIS_LINE</projectUrl>
-    <iconUrl>http://ICON_URL_HERE_OR_DELETE_THIS_LINE</iconUrl>
+    <owners>khisyametdinovvt</owners>    
+    <projectUrl>https://github.com/vildar82/NetLib</projectUrl>    
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Dot Net c# Library</description>
     <releaseNotes>Summary of changes made in this release of the package.</releaseNotes>
