@@ -49,8 +49,8 @@
     <AssemblyVersionSettings>None.None.DayOfYearStamp.Increment</AssemblyVersionSettings>
     <AssemblyFileVersionSettings>None.None.DayOfYearStamp.Increment</AssemblyFileVersionSettings>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Deploy|AnyCPU'">
-    <OutputPath>bin\Deploy\</OutputPath>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ReleaseLocal|AnyCPU'">
+    <OutputPath>bin\ReleaseLocal\</OutputPath>
     <DefineConstants>TRACE;JETBRAINS_ANNOTATIONS</DefineConstants>
     <DocumentationFile>C:\Autodesk\AutoCAD\Pik\Settings\Dll\NetLib.xml</DocumentationFile>
     <Optimize>true</Optimize>
@@ -391,7 +391,7 @@
     <PackageReference Include="WindowsAPICodePack-Shell" Version="1.1.1" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ReleaseLocal|AnyCPU'">
     <PostBuildEvent>nuget.exe pack "$(ProjectPath)" -IncludeReferencedProjects -properties Configuration=Release
 xcopy "$(TargetDir)*.nupkg" "\\picompany.ru\pikp\Dep\IT\IRA\03_NuGet\NetLib" /C /Y</PostBuildEvent>
   </PropertyGroup>
