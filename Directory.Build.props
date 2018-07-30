@@ -3,9 +3,9 @@
    <RestoreProjectStyle>PackageReference</RestoreProjectStyle>   
  </PropertyGroup>
  <ItemGroup>    
-    <PackageReference Include="JetBrains.Annotations" Version="11.1.*">      
+    <PackageReference Include="JetBrains.Annotations" Version="2018.2.1">      
 	  <PrivateAssets>all</PrivateAssets>
     </PackageReference>    
-    <PackageReference Include="NLog" Version="4.5.*"/>    
+    <PackageReference Include="NLog" Version="4.5.7"/>    
   </ItemGroup>
 </Project>

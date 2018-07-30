@@ -104,6 +104,7 @@
     <Compile Include="Source\AD\UserData.cs" />
     <Compile Include="Source\Bool\ActionUsage.cs" />
     <Compile Include="Source\Bool\BoolUsage.cs" />
+    <Compile Include="Source\Images\ImageExt.cs" />
     <Compile Include="Source\Notification\Notify.cs" />
     <Compile Include="Source\ReactiveAttribute.cs" />
     <Compile Include="Source\Comparers\AlphanumComparator.cs" />
@@ -369,22 +370,22 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="AttachedCommandBehavior" Version="2.0.*" />
-    <PackageReference Include="Enums.NET" Version="2.3.*" />
-    <PackageReference Include="EPPlus" Version="4.5.*" />
-    <PackageReference Include="FluentValidation" Version="7.6.*" />
-    <PackageReference Include="Fody" Version="3.1.*">
+    <PackageReference Include="Enums.NET" Version="2.3.2" />
+    <PackageReference Include="EPPlus" Version="4.5.2.1" />
+    <PackageReference Include="FluentValidation" Version="7.6.104" />
+    <PackageReference Include="Fody" Version="3.1.4">
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="MahApps.Metro" Version="1.6.5" />
     <PackageReference Include="MahApps.Metro.IconPacks" Version="2.3.*" />
-    <PackageReference Include="ncalc" Version="1.3.*" />
-    <PackageReference Include="Newtonsoft.Json" Version="11.0.*" />
-    <PackageReference Include="Polly" Version="6.0.*" />
-    <PackageReference Include="PropertyChanged.Fody" Version="2.5.*">
+    <PackageReference Include="ncalc" Version="1.3.8" />
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
+    <PackageReference Include="Polly" Version="6.1.0" />
+    <PackageReference Include="PropertyChanged.Fody" Version="2.5.9">
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="reactiveui" Version="8.3.*" />
-    <PackageReference Include="ToString.Fody" Version="1.10.*">
+    <PackageReference Include="reactiveui" Version="8.3.1" />
+    <PackageReference Include="ToString.Fody" Version="1.10.1">
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="WindowsAPICodePack-Shell" Version="1.1.1" />
