@@ -1,8 +1,10 @@
 ﻿using System.Drawing;
 using System.IO;
+using JetBrains.Annotations;
 
 namespace NetLib.Images
 {
+    [PublicAPI]
     public static class ImageExt
     {
         public static byte[] ImageToByteArray(this Image image)
