@@ -1,6 +1,4 @@
 ﻿using Microsoft.Win32;
-using System.Diagnostics;
-using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -52,24 +50,5 @@ namespace NetLib.WPF.Controls
         {
             SelectedPath = SelectedPathTxtBox.Text;
         }
-
-        private void OpenExplorer(object sender, RoutedEventArgs e)
-        {
-            var path = SelectedPathTxtBox.Text;
-            if (!FileOrDirectoryExists(path))
-            {
-                MessageBox.Show("Путь не найден.");
-                return;
-            }
-            string argument = "/select, \"" + path + "\"";
-            Process.Start("explorer.exe", argument);
-        }
-
-        internal static bool FileOrDirectoryExists(string name)
-        {
-            return (Directory.Exists(name) || File.Exists(name));
-        }
-
-
     }
 }

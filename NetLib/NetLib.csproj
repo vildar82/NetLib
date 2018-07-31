@@ -33,11 +33,11 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\..\..\Autodesk\AutoCAD\Pik\Settings\Dll\</OutputPath>
+    <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE;JETBRAINS_ANNOTATIONS</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>C:\Autodesk\AutoCAD\Pik\Settings\Dll\NetLib.xml</DocumentationFile>
+    <DocumentationFile>bin\Release\NetLib.xml</DocumentationFile>
     <LangVersion>latest</LangVersion>
     <NoWarn>CS1591</NoWarn>
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -50,7 +50,7 @@
     <AssemblyFileVersionSettings>None.None.DayOfYearStamp.Increment</AssemblyFileVersionSettings>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ReleaseLocal|AnyCPU'">
-    <OutputPath>bin\ReleaseLocal\</OutputPath>
+    <OutputPath>..\..\..\Autodesk\AutoCAD\Pik\Settings\Dll\</OutputPath>
     <DefineConstants>TRACE;JETBRAINS_ANNOTATIONS</DefineConstants>
     <DocumentationFile>C:\Autodesk\AutoCAD\Pik\Settings\Dll\NetLib.xml</DocumentationFile>
     <Optimize>true</Optimize>
@@ -392,8 +392,8 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ReleaseLocal|AnyCPU'">
-    <PostBuildEvent>nuget.exe pack "$(ProjectPath)" -IncludeReferencedProjects -properties Configuration=Release
-xcopy "$(TargetDir)*.nupkg" "\\picompany.ru\pikp\Dep\IT\IRA\03_NuGet\NetLib" /C /Y</PostBuildEvent>
+    <PostBuildEvent>nuget.exe pack "$(ProjectPath)" -IncludeReferencedProjects -properties Configuration=ReleaseLocal
+      xcopy "$(TargetDir)*.nupkg" "\\picompany.ru\pikp\Dep\IT\IRA\03_NuGet\NetLib" /C /Y</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
