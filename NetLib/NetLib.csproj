@@ -160,6 +160,7 @@
     <Compile Include="Source\WPF\Controls\DatePickerCalendar.cs" />
     <Compile Include="Source\WPF\Converters\Bytes.cs" />
     <Compile Include="Source\WPF\Converters\DataGridLengthConverter.cs" />
+    <Compile Include="Source\WPF\Converters\ImageByteConverter.cs" />
     <Compile Include="Source\WPF\Converters\Negate.cs" />
     <Compile Include="Source\WPF\Converters\NotNullToRedConverter.cs" />
     <Compile Include="Source\WPF\Data\CollectionView.cs" />
