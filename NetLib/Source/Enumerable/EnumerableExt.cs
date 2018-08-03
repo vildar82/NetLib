@@ -9,6 +9,25 @@ namespace NetLib
     public static class EnumerableExt
     {
         /// <summary>
+        /// Список совпадающих значений во всех списках
+        /// </summary>
+        /// <typeparam name="T">Тип значения</typeparam>
+        /// <param name="lists">Списки значений</param>
+        /// <returns>Список совпадаюших значений</returns>
+        [NotNull]
+        public static IEnumerable<T> IntersectMany<T>([NotNull] this IEnumerable<IEnumerable<T>> lists)
+        {
+            return lists.Skip(1).Aggregate(
+                new HashSet<T>(lists.First()),
+                (h, e) =>
+                {
+                    h.IntersectWith(e);
+                    return h;
+                }
+            );
+        }
+
+        /// <summary>
         /// Добавление объекта в коллекцию
         /// </summary>
         /// <typeparam name="T">Тип добавляемого объекта</typeparam>
