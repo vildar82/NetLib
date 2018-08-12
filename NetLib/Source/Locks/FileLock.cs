@@ -35,9 +35,9 @@ namespace NetLib.Locks
                 {
                     Info = file.Deserialize<LockInfo>();
                 }
-                catch
+                catch(Exception ex2)
                 {
-                    Info = new LockInfo { Login = "Unknown" };
+                    Info = new LockInfo { Login = $"{ex2.Message} - {file}" };
                 }
                 IsLockSuccess = false;
             }
