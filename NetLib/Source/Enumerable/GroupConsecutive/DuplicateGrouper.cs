@@ -1,15 +1,18 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace NetLib
 {
-    internal class DuplicateGrouper<T>
+    internal class DuplicateGrouper<T, Tkey>
     {
-        private T CurrentKey;
+        private Func<T, Tkey> _keySelector;
+        private Tkey CurrentKey;
         private IEnumerator<T> Itr;
         private bool More;
 
-        public IEnumerable<IEnumerable<T>> GroupByDuplicate(IEnumerable<T> src)
+        public IEnumerable<IEnumerable<T>> GroupByDuplicate(IEnumerable<T> src, Func<T, Tkey> keySelector)
         {
+            _keySelector = keySelector;
             using(Itr = src.GetEnumerator())
             {
                 More = Itr.MoveNext();
@@ -20,8 +23,8 @@ namespace NetLib
 
         private IEnumerable<T> GetDuplicates()
         {
-            CurrentKey = Itr.Current;
-            while (More && CurrentKey.Equals(Itr.Current))
+            CurrentKey = _keySelector(Itr.Current);
+            while (More && CurrentKey.Equals(_keySelector(Itr.Current)))
             {
                 yield return Itr.Current;
                 More = Itr.MoveNext();

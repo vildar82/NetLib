@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace NetLib
 {
@@ -10,10 +11,10 @@ namespace NetLib
         /// <typeparam name="T">Тип значения</typeparam>
         /// <param name="src">Последовательность значений</param>
         /// <returns>Группировка</returns>
-        public static IEnumerable<IEnumerable<T>> GroupConsecutive<T>(this IEnumerable<T> src)
+        public static IEnumerable<IEnumerable<T>> GroupConsecutive<T, Tkey>(this IEnumerable<T> src, Func<T, Tkey> keySelector)
         {
-            var grouper = new DuplicateGrouper<T>();
-            return grouper.GroupByDuplicate(src);
+            var grouper = new DuplicateGrouper<T, Tkey>();
+            return grouper.GroupByDuplicate(src, keySelector);
         }
     }
 }
