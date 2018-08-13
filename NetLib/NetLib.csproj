@@ -104,6 +104,8 @@
     <Compile Include="Source\AD\UserData.cs" />
     <Compile Include="Source\Bool\ActionUsage.cs" />
     <Compile Include="Source\Bool\BoolUsage.cs" />
+    <Compile Include="Source\Enumerable\GroupConsecutive\DuplicateGrouper.cs" />
+    <Compile Include="Source\Enumerable\GroupConsecutive\PartitionExtension.cs" />
     <Compile Include="Source\Images\ImageExt.cs" />
     <Compile Include="Source\Notification\Notify.cs" />
     <Compile Include="Source\ReactiveAttribute.cs" />
