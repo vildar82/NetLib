@@ -12,10 +12,6 @@ namespace NetLib.WPF.Converters
         [NotNull]
         public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (targetType == typeof(string))
-            {
-                return value.ToString();
-            }
             return value.GetValue<double>();
         }
 
