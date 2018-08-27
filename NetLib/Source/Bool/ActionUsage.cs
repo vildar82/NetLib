@@ -6,6 +6,8 @@ namespace NetLib
     public class ActionUsage : IDisposable
     {
         private readonly Action after;
+        private readonly Action<object> afterObj;
+        private readonly object obj;
 
         public ActionUsage([NotNull] Action before, Action after)
         {
@@ -13,9 +15,22 @@ namespace NetLib
             this.after = after;
         }
 
+        public ActionUsage([NotNull] object obj, Action preset, Action<object> after)
+        {
+            this.obj = obj;
+            afterObj = after;
+        }
+
         public void Dispose()
         {
-            after();
+            if (afterObj != null)
+            {
+                afterObj(obj);
+            }
+            else
+            {
+                after();
+            }
         }
     }
 }
