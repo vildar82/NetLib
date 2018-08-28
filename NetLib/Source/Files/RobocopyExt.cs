@@ -10,17 +10,26 @@ namespace NetLib.Files
 {
     public static class RobocopyExt
     {
+        [NotNull]
+        public static string Mirror([NotNull] string sourceDir, [NotNull] string destDir, bool showConsole = false)
+        {
+            return Mirror(sourceDir, destDir, out _, showConsole);
+        }
+
         /// <summary>
         /// Копирование папки с зеркалированием. Содержимое папки назначения будет точно соответствовать папке источника.
         /// </summary>
         /// <param name="sourceDir"></param>
         /// <param name="destDir"></param>
+        /// <param name="exitCode"></param>
         /// <param name="showConsole"></param>
         /// <exception cref="Exception">StandardError</exception>
         /// <returns>Output</returns>
         [NotNull]
-        public static string Mirror([NotNull] string sourceDir, [NotNull] string destDir, bool showConsole = false)
+        public static string Mirror([NotNull] string sourceDir, [NotNull] string destDir, out int exitCode,
+            bool showConsole = false)
         {
+            exitCode = 0;
             if (!Directory.Exists(sourceDir)) throw new DirectoryNotFoundException(sourceDir);
             if (!Directory.Exists(destDir)) Directory.CreateDirectory(destDir);
             var logFile = "robocopy.log";
@@ -40,6 +49,7 @@ namespace NetLib.Files
             using (var p = Process.Start(startInfo) ?? throw new InvalidOperationException())
             {
                 p.WaitForExit();
+                exitCode = p.ExitCode;
                 //var err = p.StandardError.ReadToEnd();
                 //if (!err.IsNullOrEmpty())
                 //{
