@@ -13,7 +13,7 @@ namespace NetLib.WPF.Converters
         [NotNull]
         public override object Convert([CanBeNull] object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return value == null ? Visibility.Hidden : Visibility.Visible;
+            return value == null ? Visibility.Collapsed : Visibility.Visible;
         }
     }
 }
