@@ -32,14 +32,15 @@ namespace NetLib
             if (value is string s)
             {
                 if (s.IsNullOrEmpty()) return default;
+                s = s.Trim().RemoveSpecChars();
                 if (typeT == typeof(double))
                 {
-                    value = ((string)value).ToDouble();
+                    value = s.ToDouble();
                     return (T)value;
                 }
                 if (typeT == typeof(int))
                 {
-                    value = int.Parse((string) value);
+                    value = int.Parse(s);
                     return (T)value;
                 }
             }
