@@ -41,6 +41,9 @@
                 </Style.Triggers>
             </Style>
             <Style x:Key="TbFilter" TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
+                <Setter Property="mah:TextBoxHelper.Watermark" Value="Поиск..."/>
+                <Setter Property="MinWidth" Value="100"/>
+                <Setter Property="VerticalAlignment" Value="Center"/>
                 <Style.Triggers>
                     <Trigger Property="mah:TextBoxHelper.HasText" Value="True">
                         <Setter Property="mah:TextBoxHelper.ClearTextButton" Value="True" />
