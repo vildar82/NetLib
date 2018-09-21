@@ -373,6 +373,7 @@
     <None Include="FodyWeavers.xml" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="JetBrains.Annotations" Version="2018.2.1"/>      
     <PackageReference Include="AttachedCommandBehavior" Version="2.0.*" />
     <PackageReference Include="Enums.NET" Version="2.3.2" />
     <PackageReference Include="EPPlus" Version="4.5.2.1" />
