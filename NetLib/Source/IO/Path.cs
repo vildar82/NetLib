@@ -16,12 +16,16 @@ namespace NetLib.IO
 
         public static void StartExplorer([NotNull] this string path)
         {
-            var arg = path;
             if (path.IsFilePath())
             {
-                arg = "/select, \"" + path + "\"";
+                var arg = "/select, \"" + path + "\"";
+                System.Diagnostics.Process.Start("explorer.exe", arg);
             }
-            System.Diagnostics.Process.Start("explorer.exe", arg);
+            else
+            {
+                System.Diagnostics.Process.Start(path);
+            }
+
         }
 
         public static bool IsFilePath([NotNull] this string path)
@@ -42,7 +46,7 @@ namespace NetLib.IO
         public static bool FileExists([NotNull] string file)
         {
             var task = Task.Run(() => File.Exists(file));
-            task.Wait(TimeSpan.FromMilliseconds(800));
+            task.Wait(TimeSpan.FromMilliseconds(1000));
             return task.IsCompleted && task.Result;
         }
 
