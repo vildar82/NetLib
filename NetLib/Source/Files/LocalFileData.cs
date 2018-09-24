@@ -6,7 +6,7 @@ using System.IO;
 namespace NetLib
 {
     /// <summary>
-    /// Данные хранимые в файле json на сервере, с локальным кэшем
+    /// Данные хранимые в файле json локально
     /// </summary>
     [PublicAPI]
     public class LocalFileData<T> where T : class, new()
@@ -19,7 +19,7 @@ namespace NetLib
         public T Data { get; set; }
 
         /// <summary>
-        /// Данные хранимые в файле json на сервере, с локальным кэшем
+        /// Данные хранимые в файле json локально
         /// </summary>
         /// /// <param name="localFile"></param>
         /// <param name="isXmlOrJson">true - xml, false - json</param>

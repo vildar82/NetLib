@@ -14,6 +14,11 @@ namespace NetLib.IO
     {
         private static ILogger Log { get; } = LogManager.GetCurrentClassLogger();
 
+        public static void StartExplorer(this string path)
+        {
+            System.Diagnostics.Process.Start("explorer", path);
+        }
+
         public static string GetFolderName(string dirPath)
         {
             return System.IO.Path.GetFileName(dirPath.TrimEnd(System.IO.Path.DirectorySeparatorChar));
