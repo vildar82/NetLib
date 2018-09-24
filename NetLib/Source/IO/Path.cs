@@ -14,9 +14,20 @@ namespace NetLib.IO
     {
         private static ILogger Log { get; } = LogManager.GetCurrentClassLogger();
 
-        public static void StartExplorer(this string path)
+        public static void StartExplorer([NotNull] this string path)
         {
-            System.Diagnostics.Process.Start("explorer", path);
+            var arg = path;
+            if (path.IsFilePath())
+            {
+                arg = "/select, \"" + path + "\"";
+            }
+            System.Diagnostics.Process.Start("explorer.exe", arg);
+        }
+
+        public static bool IsFilePath([NotNull] this string path)
+        {
+            var attr = File.GetAttributes(path);
+            return (attr & FileAttributes.Directory) != FileAttributes.Directory;
         }
 
         public static string GetFolderName(string dirPath)
