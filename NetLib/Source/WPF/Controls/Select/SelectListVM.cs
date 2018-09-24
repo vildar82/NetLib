@@ -2,6 +2,7 @@
 using JetBrains.Annotations;
 using ReactiveUI;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reactive.Linq;
 using System.Text.RegularExpressions;
 using System.Windows.Controls;
@@ -33,7 +34,11 @@ namespace NetLib.WPF.Controls.Select
 
         public ReactiveCommand OK { get; set; }
 
-         public SelectListItem<T> Selected { get; set; }
+        public SelectListItem<T> Selected { get; set; }
+
+        public List<SelectListItem<T>> MultiSelected { get; set; }
+
+        public SelectionMode SelectionMode { get; set; }
 
         public string Title { get; set; }
 
@@ -50,8 +55,10 @@ namespace NetLib.WPF.Controls.Select
             IsCustomValueValid = isCustomValueValid;
         }
 
-        public SelectListVM([NotNull] List<SelectListItem<T>> items, string title, [CanBeNull] string name = null)
+        public SelectListVM([NotNull] List<SelectListItem<T>> items, string title, [CanBeNull] string name = null,
+            SelectionMode selectionMode = SelectionMode.Single)
         {
+            SelectionMode = selectionMode;
             Title = title;
             Name = name;
             HasName = !string.IsNullOrEmpty(name);
@@ -61,7 +68,7 @@ namespace NetLib.WPF.Controls.Select
             };
             HasFilter = items.Count > 10;
             var canOk = this.WhenAnyValue(v => v.CanCustomValue, v => v.Selected).Select(s => s.Item2 != null || s.Item1);
-            OK = CreateCommand(OkExecute, canOk);
+            OK = SelectionMode == SelectionMode.Single ? CreateCommand(OkExecute, canOk) : CreateCommand(OkExecute);
         }
 
         private bool FilterPredicate(object obj)
@@ -73,13 +80,20 @@ namespace NetLib.WPF.Controls.Select
 
         private void OkExecute()
         {
-            if (CanCustomValue && Selected == null)
+            if (SelectionMode != SelectionMode.Single)
             {
-                var err = IsCustomValueValid();
-                if (!err.IsNullOrEmpty())
+                MultiSelected = ((SelectListView) Window).ListBoxItems.SelectedItems.Cast<SelectListItem<T>>().ToList();
+            }
+            else
+            {
+                if (CanCustomValue && Selected == null)
                 {
-                    ShowMessage($"Свое значение некорректно - {err}.");
-                    return;
+                    var err = IsCustomValueValid();
+                    if (!err.IsNullOrEmpty())
+                    {
+                        ShowMessage($"Свое значение некорректно - {err}.");
+                        return;
+                    }
                 }
             }
             DialogResult = true;

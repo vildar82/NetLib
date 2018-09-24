@@ -22,9 +22,10 @@
             <TextBlock Text="Свое значение:" Margin="1"/>
             <ContentControl Content="{Binding CustomValue}" Margin="1"/>
         </WrapPanel>
-		<ListBox Grid.Row="2" ItemsSource="{Binding ItemsView}" SelectedItem="{Binding Selected}" Margin="12" 
+		<ListBox Name="ListBoxItems" Grid.Row="2" ItemsSource="{Binding ItemsView}" SelectedItem="{Binding Selected}" Margin="12" 
 		         acb:CommandBehavior.Event="MouseDoubleClick"
-		         acb:CommandBehavior.Command="{Binding OK}">
+		         acb:CommandBehavior.Command="{Binding OK}"
+		         SelectionMode="{Binding SelectionMode}">
 			<ListBox.ItemTemplate>
 				<DataTemplate>
 					<TextBlock Text="{Binding Name}" Margin="3" />
