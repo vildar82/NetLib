@@ -28,7 +28,7 @@ namespace NetLib.WPF.Controls.Select
 
         public static List<T> SelectMany<T>([NotNull] List<SelectListItem<T>> items, string title, [CanBeNull] string name = null)
         {
-            var selVM = new SelectListVM<T>(items, title, name, SelectionMode.Extended);
+            var selVM = new SelectListVM<T>(items, title, name, true);
             var selView = new SelectListView(selVM);
             if (selView.ShowDialog() == true)
             {

@@ -34,11 +34,16 @@ namespace NetLib.WPF.Controls.Select
 
         public ReactiveCommand OK { get; set; }
 
+        public bool SelectAll { get; set; }
+
         public SelectListItem<T> Selected { get; set; }
 
         public List<SelectListItem<T>> MultiSelected { get; set; }
 
-        public SelectionMode SelectionMode { get; set; }
+        /// <summary>
+        /// Показывать галочки выбора
+        /// </summary>
+        public bool MultiSelect { get; set; }
 
         public string Title { get; set; }
 
@@ -56,9 +61,8 @@ namespace NetLib.WPF.Controls.Select
         }
 
         public SelectListVM([NotNull] List<SelectListItem<T>> items, string title, [CanBeNull] string name = null,
-            SelectionMode selectionMode = SelectionMode.Single)
+            bool multiSelect = false)
         {
-            SelectionMode = selectionMode;
             Title = title;
             Name = name;
             HasName = !string.IsNullOrEmpty(name);
@@ -68,7 +72,18 @@ namespace NetLib.WPF.Controls.Select
             };
             HasFilter = items.Count > 10;
             var canOk = this.WhenAnyValue(v => v.CanCustomValue, v => v.Selected).Select(s => s.Item2 != null || s.Item1);
-            OK = SelectionMode == SelectionMode.Single ? CreateCommand(OkExecute, canOk) : CreateCommand(OkExecute);
+            
+            if (multiSelect)
+            {
+                OK = CreateCommand(OkExecute);
+                MultiSelect = true;
+            }
+            else
+            {
+                OK = CreateCommand(OkExecute, canOk);
+            }
+            SelectAll = items.All(a => a.IsSelected);
+            this.WhenAnyValue(v => v.SelectAll).Skip(1).Subscribe(s => items.ForEach(i => i.IsSelected = s));
         }
 
         private bool FilterPredicate(object obj)
@@ -80,9 +95,9 @@ namespace NetLib.WPF.Controls.Select
 
         private void OkExecute()
         {
-            if (SelectionMode != SelectionMode.Single)
+            if (MultiSelect)
             {
-                MultiSelected = ((SelectListView) Window).ListBoxItems.SelectedItems.Cast<SelectListItem<T>>().ToList();
+                MultiSelected = ItemsView.Cast<SelectListItem<T>>().Where(w => w.IsSelected).ToList();
             }
             else
             {
