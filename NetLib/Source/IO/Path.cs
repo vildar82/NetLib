@@ -5,6 +5,7 @@ using System.IO;
 using System.Threading.Tasks;
 using Microsoft.WindowsAPICodePack.Shell;
 using NetLib.Date;
+using NetLib.Monad;
 using NLog;
 
 namespace NetLib.IO
@@ -13,6 +14,11 @@ namespace NetLib.IO
     public static class Path
     {
         private static ILogger Log { get; } = LogManager.GetCurrentClassLogger();
+
+        public static string Author(this string path)
+        {
+            return path.Try(f => File.GetAccessControl(f).GetOwner(typeof(System.Security.Principal.NTAccount)).ToString());
+        }
 
         public static void StartExplorer([NotNull] this string path)
         {
