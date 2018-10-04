@@ -78,10 +78,15 @@ namespace NetLib
             return CreateInternal(default, false, end, true);
         }
 
+        /// <summary>
+        /// Попадание в диапазон
+        /// </summary>
+        /// <param name="item"></param>
+        /// <returns></returns>
         public bool IsInRange(T item)
         {
             if (HasStart && item.CompareTo(Start) < 0) return false;
-            return !HasEnd || item.CompareTo(End) < 0;
+            return !HasEnd || item.CompareTo(End) <= 0;
         }
     }
 }
