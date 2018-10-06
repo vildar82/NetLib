@@ -1,9 +1,8 @@
 ﻿using JetBrains.Annotations;
-using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Windows;
 using System.Windows.Controls;
-using ReactiveUI;
+using ReactiveUI.Legacy;
 
 namespace NetLib.WPF.Behaviors
 {

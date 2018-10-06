@@ -28,6 +28,7 @@
     [PublicAPI]
     public abstract class BaseViewModel : ReactiveObject, IBaseViewModel
     {
+        private DateTime lastShowError;
         public readonly IDialogCoordinator dialogCoordinator = DialogCoordinator.Instance;
         protected IValidator validator;
         private static readonly HashSet<string> ignoreProps = new HashSet<string> { "Hide", "DialogResult", "Errors" };
@@ -113,6 +114,12 @@
         {
             if (e is OperationCanceledException) return;
             Logger.Error(e, "CommandException");
+            if ((DateTime.Now - lastShowError).Milliseconds < 1000)
+            {
+                lastShowError = DateTime.Now;
+                return;
+            }
+
             ShowMessage(e.Message);
         }
 

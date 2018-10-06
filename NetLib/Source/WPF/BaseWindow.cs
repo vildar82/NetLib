@@ -13,12 +13,14 @@ using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
+using ReactiveUI;
 
 namespace NetLib.WPF
 {
     [PublicAPI]
     public class BaseWindow : MetroWindow
     {
+        private static bool isInitialized;
         protected bool isDialog;
 
         private static readonly FieldInfo _showingAsDialogField = typeof(Window)
@@ -69,6 +71,12 @@ namespace NetLib.WPF
 
         protected BaseWindow([CanBeNull] IBaseViewModel model)
         {
+            if (!isInitialized)
+            {
+                isInitialized = true;
+                RxApp.DefaultExceptionHandler = new RxDefaultExceptionHandler();
+            }
+
             AddStyleResouse(Resources);
             Model = model;
             if (Model != null)
