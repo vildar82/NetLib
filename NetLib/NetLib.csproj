@@ -215,6 +215,7 @@
     <Compile Include="Source\WPF\Converters\UniversalValueConverter.cs" />
     <Compile Include="Source\WPF\Data\ImageExt.cs" />
     <Compile Include="Source\WPF\Data\RelayCommand.cs" />
+    <Compile Include="Source\WPF\Data\RelayCommandAsync.cs" />
     <Compile Include="Source\WPF\DialogCloser.cs" />
     <Compile Include="Source\WPF\IBaseModel.cs" />
     <Compile Include="Source\WPF\IBaseViewModel.cs" />
