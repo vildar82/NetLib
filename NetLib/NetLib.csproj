@@ -411,7 +411,7 @@
     <PackageReference Include="ReactiveUI.WPF">
       <Version>9.0.1</Version>
     </PackageReference>
-    <PackageReference Include="SourceLink.Create.GitHub">
+    <PackageReference Include="SourceLink.Create.CommandLine">
       <Version>2.8.3</Version>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
