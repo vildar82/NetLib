@@ -6,6 +6,7 @@ using NetLib.WPF.Theme;
 using NLog;
 using System;
 using System.ComponentModel;
+using System.Linq;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
@@ -178,6 +179,7 @@ namespace NetLib.WPF
             }
             base.OnInitialized(e);
             Model?.OnInitialize();
+            AddStyleResouse(Resources);
         }
 
         public void AddWindowButton(object button)
@@ -188,9 +190,12 @@ namespace NetLib.WPF
 
         public static void AddStyleResouse([NotNull] ResourceDictionary resources)
         {
+            var uri = new Uri("pack://application:,,,/NetLib;component/Source/Style.xaml");
+            if (resources.MergedDictionaries.Any(r => r.Source == uri))
+                return;
             resources.MergedDictionaries.Add(new ResourceDictionary
             {
-                Source = new Uri("pack://application:,,,/NetLib;component/Source/Style.xaml")
+                Source = uri
             });
         }
 

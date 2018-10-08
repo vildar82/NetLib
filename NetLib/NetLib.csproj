@@ -387,7 +387,7 @@
     <PackageReference Include="AttachedCommandBehavior" Version="2.0.*" />
     <PackageReference Include="Enums.NET" Version="2.3.2" />
     <PackageReference Include="EPPlus" Version="4.5.2.1" />
-    <PackageReference Include="FluentValidation" Version="8.0.100" />
+    <PackageReference Include="FluentValidation" Version="7.6.104" />
     <PackageReference Include="Fody" Version="3.2.9">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
@@ -408,14 +408,23 @@
     <PackageReference Include="PropertyChanged.Fody" Version="2.5.12">
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="reactiveui" Version="9.0.1" />
+    <PackageReference Include="reactiveui" Version="8.3.1" />
     <PackageReference Include="ReactiveUI.WPF">
-      <Version>9.0.1</Version>
+      <Version>8.3.1</Version>
     </PackageReference>
     <PackageReference Include="SourceLink.Create.CommandLine">
       <Version>2.8.3</Version>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="System.Reactive.Core">
+      <Version>4.1.1</Version>
+    </PackageReference>
+    <PackageReference Include="System.Reactive.Interfaces">
+      <Version>4.1.1</Version>
+    </PackageReference>
+    <PackageReference Include="System.Reactive.Linq">
+      <Version>4.1.1</Version>
     </PackageReference>
     <PackageReference Include="ToString.Fody" Version="1.10.2">
       <PrivateAssets>all</PrivateAssets>

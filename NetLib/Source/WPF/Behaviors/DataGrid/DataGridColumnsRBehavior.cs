@@ -2,7 +2,7 @@
 using System.Collections.Specialized;
 using System.Windows;
 using System.Windows.Controls;
-using ReactiveUI.Legacy;
+using ReactiveUI;
 
 namespace NetLib.WPF.Behaviors
 {
