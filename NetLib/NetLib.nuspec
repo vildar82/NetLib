@@ -24,8 +24,6 @@
       <dependency id="Polly" version="6.1.*" />
       <dependency id="reactiveui" version="8.3.*" />
       <dependency id="Fody" version="3.2.*" />
-      <dependency id="DynamicData" version="6.5.*" />
-      <dependency id="DynamicData.ReactiveUI" version="6.5.*" />
       <dependency id="PropertyChanged.Fody" version="2.5.*" />
       <dependency id="WindowsAPICodePack-Shell" version="1.1.*" />
     </dependencies>
