@@ -25,6 +25,7 @@ namespace NetLib.WPF
             this.applyTheme = applyTheme;
             DataContext = baseModel;
             Model = baseModel;
+            BaseWindow.AddStyleResouse(Resources);
         }
 
         protected override void OnInitialized(EventArgs e)

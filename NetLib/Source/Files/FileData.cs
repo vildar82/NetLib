@@ -15,8 +15,6 @@ namespace NetLib
         public readonly string ServerFile;
         private readonly bool isXmlOrJson;
         public T Data { get; set; }
-
-        // ReSharper disable once StaticMemberInGenericType
         private static ILogger Logger { get; } = LogManager.GetCurrentClassLogger();
 
         /// <summary>
@@ -61,6 +59,18 @@ namespace NetLib
             catch
             {
                 //
+            }
+        }
+
+        public void TryLoad(Func<T> onError)
+        {
+            try
+            {
+                Load();
+            }
+            catch
+            {
+                Data = onError();
             }
         }
 

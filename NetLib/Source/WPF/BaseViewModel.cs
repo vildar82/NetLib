@@ -1,4 +1,7 @@
-﻿namespace NetLib.WPF
+﻿using System.Reactive;
+using NetLib.Errors;
+
+namespace NetLib.WPF
 {
     using FluentValidation;
     using JetBrains.Annotations;
@@ -114,7 +117,7 @@
         {
             if (e is OperationCanceledException) return;
             Logger.Error(e, "CommandException");
-            if ((DateTime.Now - lastShowError).Milliseconds < 1000)
+            if ((DateTime.Now - lastShowError).TotalMilliseconds < 1000)
             {
                 lastShowError = DateTime.Now;
                 return;

@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
+using System.Xml.Serialization;
 using JetBrains.Annotations;
+using Newtonsoft.Json;
 using NLog;
 using ReactiveUI;
 
@@ -36,7 +38,12 @@ namespace NetLib.WPF
             BaseVm = baseVM;
         }
 
+        [XmlIgnore]
+        [JsonIgnore]
         public UserControl UserControl { get; set; }
+
+        [XmlIgnore]
+        [JsonIgnore]
         public IBaseViewModel BaseVm { get; set; }
 
         [NotNull]
