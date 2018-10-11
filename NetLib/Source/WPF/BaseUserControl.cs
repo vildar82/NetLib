@@ -10,7 +10,7 @@ namespace NetLib.WPF
         private readonly bool applyTheme;
         private IBaseModel model;
 
-        public BaseUserControl()
+        public BaseUserControl() : this(null, true)
         {
             
         }
