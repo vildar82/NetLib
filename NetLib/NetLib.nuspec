@@ -14,7 +14,7 @@
       <dependency id="JetBrains.Annotations" version="2018.2.*" />
       <dependency id="AttachedCommandBehavior" version="2.0.*" />
       <dependency id="Enums.NET" version="2.3.*" />
-      <dependency id="EPPlus" version="4.5.2.*" />
+      <dependency id="EPPlus" version="4.5.2.1" />
       <dependency id="FluentValidation" version="8.0.*" />
       <dependency id="MahApps.Metro" version="1.6.5" />
       <dependency id="MahApps.Metro.IconPacks" version="2.3.*" />
