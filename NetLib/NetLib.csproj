@@ -50,9 +50,9 @@
     <AssemblyFileVersionSettings>None.None.DayOfYearStamp.Increment</AssemblyFileVersionSettings>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ReleaseLocal|AnyCPU'">
-    <OutputPath>..\..\..\Autodesk\AutoCAD\Pik\Settings\Dll\</OutputPath>
+    <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE;JETBRAINS_ANNOTATIONS</DefineConstants>
-    <DocumentationFile>C:\Autodesk\AutoCAD\Pik\Settings\Dll\NetLib.xml</DocumentationFile>
+    <DocumentationFile>bin\Release\NetLib.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>CS1591</NoWarn>
     <DebugType>pdbonly</DebugType>
@@ -85,11 +85,11 @@
     <Reference Include="System.Xml" />
     <Reference Include="ToastNotifications, Version=2.2.143.4, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\refs\ToastNotifications.dll</HintPath>
+      <HintPath>lib\ToastNotifications.dll</HintPath>
     </Reference>
     <Reference Include="ToastNotifications.Messages, Version=2.2.143.4, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\refs\ToastNotifications.Messages.dll</HintPath>
+      <HintPath>lib\ToastNotifications.Messages.dll</HintPath>
     </Reference>
     <Reference Include="WindowsBase" />
   </ItemGroup>
@@ -419,10 +419,21 @@
     </PackageReference>
     <PackageReference Include="WindowsAPICodePack-Shell" Version="1.1.1" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="lib\ToastNotifications.dll" />
+    <Content Include="lib\ToastNotifications.Messages.dll" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ReleaseLocal|AnyCPU'">
     <PostBuildEvent>nuget.exe pack "$(ProjectPath)" -IncludeReferencedProjects -properties Configuration=ReleaseLocal
       xcopy "$(TargetDir)*.nupkg" "\\picompany.ru\pikp\Dep\IT\IRA\03_NuGet\NetLib" /C /Y</PostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PostBuildEvent>if $(ConfigurationName) == ReleaseLocal (
+   nuget.exe pack "$(ProjectPath)" -IncludeReferencedProjects -properties Configuration=ReleaseLocal
+   xcopy "$(TargetDir)*.nupkg" "\\picompany.ru\pikp\Dep\IT\IRA\03_NuGet\NetLib" /C /Y
+   xcopy "$(ProjectDir)bin\Release" "c:\Autodesk\AutoCAD\Pik\Settings\Dll\" /Y /C
+)</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
