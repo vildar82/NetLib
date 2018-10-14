@@ -36,7 +36,7 @@
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE;JETBRAINS_ANNOTATIONS</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
+    <WarningLevel>0</WarningLevel>
     <DocumentationFile>bin\Release\NetLib.xml</DocumentationFile>
     <LangVersion>latest</LangVersion>
     <NoWarn>CS1591</NoWarn>
@@ -56,10 +56,11 @@
     <Optimize>true</Optimize>
     <NoWarn>CS1591</NoWarn>
     <DebugType>pdbonly</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
+    <PlatformTarget>x64</PlatformTarget>
     <LangVersion>latest</LangVersion>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <WarningLevel>0</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="PresentationCore" />
@@ -409,15 +410,11 @@
     <Content Include="lib\ToastNotifications.Messages.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ReleaseLocal|AnyCPU'">
-    <PostBuildEvent>nuget.exe pack "$(ProjectPath)" -IncludeReferencedProjects -properties Configuration=ReleaseLocal
-      xcopy "$(TargetDir)*.nupkg" "\\picompany.ru\pikp\Dep\IT\IRA\03_NuGet\NetLib" /C /Y</PostBuildEvent>
-  </PropertyGroup>
   <PropertyGroup>
     <PostBuildEvent>if $(ConfigurationName) == ReleaseLocal (
    nuget.exe pack "$(ProjectPath)" -IncludeReferencedProjects -properties Configuration=ReleaseLocal
    xcopy "$(TargetDir)*.nupkg" "\\picompany.ru\pikp\Dep\IT\IRA\03_NuGet\NetLib" /C /Y
-   xcopy "$(ProjectDir)bin\Release" "c:\Autodesk\AutoCAD\Pik\Settings\Dll\" /Y /C
+   xcopy "$(ProjectDir)bin\Release" "c:\Autodesk\AutoCAD\Pik\Settings\Dll\" /Y /C /Q
 )</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
