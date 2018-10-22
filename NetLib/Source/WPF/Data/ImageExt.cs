@@ -13,6 +13,9 @@ namespace NetLib.WPF.Data
     {
         public static BitmapImage ConvertToBitmapImage(this Image image)
         {
+            if (image == null)
+                return null;
+
             using (var ms = new MemoryStream())
             {
                 image.Save(ms, image.RawFormat);
