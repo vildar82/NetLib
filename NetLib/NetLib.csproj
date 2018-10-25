@@ -400,11 +400,11 @@
     </PackageReference>
     <PackageReference Include="Polly" Version="6.1.0" />
     <PackageReference Include="reactiveui" Version="9.0.1" />
-    <PackageReference Include="ToString.Fody" Version="1.10.4">
+    <PackageReference Include="ToString.Fody" Version="1.10.5">
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="WindowsAPICodePack-Shell" Version="1.1.1" />
-    <PackageReference Update="Fody" Version="3.2.12" />
+    <PackageReference Update="Fody" Version="3.2.13" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="lib\ToastNotifications.dll" />
