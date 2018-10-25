@@ -28,18 +28,26 @@ namespace NetLib.IO
         [NotNull]
         public static List<DllResolve> GetDllResolve([NotNull] string dllFolder, SearchOption mode)
         {
-            return GetDllResolve(dllFolder, mode, "dll");
+            return GetDllResolve(dllFolder, mode, ".dll");
         }
 
+        /// <summary>
+        /// Список резолвов
+        /// </summary>
+        /// <param name="dllFolder">Папка</param>
+        /// <param name="mode">Режим</param>
+        /// <param name="extFilter">С точкой!!!</param>
+        /// <returns>Список</returns>
         [NotNull]
         public static List<DllResolve> GetDllResolve([NotNull] string dllFolder, SearchOption mode, params string[] extFilter)
         {
             var dllResolves = new List<DllResolve>();
-            foreach (var dllFile in Directory.EnumerateFiles(dllFolder, "*", mode).Where(f => IsFilterExt(f, extFilter)))
+            foreach (var dllFile in Directory.EnumerateFiles(dllFolder, "*.*", mode).Where(f => IsFilterExt(f, extFilter)))
             {
                 var dllResolve = new DllResolve(dllFile);
                 dllResolves.Add(dllResolve);
             }
+
             return dllResolves;
         }
 
