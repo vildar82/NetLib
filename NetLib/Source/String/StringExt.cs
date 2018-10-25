@@ -145,7 +145,7 @@ namespace NetLib
         /// Строка из T.ToString()
         /// </summary>
         [NotNull]
-        public static string JoinToString<T>([NotNull] this IEnumerable<T> array, string delimeter = ",")
+        public static string JoinToString<T>([NotNull] this IEnumerable<T> array, string delimeter = ", ")
         {
             return JoinToString(array, t => t.ToString(), delimeter);
         }
@@ -154,7 +154,7 @@ namespace NetLib
         /// Объекдинение списка объектов в одну строку, с разделителем и методом получения строки из объекта.
         /// </summary>
         [NotNull]
-        public static string JoinToString<T>([NotNull] this IEnumerable<T> array, [NotNull] Func<T, string> getString, string delimeter = ",")
+        public static string JoinToString<T>([NotNull] this IEnumerable<T> array, [NotNull] Func<T, string> getString, string delimeter = ", ")
         {
             return string.Join(delimeter, array.SelectNulless(getString));
         }

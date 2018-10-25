@@ -39,10 +39,12 @@ namespace NetLib.WPF
         /// Закрытие окна по нажатия Enter или Space (пробел) - DialogResult true
         /// </summary>
         public bool CloseWindowByEnterOrSpace { get; set; }
+        
         /// <summary>
         /// Вызывать ли закрытие окна или нет. (Если сохранять в памяти и показывать снова)
         /// </summary>
         public bool IsUnclosing { get; set; }
+        
         /// <summary>
         /// DataContext
         /// </summary>
@@ -58,6 +60,7 @@ namespace NetLib.WPF
                 }
             }
         }
+        
         /// <summary>
         /// Дествие при нажатии OK/Space
         /// </summary>
