@@ -400,6 +400,7 @@
     </PackageReference>
     <PackageReference Include="Polly" Version="6.1.0" />
     <PackageReference Include="reactiveui" Version="9.0.1" />
+    <PackageReference Include="System.ValueTuple" Version="4.5.0" />
     <PackageReference Include="ToString.Fody" Version="1.10.5">
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>

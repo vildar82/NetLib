@@ -13,6 +13,7 @@ namespace NetLib.WPF
     using System.Collections.Concurrent;
     using System.Collections.Generic;
     using System.ComponentModel;
+    using System.Diagnostics;
     using System.Linq;
     using System.Reactive.Concurrency;
     using System.Runtime.CompilerServices;
@@ -119,7 +120,11 @@ namespace NetLib.WPF
                 return;
             Logger.Error(e, "CommandException");
             if (e.Message == "Недостаточно квот для обработки команды")
+            {
+                Debug.Fail("Недостаточно квот для обработки команды");
                 return;
+            }
+
             if ((DateTime.Now - lastShowError).TotalMilliseconds < 1000)
             {
                 lastShowError = DateTime.Now;
