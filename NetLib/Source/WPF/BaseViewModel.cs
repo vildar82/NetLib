@@ -149,8 +149,17 @@ namespace NetLib.WPF
             command.ThrownExceptions.Subscribe(CommandException);
             return command;
         }
+        
         [NotNull]
         public ReactiveCommand CreateCommandAsync<TParam>(Func<TParam, CancellationToken, Task> execute, IObservable<bool> canExecute = null)
+        {
+            var command = ReactiveCommand.CreateFromTask(execute, canExecute, new DispatcherScheduler(Dispatcher.CurrentDispatcher));
+            command.ThrownExceptions.Subscribe(CommandException);
+            return command;
+        }
+        
+        [NotNull]
+        public ReactiveCommand<TParam, TResult> CreateCommandAsync<TParam, TResult>(Func<TParam, CancellationToken, Task<TResult>> execute, IObservable<bool> canExecute = null)
         {
             var command = ReactiveCommand.CreateFromTask(execute, canExecute, new DispatcherScheduler(Dispatcher.CurrentDispatcher));
             command.ThrownExceptions.Subscribe(CommandException);
