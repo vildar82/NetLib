@@ -115,8 +115,11 @@ namespace NetLib.WPF
 
         public void CommandException([NotNull] Exception e)
         {
-            if (e is OperationCanceledException) return;
+            if (e is OperationCanceledException)
+                return;
             Logger.Error(e, "CommandException");
+            if (e.Message == "Недостаточно квот для обработки команды")
+                return;
             if ((DateTime.Now - lastShowError).TotalMilliseconds < 1000)
             {
                 lastShowError = DateTime.Now;
