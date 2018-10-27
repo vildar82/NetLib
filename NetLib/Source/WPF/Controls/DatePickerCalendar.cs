@@ -46,7 +46,7 @@ namespace NetLib.WPF.Controls
         {
             if (e.NewValue == e.OldValue)
                 return;
-            _mode =(CalendarMode) e.NewValue;
+            _mode = (CalendarMode)e.NewValue;
             {
                 datePicker.CalendarOpened += DatePickerOnCalendarOpened;
                 datePicker.CalendarClosed += DatePickerOnCalendarClosed;

@@ -44,14 +44,15 @@ namespace NetLib.WPF
         /// Вызывать ли закрытие окна или нет. (Если сохранять в памяти и показывать снова)
         /// </summary>
         public bool IsUnclosing { get; set; }
-        
+
         /// <summary>
         /// DataContext
         /// </summary>
         public IBaseViewModel Model
         {
             get => model;
-            set {
+            set
+            {
                 model = value;
                 DataContext = model;
                 if (model != null)
@@ -60,7 +61,7 @@ namespace NetLib.WPF
                 }
             }
         }
-        
+
         /// <summary>
         /// Дествие при нажатии OK/Space
         /// </summary>
