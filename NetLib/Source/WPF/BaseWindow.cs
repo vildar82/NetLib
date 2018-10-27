@@ -65,6 +65,7 @@ namespace NetLib.WPF
         /// Дествие при нажатии OK/Space
         /// </summary>
         public Action OnEnterOrSpace { get; set; }
+        
         protected static Logger Logger { get; } = LogManager.GetCurrentClassLogger();
 
         [Obsolete("Лучше не использовать. Не забудь присвоить Model и Model.Window.")]
