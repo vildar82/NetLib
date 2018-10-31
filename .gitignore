@@ -242,3 +242,5 @@ ModelManifest.xml
 .fake/
 
 [Vv]isual [Ss]tudio*/
+/.idea/.idea.NetLib/.idea
+/.idea/.idea.NetLib/riderModule.iml

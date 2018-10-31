@@ -3,7 +3,7 @@
 <package>
   <metadata>
     <id>NetLib</id>
-    <version>$version$</version>
+    <version>$Version$</version>
     <authors>Vildar</authors>
     <projectUrl>https://github.com/vildar82/NetLib</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
@@ -30,19 +30,19 @@
       <dependency id="DynamicData.ReactiveUI" version="6.6.0.*" />
       <dependency id="gong-wpf-dragdrop" version="1.1.0" />
       <dependency id="System.ValueTuple" version="4.5.0" />      
-      <dependency id="ReactiveUI.Events.WPF" Version="9.0.1" />
-      <dependency id="ReactiveUI.WPF" Version="9.0.1" />
-      <dependency id="reactivexaml" Version="1.4.1" />
-      <dependency id="System.Reactive" Version="4.1.2" />
-      <dependency id="System.Reactive.Core" Version="4.1.2" />
-      <dependency id="System.Reactive.Interfaces" Version="4.1.2" />
-      <dependency id="System.Reactive.Linq" Version="4.1.2" />
-      <dependency id="System.Reactive.PlatformServices" Version="4.1.2" />
-      <dependency id="System.Reactive.Windows.Threading" Version="4.1.2" />
+      <dependency id="ReactiveUI.Events.WPF" version="9.0.1" />
+      <dependency id="ReactiveUI.WPF" version="9.0.1" />      
+      <dependency id="System.Reactive" version="4.1.2" />
+      <dependency id="System.Reactive.Core" version="4.1.2" />
+      <dependency id="System.Reactive.Interfaces" version="4.1.2" />
+      <dependency id="System.Reactive.Linq" version="4.1.2" />
+      <dependency id="System.Reactive.PlatformServices" version="4.1.2" />
+      <dependency id="System.Reactive.Windows.Threading" version="4.1.2" />
+      <dependency id="FontAwesome.WPF" version="4.7.0.9" />
     </dependencies>
   </metadata>
   <files>
-    <file src="bin\Release\ToastNotifications.dll" target="lib\net462" />
-    <file src="bin\Release\ToastNotifications.Messages.dll" target="lib\net462" />
+    <file src="lib\ToastNotifications.dll" target="lib" />
+    <file src="lib\ToastNotifications.Messages.dll" target="lib" />
   </files>
 </package>

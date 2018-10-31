@@ -57,7 +57,6 @@ namespace NetLib.WPF.Controls
         {
             var calendar = GetDatePickerCalendar(sender);
             calendar.DisplayMode = _mode;
-
             calendar.DisplayModeChanged += CalendarOnDisplayModeChanged;
         }
 
@@ -66,17 +65,15 @@ namespace NetLib.WPF.Controls
             var datePicker = (DatePicker)sender;
             var calendar = GetDatePickerCalendar(sender);
             datePicker.SelectedDate = calendar.SelectedDate;
-
             calendar.DisplayModeChanged -= CalendarOnDisplayModeChanged;
         }
 
         private static void CalendarOnDisplayModeChanged(object sender, CalendarModeChangedEventArgs e)
         {
             var calendar = (Calendar)sender;
-            if (calendar.DisplayMode >= _mode) return;
-
+            if (calendar.DisplayMode >= _mode)
+                return;
             calendar.SelectedDate = GetSelectedCalendarDate(calendar.DisplayDate);
-
             var datePicker = GetCalendarsDatePicker(calendar);
             datePicker.IsDropDownOpen = false;
         }
@@ -164,10 +161,12 @@ namespace NetLib.WPF.Controls
         /// </summary>
         private static void DropDownButtonPreviewMouseUp(object sender, MouseButtonEventArgs e)
         {
-            if (!(sender is FrameworkElement fe)) return;
+            if (!(sender is FrameworkElement fe))
+                return;
 
             var datePicker = fe.TryFindParent<DatePicker>();
-            if (datePicker?.SelectedDate == null) return;
+            if (datePicker?.SelectedDate == null)
+                return;
 
             var dropDownButton = GetTemplateButton(datePicker);
 
@@ -257,8 +256,6 @@ namespace NetLib.WPF.Controls
 
                 return canParse ? date : datePicker.SelectedDate;
             }
-
-
         }
     }
 
@@ -311,7 +308,8 @@ namespace NetLib.WPF.Controls
                 case ContentElement contentElement:
                 {
                     var parent = ContentOperations.GetParent(contentElement);
-                    if (parent != null) return parent;
+                    if (parent != null)
+                        return parent;
 
                     return contentElement is FrameworkContentElement fce ? fce.Parent : null;
                 }
@@ -319,7 +317,8 @@ namespace NetLib.WPF.Controls
                 case FrameworkElement frameworkElement:
                 {
                     var parent = frameworkElement.Parent;
-                    if (parent != null) return parent;
+                    if (parent != null)
+                        return parent;
                     break;
                 }
             }
