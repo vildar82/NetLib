@@ -13,7 +13,7 @@
         <Button Grid.Column="0" Background="{Binding Color, Converter={converters:ColorToBrushConverter}}"
                 MinWidth="50"
                 Click="SelectColor" ToolTip="Выбор цвета">
-            <TextBlock Text="{Binding Color}" Margin="1" />
+            <TextBlock Text="{Binding Color}" Margin="1"/>
         </Button>
         <Button Grid.Column="1" Content="x" Click="Clear" ToolTip="Удалить цвет" Margin="1"
                 IsEnabled="{Binding CanClearColor}" />
