@@ -9,6 +9,19 @@ namespace NetLib
     public static class EnumerableExt
     {
         /// <summary>
+        /// Поиск дубликатов имен
+        /// </summary>
+        /// <param name="items">Саисок элементов</param>
+        /// <param name="nameSelector">Выборка имен</param>
+        /// <typeparam name="T">Тип элемента</typeparam>
+        /// <returns>Дублирующиеся имена</returns>
+        public static IEnumerable<IGrouping<string, T>> GetDublicateNames<T>([NotNull] IEnumerable<T> items,
+            [NotNull] Func<T, string> nameSelector)
+        {
+            return items.GroupBy(nameSelector).Where(w => w?.Skip(1).Any() == true);
+        }
+        
+        /// <summary>
         /// Список совпадающих значений во всех списках
         /// </summary>
         /// <typeparam name="T">Тип значения</typeparam>

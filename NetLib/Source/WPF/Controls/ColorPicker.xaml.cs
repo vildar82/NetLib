@@ -6,16 +6,18 @@ namespace NetLib.WPF.Controls
     using System.Windows;
     using System.Windows.Forms;
     using JetBrains.Annotations;
-    using UserControl = System.Windows.Controls.UserControl;
 
-    public partial class ColorPicker : UserControl, INotifyPropertyChanged
+    public partial class ColorPicker : INotifyPropertyChanged
     {
         /// <summary>
         /// Цвет (AutoCAD)
         /// </summary>
         public static readonly DependencyProperty ColorProperty =
-            DependencyProperty.Register("Color", typeof(Color), typeof(ColorPicker),
-                new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+            DependencyProperty.Register(
+                "Color",
+                typeof(Color),
+                typeof(ColorPicker),
+                new FrameworkPropertyMetadata(Color.Empty, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
 
         private bool canClearColor;
 
