@@ -162,6 +162,9 @@
     <Compile Include="Source\WPF\Behaviors\DataGrid\ICustomSorter.cs" />
     <Compile Include="Source\WPF\BindingProxy.cs" />
     <Compile Include="Source\WPF\Controls\DatePickerCalendar.cs" />
+    <Compile Include="Source\WPF\Controls\ColorPicker.xaml.cs">
+      <DependentUpon>ColorPicker.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Source\WPF\Converters\Bytes.cs" />
     <Compile Include="Source\WPF\Converters\DataGridLengthConverter.cs" />
     <Compile Include="Source\WPF\Converters\ImageByteConverter.cs" />
@@ -237,6 +240,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Source\WPF\Controls\ColorPicker.xaml" />
     <Page Include="Source\WPF\Styles\ScrollBarIOS.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
