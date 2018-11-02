@@ -15,7 +15,7 @@ namespace NetLib
         /// <param name="nameSelector">Выборка имен</param>
         /// <typeparam name="T">Тип элемента</typeparam>
         /// <returns>Дублирующиеся имена</returns>
-        public static IEnumerable<IGrouping<string, T>> GetDublicateNames<T>([NotNull] IEnumerable<T> items,
+        public static IEnumerable<IGrouping<string, T>> GetDublicateNames<T>([NotNull] this IEnumerable<T> items,
             [NotNull] Func<T, string> nameSelector)
         {
             return items.GroupBy(nameSelector).Where(w => w?.Skip(1).Any() == true);
