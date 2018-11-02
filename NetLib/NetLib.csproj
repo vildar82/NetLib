@@ -418,7 +418,7 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="WindowsAPICodePack-Shell" Version="1.1.1" />
-    <PackageReference Update="Fody" Version="3.2.13" />
+    <PackageReference Update="Fody" Version="3.2.12" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="lib\ToastNotifications.dll" />
