@@ -55,7 +55,7 @@
                 <Setter Property="Visibility" Value="Hidden" />
                 <Style.Triggers>
                     <DataTrigger
-                        Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=FrameworkElement},Path=IsMouseOver}"
+                        Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContentPresenter}, Path=IsMouseOver}"
                         Value="True">
                         <Setter Property="Visibility" Value="Visible" />
                     </DataTrigger>
@@ -65,7 +65,7 @@
                 <Setter Property="Visibility" Value="Collapsed" />
                 <Style.Triggers>
                     <DataTrigger
-                        Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=FrameworkElement},Path=IsMouseOver}"
+                        Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContentPresenter},Path=IsMouseOver}"
                         Value="True">
                         <Setter Property="Visibility" Value="Visible" />
                     </DataTrigger>
