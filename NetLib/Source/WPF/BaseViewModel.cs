@@ -97,8 +97,7 @@
         /// </summary>
         public static void DoEvents()
         {
-            dispatcher.Invoke(DispatcherPriority.Background,
-                new Action(delegate { }));
+            dispatcher.Invoke(DispatcherPriority.Background, new Action(delegate { }));
         }
 
         /// <summary>
