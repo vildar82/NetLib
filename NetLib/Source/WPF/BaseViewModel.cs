@@ -21,6 +21,7 @@
     using NetLib.Errors;
     using NLog;
     using ReactiveUI;
+    using ControlzEx;
     using ValidationResult = FluentValidation.Results.ValidationResult;
 
     /// <inheritdoc cref="IBaseViewModel" />
@@ -80,7 +81,7 @@
         {
         }
         
-        public void AddWindowButton(string toolTip, Control icon, Action onClick)
+        public void AddWindowButton(string toolTip, PackIconBase icon, Action onClick)
         {
             if (Window == null) return;
             var button = new Button

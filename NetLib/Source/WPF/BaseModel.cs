@@ -24,7 +24,6 @@
 
         protected BaseModel()
         {
-            
         }
 
         protected BaseModel(IBaseViewModel baseVM)
