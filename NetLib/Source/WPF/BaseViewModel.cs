@@ -1,13 +1,5 @@
-﻿using System.Reactive;
-using NetLib.Errors;
-
-namespace NetLib.WPF
+﻿namespace NetLib.WPF
 {
-    using FluentValidation;
-    using JetBrains.Annotations;
-    using MahApps.Metro.Controls.Dialogs;
-    using NLog;
-    using ReactiveUI;
     using System;
     using System.Collections;
     using System.Collections.Concurrent;
@@ -15,6 +7,7 @@ namespace NetLib.WPF
     using System.ComponentModel;
     using System.Diagnostics;
     using System.Linq;
+    using System.Reactive;
     using System.Reactive.Concurrency;
     using System.Runtime.CompilerServices;
     using System.Threading;
@@ -22,7 +15,12 @@ namespace NetLib.WPF
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Threading;
-    using ControlzEx;
+    using FluentValidation;
+    using JetBrains.Annotations;
+    using MahApps.Metro.Controls.Dialogs;
+    using NetLib.Errors;
+    using NLog;
+    using ReactiveUI;
     using ValidationResult = FluentValidation.Results.ValidationResult;
 
     /// <inheritdoc cref="IBaseViewModel" />
@@ -81,8 +79,8 @@ namespace NetLib.WPF
         public BaseViewModel() : this(null)
         {
         }
-
-        public void AddWindowButton(string toolTip, PackIconBase icon, Action onClick)
+        
+        public void AddWindowButton(string toolTip, Control icon, Action onClick)
         {
             if (Window == null) return;
             var button = new Button

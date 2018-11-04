@@ -63,6 +63,9 @@
     <WarningLevel>0</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="MaterialDesignThemes.Wpf, Version=2.5.0.1205, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\..\..\Users\khisyametdinovvt\.nuget\packages\materialdesignthemes\2.5.0.1205\lib\net45\MaterialDesignThemes.Wpf.dll</HintPath>
+    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
@@ -383,10 +386,10 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="DynamicData">
-      <Version>6.6.0.2492</Version>
+      <Version>6.6.1.2507</Version>
     </PackageReference>
     <PackageReference Include="DynamicData.ReactiveUI">
-      <Version>6.6.0.2492</Version>
+      <Version>6.6.1.2507</Version>
     </PackageReference>
     <PackageReference Include="AttachedCommandBehavior" Version="2.0.*" />
     <PackageReference Include="Enums.NET" Version="2.3.2" />
@@ -398,15 +401,18 @@
     </PackageReference>
     <PackageReference Include="MahApps.Metro" Version="1.6.5" />
     <PackageReference Include="MahApps.Metro.IconPacks" Version="2.3.*" />
+    <PackageReference Include="MaterialDesignColors" Version="1.1.3" />
+    <PackageReference Include="MaterialDesignThemes" Version="2.5.0.1205" />
+    <PackageReference Include="MaterialDesignThemes.MahApps" Version="0.0.12" />
     <PackageReference Include="ncalc" Version="1.3.8" />
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
     <PackageReference Include="NLog">
       <Version>4.5.10</Version>
     </PackageReference>
     <PackageReference Include="Polly" Version="6.1.0" />
-    <PackageReference Include="reactiveui" Version="9.0.1" />
-    <PackageReference Include="ReactiveUI.Events.WPF" Version="9.0.1" />
-    <PackageReference Include="ReactiveUI.WPF" Version="9.0.1" />
+    <PackageReference Include="reactiveui" Version="9.1.1" />
+    <PackageReference Include="ReactiveUI.Events.WPF" Version="9.1.1" />
+    <PackageReference Include="ReactiveUI.WPF" Version="9.1.1" />
     <PackageReference Include="System.Reactive" Version="4.1.2" />
     <PackageReference Include="System.Reactive.Core" Version="4.1.2" />
     <PackageReference Include="System.Reactive.Interfaces" Version="4.1.2" />
