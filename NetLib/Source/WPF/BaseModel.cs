@@ -1,19 +1,19 @@
-﻿using System;
-using System.Reactive.Concurrency;
-using System.Runtime.CompilerServices;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Threading;
-using System.Xml.Serialization;
-using JetBrains.Annotations;
-using Newtonsoft.Json;
-using NLog;
-using ReactiveUI;
-
-namespace NetLib.WPF
+﻿namespace NetLib.WPF
 {
+    using System;
+    using System.Reactive.Concurrency;
+    using System.Runtime.CompilerServices;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using System.Windows;
+    using System.Windows.Controls;
+    using System.Windows.Threading;
+    using System.Xml.Serialization;
+    using JetBrains.Annotations;
+    using Newtonsoft.Json;
+    using NLog;
+    using ReactiveUI;
+
     /// <summary>
     /// Базовый класс модели - MVVM
     /// </summary>
