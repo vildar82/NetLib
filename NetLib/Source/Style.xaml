@@ -32,6 +32,16 @@
                 <TextBlock Text="{Binding Converter={converters:EnumDescriptionConverter}}" />
             </DataTemplate>
             <Style x:Key="ListBoxHiddenBtn" TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+                <Setter Property="Visibility" Value="Hidden" />
+                <Style.Triggers>
+                    <DataTrigger
+                        Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ListBoxItem},Path=IsMouseOver}"
+                        Value="True">
+                        <Setter Property="Visibility" Value="Visible" />
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+            <Style x:Key="ListBoxCollapseBtn" TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
                 <Setter Property="Visibility" Value="Collapsed" />
                 <Style.Triggers>
                     <DataTrigger
@@ -42,10 +52,20 @@
                 </Style.Triggers>
             </Style>
             <Style x:Key="HiddenButton" TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+                <Setter Property="Visibility" Value="Hidden" />
+                <Style.Triggers>
+                    <DataTrigger
+                        Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Panel},Path=IsMouseOver}"
+                        Value="True">
+                        <Setter Property="Visibility" Value="Visible" />
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+            <Style x:Key="CollapsedButton" TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
                 <Setter Property="Visibility" Value="Collapsed" />
                 <Style.Triggers>
                     <DataTrigger
-                        Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContentControl},Path=IsMouseOver}"
+                        Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Panel},Path=IsMouseOver}"
                         Value="True">
                         <Setter Property="Visibility" Value="Visible" />
                     </DataTrigger>
