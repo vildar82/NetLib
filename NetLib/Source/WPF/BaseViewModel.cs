@@ -7,7 +7,6 @@
     using System.ComponentModel;
     using System.Diagnostics;
     using System.Linq;
-    using System.Reactive;
     using System.Reactive.Concurrency;
     using System.Runtime.CompilerServices;
     using System.Threading;
@@ -18,7 +17,6 @@
     using FluentValidation;
     using JetBrains.Annotations;
     using MahApps.Metro.Controls.Dialogs;
-    using NetLib.Errors;
     using NLog;
     using ReactiveUI;
     using ControlzEx;
