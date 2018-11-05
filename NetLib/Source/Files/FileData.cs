@@ -86,6 +86,21 @@ namespace NetLib
             }
         }
 
+        public void Update()
+        {
+            try
+            {
+                if (!IO.Path.IsEqualsDateFile(ServerFile, LocalFile))
+                {
+                    Load();
+                }
+            }
+            catch
+            {
+                // Нет доступа к файлу
+            }
+        }
+
         private void Copy()
         {
             if (!File.Exists(ServerFile)) return;
