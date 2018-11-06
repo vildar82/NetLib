@@ -1,9 +1,9 @@
-﻿using System.Drawing;
-using System.IO;
-using JetBrains.Annotations;
-
-namespace NetLib.Images
+﻿namespace NetLib.Images
 {
+    using System.Drawing;
+    using System.IO;
+    using JetBrains.Annotations;
+
     [PublicAPI]
     public static class ImageExt
     {

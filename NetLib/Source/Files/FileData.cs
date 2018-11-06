@@ -1,10 +1,10 @@
-﻿using JetBrains.Annotations;
-using NLog;
-using System;
-using System.IO;
-
-namespace NetLib
+﻿namespace NetLib
 {
+    using System;
+    using System.IO;
+    using JetBrains.Annotations;
+    using NLog;
+
     /// <summary>
     /// Данные хранимые в файле xml/json на сервере, с локальным кэшем
     /// </summary>

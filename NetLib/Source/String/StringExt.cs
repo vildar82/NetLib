@@ -1,11 +1,11 @@
-﻿using JetBrains.Annotations;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text.RegularExpressions;
-
-namespace NetLib
+﻿namespace NetLib
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text.RegularExpressions;
+    using JetBrains.Annotations;
+
     [PublicAPI]
     public static class StringExt
     {
