@@ -197,6 +197,8 @@ namespace NetLib.WPF
             {
                 Source = uri
             });
+
+            AddStyleElementsResource(resources);
         }
 
         private static void AddStyleElementsResource([NotNull] ResourceDictionary resources)
