@@ -1,11 +1,11 @@
-﻿using JetBrains.Annotations;
-using System;
-using System.Globalization;
-using System.Windows;
-using System.Windows.Data;
-
-namespace NetLib.WPF.Converters
+﻿namespace NetLib.WPF.Converters
 {
+    using System;
+    using System.Globalization;
+    using System.Windows;
+    using System.Windows.Data;
+    using JetBrains.Annotations;
+
     [ValueConversion(typeof(bool), typeof(Visibility))]
     public class BooleanToCollapseVisibilityConverter : ConvertorBase
     {

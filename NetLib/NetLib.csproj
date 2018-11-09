@@ -238,10 +238,6 @@
     <Compile Include="Source\WPF\ValidationTemplate.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Source\StyleElements.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Source\WPF\Controls\Progress\ProgressView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
