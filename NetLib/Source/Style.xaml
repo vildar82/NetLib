@@ -2,7 +2,8 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:converters="clr-namespace:NetLib.WPF.Converters"
                     xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
-                    xmlns:fa="http://schemas.fontawesome.io/icons/">
+                    xmlns:fa="http://schemas.fontawesome.io/icons/"
+                    xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks">
     <ResourceDictionary.MergedDictionaries>
         <!-- MahApps.Metro resource dictionaries. Make sure that all file names are Case Sensitive! -->
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
@@ -89,13 +90,18 @@
         <Setter Property="Content">
             <Setter.Value>
                 <StackPanel Orientation="Horizontal">
-                    <fa:FontAwesome Icon="Lock" Visibility="{Binding 
+                    <Grid
+                        Visibility="{Binding 
                   RelativeSource={RelativeSource AncestorType=ToggleButton}, Path=IsChecked,
-                  Converter={converters:NegateBoolToCollapseVisibilityConverter}}" />
-                    <fa:FontAwesome Icon="Unlock" Visibility="{Binding 
+                  Converter={converters:NegateBoolToCollapseVisibilityConverter}}">
+                        <iconPacks:Modern Kind="Lock" />
+                    </Grid>
+                    <Grid
+                        Visibility="{Binding 
                   RelativeSource={RelativeSource AncestorType=ToggleButton}, Path=IsChecked,
-                  Converter={converters:BooleanToCollapseVisibilityConverter}}" />
-                    <TextBlock Text="Scan"/>
+                  Converter={converters:BooleanToCollapseVisibilityConverter}}">
+                        <iconPacks:Modern Kind="Unlock" />
+                    </Grid>
                 </StackPanel>
             </Setter.Value>
         </Setter>
