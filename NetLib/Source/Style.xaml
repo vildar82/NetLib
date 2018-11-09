@@ -85,6 +85,8 @@
         </Style.Triggers>
     </Style>
     <!-- Кнопка блокировки -->
+    <iconPacks:Modern x:Key="iconLock" Kind="Lock" x:Shared="False"/>
+    <iconPacks:Modern x:Key="iconUnlock" Kind="Unlock" x:Shared="False"/>
     <Style x:Key="tbBlocked" TargetType="{x:Type ToggleButton}"
            BasedOn="{StaticResource {x:Type ToggleButton}}">
         <Setter Property="Content">
@@ -94,13 +96,13 @@
                         Visibility="{Binding 
                   RelativeSource={RelativeSource AncestorType=ToggleButton}, Path=IsChecked,
                   Converter={converters:NegateBoolToCollapseVisibilityConverter}}">
-                        <iconPacks:Modern Kind="Lock" />
+                        <ContentPresenter Content="{StaticResource iconLock}" />
                     </Grid>
                     <Grid
                         Visibility="{Binding 
                   RelativeSource={RelativeSource AncestorType=ToggleButton}, Path=IsChecked,
                   Converter={converters:BooleanToCollapseVisibilityConverter}}">
-                        <iconPacks:Modern Kind="Unlock" />
+                        <ContentPresenter Content="{StaticResource iconUnlock}" />
                     </Grid>
                 </StackPanel>
             </Setter.Value>
