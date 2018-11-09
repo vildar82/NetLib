@@ -18,6 +18,8 @@ using ReactiveUI;
 
 namespace NetLib.WPF
 {
+    using System.Collections;
+
     [PublicAPI]
     public class BaseWindow : MetroWindow
     {
@@ -195,6 +197,25 @@ namespace NetLib.WPF
             {
                 Source = uri
             });
+        }
+
+        private static void AddStyleElementsResource([NotNull] ResourceDictionary resources)
+        {
+            try
+            {
+                var uri = new Uri("pack://application:,,,/NetLib;component/Source/StyleElements.xaml");
+                if (resources.MergedDictionaries.Any(r => r.Source == uri))
+                    return;
+                var elemResources = new ResourceDictionary { Source = uri };
+                foreach (DictionaryEntry item in elemResources)
+                {
+                    resources.Add(item.Key, item.Value);
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.Error(ex);
+            }
         }
 
         private void BaseWindow_MouseDown(object sender, MouseButtonEventArgs e)
