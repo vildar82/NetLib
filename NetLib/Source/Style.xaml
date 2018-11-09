@@ -84,15 +84,20 @@
         </Style.Triggers>
     </Style>
     <!-- Кнопка блокировки -->
-    <fa:FontAwesome x:Key="imageLock" Icon="Lock" x:Shared="False" />
-    <fa:FontAwesome x:Key="imageUnlock" Icon="Unlock" x:Shared="False" />
     <Style x:Key="tbBlocked" TargetType="{x:Type ToggleButton}"
            BasedOn="{StaticResource {x:Type ToggleButton}}">
-        <Setter Property="Content" Value="{StaticResource imageUnlock}" />
-        <Style.Triggers>
-            <Trigger Property="IsChecked" Value="True">
-                <Setter Property="Content" Value="{StaticResource imageLock}" />
-            </Trigger>
-        </Style.Triggers>
+        <Setter Property="Content">
+            <Setter.Value>
+                <StackPanel Orientation="Horizontal">
+                    <fa:FontAwesome Icon="Lock" Visibility="{Binding 
+                  RelativeSource={RelativeSource AncestorType=ToggleButton}, Path=IsChecked,
+                  Converter={converters:NegateBoolToCollapseVisibilityConverter}}" />
+                    <fa:FontAwesome Icon="Unlock" Visibility="{Binding 
+                  RelativeSource={RelativeSource AncestorType=ToggleButton}, Path=IsChecked,
+                  Converter={converters:BooleanToCollapseVisibilityConverter}}" />
+                    <TextBlock Text="Scan"/>
+                </StackPanel>
+            </Setter.Value>
+        </Setter>
     </Style>
 </ResourceDictionary>
