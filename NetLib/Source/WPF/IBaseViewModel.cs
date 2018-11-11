@@ -1,12 +1,12 @@
-﻿using ReactiveUI;
-using System;
-using System.ComponentModel;
-using System.Threading;
-using System.Threading.Tasks;
-using JetBrains.Annotations;
-
-namespace NetLib.WPF
+﻿namespace NetLib.WPF
 {
+    using System;
+    using System.ComponentModel;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using JetBrains.Annotations;
+    using ReactiveUI;
+
     [PublicAPI]
     public interface IBaseViewModel : INotifyDataErrorInfo, IDisposable
     {

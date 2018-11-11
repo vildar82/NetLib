@@ -121,12 +121,6 @@
                 return;
             }
 
-            if ((DateTime.Now - lastShowError).TotalMilliseconds < 1000)
-            {
-                lastShowError = DateTime.Now;
-                return;
-            }
-
             ShowMessage(e.Message);
         }
 
@@ -245,6 +239,12 @@
 
         public void ShowMessage(string msg, string title = "Ошибка")
         {
+            if ((DateTime.Now - lastShowError).TotalMilliseconds < 1000)
+            {
+                lastShowError = DateTime.Now;
+                return;
+            }
+            
             try
             {
                 dialogCoordinator.ShowMessageAsync(this, title, msg);
