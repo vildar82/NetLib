@@ -110,6 +110,7 @@
     <Compile Include="Source\Extensions\ColorExt.cs" />
     <Compile Include="Source\Files\XmlExt.cs" />
     <Compile Include="Source\Images\ImageExt.cs" />
+    <Compile Include="Source\IO\EmailExt.cs" />
     <Compile Include="Source\Notification\Notify.cs" />
     <Compile Include="Source\ReactiveAttribute.cs" />
     <Compile Include="Source\Comparers\AlphanumComparator.cs" />
