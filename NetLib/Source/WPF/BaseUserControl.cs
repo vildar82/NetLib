@@ -1,23 +1,23 @@
-﻿using System;
-using System.Windows.Controls;
-using JetBrains.Annotations;
-
-namespace NetLib.WPF
+﻿namespace NetLib.WPF
 {
+    using System;
+    using System.Windows.Controls;
+    using JetBrains.Annotations;
+
     [PublicAPI]
     public class BaseUserControl : UserControl
     {
         private readonly bool applyTheme;
         private IBaseModel model;
 
-        public BaseUserControl() : this(null, true)
+        public BaseUserControl()
+            : this(null, true)
         {
-            
         }
 
-        public BaseUserControl(IBaseModel baseModel) : this(baseModel, true)
+        public BaseUserControl(IBaseModel baseModel)
+            : this(baseModel, true)
         {
-            
         }
 
         public BaseUserControl(IBaseModel baseModel, bool applyTheme)

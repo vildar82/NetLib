@@ -24,7 +24,9 @@
 
     /// <inheritdoc cref="IBaseViewModel" />
     /// <summary>
-    /// ReactiveUI ViewModel, +FluentValidator (должен быть класс с таким же именем +Validator).
+    /// ReactiveUI ViewModel,
+    /// FluentValidator (должен быть класс с таким же именем +Validator) -
+    /// унаследованный от AbstractValidator
     /// </summary>
     [PublicAPI]
     public abstract class BaseViewModel : ReactiveObject, IBaseViewModel
