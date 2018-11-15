@@ -4,7 +4,9 @@ namespace NetLib.IO
     using System.Diagnostics;
     using System.Linq;
     using System.Net.Mail;
+    using JetBrains.Annotations;
 
+    [PublicAPI]
     public static class EmailExt
     {
         public static void MailTo(this MailMessage message)
@@ -34,7 +36,7 @@ namespace NetLib.IO
                 yield return "body=" + EscapeDataString(message.Body);
         }
 
-        static object EscapeDataString(string messageBody) => $"'{messageBody}'";
+        static object EscapeDataString(string messageBody) => messageBody;
 
         static string Recipients(MailAddressCollection addresses) =>
             string.Join(",", from r in addresses select EscapeDataString(r.Address));
