@@ -14,10 +14,13 @@
         public readonly string LocalFile;
         public readonly string ServerFile;
         private readonly bool isXmlOrJson;
+
         public T Data { get; set; }
+
         private static ILogger Logger { get; } = LogManager.GetCurrentClassLogger();
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="FileData{T}"/> class.
         /// Данные хранимые в файле на сервере, с локальным кэшем
         /// </summary>
         /// <param name="localFile"></param>
@@ -33,10 +36,11 @@
         /// <summary>
         ///
         /// </summary>
-        public void Load()
+        public T Load()
         {
             Copy();
             Data = Deserialize();
+            return Data;
         }
 
         public void Save()
@@ -50,27 +54,29 @@
             Copy();
         }
 
-        public void TryLoad()
+        public T TryLoad()
         {
             try
             {
-                Load();
+                return Load();
             }
             catch
             {
                 //
+                return default;
             }
         }
 
-        public void TryLoad(Func<T> onError)
+        public T TryLoad(Func<T> onError)
         {
             try
             {
-                Load();
+                return Load();
             }
             catch
             {
                 Data = onError();
+                return Data;
             }
         }
 
