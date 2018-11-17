@@ -5,6 +5,8 @@ using JetBrains.Annotations;
 
 namespace NetLib.WPF.Controls
 {
+    using System.Reactive;
+
     public class DesignTextVM : TextVM
     {
         public DesignTextVM()
@@ -21,14 +23,16 @@ namespace NetLib.WPF.Controls
     {
         public string Name { get; set; }
 
-        public ReactiveCommand OK { get; }
+        public ReactiveCommand<Unit, Unit> OK { get; }
 
         public string Title { get; set; }
 
         public string Value { get; set; }
+        
         public string Error { get; set; }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="TextVM"/> class.
         /// Заголовок, имя и значение
         /// </summary>
         /// <param name="title">Заголовок окна</param>

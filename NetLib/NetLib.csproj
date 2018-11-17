@@ -387,10 +387,10 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="DynamicData">
-      <Version>6.6.1.2507</Version>
+      <Version>6.7.0.2529</Version>
     </PackageReference>
     <PackageReference Include="DynamicData.ReactiveUI">
-      <Version>6.6.1.2507</Version>
+      <Version>6.7.0.2529</Version>
     </PackageReference>
     <PackageReference Include="AttachedCommandBehavior" Version="2.0.*" />
     <PackageReference Include="Enums.NET" Version="2.3.2" />
@@ -407,10 +407,10 @@
     <PackageReference Include="NLog">
       <Version>4.5.11</Version>
     </PackageReference>
-    <PackageReference Include="Polly" Version="6.1.0" />
-    <PackageReference Include="reactiveui" Version="9.1.4" />
-    <PackageReference Include="ReactiveUI.Events.WPF" Version="9.1.4" />
-    <PackageReference Include="ReactiveUI.WPF" Version="9.1.4" />
+    <PackageReference Include="Polly" Version="6.1.1" />
+    <PackageReference Include="reactiveui" Version="9.2.2" />
+    <PackageReference Include="ReactiveUI.Events.WPF" Version="9.2.2" />
+    <PackageReference Include="ReactiveUI.WPF" Version="9.2.2" />
     <PackageReference Include="System.Reactive" Version="4.1.2" />
     <PackageReference Include="System.Reactive.Core" Version="4.1.2" />
     <PackageReference Include="System.Reactive.Interfaces" Version="4.1.2" />
@@ -423,7 +423,8 @@
     </PackageReference>
     <PackageReference Include="WindowsAPICodePack-Shell" Version="1.1.1" />
     <PackageReference Update="Fody" Version="3.2.17" />
-    <PackageReference Update="PropertyChanged.Fody" Version="2.5.13" />
+    <PackageReference Update="PropertyChanged.Fody" Version="2.5.14" />
+    <PackageReference Update="Nerdbank.GitVersioning" Version="2.2.33" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="lib\ToastNotifications.dll" />

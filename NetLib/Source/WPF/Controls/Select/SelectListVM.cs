@@ -10,6 +10,8 @@ using System.Windows.Data;
 
 namespace NetLib.WPF.Controls.Select
 {
+    using System.Reactive;
+
     /// <summary>
     /// Использование - SelectList.Select()
     /// </summary>
@@ -32,7 +34,7 @@ namespace NetLib.WPF.Controls.Select
 
         public string Name { get; set; }
 
-        public ReactiveCommand OK { get; set; }
+        public ReactiveCommand<Unit, Unit> OK { get; set; }
 
         public bool SelectAll { get; set; }
 
@@ -48,7 +50,9 @@ namespace NetLib.WPF.Controls.Select
         public string Title { get; set; }
 
         public bool CanCustomValue { get; set; }
+        
         public Control CustomValue { get; set; }
+        
         public Func<string> IsCustomValueValid { get; set; }
 
         public SelectListVM([NotNull] List<SelectListItem<T>> items, string title, Control customValue,

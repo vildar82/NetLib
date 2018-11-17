@@ -7,6 +7,7 @@
     using System.ComponentModel;
     using System.Diagnostics;
     using System.Linq;
+    using System.Reactive;
     using System.Reactive.Concurrency;
     using System.Runtime.CompilerServices;
     using System.Threading;
@@ -14,12 +15,12 @@
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Threading;
+    using ControlzEx;
     using FluentValidation;
     using JetBrains.Annotations;
     using MahApps.Metro.Controls.Dialogs;
     using NLog;
     using ReactiveUI;
-    using ControlzEx;
     using ValidationResult = FluentValidation.Results.ValidationResult;
 
     /// <inheritdoc cref="IBaseViewModel" />
@@ -45,13 +46,20 @@
         public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
 
         public bool? DialogResult { get; set; }
+
         public List<string> Errors { get; set; }
+        
         public bool HasErrors => validationResult?.Errors?.Count > 0;
+        
         [Obsolete("Use Hide()")]
         public bool Hide { get; set; }
+        
         public bool IsValidated { get; private set; }
+        
         public IBaseViewModel Parent { get; set; }
+        
         public BaseWindow Window { get; set; }
+        
         protected static Logger Logger { get; } = LogManager.GetCurrentClassLogger();
 
         static BaseViewModel()
@@ -101,17 +109,6 @@
             dispatcher.Invoke(DispatcherPriority.Background, new Action(delegate { }));
         }
 
-        /// <summary>
-        /// Добавление команды - ThrownExceptions.Subscribe.
-        /// </summary>
-        [Obsolete("Use CreateCommand", true)]
-        [NotNull]
-        public ReactiveCommand AddCommand([NotNull] ReactiveCommand command)
-        {
-            command.ThrownExceptions.Subscribe(CommandException);
-            return command;
-        }
-
         public void CommandException([NotNull] Exception e)
         {
             if (e is OperationCanceledException)
@@ -127,7 +124,7 @@
         }
 
         [NotNull]
-        public ReactiveCommand CreateCommandAsync(Func<CancellationToken, Task> execute, IObservable<bool> canExecute = null)
+        public ReactiveCommand<Unit, Unit> CreateCommandAsync(Func<CancellationToken, Task> execute, IObservable<bool> canExecute = null)
         {
             var command = ReactiveCommand.CreateFromTask(execute, canExecute, new DispatcherScheduler(Dispatcher.CurrentDispatcher));
             command.ThrownExceptions.Subscribe(CommandException);
@@ -135,7 +132,7 @@
         }
 
         [NotNull]
-        public ReactiveCommand CreateCommandAsync(Func<Task> execute, IObservable<bool> canExecute = null)
+        public ReactiveCommand<Unit, Unit> CreateCommandAsync(Func<Task> execute, IObservable<bool> canExecute = null)
         {
             var command = ReactiveCommand.CreateFromTask(execute, canExecute, new DispatcherScheduler(Dispatcher.CurrentDispatcher));
             command.ThrownExceptions.Subscribe(CommandException);
@@ -143,7 +140,7 @@
         }
 
         [NotNull]
-        public ReactiveCommand CreateCommandAsync<TParam>(Func<TParam, Task> execute, IObservable<bool> canExecute = null)
+        public ReactiveCommand<TParam, Unit> CreateCommandAsync<TParam>(Func<TParam, Task> execute, IObservable<bool> canExecute = null)
         {
             var command = ReactiveCommand.CreateFromTask(execute, canExecute, new DispatcherScheduler(Dispatcher.CurrentDispatcher));
             command.ThrownExceptions.Subscribe(CommandException);
@@ -151,7 +148,7 @@
         }
         
         [NotNull]
-        public ReactiveCommand CreateCommandAsync<TParam>(Func<TParam, CancellationToken, Task> execute, IObservable<bool> canExecute = null)
+        public ReactiveCommand<TParam, Unit> CreateCommandAsync<TParam>(Func<TParam, CancellationToken, Task> execute, IObservable<bool> canExecute = null)
         {
             var command = ReactiveCommand.CreateFromTask(execute, canExecute, new DispatcherScheduler(Dispatcher.CurrentDispatcher));
             command.ThrownExceptions.Subscribe(CommandException);
@@ -167,7 +164,7 @@
         }
 
         [NotNull]
-        public ReactiveCommand CreateCommand(Action execute, IObservable<bool> canExecute = null)
+        public ReactiveCommand<Unit, Unit> CreateCommand(Action execute, IObservable<bool> canExecute = null)
         {
             var command = ReactiveCommand.Create(execute, canExecute, new DispatcherScheduler(Dispatcher.CurrentDispatcher));
             command.ThrownExceptions.Subscribe(CommandException);
@@ -175,7 +172,7 @@
         }
 
         [NotNull]
-        public ReactiveCommand CreateCommand<T>(Action<T> execute, IObservable<bool> canExecute = null)
+        public ReactiveCommand<T, Unit> CreateCommand<T>(Action<T> execute, IObservable<bool> canExecute = null)
         {
             var command = ReactiveCommand.Create(execute, canExecute, new DispatcherScheduler(Dispatcher.CurrentDispatcher));
             command.ThrownExceptions.Subscribe(CommandException);
