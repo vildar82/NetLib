@@ -1,16 +1,20 @@
-﻿using System;
-using System.Diagnostics;
-using System.Windows.Input;
-using JetBrains.Annotations;
-
-namespace NetLib.WPF.Data
+﻿namespace NetLib.WPF.Data
 {
+    using System;
+    using System.Diagnostics;
+    using System.Windows.Input;
+    using JetBrains.Annotations;
+    using NLog;
+
     /// <summary>
     /// A command whose sole purpose is to relay its functionality to other objects by invoking delegates. The default return value for the CanExecute method is 'true'.
     /// </summary>
     public class RelayCommand<T> : ICommand
     {
-	    protected readonly Predicate<T> _canExecute;
+        private ILogger Logger { get; } = LogManager.GetCurrentClassLogger();
+
+        protected readonly Action<Exception> _exception;
+        protected readonly Predicate<T> _canExecute;
 	    [NotNull]
 	    protected readonly Action<T> _execute;
 
@@ -24,6 +28,12 @@ namespace NetLib.WPF.Data
 	        _execute = execute ?? throw new ArgumentNullException("execute");
             _canExecute = canExecute;
         }
+
+        public RelayCommand([NotNull] Action<T> execute, Action<Exception> exception, Predicate<T> canExecute = null)
+            : this(execute, canExecute)
+        {
+            _exception = exception;
+        }
         
         public event EventHandler CanExecuteChanged
         {
@@ -32,6 +42,7 @@ namespace NetLib.WPF.Data
                 if (_canExecute != null)
                     CommandManager.RequerySuggested += value;
             }
+
             remove
             {
                 if (_canExecute != null)
@@ -47,7 +58,17 @@ namespace NetLib.WPF.Data
 
         public virtual void Execute(object parameter)
         {
-            _execute((T)parameter);
+            try
+            {
+                _execute((T)parameter);
+            }
+            catch (Exception ex)
+            {
+                if (_exception == null)
+                    Logger.Error(ex);
+                else
+                    _exception(ex);
+            }
         }        
     }
 
@@ -56,6 +77,9 @@ namespace NetLib.WPF.Data
     /// </summary>
     public class RelayCommand : ICommand
     {
+        private ILogger Logger { get; } = LogManager.GetCurrentClassLogger();
+        
+        protected readonly Action<Exception> _exception;
         protected readonly Func<bool> _canExecute;
 	    [NotNull]
 	    protected readonly Action _execute;
@@ -70,6 +94,12 @@ namespace NetLib.WPF.Data
 	        _execute = execute ?? throw new ArgumentNullException("execute");
             _canExecute = canExecute;
         }       
+	    
+        public RelayCommand([NotNull] Action execute, Action<Exception> exception, Func<bool> canExecute = null)
+            : this(execute, canExecute)
+        {
+            _exception = exception;
+        }
 
         public event EventHandler CanExecuteChanged
         {
@@ -78,6 +108,7 @@ namespace NetLib.WPF.Data
                 if (_canExecute != null)
                     CommandManager.RequerySuggested += value;
             }
+
             remove
             {
                 if (_canExecute != null)
@@ -93,7 +124,17 @@ namespace NetLib.WPF.Data
 
         public virtual void Execute(object parameter)
         {
-            _execute();
+            try
+            {
+                _execute();
+            }
+            catch (Exception ex)
+            {
+                if (_exception == null)
+                    Logger.Error(ex);
+                else
+                    _exception(ex);
+            }
         }        
     }
 }
