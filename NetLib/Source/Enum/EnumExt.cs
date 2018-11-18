@@ -1,11 +1,11 @@
-﻿using JetBrains.Annotations;
-using NetLib.WPF.Converters;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-
-namespace NetLib
+﻿namespace NetLib
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using JetBrains.Annotations;
+    using NetLib.WPF.Converters;
+
     public static class EnumExt
     {
         /// <summary>

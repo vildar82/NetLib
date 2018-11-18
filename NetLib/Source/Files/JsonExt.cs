@@ -1,9 +1,9 @@
-﻿using JetBrains.Annotations;
-using Newtonsoft.Json;
-using System.IO;
-
-namespace NetLib
+﻿namespace NetLib
 {
+    using System.IO;
+    using JetBrains.Annotations;
+    using Newtonsoft.Json;
+
     [PublicAPI]
     public static class JsonExt
     {

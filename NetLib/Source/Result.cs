@@ -1,8 +1,8 @@
-﻿using JetBrains.Annotations;
-using System;
-
-namespace NetLib
+﻿namespace NetLib
 {
+    using System;
+    using JetBrains.Annotations;
+
     [PublicAPI]
     public static class ResultExtensions
     {
@@ -66,7 +66,9 @@ namespace NetLib
     public class Result
     {
         public string Error { get; private set; }
+        
         public bool Failure => !Success;
+        
         public bool Success { get; private set; }
 
         protected Result(bool success, string error)

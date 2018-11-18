@@ -1,8 +1,8 @@
-﻿using System;
-using JetBrains.Annotations;
-
-namespace NetLib
+﻿namespace NetLib
 {
+    using System;
+    using JetBrains.Annotations;
+
     [PublicAPI]
     public static class DoubleExt
     {
