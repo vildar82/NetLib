@@ -49,7 +49,7 @@
         [NotNull]
         public ReactiveCommand<Unit, Unit> CreateCommand(Action execute, IObservable<bool> canExecute = null)
         {
-             if (BaseVm != null) return BaseVm.CreateCommand(execute, canExecute);
+            if (BaseVm != null) return BaseVm.CreateCommand(execute, canExecute);
             var command = ReactiveCommand.Create(execute, canExecute, new DispatcherScheduler(Dispatcher.CurrentDispatcher));
             command.ThrownExceptions.Subscribe(CommandException);
             return command;
@@ -58,7 +58,7 @@
         [NotNull]
         public ReactiveCommand<T, Unit> CreateCommand<T>(Action<T> execute, IObservable<bool> canExecute = null)
         {
-            if (BaseVm != null) return BaseVm.CreateCommand(execute, canExecute);
+            if (BaseVm != null) return BaseVm.CreateCommand<T>(execute, canExecute);
             var command = ReactiveCommand.Create(execute, canExecute, new DispatcherScheduler(Dispatcher.CurrentDispatcher));
             command.ThrownExceptions.Subscribe(CommandException);
             return command;

@@ -395,7 +395,7 @@
     <PackageReference Include="AttachedCommandBehavior" Version="2.0.*" />
     <PackageReference Include="Enums.NET" Version="2.3.2" />
     <PackageReference Include="EPPlus" Version="4.5.2.1" />
-    <PackageReference Include="FluentValidation" Version="8.0.100" />
+    <PackageReference Include="FluentValidation" Version="8.0.101" />
     <PackageReference Include="FontAwesome.WPF" Version="4.7.0.9" />
     <PackageReference Include="gong-wpf-dragdrop">
       <Version>1.1.0</Version>
@@ -408,9 +408,9 @@
       <Version>4.5.11</Version>
     </PackageReference>
     <PackageReference Include="Polly" Version="6.1.1" />
-    <PackageReference Include="reactiveui" Version="9.2.2" />
-    <PackageReference Include="ReactiveUI.Events.WPF" Version="9.2.2" />
-    <PackageReference Include="ReactiveUI.WPF" Version="9.2.2" />
+    <PackageReference Include="reactiveui" Version="9.3.5" />
+    <PackageReference Include="ReactiveUI.Events.WPF" Version="9.3.5" />
+    <PackageReference Include="ReactiveUI.WPF" Version="9.3.5" />
     <PackageReference Include="System.Reactive" Version="4.1.2" />
     <PackageReference Include="System.Reactive.Core" Version="4.1.2" />
     <PackageReference Include="System.Reactive.Interfaces" Version="4.1.2" />
@@ -422,7 +422,7 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="WindowsAPICodePack-Shell" Version="1.1.1" />
-    <PackageReference Update="Fody" Version="3.3.0" />
+    <PackageReference Update="Fody" Version="3.3.1" />
     <PackageReference Update="PropertyChanged.Fody" Version="2.5.14" />
     <PackageReference Update="Nerdbank.GitVersioning" Version="2.2.33" />
   </ItemGroup>
