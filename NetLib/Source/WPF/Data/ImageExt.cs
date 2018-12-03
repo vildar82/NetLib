@@ -1,13 +1,12 @@
-﻿using System;
-using System.Drawing;
-using System.Drawing.Imaging;
-using System.IO;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using JetBrains.Annotations;
-
-namespace NetLib.WPF.Data
+﻿namespace NetLib.WPF.Data
 {
+    using System.Drawing;
+    using System.Drawing.Imaging;
+    using System.IO;
+    using System.Windows.Media;
+    using System.Windows.Media.Imaging;
+    using JetBrains.Annotations;
+
     [PublicAPI]
     public static class ImageExt
     {
@@ -18,7 +17,7 @@ namespace NetLib.WPF.Data
 
             using (var ms = new MemoryStream())
             {
-                image.Save(ms, image.RawFormat);
+                image.Save(ms, ImageFormat.Png);
                 ms.Seek(0, SeekOrigin.Begin);
                 var bitmapImage = new BitmapImage();
                 bitmapImage.BeginInit();

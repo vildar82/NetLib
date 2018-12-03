@@ -22,17 +22,17 @@
         void CommandException(Exception e);
 
         ReactiveCommand<Unit, Unit> CreateCommand(Action execute, [CanBeNull] IObservable<bool> canExecute = null);
-        
+
         ReactiveCommand<T, Unit> CreateCommand<T>(Action<T> execute, [CanBeNull] IObservable<bool> canExecute = null);
-        
+
         ReactiveCommand<Unit, Unit> CreateCommandAsync(Func<CancellationToken, Task> execute, [CanBeNull] IObservable<bool> canExecute = null);
-        
+
         ReactiveCommand<Unit, Unit> CreateCommandAsync(Func<Task> execute, [CanBeNull] IObservable<bool> canExecute = null);
-        
-        ReactiveCommand<TParam, Unit> CreateCommandAsync<TParam>(Func<TParam, Task> execute,[CanBeNull] IObservable<bool> canExecute = null);
-        
-        ReactiveCommand<TParam, Unit> CreateCommandAsync<TParam>(Func<TParam, CancellationToken, Task> execute,[CanBeNull] IObservable<bool> canExecute = null);
-        
+
+        ReactiveCommand<TParam, Unit> CreateCommandAsync<TParam>(Func<TParam, Task> execute, [CanBeNull] IObservable<bool> canExecute = null);
+
+        ReactiveCommand<TParam, Unit> CreateCommandAsync<TParam>(Func<TParam, CancellationToken, Task> execute, [CanBeNull] IObservable<bool> canExecute = null);
+
         void HideMe();
 
         IDisposable HideWindow();
