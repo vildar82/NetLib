@@ -114,12 +114,6 @@
             if (e is OperationCanceledException)
                 return;
             Logger.Error(e, "CommandException");
-            if (e.Message == "Недостаточно квот для обработки команды")
-            {
-                Debug.Fail("Недостаточно квот для обработки команды");
-                return;
-            }
-
             ShowMessage(e.Message);
         }
 
@@ -243,10 +237,11 @@
                 lastShowError = DateTime.Now;
                 return;
             }
-            
+
             try
             {
-                dialogCoordinator.ShowMessageAsync(this, title, msg);
+                var task = dialogCoordinator.ShowMessageAsync(this, title, msg);
+                task.ContinueWith(o => lastShowError = DateTime.Now);
                 return;
             }
             catch

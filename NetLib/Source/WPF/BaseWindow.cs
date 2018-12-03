@@ -40,7 +40,7 @@
         /// Закрытие окна по нажатия Enter или Space (пробел) - DialogResult true
         /// </summary>
         public bool CloseWindowByEnterOrSpace { get; set; }
-        
+
         /// <summary>
         /// Вызывать ли закрытие окна или нет. (Если сохранять в памяти и показывать снова)
         /// </summary>
@@ -67,11 +67,13 @@
         /// Дествие при нажатии OK/Space
         /// </summary>
         public Action OnEnterOrSpace { get; set; }
-        
+
+        [NotNull]
         protected static Logger Logger { get; } = LogManager.GetCurrentClassLogger();
 
         [Obsolete("Лучше не использовать. Не забудь присвоить Model и Model.Window.")]
-        public BaseWindow() : this(null)
+        public BaseWindow()
+            : this(null)
         {
         }
 
@@ -83,12 +85,15 @@
             {
                 Model.Window = this;
             }
+
             // Скрытие окна
             var hideBinding = new Binding("Hide");
             SetBinding(VisibilityHelper.IsHiddenProperty, hideBinding);
+
             // Регистрация окна в MahApps
             var dialogRegBinding = new Binding { Source = model };
             SetBinding(DialogParticipation.RegisterProperty, dialogRegBinding);
+
             // DialogResult
             var dialogResultBinding = new Binding("DialogResult");
             SetBinding(DialogCloser.DialogResultProperty, dialogResultBinding);
@@ -101,10 +106,10 @@
             {
                 WindowStartupLocation = WindowStartupLocation.CenterScreen;
             }
-            
+
             Dispatcher.UnhandledException += Dispatcher_UnhandledException;
+
             // Скрыть кнопки свернуть/минимизировать
-            //ShowMinButton = false;
             ShowMaxRestoreButton = false;
             SaveWindowPosition = true;
             ResizeMode = ResizeMode.CanResizeWithGrip;
@@ -176,6 +181,7 @@
                 buttonTheme.Click += ButtonTheme_Click;
                 AddWindowButton(buttonTheme);
             }
+
             base.OnInitialized(e);
             Model?.OnInitialize();
             AddStyleResouse(Resources);
@@ -217,6 +223,7 @@
                 {
                     Close();
                 }
+
                 e.Handled = true;
             }
             else if (CloseWindowByEnterOrSpace &&
@@ -231,6 +238,7 @@
                 {
                     Close();
                 }
+
                 e.Handled = true;
             }
         }
@@ -244,11 +252,24 @@
 
         private void Dispatcher_UnhandledException(object sender, [NotNull] DispatcherUnhandledExceptionEventArgs e)
         {
-            if (!(e.Exception is OperationCanceledException))
+            var showErr = true;
+            switch (e.Exception)
+            {
+                case OperationCanceledException _:
+                    showErr = false;
+                    break;
+                case Win32Exception win32: // Недостаточно квот для обработки команды
+                    Logger.Info(win32);
+                    showErr = false;
+                    break;
+            }
+
+            if (showErr)
             {
                 Logger.Fatal(e.Exception, "UnhandledException");
                 Model?.ShowMessage(e.Exception.Message);
             }
+
             e.Handled = true;
         }
     }
