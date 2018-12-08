@@ -19,6 +19,7 @@
             {
                 return value;
             }
+
             return value.Substring(0, maxLength) + "...";
         }
 
@@ -180,6 +181,7 @@
             return date.ToString("MM.dd.yyyy HH.mm.ss");
         }
 
+        [NotNull]
         public static IEnumerable<string> Split([NotNull] this string value, int desiredLength)
         {
             var characters = StringInfo.GetTextElementEnumerator(value);
