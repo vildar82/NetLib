@@ -31,6 +31,7 @@
         protected override void OnInitialized(EventArgs e)
         {
             base.OnInitialized(e);
+
             // При изменении темы
             if (applyTheme)
             {

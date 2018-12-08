@@ -16,18 +16,22 @@ namespace NetLib.WPF
     public static class StyleSettings
     {
         private static Logger Logger { get; } = LogManager.GetCurrentClassLogger();
+
         internal static Accent accent;
         private static AppTheme theme;
-        //private static readonly WindowsThemes windowsThemes;
         private static ApplicationThemes applicationTheme;
         private static readonly string applicationName;
+
+        public static event EventHandler Change;
 
         static StyleSettings()
         {
             applicationName = GetAppName();
             LoadThemesAndColors();
             var windowsThemes = LoadWindowsThemes();
-            if (windowsThemes.Applications == null) windowsThemes.Applications = new List<ApplicationThemes>();
+            if (windowsThemes.Applications == null)
+                windowsThemes.Applications = new List<ApplicationThemes>();
+
             // перенос старой настройки тем автакада в настройки приложения
             if (applicationName.EqualsIgnoreCase("acad") &&
                 !windowsThemes.Applications.Any(a => a.Name.EqualsIgnoreCase("acad")))
@@ -35,15 +39,14 @@ namespace NetLib.WPF
                 applicationTheme = new ApplicationThemes
                 {
                     Name = "acad",
-#pragma warning disable 612
                     Accent = windowsThemes.Accent ?? "Blue",
                     Theme = windowsThemes.Theme ?? "BaseLight",
                     Windows = windowsThemes.Windows
-#pragma warning restore 612
                 };
                 windowsThemes.Applications.Add(applicationTheme);
                 Save(GetWindowsThemesFile(), windowsThemes);
             }
+
             applicationTheme = FindApplication(windowsThemes, applicationName);
             if (applicationTheme == null)
             {
@@ -55,6 +58,7 @@ namespace NetLib.WPF
                 };
                 Save(GetWindowsThemesFile(), windowsThemes);
             }
+
             accent = GetAccent(applicationTheme?.Accent ?? "Blue");
             theme = GetTheme(applicationTheme?.Theme ?? "BaseLight");
         }
@@ -75,10 +79,9 @@ namespace NetLib.WPF
             {
                 Logger.Error(ex);
             }
+
             return "default";
         }
-
-        public static event EventHandler Change;
 
         public static void ApplyWindowTheme([NotNull] BaseWindow window)
         {
@@ -108,6 +111,7 @@ namespace NetLib.WPF
                     };
                     windowsThemes.Applications.Add(applicationTheme);
                 }
+
                 if (isOnlyThisWindow && window != null)
                 {
                     var windowTheme = FindWindowTheme(window);
@@ -117,6 +121,7 @@ namespace NetLib.WPF
                         applicationTheme.Windows.Add(windowTheme);
                         AddApplication(windowsThemes, applicationTheme);
                     }
+
                     windowTheme.Theme = wTheme.Name;
                     windowTheme.Accent = wAccent.Name;
                 }
@@ -127,12 +132,14 @@ namespace NetLib.WPF
                     {
                         applicationTheme.Windows.Remove(windowTheme);
                     }
+
                     accent = wAccent;
                     theme = wTheme;
                     applicationTheme.Accent = accent.Name;
                     applicationTheme.Theme = theme.Name;
                     Change?.Invoke(null, EventArgs.Empty);
                 }
+
                 var file = GetWindowsThemesFile();
                 Save(file, windowsThemes);
             }
@@ -187,20 +194,23 @@ namespace NetLib.WPF
                 wTheme = theme;
                 wAccent = accent;
             }
+
             return new Tuple<AppTheme, Accent, bool>(wTheme, wAccent, findWindowTheme);
         }
 
         [CanBeNull]
         private static WindowTheme FindWindowTheme([CanBeNull] string wName)
         {
-            if (wName == null) return null;
+            if (wName == null)
+                return null;
             return applicationTheme?.Windows?.FirstOrDefault(f => f.Window.Equals(wName));
         }
 
         [CanBeNull]
         private static WindowTheme FindWindowTheme([CanBeNull] BaseWindow window)
         {
-            if (window == null) return null;
+            if (window == null)
+                return null;
             var wName = GetWindowName(window);
             return applicationTheme?.Windows?.FirstOrDefault(f => f.Window.Equals(wName));
         }
@@ -251,6 +261,7 @@ namespace NetLib.WPF
             {
                 Logger.Error(ex);
             }
+
             return new WindowsThemes();
         }
 

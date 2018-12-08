@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Globalization;
     using System.Linq;
     using System.Text.RegularExpressions;
     using JetBrains.Annotations;
@@ -177,6 +178,25 @@
         public static string ToFileName(this DateTime date)
         {
             return date.ToString("MM.dd.yyyy HH.mm.ss");
+        }
+
+        public static IEnumerable<string> Split([NotNull] this string value, int desiredLength)
+        {
+            var characters = StringInfo.GetTextElementEnumerator(value);
+            while (characters.MoveNext())
+                yield return string.Concat(Take(characters, desiredLength));
+        }
+
+        [NotNull]
+        private static IEnumerable<string> Take(TextElementEnumerator enumerator, int count)
+        {
+            for (int i = 0; i < count; ++i)
+            {
+                yield return (string)enumerator.Current;
+
+                if (!enumerator.MoveNext())
+                    yield break;
+            }
         }
     }
 }
