@@ -1,6 +1,7 @@
 ﻿namespace NetLib
 {
     using System;
+    using System.Collections;
     using System.Collections.Generic;
     using System.Globalization;
     using System.Linq;
@@ -181,24 +182,20 @@
             return date.ToString("MM.dd.yyyy HH.mm.ss");
         }
 
-        [NotNull]
-        public static IEnumerable<string> Split([NotNull] this string value, int desiredLength)
+        public static IEnumerable<string> Split(this string value, int desiredLength)
         {
             var characters = StringInfo.GetTextElementEnumerator(value);
-            while (characters.MoveNext())
-                yield return string.Concat(Take(characters, desiredLength));
+            do
+            {
+                yield return string.Concat(characters.AsEnumerable<string>().Take(desiredLength));
+            }
+            while (characters.MoveNext());
         }
 
-        [NotNull]
-        private static IEnumerable<string> Take(TextElementEnumerator enumerator, int count)
+        public static IEnumerable<T> AsEnumerable<T>([NotNull] this IEnumerator enumerator)
         {
-            for (int i = 0; i < count; ++i)
-            {
-                yield return (string)enumerator.Current;
-
-                if (!enumerator.MoveNext())
-                    yield break;
-            }
+            while (enumerator.MoveNext())
+                yield return (T)enumerator.Current;
         }
     }
 }
