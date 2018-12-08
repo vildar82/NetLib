@@ -185,11 +185,13 @@
         public static IEnumerable<string> Split(this string value, int desiredLength)
         {
             var characters = StringInfo.GetTextElementEnumerator(value);
+            string v;
             do
             {
-                yield return string.Concat(characters.AsEnumerable<string>().Take(desiredLength));
+                v = string.Concat(characters.AsEnumerable<string>().Take(desiredLength));
+                yield return v;
             }
-            while (characters.MoveNext());
+            while (!string.IsNullOrEmpty(v));
         }
 
         public static IEnumerable<T> AsEnumerable<T>([NotNull] this IEnumerator enumerator)
