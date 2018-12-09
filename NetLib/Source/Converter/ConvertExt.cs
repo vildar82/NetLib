@@ -28,6 +28,7 @@ namespace NetLib
                 case null: return default;
                 case T vt: return vt;
             }
+
             var typeT = typeof(T);
             if (value is string s)
             {
@@ -38,12 +39,14 @@ namespace NetLib
                     value = s.ToDouble();
                     return (T)value;
                 }
+
                 if (typeT == typeof(int))
                 {
                     value = int.Parse(s);
                     return (T)value;
                 }
             }
+
             // Из строки в число - разделитель точка или запятая
             // Округление числа до 4 знаков
             if (value is double && typeT == typeof(double))
@@ -51,17 +54,17 @@ namespace NetLib
                 value = ((double)value).Round();
                 return (T)value;
             }
+
             if (typeT.IsEnum)
             {
-                // ReSharper disable once PossibleInvalidCastException
                 return (T)value;
             }
+
             if (typeT == typeof(bool))
             {
                 switch (value)
                 {
                     case bool _:
-                        // ReSharper disable once PossibleInvalidCastException
                         return (T)value;
 
                     case int valI:
@@ -77,6 +80,7 @@ namespace NetLib
                         break;
                 }
             }
+
             return (T)Convert.ChangeType(value, typeof(T));
         }
 
