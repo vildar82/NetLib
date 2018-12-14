@@ -34,7 +34,7 @@
         {
             _exception = exception;
         }
-        
+
         public event EventHandler CanExecuteChanged
         {
             add
@@ -69,7 +69,7 @@
                 else
                     _exception(ex);
             }
-        }        
+        }
     }
 
     /// <summary>
@@ -78,7 +78,7 @@
     public class RelayCommand : ICommand
     {
         private ILogger Logger { get; } = LogManager.GetCurrentClassLogger();
-        
+
         protected readonly Action<Exception> _exception;
         protected readonly Func<bool> _canExecute;
 	    [NotNull]
@@ -93,8 +93,8 @@
         {
 	        _execute = execute ?? throw new ArgumentNullException("execute");
             _canExecute = canExecute;
-        }       
-	    
+        }
+
         public RelayCommand([NotNull] Action execute, Action<Exception> exception, Func<bool> canExecute = null)
             : this(execute, canExecute)
         {
@@ -135,6 +135,6 @@
                 else
                     _exception(ex);
             }
-        }        
+        }
     }
 }
