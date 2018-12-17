@@ -112,7 +112,6 @@
             // Скрыть кнопки свернуть/минимизировать
             ShowMaxRestoreButton = false;
             SaveWindowPosition = true;
-            IsWindowDraggable = true;
             ResizeMode = ResizeMode.CanResizeWithGrip;
             PreviewKeyDown += BaseWindow_PreviewKeyDown;
             MouseDown += BaseWindow_MouseDown;
