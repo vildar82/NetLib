@@ -13,6 +13,27 @@
     {
         private static readonly Random random = new Random();
 
+        /// <summary>
+        /// N-ное вхождение символа в строке.
+        /// </summary>
+        /// <param name="s">Строка</param>
+        /// <param name="t">Искомый символ</param>
+        /// <param name="n">номер вхождения с 1</param>
+        /// <returns></returns>
+        public static int GetNthIndex(this string s, char t, int n)
+        {
+            var count = 0;
+            for (var i = 0; i < s.Length; i++)
+            {
+                if (s[i] != t) continue;
+                count++;
+                if (count == n)
+                    return i;
+            }
+
+            return -1;
+        }
+
         public static string Truncate(this string value, int maxLength)
         {
             if (string.IsNullOrEmpty(value)) return value;
@@ -115,6 +136,7 @@
                     return Result.Ok(v);
                 }
             }
+
             return Result.Fail<int>($"Не определено целое число из строки - {input}");
         }
 
