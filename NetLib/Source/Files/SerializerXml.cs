@@ -22,14 +22,16 @@ namespace NetLib
         /// <typeparam name="T">Тип считываемого объекта></typeparam>
         /// <param name="file">Файл xml</param>
         /// <returns>Объект T или null</returns>
-        public static T Load<T>(string file) where T : class, new()
+        public static T Load<T>(string file)
+            where T : class, new()
         {
             var ser = new SerializerXml(file);
             var res = ser.DeserializeXmlFile<T>();
             return res;
         }
 
-        public static T Load<T>(string file, [NotNull] params Type[] types) where T : class, new()
+        public static T Load<T>(string file, [NotNull] params Type[] types)
+            where T : class, new()
         {
             var ser = new SerializerXml(file);
             var res = ser.DeserializeXmlFile<T>(types);

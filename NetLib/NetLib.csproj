@@ -422,7 +422,7 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="WindowsAPICodePack-Shell" Version="1.1.1" />
-    <PackageReference Update="Fody" Version="3.3.3" />
+    <PackageReference Update="Fody" Version="3.3.4" />
     <PackageReference Update="PropertyChanged.Fody" Version="2.6.0" />
     <PackageReference Update="Nerdbank.GitVersioning" Version="2.3.38" />
   </ItemGroup>
