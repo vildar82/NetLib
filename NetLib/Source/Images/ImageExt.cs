@@ -59,7 +59,7 @@
             return destImage;
         }
 
-        public static BitmapFrame ResizedImage(ImageSource source, int width, int height, int margin)
+        public static BitmapFrame ResizedImage(this ImageSource source, int width, int height, int margin)
         {
             var rect = new Rect(margin, margin, width - margin * 2, height - margin * 2);
             var group = new DrawingGroup();
