@@ -10,6 +10,8 @@ using NLog;
 
 namespace NetLib.IO
 {
+    using System.Text.RegularExpressions;
+
     [PublicAPI]
     public static class Path
     {
@@ -239,6 +241,13 @@ namespace NetLib.IO
             {
                 //
             }
+        }
+
+        public static string GetValidFileName(string fileName, string replaceIllegalChar = "")
+        {
+            var regexSearch = new string(System.IO.Path.GetInvalidFileNameChars()) + new string(System.IO.Path.GetInvalidPathChars());
+            var r = new Regex($"[{Regex.Escape(regexSearch)}]");
+            return r.Replace(fileName, replaceIllegalChar);
         }
     }
 }
