@@ -42,6 +42,11 @@
         public bool CloseWindowByEnterOrSpace { get; set; }
 
         /// <summary>
+        /// Не закрывать диалог по Esc
+        /// </summary>
+        public bool UncloseDialogByEsc { get; set; }
+
+        /// <summary>
         /// Вызывать ли закрытие окна или нет. (Если сохранять в памяти и показывать снова)
         /// </summary>
         public bool IsUnclosing { get; set; }
@@ -216,6 +221,12 @@
         {
             if (e.Key == Key.Escape)
             {
+                if (UncloseDialogByEsc)
+                {
+                    e.Handled = true;
+                    return;
+                }
+
                 if (isDialog)
                 {
                     DialogResult = false;

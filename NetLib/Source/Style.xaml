@@ -93,13 +93,13 @@
             <Setter.Value>
                 <StackPanel Orientation="Horizontal">
                     <Grid
-                        Visibility="{Binding 
+                        Visibility="{Binding
                   RelativeSource={RelativeSource AncestorType=ToggleButton}, Path=IsChecked,
                   Converter={converters:NegateBoolToCollapseVisibilityConverter}}">
                         <ContentPresenter Content="{StaticResource iconLock}" />
                     </Grid>
                     <Grid
-                        Visibility="{Binding 
+                        Visibility="{Binding
                   RelativeSource={RelativeSource AncestorType=ToggleButton}, Path=IsChecked,
                   Converter={converters:BooleanToCollapseVisibilityConverter}}">
                         <ContentPresenter Content="{StaticResource iconUnlock}" />
