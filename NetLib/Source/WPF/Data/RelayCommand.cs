@@ -64,10 +64,8 @@
             }
             catch (Exception ex)
             {
-                if (_exception == null)
-                    Logger.Error(ex);
-                else
-                    _exception(ex);
+                Logger?.Error(ex);
+                _exception?.Invoke(ex);
             }
         }
     }
@@ -130,10 +128,8 @@
             }
             catch (Exception ex)
             {
-                if (_exception == null)
-                    Logger.Error(ex);
-                else
-                    _exception(ex);
+                Logger?.Error(ex);
+                _exception?.Invoke(ex);
             }
         }
     }

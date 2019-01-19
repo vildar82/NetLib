@@ -1,10 +1,9 @@
-﻿using System;
-using System.ComponentModel;
-using System.Threading.Tasks;
-
-namespace NetLib.WPF.Data
+﻿namespace NetLib.WPF.Data
 {
-    
+    using System;
+    using System.ComponentModel;
+    using System.Threading.Tasks;
+
     public class RelayCommandAsync<T> : RelayCommand<T>
 	{
 		private bool isExecuting;
@@ -16,7 +15,7 @@ namespace NetLib.WPF.Data
 		public RelayCommandAsync(Action<T> execute, Predicate<T> canExecute = null)
 			: base(execute, canExecute)
 		{
-		}		
+		}
 
 		public override bool CanExecute(object parameter)
 		{
@@ -32,10 +31,10 @@ namespace NetLib.WPF.Data
 
 				var task = Task.Factory.StartNew(() =>
 				{
-					base.Execute(parameter);
-				});
+                    base.Execute(parameter);
+                });
 				task.ContinueWith(t =>
-				{
+                {
 					OnRunWorkerCompleted(EventArgs.Empty);
 				}, TaskScheduler.FromCurrentSynchronizationContext());
 			}
