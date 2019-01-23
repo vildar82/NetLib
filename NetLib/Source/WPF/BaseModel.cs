@@ -1,6 +1,7 @@
 ﻿namespace NetLib.WPF
 {
     using System;
+    using System.ComponentModel;
     using System.Reactive;
     using System.Reactive.Concurrency;
     using System.Runtime.CompilerServices;
@@ -40,10 +41,12 @@
 
         [XmlIgnore]
         [JsonIgnore]
+        [Browsable(false)]
         public UserControl UserControl { get; set; }
 
         [XmlIgnore]
         [JsonIgnore]
+        [Browsable(false)]
         public IBaseViewModel BaseVm { get; set; }
 
         [NotNull]
