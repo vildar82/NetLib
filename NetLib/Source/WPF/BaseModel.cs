@@ -54,7 +54,7 @@
             command.ThrownExceptions.Subscribe(CommandException);
             return command;
         }
-        
+
         [NotNull]
         public ReactiveCommand<T, Unit> CreateCommand<T>(Action<T> execute, IObservable<bool> canExecute = null)
         {
@@ -90,11 +90,19 @@
             command.ThrownExceptions.Subscribe(CommandException);
             return command;
         }
-        
+
         [NotNull]
         public ReactiveCommand<TParam, Unit> CreateCommandAsync<TParam>(Func<TParam, CancellationToken, Task> execute, [CanBeNull] IObservable<bool> canExecute = null)
         {
             if (BaseVm != null) return BaseVm.CreateCommandAsync(execute, canExecute);
+            var command = ReactiveCommand.CreateFromTask(execute, canExecute, new DispatcherScheduler(Dispatcher.CurrentDispatcher));
+            command.ThrownExceptions.Subscribe(CommandException);
+            return command;
+        }
+
+        [NotNull]
+        public ReactiveCommand<TParam, TResult> CreateCommandAsync<TParam, TResult>(Func<TParam, CancellationToken, Task<TResult>> execute, IObservable<bool> canExecute = null)
+        {
             var command = ReactiveCommand.CreateFromTask(execute, canExecute, new DispatcherScheduler(Dispatcher.CurrentDispatcher));
             command.ThrownExceptions.Subscribe(CommandException);
             return command;

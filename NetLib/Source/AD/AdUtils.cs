@@ -1,15 +1,12 @@
-﻿// Khisyametdinovvt Хисяметдинов Вильдар Тямильевич
-// 2017 04 12 20:36
-
-using System;
-using System.Collections.Generic;
-using System.DirectoryServices;
-using System.DirectoryServices.AccountManagement;
-using System.Linq;
-using JetBrains.Annotations;
-
-namespace NetLib.AD
+﻿namespace NetLib.AD
 {
+    using System;
+    using System.Collections.Generic;
+    using System.DirectoryServices;
+    using System.DirectoryServices.AccountManagement;
+    using System.Linq;
+    using JetBrains.Annotations;
+
     /// <summary>
     ///     Работа с Active Directory - получение групп пользователя
     /// </summary>

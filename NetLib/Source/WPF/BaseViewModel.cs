@@ -48,18 +48,18 @@
         public bool? DialogResult { get; set; }
 
         public List<string> Errors { get; set; }
-        
+
         public bool HasErrors => validationResult?.Errors?.Count > 0;
-        
+
         [Obsolete("Use Hide()")]
         public bool Hide { get; set; }
-        
+
         public bool IsValidated { get; private set; }
-        
+
         public IBaseViewModel Parent { get; set; }
-        
+
         public BaseWindow Window { get; set; }
-        
+
         protected static Logger Logger { get; } = LogManager.GetCurrentClassLogger();
 
         static BaseViewModel()
@@ -88,7 +88,7 @@
         public BaseViewModel() : this(null)
         {
         }
-        
+
         public void AddWindowButton(string toolTip, PackIconBase icon, Action onClick)
         {
             if (Window == null) return;
@@ -140,7 +140,7 @@
             command.ThrownExceptions.Subscribe(CommandException);
             return command;
         }
-        
+
         [NotNull]
         public ReactiveCommand<TParam, Unit> CreateCommandAsync<TParam>(Func<TParam, CancellationToken, Task> execute, IObservable<bool> canExecute = null)
         {
@@ -148,7 +148,7 @@
             command.ThrownExceptions.Subscribe(CommandException);
             return command;
         }
-        
+
         [NotNull]
         public ReactiveCommand<TParam, TResult> CreateCommandAsync<TParam, TResult>(Func<TParam, CancellationToken, Task<TResult>> execute, IObservable<bool> canExecute = null)
         {
@@ -281,7 +281,7 @@
         /// <param name="negateBtn">Надпись для кнопки отрицательного ответа</param>
         /// <param name="auxiliaryBtn">Дополнительноая кнопка (возвращается null)</param>
         /// <returns></returns>
-        public async Task<bool?> ShowMessage(string title, string msg, string affirmativeBtn, string negateBtn, 
+        public async Task<bool?> ShowMessage(string title, string msg, string affirmativeBtn, string negateBtn,
             string auxiliaryBtn = null)
         {
             if (auxiliaryBtn == null)
