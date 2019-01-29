@@ -1,5 +1,6 @@
 ﻿namespace NetLib.Images
 {
+    using System;
     using System.Drawing;
     using System.Drawing.Drawing2D;
     using System.Drawing.Imaging;
@@ -74,6 +75,16 @@
                 PixelFormats.Default); // Default pixel format
             resizedImage.Render(drawingVisual);
             return BitmapFrame.Create(resizedImage);
+        }
+
+        public static BitmapImage LoadImageFromFile(string fileImage)
+        {
+            var bmp = new BitmapImage();
+            bmp.BeginInit();
+            bmp.CacheOption = BitmapCacheOption.OnLoad;
+            bmp.UriSource = new Uri(fileImage);
+            bmp.EndInit();
+            return bmp;
         }
     }
 }
