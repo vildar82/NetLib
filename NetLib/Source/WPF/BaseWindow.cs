@@ -125,9 +125,6 @@
                 isDialog = (bool)_showingAsDialogField.GetValue(this);
                 OnActivated();
             };
-
-            // Добавить ресурс после загрузки окна если его еще нет.
-            Loaded += (o,e) => AddStyleResouse(Resources);
         }
 
         public virtual void OnActivated()
