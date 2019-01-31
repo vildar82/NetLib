@@ -7,10 +7,10 @@ namespace NetLib.WPF.Converters
 
     /// <summary>
     /// При навыедении мышки показывать скролбар
-    /// ScrollViewer.VerticalScrollBarVisibility="{Binding IsMouseOver, Converter={StaticResource MouseOverToScrollBarVisibility}}">
+    /// ScrollViewer.VerticalScrollBarVisibility="{Binding IsMouseOver, RelativeSource={RelativeSource Self}, Converter={StaticResource MouseOverToScrollBarVisibility}}">
     /// </summary>
     [ValueConversion(typeof(bool), typeof(ScrollBarVisibility))]
-    sealed class MouseOverToScrollbarVisibility : IValueConverter
+    public class MouseOverToScrollbarVisibility : IValueConverter
     {
         private static MouseOverToScrollbarVisibility converter;
 
