@@ -12,6 +12,10 @@ namespace NetLib.WPF.Converters
     [ValueConversion(typeof(bool), typeof(ScrollBarVisibility))]
     sealed class MouseOverToScrollbarVisibility : IValueConverter
     {
+        private static MouseOverToScrollbarVisibility converter;
+
+        public static MouseOverToScrollbarVisibility Converter => converter ?? (converter = new MouseOverToScrollbarVisibility());
+
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             return ((bool)value) ? ScrollBarVisibility.Auto : ScrollBarVisibility.Hidden;
