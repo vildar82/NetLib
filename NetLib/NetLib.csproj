@@ -170,6 +170,7 @@
     </Compile>
     <Compile Include="Source\WPF\Converters\DataTypeConverter.cs" />
     <Compile Include="Source\WPF\Converters\IconPackImageConverter.cs" />
+    <Compile Include="Source\WPF\Converters\MouseOverToScrollbarVisibility.cs" />
     <Compile Include="Source\WPF\Converters\NotMatchCollapseConverter.cs" />
     <Compile Include="Source\WPF\Converters\NegateBoolToCollapseVisibilityConverter.cs" />
     <Compile Include="Source\WPF\Converters\Bytes.cs" />
