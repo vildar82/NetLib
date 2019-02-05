@@ -1,4 +1,4 @@
-﻿namespace NetLib.WPF.Converters
+namespace NetLib.WPF.Converters
 {
     using System;
     using System.Globalization;
@@ -8,12 +8,12 @@
 
     [PublicAPI]
     [ValueConversion(typeof(object), typeof(Visibility))]
-    public class NullCollapseVisibilityConverter : ConvertorBase
+    public class NullHiddenVisibilityConverter : ConvertorBase
     {
         [NotNull]
         public override object Convert([CanBeNull] object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return value == null ? Visibility.Collapsed : Visibility.Visible;
+            return value == null ? Visibility.Hidden : Visibility.Visible;
         }
     }
 }
