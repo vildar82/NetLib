@@ -1,8 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace NetLib.Comparers
+﻿namespace NetLib.Comparers
 {
+    using System;
+    using System.Collections.Generic;
+
    // Сравнение чисел
    public class DoubleEqualityComparer : IEqualityComparer<double>
    {

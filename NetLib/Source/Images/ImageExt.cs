@@ -17,7 +17,7 @@
         {
             using (var ms = new MemoryStream())
             {
-                image.Save(ms, System.Drawing.Imaging.ImageFormat.Gif);
+                image.Save(ms, ImageFormat.Gif);
                 return ms.ToArray();
             }
         }
