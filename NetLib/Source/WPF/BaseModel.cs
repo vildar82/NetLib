@@ -115,15 +115,7 @@
         public ReactiveCommand<Unit, TResult> CreateCommandAsync<TResult>(Func<Task<TResult>> execute, IObservable<bool> canExecute = null)
         {
             var command = ReactiveCommand.CreateFromTask(execute, canExecute, new DispatcherScheduler(Dispatcher.CurrentDispatcher));
-            try
-            {
-                command.ThrownExceptions.Subscribe(CommandException);
-            }
-            catch (Exception ex)
-            {
-                Logger.Error(ex);
-            }
-
+            command.ThrownExceptions.Subscribe(CommandException);
             return command;
         }
 
