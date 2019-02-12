@@ -11,7 +11,7 @@ namespace NetLib.Extensions
         /// Execute's an async Task<T> method which has a void return value synchronously
         /// </summary>
         /// <param name="task">Task<T> method to execute</param>
-        public static void RunSync(Func<Task> task)
+        public static void RunSync(this Func<Task> task)
         {
             var oldContext = SynchronizationContext.Current;
             var synch = new ExclusiveSynchronizationContext();
@@ -43,7 +43,7 @@ namespace NetLib.Extensions
         /// <typeparam name="T">Return Type</typeparam>
         /// <param name="task">Task<T> method to execute</param>
         /// <returns></returns>
-        public static T RunSync<T>(Func<Task<T>> task)
+        public static T RunSync<T>(this Func<Task<T>> task)
         {
             var oldContext = SynchronizationContext.Current;
             var synch = new ExclusiveSynchronizationContext();
@@ -70,6 +70,7 @@ namespace NetLib.Extensions
             return ret;
         }
 
+        /// <inheritdoc />
         private class ExclusiveSynchronizationContext : SynchronizationContext
         {
             private bool done;
