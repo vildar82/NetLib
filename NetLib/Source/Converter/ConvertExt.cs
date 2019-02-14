@@ -49,9 +49,9 @@ namespace NetLib
 
             // Из строки в число - разделитель точка или запятая
             // Округление числа до 4 знаков
-            if (value is double && typeT == typeof(double))
+            if (value is double d && typeT == typeof(double))
             {
-                value = ((double)value).Round();
+                value = d.Round();
                 return (T)value;
             }
 
@@ -72,7 +72,9 @@ namespace NetLib
                         break;
 
                     case string valS:
-                        value = valS.EqualsAnyIgnoreCase("Да", "Yes", "1", "+");
+                        value = bool.TryParse(valS, out var v)
+                            ? v
+                            : valS.EqualsAnyIgnoreCase("Да", "Yes", "1", "+", "true");
                         break;
 
                     case double valD:

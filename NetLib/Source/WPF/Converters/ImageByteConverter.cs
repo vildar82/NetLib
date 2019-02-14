@@ -1,11 +1,11 @@
-﻿using System;
-using System.Globalization;
-using System.Windows.Data;
-using System.Windows.Media;
-using NetLib.WPF.Data;
-
-namespace NetLib.WPF.Converters
+﻿namespace NetLib.WPF.Converters
 {
+    using System;
+    using System.Globalization;
+    using System.Windows.Data;
+    using System.Windows.Media;
+    using Data;
+
     [ValueConversion(typeof(byte[]), typeof(ImageSource))]
     public class ImageByteConverter : IValueConverter
     {
