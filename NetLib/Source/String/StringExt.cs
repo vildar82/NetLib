@@ -11,8 +11,6 @@
     [PublicAPI]
     public static class StringExt
     {
-        private static readonly Random random = new Random();
-
         /// <summary>
         /// N-ное вхождение символа в строке.
         /// </summary>
@@ -189,7 +187,7 @@
         {
             const string chars = " qwerty uiop as df ghj klz xcv bnm AB CD EFG HIJK LMN OP QRS TUVWX YZ0123 456789";
             return new string(Enumerable.Repeat(chars, length)
-                .Select(s => s[random.Next(s.Length)]).ToArray());
+                .Select(s => s[General.random.Next(s.Length)]).ToArray());
         }
 
         [NotNull]

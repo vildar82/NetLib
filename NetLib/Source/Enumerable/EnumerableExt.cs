@@ -20,7 +20,7 @@
         {
             return items.GroupBy(nameSelector).Where(w => w?.Skip(1).Any() == true);
         }
-        
+
         /// <summary>
         /// Список совпадающих значений во всех списках
         /// </summary>
@@ -78,7 +78,7 @@
         }
 
         [NotNull]
-        public static IEnumerable<TRes> SelectTry<TSource, TRes>([NotNull] this IEnumerable<TSource> list, 
+        public static IEnumerable<TRes> SelectTry<TSource, TRes>([NotNull] this IEnumerable<TSource> list,
             [NotNull] Func<TSource, TRes> selector, [CanBeNull] Action<Exception> onException = null)
         {
             foreach (var item in list)
@@ -132,6 +132,19 @@
         public static IEnumerable<T> Yield<T>(this T item)
         {
             yield return item;
+        }
+
+        public static void Shuffle<T>(this IList<T> list)
+        {
+            var n = list.Count;
+            while (n > 1)
+            {
+                n--;
+                var k = General.random.Next(n + 1);
+                var value = list[k];
+                list[k] = list[n];
+                list[n] = value;
+            }
         }
     }
 }
