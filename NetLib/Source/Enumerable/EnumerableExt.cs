@@ -134,7 +134,7 @@
             yield return item;
         }
 
-        public static void Shuffle<T>(this IList<T> list)
+        public static void Shuffle<T>(this List<T> list)
         {
             var n = list.Count;
             while (n > 1)
