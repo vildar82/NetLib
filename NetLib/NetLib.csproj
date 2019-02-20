@@ -21,12 +21,12 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\..\Autodesk\AutoCAD\Pik\Settings\Dll\</OutputPath>
+    <OutputPath>c:\Autodesk\AutoCAD\Pik\Settings\Dll\</OutputPath>
     <DefineConstants>TRACE;DEBUG;JETBRAINS_ANNOTATIONS</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <LangVersion>latest</LangVersion>
-    <PlatformTarget>AnyCPU</PlatformTarget>
+    <PlatformTarget>x64</PlatformTarget>
     <DocumentationFile>..\..\..\Autodesk\AutoCAD\Pik\Settings\Dll\NetLib.xml</DocumentationFile>
     <NoWarn>CS1591</NoWarn>
   </PropertyGroup>
@@ -40,7 +40,7 @@
     <DocumentationFile>bin\Release\NetLib.xml</DocumentationFile>
     <LangVersion>latest</LangVersion>
     <NoWarn>CS1591</NoWarn>
-    <PlatformTarget>AnyCPU</PlatformTarget>
+    <PlatformTarget>x64</PlatformTarget>
     <ShouldCreateLogs>True</ShouldCreateLogs>
     <AdvancedSettingsExpanded>False</AdvancedSettingsExpanded>
     <UpdateAssemblyVersion>True</UpdateAssemblyVersion>
