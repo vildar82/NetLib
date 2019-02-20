@@ -7,7 +7,7 @@
     <authors>Vildar</authors>
     <projectUrl>https://github.com/vildar82/NetLib</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>Net4.6.2 c# Library WPF + ReactiveUI</description>
+    <description>Net4.7.2 c# Library WPF + ReactiveUI</description>
     <copyright>Copyright 2018</copyright>
     <tags>C# Lib</tags>
     <dependencies>
