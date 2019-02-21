@@ -22,7 +22,6 @@
       <dependency id="JetBrains.Annotations" version="2018.3.0" />
       <dependency id="MahApps.Metro" version="1.6.5" />
       <dependency id="MahApps.Metro.IconPacks" version="2.3.0" />
-      <dependency id="Nerdbank.GitVersioning" version="2.3.105" />
       <dependency id="ncalc" version="1.3.8" />
       <dependency id="Newtonsoft.Json" version="12.0.1" />
       <dependency id="NLog" version="4.5.11" />
