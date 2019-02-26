@@ -274,6 +274,11 @@
                     Logger.Info(win32);
                     showErr = false;
                     break;
+                case System.Windows.Markup.XamlParseException xaml when xaml.Message.Contains("Autodesk.Internal.Windows.Badge"):
+
+                    // Много таких сообщений от Лилюева!
+                    showErr = false;
+                    break;
             }
 
             if (showErr)
