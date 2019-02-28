@@ -167,19 +167,21 @@
         /// Соединение списка объектов в одну строку, с разделителем.
         /// Строка из T.ToString()
         /// </summary>
+        /// <returns>Строка значений с разделителем. Пустая строка если array=null</returns>
         [NotNull]
-        public static string JoinToString<T>([NotNull] this IEnumerable<T> array, string delimeter = ", ")
+        public static string JoinToString<T>(this IEnumerable<T> array, string delimeter = ", ")
         {
-            return JoinToString(array, t => t.ToString(), delimeter);
+            return array == null ? string.Empty : JoinToString(array, t => t.ToString(), delimeter);
         }
 
         /// <summary>
         /// Объекдинение списка объектов в одну строку, с разделителем и методом получения строки из объекта.
         /// </summary>
+        /// <returns>Строка значений с разделителем. Пустая строка если array=null</returns>
         [NotNull]
-        public static string JoinToString<T>([NotNull] this IEnumerable<T> array, [NotNull] Func<T, string> getString, string delimeter = ", ")
+        public static string JoinToString<T>(this IEnumerable<T> array, [NotNull] Func<T, string> getString, string delimeter = ", ")
         {
-            return string.Join(delimeter, array.SelectNulless(getString));
+            return array == null ? string.Empty : string.Join(delimeter, array.SelectNulless(getString));
         }
 
         [NotNull]
