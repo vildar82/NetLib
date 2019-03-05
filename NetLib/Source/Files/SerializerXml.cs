@@ -1,11 +1,11 @@
-﻿using JetBrains.Annotations;
-using System;
-using System.IO;
-using System.Xml;
-using System.Xml.Serialization;
-
-namespace NetLib
+﻿namespace NetLib
 {
+    using System;
+    using System.IO;
+    using System.Xml;
+    using System.Xml.Serialization;
+    using JetBrains.Annotations;
+
     [PublicAPI]
     public class SerializerXml
     {

@@ -1,16 +1,15 @@
-﻿using JetBrains.Annotations;
-using System;
-using System.Drawing;
-using System.IO;
-using System.Threading.Tasks;
-using Microsoft.WindowsAPICodePack.Shell;
-using NetLib.Date;
-using NetLib.Monad;
-using NLog;
-
-namespace NetLib.IO
+﻿namespace NetLib.IO
 {
+    using System;
+    using System.Drawing;
+    using System.IO;
     using System.Text.RegularExpressions;
+    using System.Threading.Tasks;
+    using Date;
+    using JetBrains.Annotations;
+    using Microsoft.WindowsAPICodePack.Shell;
+    using NetLib.Monad;
+    using NLog;
 
     [PublicAPI]
     public static class Path
@@ -33,7 +32,6 @@ namespace NetLib.IO
             {
                 System.Diagnostics.Process.Start(path);
             }
-
         }
 
         public static bool IsFilePath([NotNull] this string path)
@@ -77,7 +75,7 @@ namespace NetLib.IO
 
         public static bool IsEqualsDateFile([NotNull] string file1, [NotNull] string file2)
         {
-            var f1Date =File.GetLastWriteTime(file1);
+            var f1Date = File.GetLastWriteTime(file1);
             var f2Date = File.GetLastWriteTime(file2);
             return f1Date.IsEquals(f2Date);
         }
@@ -132,16 +130,19 @@ namespace NetLib.IO
             {
                 Directory.CreateDirectory(dirPath.Replace(sourceDir, destDir));
             }
+
             foreach (var sourceFile in Directory.GetFiles(sourceDir, "*.*", SearchOption.AllDirectories))
             {
                 try
                 {
                     var destFile = sourceFile.Replace(sourceDir, destDir);
+
                     // Проверить, что копируемый файл новее
                     if (onlyNewest && File.Exists(destFile) && !IsNewestFile(destFile, sourceFile))
                     {
                         continue;
                     }
+
                     File.Copy(sourceFile, destFile, true);
                 }
                 catch (Exception ex)
@@ -160,6 +161,7 @@ namespace NetLib.IO
             {
                 file.Delete();
             }
+
             foreach (var d in di.GetDirectories())
             {
                 d.Delete(true);
@@ -187,7 +189,6 @@ namespace NetLib.IO
         /// <summary>
         /// Пользовательская папка настроек
         /// </summary>
-        /// <returns></returns>
         [NotNull]
         [PublicAPI]
         public static string GetUserPikFolder()
@@ -199,6 +200,7 @@ namespace NetLib.IO
             {
                 Directory.CreateDirectory(pikAppDataFolder);
             }
+
             return pikAppDataFolder;
         }
 

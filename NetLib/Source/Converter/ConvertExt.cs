@@ -34,13 +34,13 @@ namespace NetLib
             {
                 if (s.IsNullOrEmpty()) return default;
                 s = s.Trim().RemoveSpecChars();
-                if (typeT == typeof(double))
+                if (typeT == typeof(double) || typeT == typeof(double?))
                 {
                     value = s.ToDouble();
                     return (T)value;
                 }
 
-                if (typeT == typeof(int))
+                if (typeT == typeof(int) || typeT == typeof(int?))
                 {
                     value = int.Parse(s);
                     return (T)value;
@@ -49,7 +49,7 @@ namespace NetLib
 
             // Из строки в число - разделитель точка или запятая
             // Округление числа до 4 знаков
-            if (value is double d && typeT == typeof(double))
+            if (value is double d && (typeT == typeof(double) || typeT == typeof(double?)))
             {
                 value = d.Round();
                 return (T)value;
@@ -60,7 +60,7 @@ namespace NetLib
                 return (T)value;
             }
 
-            if (typeT == typeof(bool))
+            if (typeT == typeof(bool) || typeT == typeof(bool?))
             {
                 switch (value)
                 {
@@ -81,6 +81,9 @@ namespace NetLib
                         value = Math.Abs(valD - 1) < 0.0001;
                         break;
                 }
+
+                if (typeT == typeof(bool?))
+                    return default;
             }
 
             return (T)Convert.ChangeType(value, typeof(T));

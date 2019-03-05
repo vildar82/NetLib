@@ -40,7 +40,9 @@
                 return value;
             }
 
-            return value.Substring(0, maxLength) + "...";
+            if (maxLength > 3)
+                return value.Substring(0, maxLength - 3) + "...";
+            return value.Substring(0, maxLength);
         }
 
         public static bool HasCirilic(this string s)
