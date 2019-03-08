@@ -1,5 +1,5 @@
 # NetLib
-Library for C# net4.7.2 projects.
+Library for C# net4.7.1 projects.
 ReactiveUI base classes for Window with Mahapps Metro.
 
 [![NuGet version (NetLib)](https://img.shields.io/nuget/v/NetLib.svg?style=flat-square)](https://www.nuget.org/packages/NetLib/)
