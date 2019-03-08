@@ -1,16 +1,17 @@
-﻿using JetBrains.Annotations;
-using System;
-using System.IO;
-using NLog;
-
-namespace NetLib.Locks
+﻿namespace NetLib.Locks
 {
+    using System;
+    using System.IO;
+    using JetBrains.Annotations;
+    using NLog;
+
     [PublicAPI]
     public class FileLock : ILockItem
     {
         private static ILogger Log { get; } = LogManager.GetCurrentClassLogger();
         private readonly string file;
         private FileStream stream;
+
         /// <summary>
         /// Информация из файла блокировки
         /// </summary>
@@ -27,18 +28,20 @@ namespace NetLib.Locks
                 IsLockSuccess = true;
                 WriteLockInfo();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Log.Error(ex);
+
                 // Заблокировано
                 try
                 {
                     Info = file.Deserialize<LockInfo>();
                 }
-                catch(Exception ex2)
+                catch (Exception ex2)
                 {
                     Info = new LockInfo { Login = $"{ex2.Message} - {file}" };
                 }
+
                 IsLockSuccess = false;
             }
         }
