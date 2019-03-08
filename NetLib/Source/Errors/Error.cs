@@ -1,7 +1,7 @@
-﻿using System;
-
-namespace NetLib.Errors
+﻿namespace NetLib.Errors
 {
+    using System;
+
     /// <summary>
     /// Описание ошибки
     /// </summary>
