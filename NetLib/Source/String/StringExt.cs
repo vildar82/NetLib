@@ -138,7 +138,6 @@
         /// Есть ли в строке кирилические символы (русские буквы)
         /// </summary>
         /// <param name="input"></param>
-        /// <returns></returns>
         public static bool HasCyrilic([NotNull] this string input)
         {
             return Regex.IsMatch(input, @"\p{IsCyrillic}");
