@@ -119,7 +119,6 @@
         /// Например: "100 шт." = 100
         /// </summary>
         /// <param name="input"></param>
-        /// <returns></returns>
         [NotNull]
         public static Result<int> GetStartInteger([NotNull] this string input)
         {
