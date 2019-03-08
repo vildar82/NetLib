@@ -6,6 +6,7 @@ tag-prefix: '[vV]'
 major-version-bump-message: '\s?(breaking|major)'
 minor-version-bump-message: '\s?(feature|minor)'
 patch-version-bump-message: '\s?(fix|patch)'
+tag: ''
 branches: {}
 ignore:
   sha: []
