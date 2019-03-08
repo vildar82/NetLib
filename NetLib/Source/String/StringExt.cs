@@ -17,7 +17,6 @@
         /// <param name="s">Строка</param>
         /// <param name="t">Искомый символ</param>
         /// <param name="n">номер вхождения с 1</param>
-        /// <returns></returns>
         public static int GetNthIndex(this string s, char t, int n)
         {
             var count = 0;
@@ -52,7 +51,6 @@
         /// Удаление разделителей строк и др. \r\n?|\n
         /// </summary>
         /// <param name="input"></param>
-        /// <returns></returns>
         [NotNull]
         public static string ClearString([NotNull] this string input)
         {
