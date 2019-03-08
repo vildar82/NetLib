@@ -1,7 +1,7 @@
-﻿using System;
-
-namespace NetLib
+﻿namespace NetLib
 {
+    using System;
+
     public class ReactiveAttribute : Attribute
     {
     }
