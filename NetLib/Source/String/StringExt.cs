@@ -34,12 +34,10 @@
 
         public static string Truncate(this string value, int maxLength)
         {
-            if (string.IsNullOrEmpty(value)) return value;
-            if (value.Length <= maxLength)
-            {
+            if (string.IsNullOrEmpty(value))
                 return value;
-            }
-
+            if (value.Length <= maxLength)
+                return value;
             if (maxLength > 3)
                 return value.Substring(0, maxLength - 3) + "...";
             return value.Substring(0, maxLength);
@@ -58,7 +56,6 @@
         [NotNull]
         public static string ClearString([NotNull] this string input)
         {
-            //return Regex.Replace(input, @"\r\n?|\n", "");
             return input.Trim().Replace("\r\n", " ").Replace("\n", " ").Replace("\r", " ").Replace(Convert.ToChar(160), ' ');
         }
 
