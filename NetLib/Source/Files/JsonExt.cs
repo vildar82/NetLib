@@ -21,12 +21,12 @@
         [NotNull]
         public static string ToJson<T>(this T item)
         {
-            return JsonConvert.SerializeObject(item, Formatting.Indented);
+            return JsonConvert.SerializeObject(item);
         }
 
         public static void Serialize<T>(this T item, [NotNull] string file)
         {
-            var json = JsonConvert.SerializeObject(item, Formatting.Indented);
+            var json = JsonConvert.SerializeObject(item);
             WriteText(file, json);
         }
 
