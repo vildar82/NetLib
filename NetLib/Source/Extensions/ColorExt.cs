@@ -25,6 +25,11 @@ namespace NetLib.Extensions
                 (byte)(from.B * amountFrom + to.B * percent));
         }
 
+        /// <summary>
+        /// Смешивание цветов
+        /// </summary>
+        /// <param name="colors">Цветв и проценты</param>
+        /// <returns>Смешанный цвет</returns>
         public static Color Mix(List<(Color Color, int Percent)> colors)
         {
             var color = colors[0].Color;
