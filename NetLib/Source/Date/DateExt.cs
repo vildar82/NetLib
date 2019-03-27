@@ -1,7 +1,7 @@
-﻿using System;
-
-namespace NetLib.Date
+﻿namespace NetLib.Date
 {
+    using System;
+
     public static class DateExt
     {
         public static bool IsEquals(this DateTime date1, DateTime date2)
