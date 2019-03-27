@@ -6,7 +6,7 @@ assembly-informational-format: '{MajorMinorPatch}'
 tag-prefix: '[vV]'
 major-version-bump-message: '\s?(breaking|major)'
 minor-version-bump-message: '\s?(feature|minor)'
-patch-version-bump-message: '\s?(fix|patch)'
+patch-version-bump-message: '\s?(fix|patch|add)'
 branches: {}
 ignore:
   sha: []
