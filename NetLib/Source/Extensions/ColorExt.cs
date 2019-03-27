@@ -28,9 +28,9 @@ namespace NetLib.Extensions
         /// <summary>
         /// Смешивание цветов
         /// </summary>
-        /// <param name="colors">Цветв и проценты</param>
+        /// <param name="colors">Цветв и проценты. Проценты от 0 до 100%!</param>
         /// <returns>Смешанный цвет</returns>
-        public static Color Mix(List<(Color Color, int Percent)> colors)
+        public static Color Mix(this List<(Color Color, int Percent)> colors)
         {
             var color = colors[0].Color;
             return colors.Skip(1).Aggregate(color, (current, item) =>
