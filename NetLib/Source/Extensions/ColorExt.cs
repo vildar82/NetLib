@@ -1,6 +1,8 @@
 namespace NetLib.Extensions
 {
+    using System.Collections.Generic;
     using System.Drawing;
+    using System.Linq;
     using JetBrains.Annotations;
 
     [PublicAPI]
@@ -21,6 +23,13 @@ namespace NetLib.Extensions
                 (byte)(from.R * amountFrom + to.R * percent),
                 (byte)(from.G * amountFrom + to.G * percent),
                 (byte)(from.B * amountFrom + to.B * percent));
+        }
+
+        public static Color Mix(List<(Color Color, int Percent)> colors)
+        {
+            var color = colors[0].Color;
+            return colors.Skip(1).Aggregate(color, (current, item) =>
+                current.Mix(item.Color, item.Percent * 0.01));
         }
     }
 }
