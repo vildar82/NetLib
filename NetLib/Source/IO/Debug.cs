@@ -4,7 +4,7 @@ namespace NetLib.IO
 
     public static class Debug
     {
-        public static void WriteLine(this string msg)
+        public static void DebugWriteLine(this string msg)
         {
             System.Diagnostics.Debug.WriteLine($"{DateTime.Now}: {msg}");
         }
