@@ -6,7 +6,7 @@ namespace NetLib.IO
     {
         public static void WriteLine(this string msg)
         {
-            System.Diagnostics.Debug.WriteLine($"{DateTime.Now}: {msg}");
+            System.Diagnostics.Debug.WriteLine($"{DateTime.Now:HH:mm:ss.fff}: {msg}");
         }
     }
 }
