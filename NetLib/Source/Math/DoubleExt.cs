@@ -39,5 +39,15 @@
         {
             return Math.Round(value, digits, MidpointRounding.AwayFromZero);
         }
+
+        /// <summary>
+        /// Округление вверх
+        /// </summary>
+        /// <param name="value">Число</param>
+        /// <returns>Целое</returns>
+        public static int RoundToUp(this double value)
+        {
+            return (int)Math.Ceiling(value);
+        }
     }
 }
