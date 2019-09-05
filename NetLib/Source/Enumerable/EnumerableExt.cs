@@ -14,7 +14,7 @@
         /// <param name="items">Список</param>
         /// <typeparam name="T">Тип</typeparam>
         /// <returns>Повторения</returns>
-        private static IEnumerable<List<T>> GetTrain<T>(this IEnumerable<T> items, Func<T, string> GetName)
+        public static IEnumerable<List<T>> Train<T>(this IEnumerable<T> items, Func<T, string> GetName)
         {
             var train = new HashSet<string>();
             var rail = new List<T>();
