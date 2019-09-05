@@ -92,14 +92,16 @@
             }
         }
 
+        public bool NeedUpdate()
+        {
+            return !IO.Path.IsEqualsDateFile(ServerFile, LocalFile);
+        }
+
         public void Update()
         {
             try
             {
-                if (!IO.Path.IsEqualsDateFile(ServerFile, LocalFile))
-                {
-                    Load();
-                }
+                if (NeedUpdate()) Load();
             }
             catch
             {

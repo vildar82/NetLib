@@ -9,6 +9,34 @@
     public static class EnumerableExt
     {
         /// <summary>
+        /// Группировка повторяющихся последовательностей
+        /// </summary>
+        /// <param name="items">Список</param>
+        /// <typeparam name="T">Тип</typeparam>
+        /// <returns>Повторения</returns>
+        private static IEnumerable<List<T>> GetTrain<T>(this IEnumerable<T> items, Func<T, string> GetName)
+        {
+            var train = new HashSet<string>();
+            var rail = new List<T>();
+            foreach (var item in items)
+            {
+                var name = GetName(item);
+                if (train.Add(name))
+                {
+                    rail.Add(item);
+                }
+                else
+                {
+                    yield return rail;
+                    train = new HashSet<string> {name};
+                    rail = new List<T> { item };
+                }
+            }
+
+            yield return rail;
+        }
+
+        /// <summary>
         /// Поиск дубликатов имен
         /// </summary>
         /// <param name="items">Саисок элементов</param>

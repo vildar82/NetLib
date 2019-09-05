@@ -244,3 +244,7 @@ ModelManifest.xml
 [Vv]isual [Ss]tudio*/
 /.idea/.idea.NetLib/.idea
 /.idea/.idea.NetLib/riderModule.iml
+
+lib/built-in-stubs\.jar
+
+NetLib/FodyWeavers\.xsd

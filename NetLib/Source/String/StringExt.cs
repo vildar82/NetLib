@@ -44,7 +44,7 @@
 
         public static bool HasCirilic(this string s)
         {
-            return Regex.IsMatch(Regex.Escape(s), "([а-яА-Я])");
+            return Regex.IsMatch(Regex.Escape(s), @"\p{IsCyrillic}");
         }
 
         /// <summary>
