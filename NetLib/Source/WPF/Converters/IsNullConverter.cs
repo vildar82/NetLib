@@ -1,10 +1,10 @@
-﻿using JetBrains.Annotations;
-using System;
-using System.Globalization;
-using System.Windows.Data;
-
-namespace NetLib.WPF.Converters
+﻿namespace NetLib.WPF.Converters
 {
+    using System;
+    using System.Globalization;
+    using System.Windows.Data;
+    using JetBrains.Annotations;
+
     /// <summary>
     /// True - если объект null
     /// </summary>
