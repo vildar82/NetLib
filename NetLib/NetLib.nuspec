@@ -29,7 +29,6 @@
       <dependency id="reactiveui" version="9.11.3" />
       <dependency id="ReactiveUI.Events.WPF" version="9.11.3" />
       <dependency id="ReactiveUI.WPF" version="9.11.3" />
-      <dependency id="SourceLink.Create.CommandLine" version="2.8.3" />
       <dependency id="StyleCop.Analyzers" version="1.0.2" />
       <dependency id="System.ValueTuple" version="4.5.0" />
       <dependency id="System.Reactive" version="4.1.3" />
