@@ -1,12 +1,12 @@
-﻿using JetBrains.Annotations;
-using System;
-using System.Globalization;
-using System.Windows;
-using System.Windows.Data;
-using System.Windows.Markup;
-
-namespace NetLib.WPF.Converters
+﻿namespace NetLib.WPF.Converters
 {
+    using System;
+    using System.Globalization;
+    using System.Windows;
+    using System.Windows.Data;
+    using System.Windows.Markup;
+    using JetBrains.Annotations;
+
     [MarkupExtensionReturnType(typeof(IValueConverter))]
     public abstract class ConvertorBase : MarkupExtension, IValueConverter
     {

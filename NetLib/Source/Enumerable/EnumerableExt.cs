@@ -58,8 +58,11 @@
         [NotNull]
         public static IEnumerable<T> IntersectMany<T>([NotNull] this IEnumerable<IEnumerable<T>> lists)
         {
-            return lists.Skip(1).Aggregate(
-                new HashSet<T>(lists.First()),
+            var listNos = lists.Where(w => w != null);
+            if (!listNos.Skip(1).Any())
+                return listNos.FirstOrDefault();
+            return listNos.Skip(1).Aggregate(
+                new HashSet<T>(listNos.First()),
                 (h, e) =>
                 {
                     h.IntersectWith(e);

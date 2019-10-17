@@ -1,9 +1,9 @@
-﻿using System;
-using System.ComponentModel;
-using JetBrains.Annotations;
-
-namespace NetLib.WPF.Converters
+﻿namespace NetLib.WPF.Converters
 {
+    using System;
+    using System.ComponentModel;
+    using JetBrains.Annotations;
+
     /// <summary>
     /// Конвертер enum значений из описаний значений
     /// [TypeConverter(typeof(EnumDescriptionTypeConverter))]

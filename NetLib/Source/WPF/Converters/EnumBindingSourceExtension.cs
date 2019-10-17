@@ -1,9 +1,9 @@
-﻿using JetBrains.Annotations;
-using System;
-using System.Windows.Markup;
-
-namespace NetLib.WPF.Converters
+﻿namespace NetLib.WPF.Converters
 {
+    using System;
+    using System.Windows.Markup;
+    using JetBrains.Annotations;
+
     /// <inheritdoc />
     /// <summary>
     /// ComboBox ItemsSource="{Binding Source={local:EnumBindingSource {x:Type local:MyEnum}}}"    ///
@@ -15,17 +15,17 @@ namespace NetLib.WPF.Converters
         public Type EnumType
         {
             get => _enumType;
-            set {
-                if (value != _enumType)
+            set
+            {
+                if (value == _enumType) return;
+                if (value != null)
                 {
-                    if (null != value)
-                    {
-                        var enumType = Nullable.GetUnderlyingType(value) ?? value;
-                        if (!enumType.IsEnum)
-                            throw new ArgumentException("Type must be for an Enum.");
-                    }
-                    _enumType = value;
+                    var enumType = Nullable.GetUnderlyingType(value) ?? value;
+                    if (!enumType.IsEnum)
+                        throw new ArgumentException("Type must be for an Enum.");
                 }
+
+                _enumType = value;
             }
         }
 
@@ -41,7 +41,7 @@ namespace NetLib.WPF.Converters
         [NotNull]
         public override object ProvideValue(IServiceProvider serviceProvider)
         {
-            if (null == _enumType)
+            if (_enumType == null)
                 throw new InvalidOperationException("The EnumType must be specified.");
 
             var actualEnumType = Nullable.GetUnderlyingType(_enumType) ?? _enumType;
