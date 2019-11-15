@@ -3,6 +3,7 @@
     using System.IO;
     using JetBrains.Annotations;
     using Newtonsoft.Json;
+    using Newtonsoft.Json.Serialization;
 
     [PublicAPI]
     public static class JsonExt
@@ -10,12 +11,17 @@
         public static T Deserialize<T>([NotNull] this string file)
         {
             var bsJson = ReadTextFile(file);
-            return JsonConvert.DeserializeObject<T>(bsJson);
+            var settings = new JsonSerializerSettings
+            {
+                ContractResolver = new CamelCasePropertyNamesContractResolver()
+            };
+
+            return JsonConvert.DeserializeObject<T>(bsJson, settings);
         }
 
         public static T FromJson<T>([NotNull] this string json)
         {
-            return JsonConvert.DeserializeObject<T>(json);
+            return json.Deserialize<T>();
         }
 
         [NotNull]
@@ -44,10 +50,8 @@
 
         private static void WriteText([NotNull] string file, string json)
         {
-            using (var sw = new StreamWriter(file, false))
-            {
-                sw.Write(json);
-            }
+            using var sw = new StreamWriter(file, false);
+            sw.Write(json);
         }
 
         [NotNull]

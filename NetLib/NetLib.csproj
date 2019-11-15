@@ -104,6 +104,7 @@
     <Compile Include="Source\AD\UserData.cs" />
     <Compile Include="Source\Bool\ActionUsage.cs" />
     <Compile Include="Source\Bool\BoolUsage.cs" />
+    <Compile Include="Source\Enumerable\Enumeration.cs" />
     <Compile Include="Source\Enumerable\GroupConsecutive\DuplicateGrouper.cs" />
     <Compile Include="Source\Enumerable\GroupConsecutive\PartitionExtension.cs" />
     <Compile Include="Source\Extensions\AsyncHelper.cs" />
