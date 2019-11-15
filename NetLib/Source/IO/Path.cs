@@ -168,6 +168,20 @@
             }
         }
 
+        public static void ClearDir(string dir)
+        {
+            var di = new DirectoryInfo(dir);
+            foreach (var file in di.GetFiles())
+            {
+                file.Delete();
+            }
+
+            foreach (var entryDir in di.GetDirectories())
+            {
+                entryDir.Delete(true);
+            }
+        }
+
         /// <summary>
         /// Возвращает путь к временному файлу
         /// </summary>
