@@ -45,8 +45,17 @@
 
         private static void WriteText([NotNull] string file, string json)
         {
+            CreateDir(file);
             using var sw = new StreamWriter(file, false);
             sw.Write(json);
+        }
+
+        private static void CreateDir(string file)
+        {
+            var dir = Path.GetDirectoryName(file);
+            if (Directory.Exists(file))
+                return;
+            Directory.CreateDirectory(dir);
         }
 
         [NotNull]

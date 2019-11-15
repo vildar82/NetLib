@@ -60,37 +60,29 @@
         public T DeserializeXmlFile<T>()
         {
             var ser = new XmlSerializer(typeof(T));
-            using (var reader = XmlReader.Create(_settingsFile))
-            {
-                return (T)ser.Deserialize(reader);
-            }
+            using var reader = XmlReader.Create(_settingsFile);
+            return (T)ser.Deserialize(reader);
         }
 
         public T DeserializeXmlFile<T>([NotNull] params Type[] types)
         {
             var ser = new XmlSerializer(typeof(T), types);
-            using (var reader = XmlReader.Create(_settingsFile))
-            {
-                return (T)ser.Deserialize(reader);
-            }
+            using var reader = XmlReader.Create(_settingsFile);
+            return (T)ser.Deserialize(reader);
         }
 
         public void SerializeList<T>([NotNull] T settings)
         {
-            using (var fs = new FileStream(_settingsFile, FileMode.Create, FileAccess.Write))
-            {
-                var ser = new XmlSerializer(typeof(T));
-                ser.Serialize(fs, settings);
-            }
+            using var fs = new FileStream(_settingsFile, FileMode.Create, FileAccess.Write);
+            var ser = new XmlSerializer(typeof(T));
+            ser.Serialize(fs, settings);
         }
 
         public void SerializeList<T>([NotNull] T settings, [NotNull] params Type[] types)
         {
-            using (var fs = new FileStream(_settingsFile, FileMode.Create, FileAccess.Write))
-            {
-                var ser = new XmlSerializer(typeof(T), types);
-                ser.Serialize(fs, settings);
-            }
+            using var fs = new FileStream(_settingsFile, FileMode.Create, FileAccess.Write);
+            var ser = new XmlSerializer(typeof(T), types);
+            ser.Serialize(fs, settings);
         }
     }
 }
