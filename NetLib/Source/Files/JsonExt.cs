@@ -11,15 +11,7 @@
         public static T Deserialize<T>([NotNull] this string file)
         {
             var bsJson = ReadTextFile(file);
-            var settings = new JsonSerializerSettings
-            {
-                ContractResolver = new DefaultContractResolver
-                {
-                    NamingStrategy = new CamelCaseNamingStrategy(true, false)
-                }
-            };
-
-            return JsonConvert.DeserializeObject<T>(bsJson, settings);
+            return JsonConvert.DeserializeObject<T>(bsJson);
         }
 
         public static T FromJson<T>([NotNull] this string json)
