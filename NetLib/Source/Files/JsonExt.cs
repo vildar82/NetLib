@@ -13,7 +13,10 @@
             var bsJson = ReadTextFile(file);
             var settings = new JsonSerializerSettings
             {
-                ContractResolver = new TitleCaseContractResolver()
+                ContractResolver = new DefaultContractResolver
+                {
+                    NamingStrategy = new CamelCaseNamingStrategy(true, false)
+                }
             };
 
             return JsonConvert.DeserializeObject<T>(bsJson, settings);
@@ -62,15 +65,6 @@
             var text = File.ReadAllText(tempFile);
             IO.Path.TryDeleteFile(tempFile);
             return text;
-        }
-    }
-
-    public class TitleCaseContractResolver : DefaultContractResolver
-    {
-        protected override string ResolvePropertyName(string propertyName)
-        {
-            var name = string.Concat(propertyName[0].ToString().ToUpper(), propertyName.Substring(1).ToLower());
-            return base.ResolvePropertyName(name);
         }
     }
 }
