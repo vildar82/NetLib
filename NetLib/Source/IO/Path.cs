@@ -155,7 +155,7 @@
         [PublicAPI]
         public static void DeleteDir(string dir)
         {
-            if (!Directory.Exists(dir)) return;
+            if (!Directory.Exists(dir) || IsRootDir(dir)) return;
             var di = new DirectoryInfo(dir);
             foreach (var file in di.GetFiles())
             {
@@ -170,6 +170,7 @@
 
         public static void ClearDir(string dir)
         {
+            if (!Directory.Exists(dir) || IsRootDir(dir)) return;
             var di = new DirectoryInfo(dir);
             foreach (var file in di.GetFiles())
             {
@@ -180,6 +181,13 @@
             {
                 entryDir.Delete(true);
             }
+        }
+
+        private static bool IsRootDir(string dir)
+        {
+            var dirAbs = System.IO.Path.GetFullPath(dir);
+            var system = System.IO.Path.GetPathRoot(Environment.GetFolderPath(Environment.SpecialFolder.System));
+            return system.EqualsIgnoreCase(dirAbs);
         }
 
         /// <summary>
