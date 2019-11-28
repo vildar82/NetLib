@@ -16,7 +16,7 @@
 
         public static T FromJson<T>([NotNull] this string json)
         {
-            return json.Deserialize<T>();
+            return JsonConvert.DeserializeObject<T>(json);
         }
 
         [NotNull]
