@@ -2,26 +2,26 @@
 using System.Collections.Specialized;
 using System.Windows;
 using System.Windows.Controls;
-using ReactiveUI;
-using ReactiveUI.Legacy;
 
 namespace NetLib.WPF.Behaviors
 {
+    using DynamicData.Binding;
+
     [PublicAPI]
     public class DataGridColumnsRBehavior
     {
         public static readonly DependencyProperty BindableColumnsProperty =
             DependencyProperty.RegisterAttached("BindableColumns",
-                typeof(ReactiveList<DataGridColumn>),
+                typeof(ObservableCollectionExtended<DataGridColumn>),
                 typeof(DataGridColumnsBehavior),
                 new UIPropertyMetadata(null, BindableColumnsPropertyChanged));
 
-        public static ReactiveList<DataGridColumn> GetBindableColumns([NotNull] DependencyObject element)
+        public static ObservableCollectionExtended<DataGridColumn> GetBindableColumns([NotNull] DependencyObject element)
         {
-            return (ReactiveList<DataGridColumn>)element.GetValue(BindableColumnsProperty);
+            return (ObservableCollectionExtended<DataGridColumn>)element.GetValue(BindableColumnsProperty);
         }
 
-        public static void SetBindableColumns([NotNull] DependencyObject element, ReactiveList<DataGridColumn> value)
+        public static void SetBindableColumns([NotNull] DependencyObject element, ObservableCollectionExtended<DataGridColumn> value)
         {
             element.SetValue(BindableColumnsProperty, value);
         }
@@ -29,7 +29,7 @@ namespace NetLib.WPF.Behaviors
         private static void BindableColumnsPropertyChanged(DependencyObject source, DependencyPropertyChangedEventArgs e)
         {
             if (!(source is DataGrid dataGrid)) return;
-            var columns = e.NewValue as ReactiveList<DataGridColumn>;
+            var columns = e.NewValue as ObservableCollectionExtended<DataGridColumn>;
             dataGrid.Columns.Clear();
             if (columns == null)
             {
