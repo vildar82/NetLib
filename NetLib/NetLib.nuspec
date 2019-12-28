@@ -10,6 +10,7 @@
     <description>Net4.7.1 c# Library WPF + ReactiveUI</description>
     <copyright>Copyright 2018</copyright>
     <tags>C# Lib</tags>
+    <license type="expression">MIT</license>
     <dependencies>
       <dependency id="AttachedCommandBehavior" version="2.0.0" />
       <dependency id="DynamicData" version="6.14.3.*" />
