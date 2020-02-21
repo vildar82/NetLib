@@ -120,7 +120,7 @@ namespace NetLib.Extensions
                         task.Item1(task.Item2);
                         if (InnerException != null)
                         {
-                            throw new AggregateException("AsyncHelpers.Run method threw an exception.", InnerException);
+                            throw new AggregateException(InnerException.Message, InnerException);
                         }
                     }
                     else
