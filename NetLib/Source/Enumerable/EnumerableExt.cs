@@ -108,6 +108,14 @@
             return list1.All(list2.Contains) && list1.Count == list2.Count;
         }
 
+        [PublicAPI]
+        public static bool EqualLists<T>(this List<T> list1, List<T> list2, IEqualityComparer<T> comparer)
+        {
+            if (ReferenceEquals(list1, list2)) return true;
+            if (list1 == null || list2 == null) return false;
+            return list1.All(l1 => list2.Contains(l1, comparer)) && list1.Count == list2.Count;
+        }
+
         [NotNull]
         public static IEnumerable<TRes> SelectTry<TSource, TRes>([NotNull] this IEnumerable<TSource> list,
             [NotNull] Func<TSource, TRes> selector, [CanBeNull] Action<Exception> onException = null)
