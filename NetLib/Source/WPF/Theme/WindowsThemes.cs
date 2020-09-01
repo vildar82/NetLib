@@ -1,16 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace NetLib.WPF.Theme
+﻿namespace NetLib.WPF.Theme
 {
+    using System.Collections.Generic;
+
     public class WindowsThemes
     {
-        [Obsolete]
-        public List<WindowTheme> Windows { get; set; } = new List<WindowTheme>();
-        [Obsolete]
-        public string Accent = "Blue";
-        [Obsolete]
-        public string Theme = "BaseLight";
         public List<ApplicationThemes> Applications { get; set; } = new List<ApplicationThemes>();
     }
 
@@ -20,8 +13,9 @@ namespace NetLib.WPF.Theme
     public class ApplicationThemes
     {
         public string Name { get; set; }
+
         public List<WindowTheme> Windows { get; set; } = new List<WindowTheme>();
-        public string Accent = "Blue";
-        public string Theme = "BaseLight";
+
+        public string Theme { get; set; }
     }
 }

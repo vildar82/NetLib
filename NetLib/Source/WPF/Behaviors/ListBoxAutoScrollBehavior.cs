@@ -1,10 +1,10 @@
-﻿using JetBrains.Annotations;
-using System;
-using System.Windows;
-using System.Windows.Controls;
-
-namespace NetLib.WPF.Behaviors
+﻿namespace NetLib.WPF.Behaviors
 {
+    using System;
+    using System.Windows;
+    using System.Windows.Controls;
+    using JetBrains.Annotations;
+
     [PublicAPI]
     public class ListBoxAutoScrollBehavior
     {

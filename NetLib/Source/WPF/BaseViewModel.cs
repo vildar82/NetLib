@@ -5,7 +5,6 @@
     using System.Collections.Concurrent;
     using System.Collections.Generic;
     using System.ComponentModel;
-    using System.Diagnostics;
     using System.Linq;
     using System.Reactive;
     using System.Reactive.Concurrency;
@@ -18,8 +17,8 @@
     using ControlzEx;
     using FluentValidation;
     using JetBrains.Annotations;
-    using MahApps.Metro.Controls.Dialogs;
     using NLog;
+    using Pik.Metro.Controls.Dialogs;
     using ReactiveUI;
     using ValidationResult = FluentValidation.Results.ValidationResult;
 
@@ -80,23 +79,28 @@
                     Window = parent.Window;
                     dialogCoordinator = parentVM.dialogCoordinator;
                 }
+
                 PropertyChanged += BaseViewModel_PropertyChanged;
                 ThrownExceptions.Subscribe(CommandException);
             }
         }
 
-        public BaseViewModel() : this(null)
+        public BaseViewModel()
+            : this(null)
         {
         }
 
         public void AddWindowButton(string toolTip, PackIconBase icon, Action onClick)
         {
-            if (Window == null) return;
+            if (Window == null)
+                return;
+
             var button = new Button
             {
                 Content = icon,
                 ToolTip = toolTip
             };
+
             button.Click += (o, s) => onClick();
             Window.AddWindowButton(button);
         }
@@ -117,7 +121,6 @@
             ShowMessage(e.Message);
         }
 
-        [NotNull]
         public ReactiveCommand<Unit, Unit> CreateCommandAsync(Func<CancellationToken, Task> execute, IObservable<bool> canExecute = null)
         {
             var command = ReactiveCommand.CreateFromTask(execute, canExecute, new DispatcherScheduler(Dispatcher.CurrentDispatcher));
@@ -125,7 +128,6 @@
             return command;
         }
 
-        [NotNull]
         public ReactiveCommand<Unit, Unit> CreateCommandAsync(Func<Task> execute, IObservable<bool> canExecute = null)
         {
             var command = ReactiveCommand.CreateFromTask(execute, canExecute, new DispatcherScheduler(Dispatcher.CurrentDispatcher));
@@ -133,7 +135,6 @@
             return command;
         }
 
-        [NotNull]
         public ReactiveCommand<TParam, Unit> CreateCommandAsync<TParam>(Func<TParam, Task> execute, IObservable<bool> canExecute = null)
         {
             var command = ReactiveCommand.CreateFromTask(execute, canExecute, new DispatcherScheduler(Dispatcher.CurrentDispatcher));
@@ -141,7 +142,6 @@
             return command;
         }
 
-        [NotNull]
         public ReactiveCommand<TParam, Unit> CreateCommandAsync<TParam>(Func<TParam, CancellationToken, Task> execute, IObservable<bool> canExecute = null)
         {
             var command = ReactiveCommand.CreateFromTask(execute, canExecute, new DispatcherScheduler(Dispatcher.CurrentDispatcher));
@@ -165,7 +165,6 @@
             return command;
         }
 
-        [NotNull]
         public ReactiveCommand<Unit, Unit> CreateCommand(Action execute, IObservable<bool> canExecute = null)
         {
             var command = ReactiveCommand.Create(execute, canExecute, new DispatcherScheduler(Dispatcher.CurrentDispatcher));
@@ -173,7 +172,6 @@
             return command;
         }
 
-        [NotNull]
         public ReactiveCommand<T, Unit> CreateCommand<T>(Action<T> execute, IObservable<bool> canExecute = null)
         {
             var command = ReactiveCommand.Create(execute, canExecute, new DispatcherScheduler(Dispatcher.CurrentDispatcher));
@@ -343,6 +341,7 @@
             {
                 await Task.Run(() => job(controller));
             }
+
             await controller.CloseAsync();
             if (jobEx != null)
             {
@@ -358,7 +357,7 @@
             if (validator == null) return;
             await Task.Run(() =>
             {
-                validationResult = validator.Validate(this);
+                validationResult = validator.Validate(new ValidationContext<object>(this));
                 Errors = new List<string>(validationResult.Errors.Select(s => s.ErrorMessage).ToList());
                 if (propName == null)
                 {
@@ -374,6 +373,7 @@
                 {
                     RaiseErrorsChanged(propName);
                 }
+
                 IsValidated = true;
                 Logger.Debug($"Validate {this}");
             });
@@ -403,6 +403,7 @@
                 {
                     validator = (IValidator)Activator.CreateInstance(type);
                 }
+
                 validators[modelType.TypeHandle] = validator;
                 Validate();
             });

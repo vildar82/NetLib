@@ -1,16 +1,11 @@
 ﻿namespace NetLib.WPF.Data
 {
-    using System;
-    using System.Collections.Generic;
     using System.Drawing;
     using System.Drawing.Imaging;
     using System.IO;
     using System.Windows.Media;
     using System.Windows.Media.Imaging;
     using JetBrains.Annotations;
-    using MahApps.Metro.IconPacks;
-    using Brush = System.Windows.Media.Brush;
-    using Pen = System.Windows.Media.Pen;
 
     [PublicAPI]
     public static class ImageExt
@@ -37,7 +32,7 @@
         public static byte[] ToArray(this ImageSource image)
         {
             var converter = new ImageSourceConverter();
-            return (byte[]) converter.ConvertTo(image, typeof(byte[]));
+            return (byte[])converter.ConvertTo(image, typeof(byte[]));
         }
 
         public static ImageSource ToImage(this byte[] array)

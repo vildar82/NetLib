@@ -5,7 +5,7 @@
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:wpf="clr-namespace:NetLib.WPF"
-	xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls" 
+	xmlns:controls="http://metro.pik.com/winfx/xaml/controls"
 	mc:Ignorable="d" 
 	SizeToContent="WidthAndHeight" 
 	ResizeMode="NoResize"
@@ -28,6 +28,6 @@
 	ShowThemeButton="False"
 	BorderBrush="Transparent">
 	<Grid>
-		<mah:ProgressRing Width="150" Height="150"/>
+		<controls:ProgressRing Width="150" Height="150"/>
 	</Grid>
 </wpf:BaseWindow>

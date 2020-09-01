@@ -2,7 +2,8 @@
 {
     public partial class SelectListView
     {
-        public SelectListView(BaseViewModel vm) : base(vm)
+        public SelectListView(BaseViewModel vm)
+            : base(vm)
         {
             InitializeComponent();
         }

@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using JetBrains.Annotations;
-
-namespace NetLib.Comparers
+﻿namespace NetLib.Comparers
 {
+    using System;
+    using System.Collections.Generic;
+    using JetBrains.Annotations;
+
     /// <summary>
     /// Сравнение чисел
     /// </summary>

@@ -1,7 +1,6 @@
 ﻿namespace NetLib.WPF
 {
     using System;
-    using System.Collections;
     using System.ComponentModel;
     using System.Linq;
     using System.Reflection;
@@ -12,12 +11,11 @@
     using System.Windows.Media;
     using System.Windows.Threading;
     using JetBrains.Annotations;
-    using MahApps.Metro.Controls;
-    using MahApps.Metro.Controls.Dialogs;
     using MahApps.Metro.IconPacks;
-    using NetLib.WPF.Theme;
     using NLog;
-    using ReactiveUI;
+    using Pik.Metro.Controls;
+    using Pik.Metro.Controls.Dialogs;
+    using Theme;
 
     [PublicAPI]
     public class BaseWindow : MetroWindow

@@ -1,8 +1,8 @@
-﻿using JetBrains.Annotations;
-using System;
-
-namespace NetLib
+﻿namespace NetLib
 {
+    using System;
+    using JetBrains.Annotations;
+
     public class ActionUsage : IDisposable
     {
         private readonly Action after;

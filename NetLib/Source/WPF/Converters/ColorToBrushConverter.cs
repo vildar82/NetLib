@@ -1,11 +1,11 @@
-﻿using JetBrains.Annotations;
-using System;
-using System.Globalization;
-using System.Windows.Data;
-using System.Windows.Media;
-
-namespace NetLib.WPF.Converters
+﻿namespace NetLib.WPF.Converters
 {
+    using System;
+    using System.Globalization;
+    using System.Windows.Data;
+    using System.Windows.Media;
+    using JetBrains.Annotations;
+
     [PublicAPI]
     [ValueConversion(typeof(Color), typeof(SolidColorBrush))]
     [ValueConversion(typeof(System.Drawing.Color), typeof(SolidColorBrush))]
@@ -18,10 +18,12 @@ namespace NetLib.WPF.Converters
             {
                 return new SolidColorBrush(Color.FromArgb(dc.A, dc.R, dc.G, dc.B));
             }
+
             if (value is Color color)
             {
                 return new SolidColorBrush(color);
             }
+
             return null;
         }
     }

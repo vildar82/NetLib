@@ -1,11 +1,10 @@
-﻿using JetBrains.Annotations;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Windows.Controls;
-
-namespace NetLib.WPF.Controls.Select
+﻿namespace NetLib.WPF.Controls.Select
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using JetBrains.Annotations;
+
     [PublicAPI]
     public static class SelectList
     {
@@ -23,6 +22,7 @@ namespace NetLib.WPF.Controls.Select
             {
                 return selVM.Selected.Object;
             }
+
             throw new OperationCanceledException("Отменено пользователем");
         }
 
@@ -34,6 +34,7 @@ namespace NetLib.WPF.Controls.Select
             {
                 return selVM.MultiSelected.Select(s => s.Object).ToList();
             }
+
             throw new OperationCanceledException("Отменено пользователем");
         }
 

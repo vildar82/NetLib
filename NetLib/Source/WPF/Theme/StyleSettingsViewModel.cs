@@ -1,47 +1,45 @@
-﻿using JetBrains.Annotations;
-using MahApps.Metro;
-using ReactiveUI;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reactive.Linq;
-
-namespace NetLib.WPF.Theme
+﻿namespace NetLib.WPF.Theme
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Reactive.Linq;
+    using Pik.Metro;
+    using ReactiveUI;
+
     public class StyleSettingsViewModel : BaseViewModel
     {
-        public StyleSettingsViewModel([CanBeNull] IBaseViewModel parent) : base(parent)
+        public StyleSettingsViewModel(IBaseViewModel? parent)
+            : base(parent)
         {
-            Themes = StyleSettings.GetThemes().Select(s => new ThemeViewModel(s)).ToList();
-            Accents = StyleSettings.Getaccents().Select(s => new AccentViewModel(s)).ToList();
-            var windowTheme = StyleSettings.GetWindowTheme(parent?.Window);
-            SelectedTheme = Themes.FirstOrDefault(t => t.Theme == windowTheme.Item1);
-            SelectedAccent = Accents.FirstOrDefault(t => t.Accent == windowTheme.Item2);
-            IsOnlyThisWindow = windowTheme.Item3;
+            Themes = StyleSettings.GetThemes().ToList();
+            var (theme, find) = StyleSettings.GetWindowTheme(parent?.Window);
+            SelectedTheme = Themes.FirstOrDefault(t => t == theme) ?? Themes.First();
+            IsOnlyThisWindow = find;
 
-            this.WhenAnyValue(w => w.SelectedTheme, w => w.SelectedAccent).Skip(1).Subscribe(s =>
+            this.WhenAnyValue(w => w.SelectedTheme).Skip(1).Subscribe(s =>
             {
-                StyleSettings.SaveWindowTheme(Parent.Window, s.Item1.Theme, s.Item2.Accent, IsOnlyThisWindow);
-                ThemeManager.ChangeAppStyle(Window.Resources, s.Item2.Accent, s.Item1.Theme);
+                StyleSettings.SaveWindowTheme(Parent.Window, s, IsOnlyThisWindow);
+                ThemeManager.ChangeTheme(Window.Resources, s);
                 if (parent?.Window != null)
                 {
-                    ThemeManager.ChangeAppStyle(parent.Window.Resources, s.Item2.Accent, s.Item1.Theme);
+                    ThemeManager.ChangeTheme(parent.Window.Resources, s);
                     parent.Window.OnChangeTheme();
                 }
             });
         }
 
-        public List<ThemeViewModel> Themes { get; set; }
-         public ThemeViewModel SelectedTheme { get; set; }
-        public List<AccentViewModel> Accents { get; set; }
-         public AccentViewModel SelectedAccent { get; set; }
-         public bool IsOnlyThisWindow { get; set; }
+        public List<Theme> Themes { get; set; }
+
+        public Theme SelectedTheme { get; set; }
+
+        public bool IsOnlyThisWindow { get; set; }
 
         public override void OnInitialize()
         {
             try
             {
-                ThemeManager.ChangeAppStyle(Window.Resources, SelectedAccent.Accent, SelectedTheme.Theme);
+                ThemeManager.ChangeTheme(Window.Resources, SelectedTheme);
             }
             catch
             {
@@ -51,7 +49,7 @@ namespace NetLib.WPF.Theme
 
         public override void OnClosed()
         {
-            StyleSettings.SaveWindowTheme(Parent.Window, SelectedTheme.Theme, SelectedAccent.Accent, IsOnlyThisWindow);
+            StyleSettings.SaveWindowTheme(Parent.Window, SelectedTheme, IsOnlyThisWindow);
         }
     }
 }

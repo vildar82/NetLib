@@ -15,17 +15,16 @@
 
         protected readonly Action<Exception> _exception;
         protected readonly Predicate<T> _canExecute;
-	    [NotNull]
-	    protected readonly Action<T> _execute;
+        [NotNull] protected readonly Action<T> _execute;
 
-	    /// <summary>
+        /// <summary>
         /// Initializes a new instance of the <see cref="RelayCommand&lt;T&gt;"/> class.
         /// </summary>
         /// <param name="execute">The execution logic.</param>
         /// <param name="canExecute">The execution status logic.</param>
         public RelayCommand([NotNull] Action<T> execute, Predicate<T> canExecute = null)
         {
-	        _execute = execute ?? throw new ArgumentNullException("execute");
+            _execute = execute ?? throw new ArgumentNullException("execute");
             _canExecute = canExecute;
         }
 
@@ -79,17 +78,16 @@
 
         protected readonly Action<Exception> _exception;
         protected readonly Func<bool> _canExecute;
-	    [NotNull]
-	    protected readonly Action _execute;
+        [NotNull] protected readonly Action _execute;
 
-	    /// <summary>
+        /// <summary>
         /// Initializes a new instance of the <see cref="RelayCommand&lt;T&gt;"/> class.
         /// </summary>
         /// <param name="execute">The execution logic.</param>
         /// <param name="canExecute">The execution status logic.</param>
         public RelayCommand([NotNull] Action execute, Func<bool> canExecute = null)
         {
-	        _execute = execute ?? throw new ArgumentNullException("execute");
+            _execute = execute ?? throw new ArgumentNullException("execute");
             _canExecute = canExecute;
         }
 

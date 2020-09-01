@@ -1,12 +1,12 @@
-﻿using System.Collections;
-using System.Collections.Specialized;
-using System.Linq;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Interactivity;
-
-namespace NetLib.WPF.Behaviors
+﻿namespace NetLib.WPF.Behaviors
 {
+    using System.Collections;
+    using System.Collections.Specialized;
+    using System.Linq;
+    using System.Windows;
+    using System.Windows.Controls;
+    using Microsoft.Xaml.Behaviors;
+
     /// <summary>
     /// <ListBox ItemsSource="{Binding Items}" SelectionMode="Multiple">
     /// <i:Interaction.Behaviors>

@@ -1,10 +1,10 @@
-﻿using System;
-using System.Windows.Controls;
-using System.Windows.Interactivity;
-using JetBrains.Annotations;
-
-namespace NetLib.WPF.Behaviors
+﻿namespace NetLib.WPF.Behaviors
 {
+    using System;
+    using System.Windows.Controls;
+    using JetBrains.Annotations;
+    using Microsoft.Xaml.Behaviors;
+
     /// <summary>
     /// Скрол до выделенного элемента
     /// <ListBox ItemsSource="{Binding Path=MyList}"

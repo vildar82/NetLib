@@ -1,12 +1,11 @@
-﻿using JetBrains.Annotations;
-using System.Collections.ObjectModel;
-using System.Collections.Specialized;
-using System.Windows;
-using System.Windows.Controls;
-using ReactiveUI;
-
-namespace NetLib.WPF.Behaviors
+﻿namespace NetLib.WPF.Behaviors
 {
+    using System.Collections.ObjectModel;
+    using System.Collections.Specialized;
+    using System.Windows;
+    using System.Windows.Controls;
+    using JetBrains.Annotations;
+
     [PublicAPI]
     public class DataGridColumnsBehavior
     {
@@ -28,13 +27,16 @@ namespace NetLib.WPF.Behaviors
 
         private static void BindableColumnsPropertyChanged(DependencyObject source, DependencyPropertyChangedEventArgs e)
         {
-            if (!(source is DataGrid dataGrid)) return;
+            if (!(source is DataGrid dataGrid))
+                return;
+
             var columns = e.NewValue as ObservableCollection<DataGridColumn>;
             dataGrid.Columns.Clear();
             if (columns == null)
             {
                 return;
             }
+
             foreach (var column in columns)
             {
                 try
@@ -46,6 +48,7 @@ namespace NetLib.WPF.Behaviors
                     // ignored
                 }
             }
+
             columns.CollectionChanged += (sender, e2) =>
             {
                 var ne = e2;
@@ -57,6 +60,7 @@ namespace NetLib.WPF.Behaviors
                         {
                             dataGrid.Columns.Add(column);
                         }
+
                         break;
 
                     case NotifyCollectionChangedAction.Add:
@@ -64,6 +68,7 @@ namespace NetLib.WPF.Behaviors
                         {
                             dataGrid.Columns.Add(column);
                         }
+
                         break;
 
                     case NotifyCollectionChangedAction.Move:
@@ -75,6 +80,7 @@ namespace NetLib.WPF.Behaviors
                         {
                             dataGrid.Columns.Remove(column);
                         }
+
                         break;
 
                     case NotifyCollectionChangedAction.Replace:

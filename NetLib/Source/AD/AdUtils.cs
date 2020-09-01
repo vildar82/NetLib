@@ -26,8 +26,7 @@
         /// <summary>
         ///     Группы текущего пользователя
         /// </summary>
-        [NotNull]
-        public static List<string> GetCurrentUserADGroups([CanBeNull] out string fio)
+        public static List<string> GetCurrentUserADGroups(out string? fio)
         {
             using (var adUtils = new ADUtils())
             {
@@ -35,8 +34,7 @@
             }
         }
 
-        [CanBeNull]
-        public static string GetUserFIO([NotNull] string login)
+        public static string? GetUserFIO([NotNull] string login)
         {
             using (var adUtils = new ADUtils())
             {
@@ -65,8 +63,7 @@
             }
         }
 
-        [CanBeNull]
-        private string GetFIO([NotNull] string login)
+        private string? GetFIO([NotNull] string login)
         {
             using (var user = GetUser(login, Environment.UserDomainName))
             {
@@ -90,15 +87,14 @@
         /// </summary>
         /// <param name="sUserName">Имя пользователя для извлечения</param>
         /// <param name="domain">Домен</param>
-        [CanBeNull]
-        private UserPrincipal GetUser([NotNull] string sUserName, string domain)
+        private UserPrincipal? GetUser([NotNull] string sUserName, string? domain)
         {
             context = GetPrincipalContext(domain);
             var user = UserPrincipal.FindByIdentity(context, IdentityType.SamAccountName, sUserName);
             return user;
         }
 
-        public static UserData GetUserData(string login, string domain)
+        public static UserData GetUserData(string login, string? domain)
         {
             using (var utils = new ADUtils())
             using (var user = utils.GetUser(login, domain))

@@ -1,13 +1,13 @@
-﻿using JetBrains.Annotations;
-using NetLib.Errors.UI.View;
-using NetLib.Errors.UI.ViewModel;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Windows;
-
-namespace NetLib.Errors
+﻿namespace NetLib.Errors
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Windows;
+    using JetBrains.Annotations;
+    using UI.View;
+    using UI.ViewModel;
+
     /// <summary>
     /// Сбор ошибок и отображение
     /// </summary>

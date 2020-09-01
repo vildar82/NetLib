@@ -1,9 +1,9 @@
-﻿using System;
-using JetBrains.Annotations;
-using System.Collections.Generic;
-
-namespace NetLib.Comparers
+﻿namespace NetLib.Comparers
 {
+    using System;
+    using System.Collections.Generic;
+    using JetBrains.Annotations;
+
     /// <summary>
     /// Сортировка строк с числами.
     /// http://www.dotnetperls.com/alphanumeric-sorting

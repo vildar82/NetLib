@@ -1,13 +1,14 @@
-﻿using System.Windows;
-
-namespace NetLib.WPF.Controls.InfoDialogs
+﻿namespace NetLib.WPF.Controls.InfoDialogs
 {
+    using System.Windows;
+
     /// <summary>
     /// Interaction logic for InfoDialogView.xaml
     /// </summary>
     internal partial class InfoDialogView
     {
-        public InfoDialogView(InfoDialogViewModel infoDlgVM) : base(infoDlgVM)
+        public InfoDialogView(InfoDialogViewModel infoDlgVM)
+            : base(infoDlgVM)
         {
             InitializeComponent();
         }

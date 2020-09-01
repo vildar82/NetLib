@@ -1,19 +1,19 @@
-using System;
-using System.Globalization;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
-using System.Windows.Data;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Threading;
-using Calendar = System.Windows.Controls.Calendar;
-using CalendarMode = System.Windows.Controls.CalendarMode;
-using CalendarModeChangedEventArgs = System.Windows.Controls.CalendarModeChangedEventArgs;
-using DatePicker = System.Windows.Controls.DatePicker;
-
 namespace NetLib.WPF.Controls
 {
+    using System;
+    using System.Globalization;
+    using System.Windows;
+    using System.Windows.Controls;
+    using System.Windows.Controls.Primitives;
+    using System.Windows.Data;
+    using System.Windows.Input;
+    using System.Windows.Media;
+    using System.Windows.Threading;
+    using Calendar = System.Windows.Controls.Calendar;
+    using CalendarMode = System.Windows.Controls.CalendarMode;
+    using CalendarModeChangedEventArgs = System.Windows.Controls.CalendarModeChangedEventArgs;
+    using DatePicker = System.Windows.Controls.DatePicker;
+
     public class DatePickerCalendar
     {
         private static CalendarMode _mode;

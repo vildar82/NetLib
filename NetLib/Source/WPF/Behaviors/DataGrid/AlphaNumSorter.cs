@@ -1,9 +1,9 @@
-﻿using NetLib.Comparers;
-using System.ComponentModel;
-using JetBrains.Annotations;
-
-namespace NetLib.WPF.Behaviors
+﻿namespace NetLib.WPF.Behaviors
 {
+    using System.ComponentModel;
+    using Comparers;
+    using JetBrains.Annotations;
+
     [PublicAPI]
     public class AlphaNumSorter : ICustomSorter
     {

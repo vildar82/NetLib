@@ -1,7 +1,7 @@
-﻿using System;
-
-namespace NetLib.Locks
+﻿namespace NetLib.Locks
 {
+    using System;
+
 	public class LockInfo
 	{
 		public string Login { get; set; }

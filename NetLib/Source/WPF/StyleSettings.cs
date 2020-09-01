@@ -1,24 +1,23 @@
-﻿using JetBrains.Annotations;
-using MahApps.Metro;
-using NetLib.WPF.Theme;
-using NLog;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Windows.Controls;
-using System.Windows.Media;
-using Path = NetLib.IO.Path;
-
-namespace NetLib.WPF
+﻿namespace NetLib.WPF
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Diagnostics;
+    using System.IO;
+    using System.Linq;
+    using System.Windows.Controls;
+    using System.Windows.Media;
+    using JetBrains.Annotations;
+    using NLog;
+    using Pik.Metro;
+    using Theme;
+    using Path = IO.Path;
+
     public static class StyleSettings
     {
         private static Logger Logger { get; } = LogManager.GetCurrentClassLogger();
 
-        internal static Accent accent;
-        private static AppTheme theme;
+        private static Pik.Metro.Theme theme;
         private static ApplicationThemes applicationTheme;
         private static readonly string applicationName;
 
@@ -32,70 +31,43 @@ namespace NetLib.WPF
             if (windowsThemes.Applications == null)
                 windowsThemes.Applications = new List<ApplicationThemes>();
 
-            // перенос старой настройки тем автакада в настройки приложения
-            if (applicationName.EqualsIgnoreCase("acad") &&
-                !windowsThemes.Applications.Any(a => a.Name.EqualsIgnoreCase("acad")))
-            {
-                applicationTheme = new ApplicationThemes
-                {
-                    Name = "acad",
-                    Accent = windowsThemes.Accent ?? "Blue",
-                    Theme = windowsThemes.Theme ?? "BaseLight",
-                    Windows = windowsThemes.Windows
-                };
-                windowsThemes.Applications.Add(applicationTheme);
-                Save(GetWindowsThemesFile(), windowsThemes);
-            }
-
             applicationTheme = FindApplication(windowsThemes, applicationName);
-            if (applicationTheme == null)
-            {
-                applicationTheme = new ApplicationThemes
-                {
-                    Name = applicationName,
-                    Accent = "Blue",
-                    Theme = "BaseLight",
-                };
-                Save(GetWindowsThemesFile(), windowsThemes);
-            }
-
-            accent = GetAccent(applicationTheme?.Accent ?? "Blue");
-            theme = GetTheme(applicationTheme?.Theme ?? "BaseLight");
+            theme = GetTheme(applicationTheme?.Theme);
         }
 
-        private static ApplicationThemes FindApplication(WindowsThemes windowsThemes, string appName)
-        {
-            return windowsThemes.Applications.FirstOrDefault(a => a.Name.Equals(appName));
-        }
-
-        [NotNull]
-        private static string GetAppName()
-        {
-            try
-            {
-                return Process.GetCurrentProcess().ProcessName;
-            }
-            catch (Exception ex)
-            {
-                Logger.Error(ex);
-            }
-
-            return "default";
-        }
-
-        public static void ApplyWindowTheme([NotNull] BaseWindow window)
+        public static void ApplyWindowTheme(BaseWindow window)
         {
             var windowTheme = GetWindowTheme(window);
-            ThemeManager.ChangeAppStyle(window.Resources, windowTheme.Item2, windowTheme.Item1);
+            ThemeManager.ChangeTheme(window.Resources, windowTheme.theme);
         }
 
-        public static void ApplyWindowTheme([NotNull] UserControl control)
+        public static void ApplyWindowTheme(UserControl control)
         {
             var windowTheme = GetWindowTheme(control.GetType().FullName);
-            ThemeManager.ChangeAppStyle(control.Resources, windowTheme.Item2, windowTheme.Item1);
+            ThemeManager.ChangeTheme(control.Resources, windowTheme.theme);
         }
 
-        internal static void SaveWindowTheme([CanBeNull] BaseWindow window, AppTheme wTheme, Accent wAccent, bool isOnlyThisWindow)
+        /// <summary>
+        /// Determining Ideal Text Color Based on Specified Background Color
+        /// http://www.codeproject.com/KB/GDI-plus/IdealTextColor.aspx
+        /// </summary>
+        /// <param name = "color">The bg.</param>
+        public static Color IdealTextColor(Color color)
+        {
+            const int nThreshold = 105;
+            var bgDelta = Convert.ToInt32(color.R * 0.299 + color.G * 0.587 + color.B * 0.114);
+            var foreColor = 255 - bgDelta < nThreshold ? Colors.Black : Colors.White;
+            return foreColor;
+        }
+
+        public static SolidColorBrush GetSolidColorBrush(Color color, double opacity = 1d)
+        {
+            var brush = new SolidColorBrush(color) { Opacity = opacity };
+            brush.Freeze();
+            return brush;
+        }
+
+        internal static void SaveWindowTheme(BaseWindow? window, Pik.Metro.Theme wTheme, bool isOnlyThisWindow)
         {
             try
             {
@@ -103,12 +75,7 @@ namespace NetLib.WPF
                 applicationTheme = FindApplication(windowsThemes, applicationName);
                 if (applicationTheme == null)
                 {
-                    applicationTheme = new ApplicationThemes
-                    {
-                        Name = applicationName,
-                        Accent = "Blue",
-                        Theme = "BaseLight"
-                    };
+                    applicationTheme = new ApplicationThemes { Name = applicationName };
                     windowsThemes.Applications.Add(applicationTheme);
                 }
 
@@ -123,7 +90,6 @@ namespace NetLib.WPF
                     }
 
                     windowTheme.Theme = wTheme.Name;
-                    windowTheme.Accent = wAccent.Name;
                 }
                 else
                 {
@@ -133,9 +99,7 @@ namespace NetLib.WPF
                         applicationTheme.Windows.Remove(windowTheme);
                     }
 
-                    accent = wAccent;
                     theme = wTheme;
-                    applicationTheme.Accent = accent.Name;
                     applicationTheme.Theme = theme.Name;
                     Change?.Invoke(null, EventArgs.Empty);
                 }
@@ -169,45 +133,39 @@ namespace NetLib.WPF
             }
         }
 
-        internal static Tuple<AppTheme, Accent, bool>
-            GetWindowTheme(BaseWindow window)
+        internal static (Pik.Metro.Theme theme, bool find) GetWindowTheme(BaseWindow window)
         {
             return GetWindowTheme(GetWindowName(window));
         }
 
-        internal static Tuple<AppTheme, Accent, bool>
-            GetWindowTheme(string windowName)
+        internal static (Pik.Metro.Theme theme, bool find) GetWindowTheme(string windowName)
         {
-            AppTheme wTheme;
-            Accent wAccent;
+            Pik.Metro.Theme wTheme;
+
             var windowTheme = FindWindowTheme(windowName);
             bool findWindowTheme;
             if (windowTheme != null)
             {
                 wTheme = GetTheme(windowTheme.Theme);
-                wAccent = GetAccent(windowTheme.Accent);
                 findWindowTheme = true;
             }
             else
             {
                 findWindowTheme = false;
                 wTheme = theme;
-                wAccent = accent;
             }
 
-            return new Tuple<AppTheme, Accent, bool>(wTheme, wAccent, findWindowTheme);
+            return (wTheme, findWindowTheme);
         }
 
-        [CanBeNull]
-        private static WindowTheme FindWindowTheme([CanBeNull] string wName)
+        private static WindowTheme? FindWindowTheme([CanBeNull] string wName)
         {
             if (wName == null)
                 return null;
             return applicationTheme?.Windows?.FirstOrDefault(f => f.Window.Equals(wName));
         }
 
-        [CanBeNull]
-        private static WindowTheme FindWindowTheme([CanBeNull] BaseWindow window)
+        private static WindowTheme? FindWindowTheme(BaseWindow? window)
         {
             if (window == null)
                 return null;
@@ -215,35 +173,21 @@ namespace NetLib.WPF
             return applicationTheme?.Windows?.FirstOrDefault(f => f.Window.Equals(wName));
         }
 
-        [CanBeNull]
-        private static string GetWindowName([CanBeNull] BaseWindow window)
+        private static string? GetWindowName(BaseWindow? window)
         {
             return window?.GetType().FullName;
         }
 
-        private static AppTheme GetTheme(string themeName)
+        private static Pik.Metro.Theme GetTheme(string? themeName)
         {
             try
             {
-                var fTheme = ThemeManager.GetAppTheme(themeName);
-                return fTheme ?? ThemeManager.GetAppTheme("BaseLight");
+                var fTheme = ThemeManager.GetTheme(themeName);
+                return fTheme ?? ThemeManager.GetTheme("White Blue") ?? ThemeManager.Themes.First();
             }
             catch
             {
-                return ThemeManager.AppThemes.First();
-            }
-        }
-
-        private static Accent GetAccent(string accentName)
-        {
-            try
-            {
-                var fAccent = ThemeManager.GetAccent(accentName);
-                return fAccent ?? ThemeManager.GetAccent("Blue");
-            }
-            catch
-            {
-                return ThemeManager.Accents.First();
+                return ThemeManager.Themes.First();
             }
         }
 
@@ -265,27 +209,26 @@ namespace NetLib.WPF
             return new WindowsThemes();
         }
 
-        [NotNull]
         private static string GetWindowsThemesFile()
         {
             return Path.GetUserPluginFile("AutoCAD\\Theme", "WindowsThemes.json");
         }
 
-        public static IEnumerable<AppTheme> GetThemes()
+        public static IEnumerable<Pik.Metro.Theme> GetThemes()
         {
-            return ThemeManager.AppThemes;
+            return ThemeManager.Themes;
         }
 
-        public static IEnumerable<Accent> Getaccents()
+        public static IEnumerable<string> Getaccents()
         {
-            return ThemeManager.Accents;
+            return ThemeManager.BaseColors;
         }
 
         private static void LoadThemesAndColors()
         {
             try
             {
-                ThemeManager.AddAppTheme("DarkBlue", new Uri("pack://application:,,,/NetLib;component/Source/WPF/Theme/DarkBlue.xaml"));
+                /*ThemeManager.AddAppTheme("DarkBlue", new Uri("pack://application:,,,/NetLib;component/Source/WPF/Theme/DarkBlue.xaml"));
                 ThemeManager.AddAppTheme("Gray", new Uri("pack://application:,,,/NetLib;component/Source/WPF/Theme/Gray.xaml"));
                 ThemeManager.AddAppTheme("AlabasterLight", new Uri("pack://application:,,,/NetLib;component/Source/WPF/Theme/AlabasterLight.xaml"));
                 ThemeManager.AddAccent("Gray", new Uri("pack://application:,,,/NetLib;component/Source/WPF/Theme/Accents/GrayAccent.xaml"));
@@ -308,7 +251,7 @@ namespace NetLib.WPF
                 ThemeManager.AddAccent("mdRed", new Uri("pack://application:,,,/NetLib;component/Source/WPF/Theme/Accents/mdRed.xaml"));
                 ThemeManager.AddAccent("mdTeal", new Uri("pack://application:,,,/NetLib;component/Source/WPF/Theme/Accents/mdTeal.xaml"));
                 ThemeManager.AddAccent("mdYellow", new Uri("pack://application:,,,/NetLib;component/Source/WPF/Theme/Accents/mdYellow.xaml"));
-                ThemeManager.AddAccent("Azure", new Uri("pack://application:,,,/NetLib;component/Source/WPF/Theme/Accents/Azure.xaml"));
+                ThemeManager.AddAccent("Azure", new Uri("pack://application:,,,/NetLib;component/Source/WPF/Theme/Accents/Azure.xaml"));*/
             }
             catch (Exception ex)
             {
@@ -316,26 +259,23 @@ namespace NetLib.WPF
             }
         }
 
-        /// <summary>
-        /// Determining Ideal Text Color Based on Specified Background Color
-        /// http://www.codeproject.com/KB/GDI-plus/IdealTextColor.aspx
-        /// </summary>
-        /// <param name = "color">The bg.</param>
-        /// <returns></returns>
-        public static Color IdealTextColor(Color color)
+        private static ApplicationThemes FindApplication(WindowsThemes windowsThemes, string appName)
         {
-            const int nThreshold = 105;
-            var bgDelta = Convert.ToInt32(color.R * 0.299 + color.G * 0.587 + color.B * 0.114);
-            var foreColor = 255 - bgDelta < nThreshold ? Colors.Black : Colors.White;
-            return foreColor;
+            return windowsThemes.Applications.FirstOrDefault(a => a.Name.Equals(appName));
         }
 
-        [NotNull]
-        public static SolidColorBrush GetSolidColorBrush(Color color, double opacity = 1d)
+        private static string GetAppName()
         {
-            var brush = new SolidColorBrush(color) { Opacity = opacity };
-            brush.Freeze();
-            return brush;
+            try
+            {
+                return Process.GetCurrentProcess().ProcessName;
+            }
+            catch (Exception ex)
+            {
+                Logger.Error(ex);
+            }
+
+            return "default";
         }
     }
 }
