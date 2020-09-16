@@ -16,7 +16,7 @@
       <dependency id="BimLab.Metro" version="1.0.15" />
       <dependency id="DynamicData" version="6.16.*" />
       <dependency id="DynamicData.ReactiveUI" version="6.11.*" />
-      <dependency id="EPPlus" version="5.3.0" />
+      <dependency id="EPPlus" version="5.3.2" />
       <dependency id="Enums.NET" version="3.0.3" />
       <dependency id="FluentValidation" version="9.2.0" />
       <dependency id="FontAwesome.WPF" version="4.7.0.9" />
