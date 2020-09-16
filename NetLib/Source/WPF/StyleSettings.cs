@@ -26,7 +26,6 @@
         static StyleSettings()
         {
             applicationName = GetAppName();
-            LoadThemesAndColors();
             var windowsThemes = LoadWindowsThemes();
             if (windowsThemes.Applications == null)
                 windowsThemes.Applications = new List<ApplicationThemes>();
@@ -182,8 +181,9 @@
         {
             try
             {
-                var fTheme = ThemeManager.GetTheme(themeName);
-                return fTheme ?? ThemeManager.GetTheme("White Blue") ?? ThemeManager.Themes.First();
+                return ThemeManager.GetTheme(themeName) ??
+                       ThemeManager.GetTheme("Light.Cyan") ??
+                       ThemeManager.Themes.First();
             }
             catch
             {
@@ -217,46 +217,6 @@
         public static IEnumerable<Pik.Metro.Theme> GetThemes()
         {
             return ThemeManager.Themes;
-        }
-
-        public static IEnumerable<string> Getaccents()
-        {
-            return ThemeManager.BaseColors;
-        }
-
-        private static void LoadThemesAndColors()
-        {
-            try
-            {
-                /*ThemeManager.AddAppTheme("DarkBlue", new Uri("pack://application:,,,/NetLib;component/Source/WPF/Theme/DarkBlue.xaml"));
-                ThemeManager.AddAppTheme("Gray", new Uri("pack://application:,,,/NetLib;component/Source/WPF/Theme/Gray.xaml"));
-                ThemeManager.AddAppTheme("AlabasterLight", new Uri("pack://application:,,,/NetLib;component/Source/WPF/Theme/AlabasterLight.xaml"));
-                ThemeManager.AddAccent("Gray", new Uri("pack://application:,,,/NetLib;component/Source/WPF/Theme/Accents/GrayAccent.xaml"));
-                ThemeManager.AddAccent("mdAmber", new Uri("pack://application:,,,/NetLib;component/Source/WPF/Theme/Accents/mdAmber.xaml"));
-                ThemeManager.AddAccent("mdBlue", new Uri("pack://application:,,,/NetLib;component/Source/WPF/Theme/Accents/mdBlue.xaml"));
-                ThemeManager.AddAccent("mdBlueGrey", new Uri("pack://application:,,,/NetLib;component/Source/WPF/Theme/Accents/mdBlueGrey.xaml"));
-                ThemeManager.AddAccent("mdBrown", new Uri("pack://application:,,,/NetLib;component/Source/WPF/Theme/Accents/mdBrown.xaml"));
-                ThemeManager.AddAccent("mdCyan", new Uri("pack://application:,,,/NetLib;component/Source/WPF/Theme/Accents/mdCyan.xaml"));
-                ThemeManager.AddAccent("mdDeepOrange", new Uri("pack://application:,,,/NetLib;component/Source/WPF/Theme/Accents/mdDeepOrange.xaml"));
-                ThemeManager.AddAccent("mdDeepPurple", new Uri("pack://application:,,,/NetLib;component/Source/WPF/Theme/Accents/mdDeepPurple.xaml"));
-                ThemeManager.AddAccent("mdGreen", new Uri("pack://application:,,,/NetLib;component/Source/WPF/Theme/Accents/mdGreen.xaml"));
-                ThemeManager.AddAccent("mdGrey", new Uri("pack://application:,,,/NetLib;component/Source/WPF/Theme/Accents/mdGrey.xaml"));
-                ThemeManager.AddAccent("mdIndigo", new Uri("pack://application:,,,/NetLib;component/Source/WPF/Theme/Accents/mdIndigo.xaml"));
-                ThemeManager.AddAccent("mdLightBlue", new Uri("pack://application:,,,/NetLib;component/Source/WPF/Theme/Accents/mdLightBlue.xaml"));
-                ThemeManager.AddAccent("mdLightGreen", new Uri("pack://application:,,,/NetLib;component/Source/WPF/Theme/Accents/mdLightGreen.xaml"));
-                ThemeManager.AddAccent("mdLime", new Uri("pack://application:,,,/NetLib;component/Source/WPF/Theme/Accents/mdLime.xaml"));
-                ThemeManager.AddAccent("mdOrange", new Uri("pack://application:,,,/NetLib;component/Source/WPF/Theme/Accents/mdOrange.xaml"));
-                ThemeManager.AddAccent("mdPink", new Uri("pack://application:,,,/NetLib;component/Source/WPF/Theme/Accents/mdPink.xaml"));
-                ThemeManager.AddAccent("mdPurple", new Uri("pack://application:,,,/NetLib;component/Source/WPF/Theme/Accents/mdPurple.xaml"));
-                ThemeManager.AddAccent("mdRed", new Uri("pack://application:,,,/NetLib;component/Source/WPF/Theme/Accents/mdRed.xaml"));
-                ThemeManager.AddAccent("mdTeal", new Uri("pack://application:,,,/NetLib;component/Source/WPF/Theme/Accents/mdTeal.xaml"));
-                ThemeManager.AddAccent("mdYellow", new Uri("pack://application:,,,/NetLib;component/Source/WPF/Theme/Accents/mdYellow.xaml"));
-                ThemeManager.AddAccent("Azure", new Uri("pack://application:,,,/NetLib;component/Source/WPF/Theme/Accents/Azure.xaml"));*/
-            }
-            catch (Exception ex)
-            {
-                Logger.Error(ex, "LoadThemesAndColors");
-            }
         }
 
         private static ApplicationThemes FindApplication(WindowsThemes windowsThemes, string appName)

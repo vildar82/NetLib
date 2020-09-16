@@ -1,17 +1,12 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:converters="clr-namespace:NetLib.WPF.Converters"
-                    xmlns:controls="http://metro.pik.com/winfx/xaml/controls">
+                    xmlns:controls="http://metro.pik.com/winfx/xaml/controls"
+                    xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks">
     <ResourceDictionary.MergedDictionaries>
-        <!-- MahApps.Metro resource dictionaries. Make sure that all file names are Case Sensitive! -->
-        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
-        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
-        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colors.xaml" />
-        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/FlatSlider.xaml" />
-        <!-- Accent and AppTheme setting -->
-        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Blue.xaml" />
-        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml" />
-
+        <ResourceDictionary Source="pack://application:,,,/Pik.Metro;component/Styles/Controls.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/Pik.Metro;component/Styles/Fonts.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/Pik.Metro;component/Styles/Themes/Light.Blue.xaml" />
         <ResourceDictionary Source="WPF/Styles/ScrollBarIOS.xaml" />
     </ResourceDictionary.MergedDictionaries>
     <!--Если textBox в ListBox - выделяется весь элемент-->

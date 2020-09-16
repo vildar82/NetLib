@@ -5,7 +5,8 @@
     /// </summary>
     public partial class StyleSettingsView
     {
-        public StyleSettingsView(StyleSettingsViewModel model) : base(model)
+        public StyleSettingsView(StyleSettingsViewModel model)
+            : base(model)
         {
             InitializeComponent();
         }

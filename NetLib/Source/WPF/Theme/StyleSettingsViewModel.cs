@@ -12,7 +12,7 @@
         public StyleSettingsViewModel(IBaseViewModel? parent)
             : base(parent)
         {
-            Themes = StyleSettings.GetThemes().ToList();
+            Themes = StyleSettings.GetThemes().OrderBy(o => o.Name).ToList();
             var (theme, find) = StyleSettings.GetWindowTheme(parent?.Window);
             SelectedTheme = Themes.FirstOrDefault(t => t == theme) ?? Themes.First();
             IsOnlyThisWindow = find;
