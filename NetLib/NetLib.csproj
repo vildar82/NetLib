@@ -301,7 +301,7 @@
     <PackageReference Include="EPPlus" Version="5.3.2" />
     <PackageReference Include="Enums.NET" Version="3.0.3" />
     <PackageReference Include="FluentValidation" Version="9.2.0" />
-    <PackageReference Include="Fody" Version="6.2.5" PrivateAssets="all" />
+    <PackageReference Include="Fody" Version="6.2.6" PrivateAssets="all" />
     <PackageReference Include="FontAwesome.WPF" Version="4.7.0.9" />
     <PackageReference Include="JetBrains.Annotations" Version="2020.1.0" PrivateAssets="all" />
     <PackageReference Include="MahApps.Metro.IconPacks" Version="4.4.0" />
