@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>NetLib</RootNamespace>
     <AssemblyName>NetLib</AssemblyName>
-    <CodeAnalysisRuleSet>$(SolutionDir)stylecop1.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet>$(SolutionDir)stylecop.ruleset</CodeAnalysisRuleSet>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <FileAlignment>512</FileAlignment>
@@ -17,18 +17,18 @@
     <TargetFrameworkProfile />
     <NullableContextOptions>enable</NullableContextOptions>
     <Nullable>enable</Nullable>
-    <LangVersion>8</LangVersion>
+    <LangVersion>default</LangVersion>
     <PlatformTarget>x64</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>c:\Autodesk\AutoCAD\Pik\Settings\Dll\</OutputPath>
+    <OutputPath>$(AppData)\Autodesk\ApplicationPlugins\PIK.CAD.bundle\Settings\Dll\</OutputPath>
     <DefineConstants>TRACE;DEBUG;JETBRAINS_ANNOTATIONS</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>    
-    <DocumentationFile>c:\Autodesk\AutoCAD\Pik\Settings\Dll\NetLib.xml</DocumentationFile>
+    <DocumentationFile>$(AppData)\Autodesk\ApplicationPlugins\PIK.CAD.bundle\Settings\Dll\NetLib.xml</DocumentationFile>
     <NoWarn>CS1591</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -107,6 +107,7 @@
     <Compile Include="Source\Enumerable\Enumeration.cs" />
     <Compile Include="Source\Enumerable\GroupConsecutive\DuplicateGrouper.cs" />
     <Compile Include="Source\Enumerable\GroupConsecutive\PartitionExtension.cs" />
+    <Compile Include="Source\Errors\ExtensionExt.cs" />
     <Compile Include="Source\Extensions\AsyncHelper.cs" />
     <Compile Include="Source\Extensions\ColorExt.cs" />
     <Compile Include="Source\Files\XmlExt.cs" />
@@ -332,7 +333,7 @@
   <PropertyGroup>
     <PostBuildEvent>if $(ConfigurationName) == ReleaseLocal (
    c:\dev\nuget pack "$(ProjectPath)" -IncludeReferencedProjects -properties Configuration=ReleaseLocal   
-   xcopy "$(ProjectDir)bin\Release" "c:\Autodesk\AutoCAD\Pik\Settings\Dll\" /Y /C /Q
+   xcopy "$(ProjectDir)bin\Release" "$(AppData)\Autodesk\ApplicationPlugins\PIK.CAD.bundle\Settings\Dll\" /Y /C /Q
 )</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
