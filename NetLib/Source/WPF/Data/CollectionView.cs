@@ -1,16 +1,16 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Collections.Specialized;
-using System.ComponentModel;
-using System.Globalization;
-using System.Linq;
-using System.Windows.Data;
-using JetBrains.Annotations;
-
-namespace NetLib.WPF.Data
+﻿namespace NetLib.WPF.Data
 {
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Collections.ObjectModel;
+    using System.Collections.Specialized;
+    using System.ComponentModel;
+    using System.Globalization;
+    using System.Linq;
+    using System.Windows.Data;
+    using JetBrains.Annotations;
+
     public interface ICollectionView<out T> : IEnumerable<T>, ICollectionView
     {
         IEnumerable<T> SourceCollectionGeneric { get; }

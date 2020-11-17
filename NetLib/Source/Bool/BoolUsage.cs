@@ -1,8 +1,8 @@
-﻿using JetBrains.Annotations;
-using System;
-
-namespace NetLib
+﻿namespace NetLib
 {
+    using System;
+    using JetBrains.Annotations;
+
     [PublicAPI]
     public class BoolUsage : IDisposable
     {

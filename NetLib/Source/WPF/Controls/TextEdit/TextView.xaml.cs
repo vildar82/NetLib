@@ -5,7 +5,8 @@
     /// </summary>
     public partial class TextView
     {
-        public TextView(TextVM textVM) : base(textVM)
+        public TextView(TextVM textVM)
+            : base(textVM)
         {
             InitializeComponent();
         }

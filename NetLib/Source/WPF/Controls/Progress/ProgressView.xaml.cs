@@ -1,10 +1,10 @@
-﻿using System;
-using System.ComponentModel;
-using System.Threading;
-using System.Windows.Threading;
-
-namespace NetLib.WPF.Controls.Progress
+﻿namespace NetLib.WPF.Controls.Progress
 {
+    using System;
+    using System.ComponentModel;
+    using System.Threading;
+    using System.Windows.Threading;
+
     /// <summary>
     /// Interaction logic for ProgressView.xaml
     /// </summary>

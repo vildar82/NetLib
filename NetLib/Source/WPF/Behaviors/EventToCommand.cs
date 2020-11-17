@@ -2,8 +2,8 @@
 using System.Reflection;
 using System.Windows;
 using System.Windows.Input;
-using System.Windows.Interactivity;
 using JetBrains.Annotations;
+using Microsoft.Xaml.Behaviors;
 
 /// <summary>
 /// https://stackoverflow.com/a/16317999
@@ -22,6 +22,7 @@ public class EventToCommand : Behavior<FrameworkElement>
         get => (string) GetValue(EventProperty);
         set => SetValue(EventProperty, value);
     }
+
     public static readonly DependencyProperty EventProperty = DependencyProperty.Register("Event", typeof(string),
         typeof(EventToCommand), new PropertyMetadata(null, OnEventChanged));
 
@@ -31,6 +32,7 @@ public class EventToCommand : Behavior<FrameworkElement>
         get => (ICommand) GetValue(CommandProperty);
         set => SetValue(CommandProperty, value);
     }
+
     public static readonly DependencyProperty CommandProperty = DependencyProperty.Register("Command", typeof(ICommand),
         typeof(EventToCommand), new PropertyMetadata(null));
 
@@ -40,6 +42,7 @@ public class EventToCommand : Behavior<FrameworkElement>
         get => (bool) GetValue(PassArgumentsProperty);
         set => SetValue(PassArgumentsProperty, value);
     }
+
     public static readonly DependencyProperty PassArgumentsProperty = DependencyProperty.Register("PassArguments", typeof(bool),
         typeof(EventToCommand), new PropertyMetadata(false));
 
@@ -78,8 +81,10 @@ public class EventToCommand : Behavior<FrameworkElement>
                 _oldEvent = ei; // store to detach in case the Event property changes
             }
             else
+            {
                 throw new ArgumentException(
                     $"The event '{eventName}' was not found on type '{AssociatedObject.GetType().Name}'");
+            }
         }
     }
 

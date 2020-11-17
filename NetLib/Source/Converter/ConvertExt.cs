@@ -1,9 +1,9 @@
-﻿using JetBrains.Annotations;
-using System;
-using System.Drawing;
-
-namespace NetLib
+﻿namespace NetLib
 {
+    using System;
+    using System.Drawing;
+    using JetBrains.Annotations;
+
     public static class ConvertExt
     {
         [PublicAPI]
@@ -32,7 +32,9 @@ namespace NetLib
             var typeT = typeof(T);
             if (value is string s)
             {
-                if (s.IsNullOrEmpty()) return default;
+                if (s.IsNullOrEmpty())
+                    return default;
+
                 s = s.Trim().RemoveSpecChars();
                 if (typeT == typeof(double) || typeT == typeof(double?))
                 {

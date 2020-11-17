@@ -1,10 +1,10 @@
-﻿using JetBrains.Annotations;
-using System;
-using System.Collections.Generic;
-using System.Threading;
-
-namespace NetLib
+﻿namespace NetLib
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Threading;
+    using JetBrains.Annotations;
+
     /// <summary>
     /// Повторение операции, за заданное время и количество попыток.
     /// </summary>
@@ -19,11 +19,13 @@ namespace NetLib
         /// <param name="retryCount">Кол попыток</param>
         public static void Do(Action action, TimeSpan retryInterval, int retryCount = 3)
         {
-            Do<object>(() =>
+            Do<object>(
+                () =>
             {
                 action();
                 return null;
-            }, retryInterval, retryCount);
+            }, retryInterval,
+                retryCount);
         }
 
         /// <summary>
@@ -41,7 +43,9 @@ namespace NetLib
             {
                 try
                 {
-                    if (retry > 0) Thread.Sleep(retryInterval);
+                    if (retry > 0)
+                        Thread.Sleep(retryInterval);
+
                     return action();
                 }
                 catch (Exception ex)
@@ -49,6 +53,7 @@ namespace NetLib
                     exceptions.Add(ex);
                 }
             }
+
             throw new AggregateException(exceptions);
         }
     }

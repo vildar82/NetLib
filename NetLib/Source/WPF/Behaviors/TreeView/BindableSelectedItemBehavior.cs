@@ -1,10 +1,10 @@
-﻿using JetBrains.Annotations;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Interactivity;
-
-namespace NetLib.WPF.Behaviors
+﻿namespace NetLib.WPF.Behaviors
 {
+    using System.Windows;
+    using System.Windows.Controls;
+    using JetBrains.Annotations;
+    using Microsoft.Xaml.Behaviors;
+
     /// <summary>
     /// e:Interaction.Behaviors
     ///     behaviours:BindableSelectedItemBehavior SelectedItem = "{Binding SelectedItem, Mode=TwoWay}"

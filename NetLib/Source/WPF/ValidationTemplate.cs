@@ -1,14 +1,14 @@
-﻿using FluentValidation;
-using FluentValidation.Results;
-using JetBrains.Annotations;
-using System;
-using System.Collections;
-using System.Collections.Concurrent;
-using System.ComponentModel;
-using System.Linq;
-
-namespace NetLib.WPF
+﻿namespace NetLib.WPF
 {
+    using System;
+    using System.Collections;
+    using System.Collections.Concurrent;
+    using System.ComponentModel;
+    using System.Linq;
+    using FluentValidation;
+    using JetBrains.Annotations;
+    using ValidationResult = FluentValidation.Results.ValidationResult;
+
     [PublicAPI]
     public class ValidationTemplate : INotifyDataErrorInfo
     {
@@ -27,7 +27,8 @@ namespace NetLib.WPF
         {
             this.target = target;
             validator = GetValidator(target.GetType());
-            validationResult = validator.Validate(target);
+            var context = new ValidationContext<object>(target);
+            validationResult = validator.Validate(context);
             target.PropertyChanged += Validate;
         }
 
@@ -55,7 +56,7 @@ namespace NetLib.WPF
 
         private void Validate(object sender, PropertyChangedEventArgs e)
         {
-            validationResult = validator.Validate(target);
+            validationResult = validator.Validate(new ValidationContext<object>(target));
             foreach (var error in validationResult.Errors)
             {
                 RaiseErrorsChanged(error.PropertyName);

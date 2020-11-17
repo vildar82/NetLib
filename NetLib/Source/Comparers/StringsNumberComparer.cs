@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
-using JetBrains.Annotations;
-
-namespace NetLib.Comparers
+﻿namespace NetLib.Comparers
 {
+    using System.Collections.Generic;
+    using JetBrains.Annotations;
+
     /// <summary>
     /// Сравнение строк как чисел
     /// </summary>
@@ -19,13 +19,15 @@ namespace NetLib.Comparers
                     // y - число numberY
                     return numberX.CompareTo(numberY);
                 }
+
                 // y - строка.
                 return -1; // число numberX меньше строки y
             }
+
             // x - строка
+            // y - строка.
             // ReSharper disable once StringCompareIsCultureSpecific.1
             return int.TryParse(y, out var _) ? 1 : string.Compare(x, y);
-            // y - строка.
         }
     }
 }

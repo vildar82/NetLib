@@ -32,7 +32,9 @@
         [PublicAPI]
         public static bool HasAny<T>(this T enum1, T enum2) where T : struct
         {
-            if (!typeof(T).IsEnum) throw new ArgumentException("Это не enum");
+            if (!typeof(T).IsEnum)
+                throw new ArgumentException("Это не enum");
+
             var v1 = Convert.ToInt32(enum1);
             var v2 = Convert.ToInt32(enum2);
             return v1 == 0 || v2 == 0 || (v1 & v2) > 0;

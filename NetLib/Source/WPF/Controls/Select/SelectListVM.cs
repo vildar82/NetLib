@@ -1,16 +1,15 @@
-﻿using System;
-using JetBrains.Annotations;
-using ReactiveUI;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reactive.Linq;
-using System.Text.RegularExpressions;
-using System.Windows.Controls;
-using System.Windows.Data;
-
-namespace NetLib.WPF.Controls.Select
+﻿namespace NetLib.WPF.Controls.Select
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
     using System.Reactive;
+    using System.Reactive.Linq;
+    using System.Text.RegularExpressions;
+    using System.Windows.Controls;
+    using System.Windows.Data;
+    using JetBrains.Annotations;
+    using ReactiveUI;
 
     /// <summary>
     /// Использование - SelectList.Select()
@@ -74,6 +73,7 @@ namespace NetLib.WPF.Controls.Select
             {
                 Filter = FilterPredicate
             };
+
             HasFilter = items.Count > 10;
             var canOk = this.WhenAnyValue(v => v.CanCustomValue, v => v.Selected).Select(s => s.Item2 != null || s.Item1);
             
@@ -86,13 +86,16 @@ namespace NetLib.WPF.Controls.Select
             {
                 OK = CreateCommand(OkExecute, canOk);
             }
+
             SelectAll = items.All(a => a.IsSelected);
             this.WhenAnyValue(v => v.SelectAll).Skip(1).Subscribe(s => items.ForEach(i => i.IsSelected = s));
         }
 
         private bool FilterPredicate(object obj)
         {
-            if (string.IsNullOrEmpty(Filter)) return true;
+            if (string.IsNullOrEmpty(Filter))
+                return true;
+
             var item = (SelectListItem<T>)obj;
             return Regex.IsMatch(item.Name, Filter, RegexOptions.IgnoreCase);
         }
@@ -115,6 +118,7 @@ namespace NetLib.WPF.Controls.Select
                     }
                 }
             }
+
             DialogResult = true;
         }
     }

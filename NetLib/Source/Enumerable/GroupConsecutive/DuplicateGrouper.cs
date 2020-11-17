@@ -1,8 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace NetLib
+﻿namespace NetLib
 {
+    using System;
+    using System.Collections.Generic;
+
     internal class DuplicateGrouper<T, Tkey>
     {
         private Func<T, Tkey> _keySelector;

@@ -1,8 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace NetLib
+﻿namespace NetLib
 {
+    using System;
+    using System.Collections.Generic;
+
     public static class PartitionExtension
     {
         /// <summary>

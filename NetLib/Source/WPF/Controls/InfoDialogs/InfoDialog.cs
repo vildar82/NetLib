@@ -1,9 +1,9 @@
-﻿using JetBrains.Annotations;
-using NetLib.WPF.Controls.InfoDialogs;
-
-// ReSharper disable once CheckNamespace
+﻿// ReSharper disable once CheckNamespace
 namespace NetLib.WPF.Controls
 {
+    using InfoDialogs;
+    using JetBrains.Annotations;
+
     [PublicAPI]
     public class InfoDialog
     {

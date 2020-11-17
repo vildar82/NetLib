@@ -1,10 +1,10 @@
-﻿using JetBrains.Annotations;
-using System;
-using System.Globalization;
-using System.Windows.Data;
-
-namespace NetLib.WPF.Converters
+﻿namespace NetLib.WPF.Converters
 {
+    using System;
+    using System.Globalization;
+    using System.Windows.Data;
+    using JetBrains.Annotations;
+
     [PublicAPI]
     [ValueConversion(typeof(bool), typeof(string))]
     public class BoolToYesNoConverter : ConvertorBase
@@ -16,6 +16,7 @@ namespace NetLib.WPF.Converters
             {
                 return b ? "Да" : "Нет";
             }
+
             return null;
         }
     }

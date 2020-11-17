@@ -1,11 +1,10 @@
-﻿using ReactiveUI;
-using System;
-using System.Reactive.Linq;
-using JetBrains.Annotations;
-
-namespace NetLib.WPF.Controls
+﻿namespace NetLib.WPF.Controls
 {
+    using System;
     using System.Reactive;
+    using System.Reactive.Linq;
+    using JetBrains.Annotations;
+    using ReactiveUI;
 
     public class DesignTextVM : TextVM
     {

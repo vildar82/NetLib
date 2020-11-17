@@ -1,17 +1,16 @@
-﻿using JetBrains.Annotations;
-using MahApps.Metro;
-
-namespace NetLib.WPF.Theme
+﻿namespace NetLib.WPF.Theme
 {
+    using Pik.Metro;
+
     public class ThemeViewModel : BaseModel
     {
-        public ThemeViewModel([NotNull] AppTheme theme)
+        public ThemeViewModel(Theme theme)
         {
             Theme = theme;
             Name = theme.Name;
         }
 
-        public AppTheme Theme { get; set; }
+        public Theme Theme { get; set; }
         public string Name { get; set; }
     }
 }

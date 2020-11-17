@@ -1,12 +1,12 @@
-﻿using JetBrains.Annotations;
-using System;
-using System.Globalization;
-using System.Linq;
-using System.Windows.Data;
-using System.Windows.Markup;
-
-namespace NetLib.WPF.Converters
+﻿namespace NetLib.WPF.Converters
 {
+    using System;
+    using System.Globalization;
+    using System.Linq;
+    using System.Windows.Data;
+    using System.Windows.Markup;
+    using JetBrains.Annotations;
+
     [PublicAPI]
     [MarkupExtensionReturnType(typeof(IValueConverter))]
     public class BooleanOrConverter : MarkupExtension, IMultiValueConverter
