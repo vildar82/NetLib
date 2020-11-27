@@ -1,35 +1,35 @@
 ﻿namespace NetLib
 {
     using System;
-    using JetBrains.Annotations;
 
     public class ActionUsage : IDisposable
     {
-        private readonly Action after;
-        private readonly Action<object> afterObj;
-        private readonly object obj;
+        private readonly Action _after;
+        private readonly Action<object>? _afterObj;
+        private readonly object _obj;
 
-        public ActionUsage([NotNull] Action before, Action after)
+        public ActionUsage(Action before, Action after)
         {
             before();
-            this.after = after;
+            _after = after;
         }
 
-        public ActionUsage([NotNull] object obj, Action preset, Action<object> after)
+        public ActionUsage(object obj, Action preset, Action<object> after)
         {
-            this.obj = obj;
-            afterObj = after;
+            _obj = obj;
+            preset();
+            _afterObj = after;
         }
 
         public void Dispose()
         {
-            if (afterObj != null)
+            if (_afterObj != null)
             {
-                afterObj(obj);
+                _afterObj(_obj);
             }
             else
             {
-                after();
+                _after();
             }
         }
     }

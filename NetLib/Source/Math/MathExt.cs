@@ -104,9 +104,8 @@ namespace NetLib
         {
             var res = input.GetStartInteger();
             if (res.Success)
-            {
                 return res.Value;
-            }
+
             throw new Exception(res.Error);
         }
 
@@ -115,8 +114,7 @@ namespace NetLib
         /// int's = 1, 2, 3, 4, 5, 7, 8, 10, 15, 16, 100, 101, 102, 103, 105, 106, 107, 109
         /// res = "1-8, 10, 15, 16, 100-107, 109"
         /// </summary>
-        [NotNull]
-        public static string IntsToStringSequence([NotNull] int[] ints)
+        public static string IntsToStringSequence(int[] ints)
         {
             var uniqints = ints.Distinct().ToList();
             var res = string.Empty;
@@ -129,10 +127,10 @@ namespace NetLib
                     seq = new IntSequence(n);
                 }
             }
+
             if (!seq.IsNull())
-            {
                 SetSeq(ref res, ref seq);
-            }
+
             return res;
         }
 
@@ -143,8 +141,7 @@ namespace NetLib
         /// </summary>
         /// <param name="ints"></param>
         /// <returns></returns>
-        [NotNull]
-        public static string IntsToStringSequenceAnton([NotNull] int[] ints)
+        public static string IntsToStringSequenceAnton(int[] ints)
         {
             // int[] paleNumbersInt = new[] { 1, 2, 3, 4, 5, 7, 8, 10, 15, 16, 100, 101, 102, 103, 105, 106, 107, 109 };
             // res = 1-8,10,15,16,100-107,109
@@ -160,31 +157,41 @@ namespace NetLib
                         mark += ints[i];
                         break;
                     }
-                    if (mark[mark.Length - 1] != '-') mark += ",";
+
+                    if (mark[mark.Length - 1] != '-')
+                        mark += ",";
                     mark += ints[i];
                     break;
                 }
+
                 if (i == 0 || isFirstEnter)
                 {
                     mark += ints[i].ToString();
                     isFirstEnter = false;
                     continue;
                 }
+
                 if (ints[i + 1] - ints[i] == 1)
                 {
-                    if (mark[mark.Length - 1] != '-') mark += "-";// "," + int's[i] + "-";
+                    if (mark[mark.Length - 1] != '-')
+                        mark += "-"; // "," + int's[i] + "-";
                     isWas = true;
                     continue;
                 }
-                if (mark[mark.Length - 1] != '-') mark += ",";
-                if (!isWas) mark += ints[i] + ",";
+
+                if (mark[mark.Length - 1] != '-')
+                    mark += ",";
+                if (!isWas)
+                    mark += ints[i] + ",";
                 else
                 {
                     isWas = false;
                     mark += ints[i] + ",";
                 }
+
                 isFirstEnter = true;
             }
+
             mark = mark.Replace(",,", ",");
             return mark;
         }
@@ -246,12 +253,14 @@ namespace NetLib
             {
                 angle = angle.ToRadians();
             }
+
             var p = angle % PIHalf;
             if (p < tolerance)
             {
                 angteToOrtho = 0;
                 return true;
             }
+
             var np = PIHalf - p;
             angteToOrtho = p < np ? -p : np;
             return false;
@@ -292,9 +301,7 @@ namespace NetLib
         public static int RoundTo10(int i)
         {
             if (i % 10 != 0)
-            {
                 i = (i + 5) / 10 * 10;
-            }
             return i;
         }
 
@@ -304,9 +311,7 @@ namespace NetLib
         public static int RoundTo100(int i)
         {
             if (i % 100 != 0)
-            {
                 i = (i + 50) / 100 * 100;
-            }
             return i;
         }
 
@@ -316,9 +321,7 @@ namespace NetLib
         public static int RoundTo5(int i)
         {
             if (i % 5 != 0)
-            {
                 i = (i + 5) / 5 * 5;
-            }
             return i;
         }
 
@@ -329,15 +332,14 @@ namespace NetLib
         /// <returns>Угол в градусах</returns>
         public static double ToDegrees(this double radian)
         {
-            return radian % PI2 * RatioRadianToDegree;// 180.0 / Math.PI;
+            return (radian % PI2) * RatioRadianToDegree; // 180.0 / Math.PI;
         }
 
         public static double ToDouble(this string val)
         {
             if (string.IsNullOrEmpty(val))
-            {
                 return 0;
-            }
+
             val = val.Trim();
             try
             {
@@ -357,22 +359,22 @@ namespace NetLib
             {
                 // ignored
             }
+
             if (!double.TryParse(val, out var d))
             {
                 // ReSharper disable once StringIndexOfIsCultureSpecific.1
                 val = val.IndexOf(",") != -1 ? val.Replace(",", ".") : val.Replace(".", ",");
                 d = double.Parse(val);
             }
+
             return d;
         }
 
-        [NotNull]
         public static string ToHours(this int min)
         {
             return ToHours((double)min);
         }
 
-        [NotNull]
         public static string ToHours(this double min)
         {
             var span = TimeSpan.FromMinutes(min);
@@ -427,6 +429,7 @@ namespace NetLib
                     end = next;
                     return true;
                 }
+
                 return false;
             }
 
@@ -447,6 +450,7 @@ namespace NetLib
                 {
                     res = start + "-" + end;
                 }
+
                 return res;
             }
 

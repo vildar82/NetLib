@@ -20,8 +20,7 @@
         /// <param name="value">Значение</param>
         /// <returns>Значение приведенное к заданному типу.</returns>
         /// <exception cref="InvalidCastException">Это и другие исключения от Convert.ChangeType</exception>
-        [CanBeNull]
-        public static T GetValue<T>(this object value)
+        public static T? GetValue<T>(this object value)
         {
             switch (value)
             {
@@ -98,7 +97,7 @@
         }
 
         [PublicAPI]
-        public static T TryGetValue<T>(this object value, T defaultValue = default)
+        public static T? TryGetValue<T>(this object value, T defaultValue = default)
         {
             try
             {

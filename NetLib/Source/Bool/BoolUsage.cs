@@ -9,7 +9,7 @@
         private readonly bool oldValue;
         private readonly Action<bool> setValue;
 
-        public BoolUsage(bool curValue, bool newValue, [NotNull] Action<bool> setValue)
+        public BoolUsage(bool curValue, bool newValue, Action<bool> setValue)
         {
             oldValue = curValue;
             this.setValue = setValue;

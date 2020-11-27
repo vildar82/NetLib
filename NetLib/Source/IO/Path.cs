@@ -21,7 +21,7 @@
             return path.Try(f => File.GetAccessControl(f).GetOwner(typeof(System.Security.Principal.NTAccount)).ToString());
         }
 
-        public static void StartExplorer([NotNull] this string path)
+        public static void StartExplorer(this string path)
         {
             if (path.IsFilePath())
             {
@@ -34,7 +34,7 @@
             }
         }
 
-        public static bool IsFilePath([NotNull] this string path)
+        public static bool IsFilePath(this string path)
         {
             var attr = File.GetAttributes(path);
             return (attr & FileAttributes.Directory) != FileAttributes.Directory;
@@ -49,15 +49,14 @@
         /// Files the exists with timeout.
         /// </summary>
         /// <param name="file">The file.</param>
-        public static bool FileExists([NotNull] string file)
+        public static bool FileExists(string file)
         {
             var task = Task.Run(() => File.Exists(file));
             task.Wait(TimeSpan.FromMilliseconds(1000));
             return task.IsCompleted && task.Result;
         }
 
-        [NotNull]
-        public static Task<bool> FileExistsAsync([NotNull] string file)
+        public static Task<bool> FileExistsAsync(string file)
         {
             return Task.Run(() => File.Exists(file));
         }
@@ -73,7 +72,7 @@
             return shellFile.Thumbnail.ExtraLargeBitmap;
         }
 
-        public static bool IsEqualsDateFile([NotNull] string file1, [NotNull] string file2)
+        public static bool IsEqualsDateFile(string file1, string file2)
         {
             var f1Date = File.GetLastWriteTime(file1);
             var f2Date = File.GetLastWriteTime(file2);
@@ -88,14 +87,14 @@
         /// <returns>
         ///   <c>true</c> if [is newest file] [the specified file1]; otherwise, <c>false</c>.
         /// </returns>
-        public static bool IsNewestFile([NotNull] string file1, [NotNull] string file2)
+        public static bool IsNewestFile(string file1, string file2)
         {
             var f1Date = File.GetLastWriteTime(file1);
             var f2Date = File.GetLastWriteTime(file2);
             return f1Date > f2Date;
         }
 
-        public static bool IsEqualsDateDir([NotNull] string sourceDir, [NotNull] string destDir)
+        public static bool IsEqualsDateDir(string sourceDir, string destDir)
         {
             var dateSrc = Directory.GetLastWriteTime(sourceDir);
             var dateDest = Directory.GetLastWriteTime(destDir);
@@ -108,7 +107,7 @@
         /// <param name="sourceDir">The source dir.</param>
         /// <param name="destDir">The dest dir.</param>
         [PublicAPI]
-        public static void CopyDirectory([NotNull] string sourceDir, string destDir)
+        public static void CopyDirectory(string sourceDir, string destDir)
         {
             CopyDirectory(sourceDir, destDir, false);
         }
@@ -120,7 +119,7 @@
         /// <param name="destDir">The dest dir.</param>
         /// <param name="onlyNewest">if set to <c>true</c> [only newest].</param>
         [PublicAPI]
-        public static void CopyDirectory([NotNull] string sourceDir, string destDir, bool onlyNewest)
+        public static void CopyDirectory(string sourceDir, string destDir, bool onlyNewest)
         {
             sourceDir = sourceDir.TrimEnd(System.IO.Path.DirectorySeparatorChar);
             destDir = destDir.TrimEnd(System.IO.Path.DirectorySeparatorChar);
@@ -194,13 +193,11 @@
         /// Возвращает путь к временному файлу
         /// </summary>
         /// <param name="extWithDot">Расширение, если нужно, начиная с точки.</param>
-        [NotNull]
-        public static string GetTempFile([CanBeNull] string extWithDot = null)
+        public static string GetTempFile(string? extWithDot = null)
         {
             return System.IO.Path.GetTempPath() + Guid.NewGuid() + (extWithDot ?? ".tmp");
         }
 
-        [NotNull]
         public static string GetTemporaryDirectory()
         {
             var tempDirectory = System.IO.Path.Combine(System.IO.Path.GetTempPath(), System.IO.Path.GetRandomFileName());
@@ -211,7 +208,6 @@
         /// <summary>
         /// Пользовательская папка настроек
         /// </summary>
-        [NotNull]
         [PublicAPI]
         public static string GetUserPikFolder()
         {
@@ -232,8 +228,7 @@
         /// <param name="plugin">Имя плагина</param>
         /// <param name="fileName">Имя файла</param>
         /// <returns>Полный путь к файлу</returns>
-        [NotNull]
-        public static string GetUserPluginFile([NotNull] string plugin, [NotNull] string fileName)
+        public static string GetUserPluginFile(string plugin, string fileName)
         {
             var pluginFolder = GetUserPluginFolder(plugin);
             return System.IO.Path.Combine(pluginFolder, fileName);
@@ -244,9 +239,8 @@
         /// </summary>
         /// <param name="plugin">Имя плагина - имя папки</param>
         /// <returns>Полный путь</returns>
-        [NotNull]
         [PublicAPI]
-        public static string GetUserPluginFolder([NotNull] string plugin)
+        public static string GetUserPluginFolder(string plugin)
         {
             var companyFolder = GetUserPikFolder();
             var pluginFolder = System.IO.Path.Combine(companyFolder, plugin);
