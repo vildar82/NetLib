@@ -20,7 +20,7 @@
       <dependency id="Enums.NET" version="3.0.3" />
       <dependency id="FluentValidation" version="9.2.0" />
       <dependency id="FontAwesome.WPF" version="4.7.0.9" />
-      <dependency id="JetBrains.Annotations" version="2020.1.0" />
+      <dependency id="JetBrains.Annotations" version="2020.3.0" />
       <dependency id="MahApps.Metro.IconPacks" version="4.4.0" />
       <dependency id="NLog" version="4.7.4" />
       <dependency id="Newtonsoft.Json" version="12.0.3" />

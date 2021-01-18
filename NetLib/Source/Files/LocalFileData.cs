@@ -1,28 +1,30 @@
-﻿using JetBrains.Annotations;
-using NLog;
-using System;
-using System.IO;
-
-namespace NetLib
+﻿namespace NetLib
 {
+    using System;
+    using System.IO;
+    using JetBrains.Annotations;
+    using NLog;
+
     /// <summary>
     /// Данные хранимые в файле json локально
     /// </summary>
     [PublicAPI]
-    public class LocalFileData<T> where T : class, new()
+    public class LocalFileData<T>
+        where T : class, new()
     {
         private static ILogger Logger { get; } = LogManager.GetCurrentClassLogger();
-        private DateTime fileLastWrite;
-            
+
         public readonly string LocalFile;
         private readonly bool isXmlOrJson;
-        public T Data { get; set; }
+        private DateTime fileLastWrite;
+
+        public T? Data { get; set; }
 
         /// <summary>
         /// Данные хранимые в файле json локально
         /// </summary>
-        /// /// <param name="localFile"></param>
-        /// <param name="isXmlOrJson">true - xml, false - json</param>
+        /// <param name="localFile"></param>
+        /// <param name="isXmlOrJson">true - xml, false - json.</param>
         public LocalFileData([NotNull] string localFile, bool isXmlOrJson)
         {
             LocalFile = localFile;
@@ -35,12 +37,29 @@ namespace NetLib
         }
 
         /// <summary>
-        ///
+        /// Load
         /// </summary>
         public void Load()
         {
             Data = Deserialize();
             fileLastWrite = File.GetLastWriteTime(LocalFile);
+        }
+
+        /// <summary>
+        /// Load
+        /// </summary>
+        public T? TryLoadData()
+        {
+            try
+            {
+                Data = Deserialize();
+                fileLastWrite = File.GetLastWriteTime(LocalFile);
+                return Data;
+            }
+            catch
+            {
+                return Data;
+            }
         }
 
         public void Save()
