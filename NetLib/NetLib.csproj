@@ -5,12 +5,13 @@
         <LangVersion>default</LangVersion>
         <Nullable>enable</Nullable>
         <UseWpf>True</UseWpf>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <PackageVersion>21.1.0</PackageVersion>
+        <Authors>Vildar</Authors>
+        <Description>Net4.7.2 c# Library WPF + ReactiveUI</Description>
+        <PackageProjectUrl>https://github.com/vildar82/NetLib</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/vildar82/NetLib</RepositoryUrl>
     </PropertyGroup>
-
-    <ItemGroup>
-        <Reference Include="System.Windows.Forms" />
-        <Reference Include="WindowsFormsIntegration" />
-    </ItemGroup>
 
     <ItemGroup>
         <PackageReference Include="AttachedCommandBehavior" Version="2.0.0" />
@@ -45,27 +46,8 @@
     </ItemGroup>
 
     <ItemGroup>
-        <Reference Include="PresentationCore" />
-        <Reference Include="PresentationFramework" />
-        <Reference Include="System" />
-        <Reference Include="System.ComponentModel.Composition" />
-        <Reference Include="System.ComponentModel.DataAnnotations" />
-        <Reference Include="System.configuration" />
-        <Reference Include="System.Core" />
         <Reference Include="System.DirectoryServices" />
         <Reference Include="System.DirectoryServices.AccountManagement" />
-        <Reference Include="System.Drawing" />
-        <Reference Include="System.IO.Compression" />
-        <Reference Include="System.IO.Compression.FileSystem" />
-        <Reference Include="System.Numerics" />
-        <Reference Include="System.Runtime.Serialization" />
-        <Reference Include="System.Windows" />
-        <Reference Include="System.Xaml" />
-        <Reference Include="System.Xml.Linq" />
-        <Reference Include="System.Data.DataSetExtensions" />
-        <Reference Include="Microsoft.CSharp" />
-        <Reference Include="System.Data" />
-        <Reference Include="System.Xml" />
         <Reference Include="ToastNotifications, Version=2.2.143.4, Culture=neutral, processorArchitecture=MSIL">
             <SpecificVersion>False</SpecificVersion>
             <HintPath>lib\ToastNotifications.dll</HintPath>
@@ -74,7 +56,17 @@
             <SpecificVersion>False</SpecificVersion>
             <HintPath>lib\ToastNotifications.Messages.dll</HintPath>
         </Reference>
-        <Reference Include="WindowsBase" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="lib\ToastNotifications.dll" />
+      <Content Include="lib\ToastNotifications.dll">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <None Remove="lib\ToastNotifications.Messages.dll" />
+      <Content Include="lib\ToastNotifications.Messages.dll">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
     </ItemGroup>
 
 </Project>

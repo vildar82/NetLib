@@ -1,8 +1,8 @@
-﻿using JetBrains.Annotations;
-using System.Windows;
-
-namespace NetLib.WPF
+﻿namespace NetLib.WPF
 {
+    using System.Windows;
+    using JetBrains.Annotations;
+
     /// <summary>
     /// Window ...
     /// xmlns:xc="clr-namespace:ExCastle.Wpf"
