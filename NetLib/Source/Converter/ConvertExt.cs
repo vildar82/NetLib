@@ -2,7 +2,6 @@
 {
     using System;
     using System.Drawing;
-    using JetBrains.Annotations;
 
     public static class ConvertExt
     {

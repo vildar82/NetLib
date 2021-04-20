@@ -2,7 +2,6 @@
 {
     using System.Windows;
     using System.Windows.Controls;
-    using JetBrains.Annotations;
     using Microsoft.Xaml.Behaviors;
 
     /// <summary>

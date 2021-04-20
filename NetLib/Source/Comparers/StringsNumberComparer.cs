@@ -1,7 +1,6 @@
 ﻿namespace NetLib.Comparers
 {
     using System.Collections.Generic;
-    using JetBrains.Annotations;
 
     /// <summary>
     /// Сравнение строк как чисел

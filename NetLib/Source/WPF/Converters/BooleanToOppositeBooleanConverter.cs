@@ -3,7 +3,6 @@
     using System;
     using System.Globalization;
     using System.Windows.Data;
-    using JetBrains.Annotations;
 
     [ValueConversion(typeof(bool), typeof(bool))]
     public class BooleanToOppositeBooleanConverter : ConvertorBase

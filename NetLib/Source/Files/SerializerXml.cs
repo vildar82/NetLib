@@ -4,7 +4,6 @@
     using System.IO;
     using System.Xml;
     using System.Xml.Serialization;
-    using JetBrains.Annotations;
 
     public class SerializerXml
     {

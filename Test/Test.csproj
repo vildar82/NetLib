@@ -89,7 +89,6 @@
     </ItemGroup>
     <ItemGroup>
       <PackageReference Include="BimLab.Metro" Version="1.0.1" />
-      <PackageReference Include="JetBrains.Annotations" Version="2020.1.0" />
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

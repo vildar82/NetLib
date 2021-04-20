@@ -2,7 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using JetBrains.Annotations;
 
     /// <summary>
     /// Сравнение чисел

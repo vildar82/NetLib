@@ -2,7 +2,6 @@
 {
     using System;
     using System.IO;
-    using JetBrains.Annotations;
     using NLog;
 
     public class FileLock : ILockItem

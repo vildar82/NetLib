@@ -8,26 +8,21 @@
     using System.Windows;
     using System.Windows.Media;
     using System.Windows.Media.Imaging;
-    using JetBrains.Annotations;
 
     public static class ImageExt
     {
         public static byte[] ImageToByteArray(this Image image)
         {
-            using (var ms = new MemoryStream())
-            {
-                image.Save(ms, ImageFormat.Gif);
-                return ms.ToArray();
-            }
+            using var ms = new MemoryStream();
+            image.Save(ms, ImageFormat.Gif);
+            return ms.ToArray();
         }
 
         public static Image ByteArrayToImage(this byte[] byteArray)
         {
-            using (var ms = new MemoryStream(byteArray))
-            {
-                var image = Image.FromStream(ms);
-                return image;
-            }
+            using var ms = new MemoryStream(byteArray);
+            var image = Image.FromStream(ms);
+            return image;
         }
 
         /// <summary>

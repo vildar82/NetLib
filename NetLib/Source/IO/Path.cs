@@ -6,9 +6,8 @@
     using System.Text.RegularExpressions;
     using System.Threading.Tasks;
     using Date;
-    using JetBrains.Annotations;
     using Microsoft.WindowsAPICodePack.Shell;
-    using NetLib.Monad;
+    using Monad;
     using NLog;
 
     public static class Path

@@ -5,8 +5,7 @@ namespace NetLib.Files
     using System.Diagnostics;
     using System.IO;
     using System.Text;
-    using JetBrains.Annotations;
-    using Path = NetLib.IO.Path;
+    using Path = IO.Path;
 
     public static class RobocopyExt
     {

@@ -4,7 +4,6 @@
     using System.Windows;
     using System.Windows.Controls;
     using DynamicData.Binding;
-    using JetBrains.Annotations;
 
     public class DataGridColumnsRBehavior
     {

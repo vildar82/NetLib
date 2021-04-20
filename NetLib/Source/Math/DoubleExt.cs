@@ -1,7 +1,6 @@
 ﻿namespace NetLib
 {
     using System;
-    using JetBrains.Annotations;
 
     public static class DoubleExt
     {

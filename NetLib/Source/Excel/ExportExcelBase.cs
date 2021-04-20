@@ -4,7 +4,6 @@
     using System.Collections.Generic;
     using System.Diagnostics;
     using System.IO;
-    using JetBrains.Annotations;
     using Microsoft.Win32;
     using OfficeOpenXml;
     using OfficeOpenXml.Style;

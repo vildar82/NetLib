@@ -1,7 +1,6 @@
 ﻿namespace NetLib.Monad
 {
     using System;
-    using JetBrains.Annotations;
     using NLog;
 
     public static class MonadExt

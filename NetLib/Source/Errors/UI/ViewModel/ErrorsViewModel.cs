@@ -1,10 +1,9 @@
-﻿using JetBrains.Annotations;
-using NetLib.WPF;
-using System.Collections.Generic;
-using System.Linq;
-
-namespace NetLib.Errors.UI.ViewModel
+﻿namespace NetLib.Errors.UI.ViewModel
 {
+    using System.Collections.Generic;
+    using System.Linq;
+    using WPF;
+
     public class ErrorsViewModel : BaseViewModel
     {
         public ErrorsViewModel(List<IError> errors, string title, bool isDialog)

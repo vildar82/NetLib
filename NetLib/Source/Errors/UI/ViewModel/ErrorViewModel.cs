@@ -1,11 +1,10 @@
-﻿using JetBrains.Annotations;
-using MahApps.Metro.IconPacks;
-using NetLib.WPF;
-using System.Windows.Controls;
-using System.Windows.Media;
-
-namespace NetLib.Errors.UI.ViewModel
+﻿namespace NetLib.Errors.UI.ViewModel
 {
+    using System.Windows.Controls;
+    using System.Windows.Media;
+    using MahApps.Metro.IconPacks;
+    using WPF;
+
     public class ErrorViewModel : BaseViewModel
     {
         public ErrorViewModel(IError error)

@@ -3,7 +3,6 @@ namespace NetLib.Extensions
     using System.Collections.Generic;
     using System.Drawing;
     using System.Linq;
-    using JetBrains.Annotations;
 
     public static class ColorExt
     {

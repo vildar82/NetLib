@@ -4,7 +4,6 @@
     using System.Globalization;
     using System.Windows;
     using System.Windows.Data;
-    using JetBrains.Annotations;
 
     [ValueConversion(typeof(bool), typeof(FontWeights))]
     public class BooleanToFontBoldConverter : ConvertorBase
