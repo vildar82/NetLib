@@ -1,15 +1,14 @@
-﻿using System;
-using System.Windows;
-using System.Windows.Threading;
-using JetBrains.Annotations;
-using ToastNotifications;
-using ToastNotifications.Core;
-using ToastNotifications.Lifetime;
-using ToastNotifications.Messages;
-using ToastNotifications.Position;
-
-namespace NetLib.Notification
+﻿namespace NetLib.Notification
 {
+    using System;
+    using System.Windows;
+    using System.Windows.Threading;
+    using ToastNotifications;
+    using ToastNotifications.Core;
+    using ToastNotifications.Lifetime;
+    using ToastNotifications.Messages;
+    using ToastNotifications.Position;
+
     public enum NotifyType
     {
         Information,
@@ -53,7 +52,7 @@ namespace NetLib.Notification
         }
 
         public TimeSpan LifeTime { get; set; }
-        public Window Parent { get; set; }
+        public Window? Parent { get; set; }
         public NotifyCorner Corner { get; set; }
         public double OffsetX { get; set; }
         public double OffsetY { get; set; }
@@ -75,7 +74,6 @@ namespace NetLib.Notification
     /// <summary>
     /// Уведомления - toast
     /// </summary>
-    [PublicAPI]
     public class Notify
     {
         private static Notify notifyScreen;
@@ -112,8 +110,7 @@ namespace NetLib.Notification
         /// <param name="message">Сообщение</param>
         /// <param name="type">Тип</param>
         /// <param name="msgOpt">настройки сообщения</param>
-        public static void ShowOnScreen(string message, NotifyType type = NotifyType.Information,
-            [CanBeNull] NotifyMessageOptions msgOpt = null)
+        public static void ShowOnScreen(string message, NotifyType type = NotifyType.Information, NotifyMessageOptions? msgOpt = null)
         {
             Show(message, notifyScreen, msgOpt, type);
         }
@@ -124,14 +121,12 @@ namespace NetLib.Notification
         /// <param name="message">Сообщение</param>
         /// <param name="type">Тип</param>
         /// <param name="msgOpt">настройки сообщения</param>
-        public void Show(string message, NotifyType type = NotifyType.Information, 
-            [CanBeNull] NotifyMessageOptions msgOpt = null)
+        public void Show(string message, NotifyType type = NotifyType.Information, NotifyMessageOptions? msgOpt = null)
         {
             Show(message, this, msgOpt, type);
         }
 
-        private static void Show(string message, [NotNull] Notify notify, [CanBeNull] NotifyMessageOptions nMsgOpt, 
-            NotifyType type)
+        private static void Show(string message, Notify notify, NotifyMessageOptions? nMsgOpt, NotifyType type)
         {
             if (nMsgOpt == null) nMsgOpt = new NotifyMessageOptions();
             var msgOpt = new MessageOptions
@@ -147,7 +142,7 @@ namespace NetLib.Notification
                     n.CanClose = true;
                     n.Close();
                     nMsgOpt.NotificationClickAction?.Invoke();
-                }
+                },
             };
             switch (type)
             {
@@ -167,26 +162,32 @@ namespace NetLib.Notification
             }
         }
 
-        [NotNull]
         private static Notifier CreateNotifier(NotifyOptions opt)
         {
             return new Notifier(cfg =>
             {
                 if (opt.Parent == null)
+                {
                     cfg.PositionProvider = new PrimaryScreenPositionProvider(
-                        (Corner) opt.Corner, opt.OffsetX, opt.OffsetY);
+                        (Corner)opt.Corner, opt.OffsetX, opt.OffsetY);
+                }
                 else
+                {
                     cfg.PositionProvider = new WindowPositionProvider(
-                        opt.Parent, (Corner) opt.Corner, opt.OffsetX, opt.OffsetY);
+                        opt.Parent, (Corner)opt.Corner, opt.OffsetX, opt.OffsetY);
+                }
+
                 if (opt.LifeTime.TotalMilliseconds < 100)
                 {
                     cfg.LifetimeSupervisor = new CountBasedLifetimeSupervisor(MaximumNotificationCount.FromCount(opt.MaxCount));
                 }
                 else
                 {
-                    cfg.LifetimeSupervisor = new TimeAndCountBasedLifetimeSupervisor(opt.LifeTime,
+                    cfg.LifetimeSupervisor = new TimeAndCountBasedLifetimeSupervisor(
+                        opt.LifeTime,
                         MaximumNotificationCount.FromCount(opt.MaxCount));
                 }
+
                 cfg.Dispatcher = dispatcher;
                 cfg.DisplayOptions.Width = opt.With;
             });

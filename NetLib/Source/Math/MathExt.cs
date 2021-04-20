@@ -1,14 +1,12 @@
-﻿using JetBrains.Annotations;
-using NCalc;
-using NetLib.Comparers;
-using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-
-namespace NetLib
+﻿namespace NetLib
 {
-    [PublicAPI]
+    using System;
+    using System.Collections.Generic;
+    using System.Globalization;
+    using System.Linq;
+    using Comparers;
+    using NCalc;
+
     public static class MathExt
     {
         /// <summary>
@@ -62,7 +60,6 @@ namespace NetLib
         /// <param name="x1">Конечное X</param>
         /// <param name="y1">Конечное Y</param>
         /// <param name="x">Промежуточное X для котрого нужно интерполировать Y</param>
-        /// <returns></returns>
         public static double Interpolate(double x0, double y0, double x1, double y1, double x)
         {
             return y0 * (x - x1) / (x0 - x1) + y1 * (x - x0) / (x1 - x0);
@@ -96,11 +93,12 @@ namespace NetLib
             {
                 angle %= PI2;
             }
+
             return angle;
         }
 
         [Obsolete("Use StringExt.GetStartInteger()")]
-        public static int GetStartInt([NotNull] this string input)
+        public static int GetStartInt(this string input)
         {
             var res = input.GetStartInteger();
             if (res.Success)
@@ -140,7 +138,6 @@ namespace NetLib
         /// res = "1-8,10,15,16,100-107,109"
         /// </summary>
         /// <param name="ints"></param>
-        /// <returns></returns>
         public static string IntsToStringSequenceAnton(int[] ints)
         {
             // int[] paleNumbersInt = new[] { 1, 2, 3, 4, 5, 7, 8, 10, 15, 16, 100, 101, 102, 103, 105, 106, 107, 109 };
@@ -282,8 +279,7 @@ namespace NetLib
         /// Превращает строки с диапазоном чисел в последовательность чисел.
         /// Например "1-5, 8,9" - {1,2,3,4,5,8,9}
         /// </summary>
-        [NotNull]
-        public static List<int> ParseRangeNumbers([NotNull] string text)
+        public static List<int> ParseRangeNumbers(string text)
         {
             var query =
                 from x in text.Split(',')
@@ -397,7 +393,7 @@ namespace NetLib
             return degrees * RatioDegreeToRadian;// (Math.PI / 180.0);
         }
 
-        private static void SetSeq([NotNull] ref string res, ref IntSequence seq)
+        private static void SetSeq(ref string res, ref IntSequence seq)
         {
             if (res == string.Empty)
             {
@@ -433,7 +429,6 @@ namespace NetLib
                 return false;
             }
 
-            [NotNull]
             public string GetSeq()
             {
                 string res;

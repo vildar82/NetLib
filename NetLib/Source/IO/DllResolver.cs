@@ -1,17 +1,15 @@
-﻿using JetBrains.Annotations;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Reflection;
-
-namespace NetLib.IO
+﻿namespace NetLib.IO
 {
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
     using System.Linq;
+    using System.Reflection;
+    using JetBrains.Annotations;
 
     /// <summary>
     /// Разрешение сборки
     /// </summary>
-    [PublicAPI]
     [ToString]
     public class DllResolve
     {
@@ -25,8 +23,7 @@ namespace NetLib.IO
             DllName = System.IO.Path.GetFileNameWithoutExtension(dllFile);
         }
 
-        [NotNull]
-        public static List<DllResolve> GetDllResolve([NotNull] string dllFolder, SearchOption mode)
+        public static List<DllResolve> GetDllResolve(string dllFolder, SearchOption mode)
         {
             return GetDllResolve(dllFolder, mode, ".dll");
         }
@@ -38,8 +35,7 @@ namespace NetLib.IO
         /// <param name="mode">Режим</param>
         /// <param name="extFilter">С точкой!!!</param>
         /// <returns>Список</returns>
-        [NotNull]
-        public static List<DllResolve> GetDllResolve([NotNull] string dllFolder, SearchOption mode, params string[] extFilter)
+        public static List<DllResolve> GetDllResolve(string dllFolder, SearchOption mode, params string[] extFilter)
         {
             var dllResolves = new List<DllResolve>();
             foreach (var dllFile in Directory.EnumerateFiles(dllFolder, "*.*", mode).Where(f => IsFilterExt(f, extFilter)))
@@ -57,12 +53,11 @@ namespace NetLib.IO
             return extFilter.Any(a => a.EqualsIgnoreCase(ext));
         }
 
-        public bool IsResolve([NotNull] string dllRequest)
+        public bool IsResolve(string dllRequest)
         {
             return dllRequest.StartsWith($"{DllName},", StringComparison.OrdinalIgnoreCase);
         }
 
-        [NotNull]
         public Assembly LoadAssembly()
         {
             return Assembly.LoadFrom(DllFile);

@@ -1,12 +1,10 @@
-﻿using System;
-using System.Globalization;
-using System.Windows.Data;
-using System.Windows.Media;
-using JetBrains.Annotations;
-
-namespace NetLib.WPF.Converters
+﻿namespace NetLib.WPF.Converters
 {
-    [PublicAPI]
+    using System;
+    using System.Globalization;
+    using System.Windows.Data;
+    using System.Windows.Media;
+
     [ValueConversion(typeof(object), typeof(Brush))]
     public class NotNullToRedConverter : ConvertorBase
     {

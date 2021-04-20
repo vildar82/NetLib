@@ -11,7 +11,6 @@
     /// <summary>
     /// Сбор ошибок и отображение
     /// </summary>
-    [PublicAPI]
     public class Inspector
     {
         private readonly List<IError> errors = new List<IError>();
@@ -25,7 +24,7 @@
             Title = title;
         }
 
-        public void AddError([CanBeNull] IError error)
+        public void AddError(IError? error)
         {
             if (error == null) return;
             errors.Add(error);
@@ -36,12 +35,11 @@
             AddError(new Error { Group = group, Message = msg, Level = level });
         }
 
-        public void AddError([NotNull] Exception ex, string group)
+        public void AddError(Exception ex, string group)
         {
             AddError(new Error { Group = group, Message = ex.Message });
         }
 
-        [CanBeNull]
         public Window GetWindow()
         {
             if (!HasError) return null;

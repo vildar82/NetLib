@@ -9,7 +9,6 @@
     [ValueConversion(typeof(bool), typeof(Visibility))]
     public class BooleanToCollapseVisibilityConverter : ConvertorBase
     {
-        [NotNull]
         public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value is bool v)

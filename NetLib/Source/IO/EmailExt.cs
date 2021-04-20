@@ -4,9 +4,7 @@ namespace NetLib.IO
     using System.Diagnostics;
     using System.Linq;
     using System.Net.Mail;
-    using JetBrains.Annotations;
 
-    [PublicAPI]
     public static class EmailExt
     {
         public static void MailTo(this MailMessage message)

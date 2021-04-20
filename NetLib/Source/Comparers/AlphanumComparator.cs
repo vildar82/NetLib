@@ -2,7 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using JetBrains.Annotations;
 
     /// <summary>
     /// Сортировка строк с числами.
@@ -17,13 +16,10 @@
             var null1 = string.IsNullOrEmpty(s1);
             var null2 = string.IsNullOrEmpty(s2);
             if (null1)
-            {
                 return null2 ? 0 : -1;
-            }
+
             if (null2)
-            {
                 return 1;
-            }
 
             var len1 = s1.Length;
             var len2 = s2.Length;
@@ -73,7 +69,8 @@
                     {
                         break;
                     }
-                } while (char.IsDigit(ch2) == char.IsDigit(space2[0]));
+                }
+                while (char.IsDigit(ch2) == char.IsDigit(space2[0]));
 
                 // If we have collected numbers, compare them numerically.
                 // Otherwise, if we have strings, compare them alphabetically.
@@ -98,16 +95,17 @@
                 {
                     result = string.Compare(str1, str2, StringComparison.OrdinalIgnoreCase);
                 }
+
                 if (result != 0)
                 {
                     return result;
                 }
             }
+
             return len1 - len2;
         }
 
-        [PublicAPI]
-        public int GetHashCode([CanBeNull] string obj)
+        public int GetHashCode(string? obj)
         {
             return obj == null ? 0 : obj.GetHashCode();
         }

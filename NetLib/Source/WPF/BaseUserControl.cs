@@ -2,9 +2,7 @@
 {
     using System;
     using System.Windows.Controls;
-    using JetBrains.Annotations;
 
-    [PublicAPI]
     public class BaseUserControl : UserControl
     {
         private readonly bool applyTheme;

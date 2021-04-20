@@ -2,9 +2,7 @@
 {
     using System.ComponentModel;
     using Comparers;
-    using JetBrains.Annotations;
 
-    [PublicAPI]
     public class AlphaNumSorter : ICustomSorter
     {
         public ListSortDirection SortDirection { get; set; }

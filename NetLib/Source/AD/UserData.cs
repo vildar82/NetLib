@@ -8,16 +8,16 @@
         /// <summary>
         /// Gets or sets the department.
         /// </summary>
-        public string Department { get; set; }
+        public string? Department { get; set; }
 
         /// <summary>
         /// Gets or sets the fio.
         /// </summary>
-        public string Fio { get; set; }
+        public string? Fio { get; set; }
 
         /// <summary>
         /// Gets or sets the position.
         /// </summary>
-        public string Position { get; set; }
+        public string? Position { get; set; }
     }
 }

@@ -7,7 +7,6 @@
     using System.Windows.Data;
     using JetBrains.Annotations;
 
-    [PublicAPI]
     public class CustomSortBehaviour
     {
         public static readonly DependencyProperty AllowCustomSortProperty =
@@ -17,22 +16,22 @@
         public static readonly DependencyProperty CustomSorterProperty =
                     DependencyProperty.RegisterAttached("CustomSorter", typeof(ICustomSorter), typeof(CustomSortBehaviour));
 
-        public static bool GetAllowCustomSort([NotNull] DataGrid grid)
+        public static bool GetAllowCustomSort(DataGrid grid)
         {
             return (bool)grid.GetValue(AllowCustomSortProperty);
         }
 
-        public static ICustomSorter GetCustomSorter([NotNull] DataGridColumn gridColumn)
+        public static ICustomSorter GetCustomSorter( DataGridColumn gridColumn)
         {
             return (ICustomSorter)gridColumn.GetValue(CustomSorterProperty);
         }
 
-        public static void SetAllowCustomSort([NotNull] DataGrid grid, bool value)
+        public static void SetAllowCustomSort(DataGrid grid, bool value)
         {
             grid.SetValue(AllowCustomSortProperty, value);
         }
 
-        public static void SetCustomSorter([NotNull] DataGridColumn gridColumn, ICustomSorter value)
+        public static void SetCustomSorter(DataGridColumn gridColumn, ICustomSorter value)
         {
             gridColumn.SetValue(CustomSorterProperty, value);
         }
@@ -46,8 +45,6 @@
 
             // Sanity check
             var sorter = GetCustomSorter(e.Column);
-            if (sorter == null)
-                return;
 
             sorter.SortPropertyName = e.Column.SortMemberPath;
 

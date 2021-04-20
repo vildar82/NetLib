@@ -3,9 +3,7 @@
     using System;
     using System.Globalization;
     using System.Windows.Data;
-    using JetBrains.Annotations;
 
-    [PublicAPI]
     [ValueConversion(typeof(string), typeof(double))]
     public class DoubleConverter : ConvertorBase
     {

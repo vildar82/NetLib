@@ -3,7 +3,6 @@
     using System;
     using System.Diagnostics;
     using System.Windows.Input;
-    using JetBrains.Annotations;
     using NLog;
 
     /// <summary>
@@ -14,21 +13,21 @@
         private ILogger Logger { get; } = LogManager.GetCurrentClassLogger();
 
         protected readonly Action<Exception> _exception;
-        protected readonly Predicate<T> _canExecute;
-        [NotNull] protected readonly Action<T> _execute;
+        protected readonly Predicate<T>? _canExecute;
+        protected readonly Action<T> _execute;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RelayCommand&lt;T&gt;"/> class.
         /// </summary>
         /// <param name="execute">The execution logic.</param>
         /// <param name="canExecute">The execution status logic.</param>
-        public RelayCommand([NotNull] Action<T> execute, Predicate<T> canExecute = null)
+        public RelayCommand(Action<T> execute, Predicate<T>? canExecute = null)
         {
             _execute = execute ?? throw new ArgumentNullException("execute");
             _canExecute = canExecute;
         }
 
-        public RelayCommand([NotNull] Action<T> execute, Action<Exception> exception, Predicate<T> canExecute = null)
+        public RelayCommand(Action<T> execute, Action<Exception> exception, Predicate<T>? canExecute = null)
             : this(execute, canExecute)
         {
             _exception = exception;
@@ -77,21 +76,21 @@
         private ILogger Logger { get; } = LogManager.GetCurrentClassLogger();
 
         protected readonly Action<Exception> _exception;
-        protected readonly Func<bool> _canExecute;
-        [NotNull] protected readonly Action _execute;
+        protected readonly Func<bool>? _canExecute;
+        protected readonly Action _execute;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RelayCommand&lt;T&gt;"/> class.
         /// </summary>
         /// <param name="execute">The execution logic.</param>
         /// <param name="canExecute">The execution status logic.</param>
-        public RelayCommand([NotNull] Action execute, Func<bool> canExecute = null)
+        public RelayCommand(Action execute, Func<bool>? canExecute = null)
         {
             _execute = execute ?? throw new ArgumentNullException("execute");
             _canExecute = canExecute;
         }
 
-        public RelayCommand([NotNull] Action execute, Action<Exception> exception, Func<bool> canExecute = null)
+        public RelayCommand(Action execute, Action<Exception> exception, Func<bool>? canExecute = null)
             : this(execute, canExecute)
         {
             _exception = exception;

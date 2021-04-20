@@ -3,12 +3,10 @@
     using System;
     using System.Globalization;
     using System.Windows.Data;
-    using JetBrains.Annotations;
 
     /// <summary>
     /// Отрицание - !bool
     /// </summary>
-    [PublicAPI]
     [ValueConversion(typeof(bool), typeof(bool))]
     public class Negate : ConvertorBase
     {

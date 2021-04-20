@@ -6,7 +6,6 @@
     /// <summary>
     /// Сравнение строк как чисел
     /// </summary>
-    [PublicAPI]
     public class StringsNumberComparer : IComparer<string>
     {
         public int Compare(string x, string y)

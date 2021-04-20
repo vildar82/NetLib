@@ -8,7 +8,7 @@ namespace NetLib.Errors.UI.ViewModel
 {
     public class ErrorViewModel : BaseViewModel
     {
-        public ErrorViewModel([NotNull] IError error)
+        public ErrorViewModel(IError error)
         {
             Message = error.Message;
             Icon = GetIcon(error);
@@ -17,8 +17,7 @@ namespace NetLib.Errors.UI.ViewModel
         public string Message { get; set; }
         public Control Icon { get; set; }
 
-        [CanBeNull]
-        private static Control GetIcon([NotNull] IError error)
+        private static Control? GetIcon(IError error)
         {
             switch (error.Level)
             {
@@ -26,19 +25,19 @@ namespace NetLib.Errors.UI.ViewModel
                     return new PackIconOcticons
                     {
                         Kind = PackIconOcticonsKind.Stop,
-                        Background = Brushes.Red
+                        Background = Brushes.Red,
                     };
                 case ErrorLevel.Info:
                     return new PackIconOcticons
                     {
                         Kind = PackIconOcticonsKind.Info,
-                        Background = Brushes.DeepSkyBlue
+                        Background = Brushes.DeepSkyBlue,
                     };
                 case ErrorLevel.Exclamation:
                     return new PackIconOcticons
                     {
                         Kind = PackIconOcticonsKind.Alert,
-                        Background = Brushes.Yellow
+                        Background = Brushes.Yellow,
                     };
                 default: return null;
             }

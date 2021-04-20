@@ -6,7 +6,7 @@
         <Nullable>enable</Nullable>
         <UseWpf>True</UseWpf>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-        <PackageVersion>21.1.0</PackageVersion>
+        <PackageVersion>21.1.1</PackageVersion>
         <Authors>Vildar</Authors>
         <Description>Net4.7.2 c# Library WPF + ReactiveUI</Description>
         <PackageProjectUrl>https://github.com/vildar82/NetLib</PackageProjectUrl>
@@ -23,7 +23,6 @@
         <PackageReference Include="FluentValidation" Version="10.0.4" />
         <PackageReference Include="Fody" Version="6.5.1" PrivateAssets="all" />
         <PackageReference Include="FontAwesome.WPF" Version="4.7.0.9" />
-        <PackageReference Include="JetBrains.Annotations" Version="2021.1.0" PrivateAssets="all" />
         <PackageReference Include="MahApps.Metro.IconPacks" Version="4.8.0" />
         <PackageReference Include="NLog" Version="4.7.9" />
         <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />

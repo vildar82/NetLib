@@ -9,14 +9,12 @@
     using System.Globalization;
     using System.Linq;
     using System.Windows.Data;
-    using JetBrains.Annotations;
 
     public interface ICollectionView<out T> : IEnumerable<T>, ICollectionView
     {
         IEnumerable<T> SourceCollectionGeneric { get; }
     }
 
-    [PublicAPI]
     public class CollectionView<T> : ICollectionView<T>
     {
         private readonly ICollectionView _collectionView;

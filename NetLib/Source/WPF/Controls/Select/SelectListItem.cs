@@ -1,8 +1,5 @@
 ﻿namespace NetLib.WPF.Controls.Select
 {
-    using JetBrains.Annotations;
-
-    [PublicAPI]
     public class SelectListItem<T> : BaseModel
     {
         public string Name { get; set; }

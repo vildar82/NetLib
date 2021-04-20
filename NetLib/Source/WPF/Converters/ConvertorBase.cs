@@ -5,7 +5,6 @@
     using System.Windows;
     using System.Windows.Data;
     using System.Windows.Markup;
-    using JetBrains.Annotations;
 
     [MarkupExtensionReturnType(typeof(IValueConverter))]
     public abstract class ConvertorBase : MarkupExtension, IValueConverter
@@ -25,7 +24,6 @@
             throw new NotImplementedException($"ConvertBack из значения {value} в {targetType}");
         }
 
-        [NotNull]
         public override object ProvideValue(IServiceProvider serviceProvider)
         {
             return this;

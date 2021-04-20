@@ -7,7 +7,6 @@
     /// <summary>
     /// Сравнение чисел
     /// </summary>
-    [PublicAPI]
     public class IntEqualityComparer : IEqualityComparer<int>
     {
         private readonly int threshold;

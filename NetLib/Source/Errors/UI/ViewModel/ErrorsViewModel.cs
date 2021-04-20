@@ -7,7 +7,7 @@ namespace NetLib.Errors.UI.ViewModel
 {
     public class ErrorsViewModel : BaseViewModel
     {
-        public ErrorsViewModel([NotNull] List<IError> errors, string title, bool isDialog)
+        public ErrorsViewModel(List<IError> errors, string title, bool isDialog)
         {
             CollapseDialogButtons = !isDialog;
             Title = title;

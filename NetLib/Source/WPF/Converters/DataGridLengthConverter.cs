@@ -4,9 +4,7 @@
     using System.Globalization;
     using System.Windows.Controls;
     using System.Windows.Data;
-    using JetBrains.Annotations;
 
-    [PublicAPI]
     [ValueConversion(typeof(double), typeof(DataGridLength))]
     public class DataGridLengthConverter : ConvertorBase
     {
@@ -17,7 +15,6 @@
             throw new ArgumentException("Ожидается double");
         }
 
-        [NotNull]
         public override object ConvertBack( object value, Type targetType, object parameter, CultureInfo culture)
         {
             return ((DataGridLength)value).Value;

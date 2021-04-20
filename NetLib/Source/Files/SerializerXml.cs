@@ -6,7 +6,6 @@
     using System.Xml.Serialization;
     using JetBrains.Annotations;
 
-    [PublicAPI]
     public class SerializerXml
     {
         private readonly string _settingsFile;
@@ -30,7 +29,7 @@
             return res;
         }
 
-        public static T Load<T>(string file, [NotNull] params Type[] types)
+        public static T Load<T>(string file, params Type[] types)
             where T : class, new()
         {
             var ser = new SerializerXml(file);
@@ -45,13 +44,13 @@
         /// <typeparam name="T">Тип объекта</typeparam>
         /// <param name="file">Файл</param>
         /// <param name="obj">Объект</param>
-        public static void Save<T>(string file, [NotNull] T obj)
+        public static void Save<T>(string file, T obj)
         {
             var ser = new SerializerXml(file);
             ser.SerializeList(obj);
         }
 
-        public static void Save<T>(string file, [NotNull] T obj, [NotNull] params Type[] types)
+        public static void Save<T>(string file, T obj, params Type[] types)
         {
             var ser = new SerializerXml(file);
             ser.SerializeList(obj, types);
@@ -64,21 +63,21 @@
             return (T)ser.Deserialize(reader);
         }
 
-        public T DeserializeXmlFile<T>([NotNull] params Type[] types)
+        public T DeserializeXmlFile<T>(params Type[] types)
         {
             var ser = new XmlSerializer(typeof(T), types);
             using var reader = XmlReader.Create(_settingsFile);
             return (T)ser.Deserialize(reader);
         }
 
-        public void SerializeList<T>([NotNull] T settings)
+        public void SerializeList<T>(T settings)
         {
             using var fs = new FileStream(_settingsFile, FileMode.Create, FileAccess.Write);
             var ser = new XmlSerializer(typeof(T));
             ser.Serialize(fs, settings);
         }
 
-        public void SerializeList<T>([NotNull] T settings, [NotNull] params Type[] types)
+        public void SerializeList<T>(T settings, params Type[] types)
         {
             using var fs = new FileStream(_settingsFile, FileMode.Create, FileAccess.Write);
             var ser = new XmlSerializer(typeof(T), types);

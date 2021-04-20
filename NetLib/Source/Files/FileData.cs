@@ -8,8 +8,8 @@
     /// <summary>
     /// Данные хранимые в файле xml/json на сервере, с локальным кэшем
     /// </summary>
-    [PublicAPI]
-    public class FileData<T> where T : class, new()
+    public class FileData<T>
+        where T : class, new()
     {
         public readonly string LocalFile;
         public readonly string ServerFile;
@@ -26,7 +26,7 @@
         /// <param name="localFile"></param>
         /// <param name="isXmlOrJson">true - xml, false - json</param>
         /// <param name="serverFile"></param>
-        public FileData([NotNull] string serverFile, [NotNull] string localFile, bool isXmlOrJson)
+        public FileData(string serverFile, string localFile, bool isXmlOrJson)
         {
             ServerFile = serverFile;
             LocalFile = localFile;

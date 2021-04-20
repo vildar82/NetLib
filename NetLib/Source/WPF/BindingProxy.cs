@@ -1,7 +1,7 @@
-﻿using System.Windows;
-
-namespace NetLib.WPF
+﻿namespace NetLib.WPF
 {
+    using System.Windows;
+
     /// <summary>
     /// http://www.technical-recipes.com/2017/binding-the-visibility-of-datagridcolumn-in-wpf-mvvm/
     /// </summary>

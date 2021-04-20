@@ -6,7 +6,6 @@
     using System.Windows.Data;
     using JetBrains.Annotations;
 
-    [PublicAPI]
     [ValueConversion(typeof(bool), typeof(Visibility))]
     public class BooleanToHidingVisibilityConverter : ConvertorBase
     {

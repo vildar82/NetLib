@@ -8,7 +8,6 @@
     /// <summary>
     /// Повторение операции, за заданное время и количество попыток.
     /// </summary>
-    [PublicAPI]
     public static class Retry
     {
         /// <summary>
@@ -36,7 +35,7 @@
         /// <param name="retryInterval">Интервал повторения</param>
         /// <param name="retryCount">Кол попыток</param>
         /// <returns>Результат операции</returns>
-        public static T Do<T>([NotNull] Func<T> action, TimeSpan retryInterval, int retryCount = 3)
+        public static T Do<T>(Func<T> action, TimeSpan retryInterval, int retryCount = 3)
         {
             var exceptions = new List<Exception>();
             for (var retry = 0; retry < retryCount; retry++)

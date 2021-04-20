@@ -1,26 +1,29 @@
-﻿using JetBrains.Annotations;
-using Microsoft.Win32;
-using OfficeOpenXml;
-using OfficeOpenXml.Style;
-using OfficeOpenXml.Style.XmlAccess;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-
-namespace NetLib.Excel
+﻿namespace NetLib.Excel
 {
-    [PublicAPI]
+    using System;
+    using System.Collections.Generic;
+    using System.Diagnostics;
+    using System.IO;
+    using JetBrains.Annotations;
+    using Microsoft.Win32;
+    using OfficeOpenXml;
+    using OfficeOpenXml.Style;
+    using OfficeOpenXml.Style.XmlAccess;
+
     public abstract class ExportExcelBase
     {
         protected abstract string DefFileName { get; set; }
         protected abstract List<string> SheetNames { get; set; }
 
-        [NotNull]
-        public static ExcelNamedStyleXml AddStyle([NotNull] ExcelWorkbook wb, string name,
+        public static ExcelNamedStyleXml AddStyle(
+            ExcelWorkbook wb,
+            string name,
             ExcelBorderStyle borderStyle = ExcelBorderStyle.Medium,
-            System.Drawing.Color? bckColor = null, int size = 11, bool bold = false,
-            bool borderByGost = true, bool center = true)
+            System.Drawing.Color? bckColor = null,
+            int size = 11,
+            bool bold = false,
+            bool borderByGost = true,
+            bool center = true)
         {
             var style = wb.Styles.CreateNamedStyle(name);
             style.Style.Font.Name = "Arial";
@@ -31,19 +34,23 @@ namespace NetLib.Excel
             {
                 style.Style.SetStyleCenterAlignment();
             }
+
             if (borderByGost)
             {
                 style.Style.SetBorderByGost(borderStyle);
             }
+
             else
             {
                 style.Style.SetBorderByGost(borderStyle, borderStyle);
             }
+
             if (bckColor != null)
             {
                 style.Style.Fill.PatternType = ExcelFillStyle.Solid;
                 style.Style.Fill.BackgroundColor.SetColor(bckColor.Value);
             }
+
             return style;
         }
 
@@ -66,12 +73,12 @@ namespace NetLib.Excel
                     FileName = DefFileName,
                     DefaultExt = ".xlsx",
                     AddExtension = true,
-                    OverwritePrompt = true
+                    OverwritePrompt = true,
                 };
+
                 if (dlg.ShowDialog() != true)
-                {
                     throw new OperationCanceledException();
-                }
+
                 File.Copy(tempFile, dlg.FileName, true);
                 Process.Start(dlg.FileName);
             }

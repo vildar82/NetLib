@@ -10,14 +10,12 @@
     using System.Windows.Input;
     using System.Windows.Media;
     using System.Windows.Threading;
-    using JetBrains.Annotations;
     using MahApps.Metro.IconPacks;
     using NLog;
     using Pik.Metro.Controls;
     using Pik.Metro.Controls.Dialogs;
     using Theme;
 
-    [PublicAPI]
     public class BaseWindow : MetroWindow
     {
         protected bool isDialog;
@@ -71,7 +69,6 @@
         /// </summary>
         public Action OnEnterOrSpace { get; set; }
 
-        [NotNull]
         protected static Logger Logger { get; } = LogManager.GetCurrentClassLogger();
 
         [Obsolete("Лучше не использовать. Не забудь присвоить Model и Model.Window.")]
@@ -80,7 +77,7 @@
         {
         }
 
-        protected BaseWindow([CanBeNull] IBaseViewModel model)
+        protected BaseWindow(IBaseViewModel model)
         {
             AddStyleResouse(Resources);
             Model = model;
@@ -197,7 +194,7 @@
             RightWindowCommands.Items.Add(button);
         }
 
-        public static void AddStyleResouse([NotNull] ResourceDictionary resources)
+        public static void AddStyleResouse(ResourceDictionary resources)
         {
             var uri = new Uri("pack://application:,,,/NetLib;component/Source/Style.xaml");
             if (resources.MergedDictionaries.Any(r => r.Source == uri))
@@ -215,7 +212,7 @@
             Keyboard.ClearFocus(); // remove keyboard focus
         }
 
-        private void BaseWindow_PreviewKeyDown(object sender, [NotNull] KeyEventArgs e)
+        private void BaseWindow_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Escape)
             {
@@ -260,7 +257,7 @@
             styleSettingsView.ShowDialog();
         }
 
-        private void Dispatcher_UnhandledException(object sender, [NotNull] DispatcherUnhandledExceptionEventArgs e)
+        private void Dispatcher_UnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
         {
             var showErr = true;
             switch (e.Exception)

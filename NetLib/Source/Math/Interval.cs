@@ -1,9 +1,7 @@
-﻿using System;
-using JetBrains.Annotations;
-
-namespace NetLib
+﻿namespace NetLib
 {
-    [PublicAPI]
+    using System;
+
     public class Interval<T>
         where T : IComparable
     {
@@ -29,7 +27,7 @@ namespace NetLib
             return HasEnd && other.IsInRange(End);
         }
 
-        public static Interval<T> Merge([NotNull] Interval<T> int1, [NotNull] Interval<T> int2)
+        public static Interval<T> Merge(Interval<T> int1, Interval<T> int2)
         {
             if (!int1.Overlaps(int2))
                 throw new ArgumentException("Interval ranges do not overlap.");

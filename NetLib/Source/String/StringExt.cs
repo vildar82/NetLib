@@ -8,7 +8,6 @@
     using System.Text.RegularExpressions;
     using JetBrains.Annotations;
 
-    [PublicAPI]
     public static class StringExt
     {
         /// <summary>
@@ -208,7 +207,7 @@
             while (!string.IsNullOrEmpty(v));
         }
 
-        public static IEnumerable<T> AsEnumerable<T>([NotNull] this IEnumerator enumerator)
+        public static IEnumerable<T> AsEnumerable<T>(this IEnumerator enumerator)
         {
             while (enumerator.MoveNext())
                 yield return (T)enumerator.Current;

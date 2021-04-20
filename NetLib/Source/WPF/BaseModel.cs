@@ -11,7 +11,6 @@
     using System.Windows.Controls;
     using System.Windows.Threading;
     using System.Xml.Serialization;
-    using JetBrains.Annotations;
     using Newtonsoft.Json;
     using NLog;
     using ReactiveUI;
@@ -19,7 +18,6 @@
     /// <summary>
     /// Базовый класс модели - MVVM
     /// </summary>
-    [PublicAPI]
     public abstract class BaseModel : ReactiveObject, IBaseModel
     {
         protected static Logger Logger { get; } = LogManager.GetCurrentClassLogger();
@@ -49,8 +47,7 @@
         [Browsable(false)]
         public IBaseViewModel BaseVm { get; set; }
 
-        [NotNull]
-        public ReactiveCommand<Unit, Unit> CreateCommand(Action execute, IObservable<bool> canExecute = null)
+        public ReactiveCommand<Unit, Unit> CreateCommand(Action execute, IObservable<bool>? canExecute = null)
         {
             if (BaseVm != null) return BaseVm.CreateCommand(execute, canExecute);
             var command = ReactiveCommand.Create(execute, canExecute, new DispatcherScheduler(Dispatcher.CurrentDispatcher));
@@ -58,8 +55,7 @@
             return command;
         }
 
-        [NotNull]
-        public ReactiveCommand<T, Unit> CreateCommand<T>(Action<T> execute, IObservable<bool> canExecute = null)
+        public ReactiveCommand<T, Unit> CreateCommand<T>(Action<T> execute, IObservable<bool>? canExecute = null)
         {
             if (BaseVm != null) return BaseVm.CreateCommand<T>(execute, canExecute);
             var command = ReactiveCommand.Create(execute, canExecute, new DispatcherScheduler(Dispatcher.CurrentDispatcher));
@@ -67,8 +63,7 @@
             return command;
         }
 
-        [NotNull]
-        public ReactiveCommand<Unit, Unit> CreateCommandAsync(Func<CancellationToken,Task> execute, [CanBeNull] IObservable<bool> canExecute = null)
+        public ReactiveCommand<Unit, Unit> CreateCommandAsync(Func<CancellationToken,Task> execute, IObservable<bool>? canExecute = null)
         {
             if (BaseVm != null) return BaseVm.CreateCommandAsync(execute, canExecute);
             var command = ReactiveCommand.CreateFromTask(execute, canExecute, new DispatcherScheduler(Dispatcher.CurrentDispatcher));
@@ -76,8 +71,7 @@
             return command;
         }
 
-        [NotNull]
-        public ReactiveCommand<Unit, Unit> CreateCommandAsync(Func<Task> execute, [CanBeNull] IObservable<bool> canExecute = null)
+        public ReactiveCommand<Unit, Unit> CreateCommandAsync(Func<Task> execute, IObservable<bool>? canExecute = null)
         {
             if (BaseVm != null) return BaseVm.CreateCommandAsync(execute, canExecute);
             var command = ReactiveCommand.CreateFromTask(execute, canExecute, new DispatcherScheduler(Dispatcher.CurrentDispatcher));
@@ -85,8 +79,7 @@
             return command;
         }
 
-        [NotNull]
-        public ReactiveCommand<TParam, Unit> CreateCommandAsync<TParam>(Func<TParam, Task> execute, [CanBeNull] IObservable<bool> canExecute = null)
+        public ReactiveCommand<TParam, Unit> CreateCommandAsync<TParam>(Func<TParam, Task> execute, IObservable<bool>? canExecute = null)
         {
             if (BaseVm != null) return BaseVm.CreateCommandAsync(execute, canExecute);
             var command = ReactiveCommand.CreateFromTask(execute, canExecute, new DispatcherScheduler(Dispatcher.CurrentDispatcher));
@@ -94,8 +87,7 @@
             return command;
         }
 
-        [NotNull]
-        public ReactiveCommand<TParam, Unit> CreateCommandAsync<TParam>(Func<TParam, CancellationToken, Task> execute, [CanBeNull] IObservable<bool> canExecute = null)
+        public ReactiveCommand<TParam, Unit> CreateCommandAsync<TParam>(Func<TParam, CancellationToken, Task> execute, IObservable<bool>? canExecute = null)
         {
             if (BaseVm != null) return BaseVm.CreateCommandAsync(execute, canExecute);
             var command = ReactiveCommand.CreateFromTask(execute, canExecute, new DispatcherScheduler(Dispatcher.CurrentDispatcher));
@@ -103,7 +95,6 @@
             return command;
         }
 
-        [NotNull]
         public ReactiveCommand<TParam, TResult> CreateCommandAsync<TParam, TResult>(Func<TParam, CancellationToken, Task<TResult>> execute, IObservable<bool> canExecute = null)
         {
             var command = ReactiveCommand.CreateFromTask(execute, canExecute, new DispatcherScheduler(Dispatcher.CurrentDispatcher));
@@ -111,7 +102,6 @@
             return command;
         }
 
-        [NotNull]
         public ReactiveCommand<Unit, TResult> CreateCommandAsync<TResult>(Func<Task<TResult>> execute, IObservable<bool> canExecute = null)
         {
             var command = ReactiveCommand.CreateFromTask(execute, canExecute, new DispatcherScheduler(Dispatcher.CurrentDispatcher));
@@ -119,7 +109,6 @@
             return command;
         }
 
-        [NotNull]
         public ReactiveCommand<Unit, TResult> CreateCommandAsync<TResult>(Func<CancellationToken, Task<TResult>> execute, IObservable<bool> canExecute = null)
         {
             var command = ReactiveCommand.CreateFromTask(execute, canExecute, new DispatcherScheduler(Dispatcher.CurrentDispatcher));
@@ -127,7 +116,7 @@
             return command;
         }
 
-        public void CommandException([NotNull] Exception e)
+        public void CommandException(Exception e)
         {
             if (e is OperationCanceledException) return;
             Logger.Error(e, "CommandException");
@@ -150,18 +139,17 @@
         /// <param name="auxiliaryBtn">Дополнительноая кнопка (возвращается null)</param>
         /// <returns></returns>
         public Task<bool?> ShowMessage(string title, string msg, string affirmativeBtn, string negateBtn,
-            [CanBeNull] string auxiliaryBtn = null)
+            string? auxiliaryBtn = null)
         {
             if (BaseVm == null) throw new Exception($"Не задана BaseViewModel - {this}.");
             return BaseVm.ShowMessage(msg, title, affirmativeBtn, negateBtn, auxiliaryBtn);
         }
 
-        public virtual void OnPropertyChanged([CanBeNull] [CallerMemberName] string propertyName = null)
+        public virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
         {
             this.RaisePropertyChanged(propertyName);
         }
 
-        [NotNull]
         public IDisposable HideWindow()
         {
             return BaseVm.HideWindow();

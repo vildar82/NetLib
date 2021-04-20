@@ -2,13 +2,11 @@
 {
     using System;
     using System.Windows.Markup;
-    using JetBrains.Annotations;
 
     /// <inheritdoc />
     /// <summary>
     /// ComboBox ItemsSource="{Binding Source={local:EnumBindingSource {x:Type local:MyEnum}}}"    ///
     /// </summary>
-    [PublicAPI]
     public class EnumBindingSourceExtension : MarkupExtension
     {
         private Type _enumType;
@@ -38,7 +36,6 @@
             EnumType = enumType;
         }
 
-        [NotNull]
         public override object ProvideValue(IServiceProvider serviceProvider)
         {
             if (_enumType == null)

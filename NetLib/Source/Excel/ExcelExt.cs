@@ -1,13 +1,14 @@
-﻿using JetBrains.Annotations;
-using OfficeOpenXml;
-using OfficeOpenXml.Style;
-using System.Drawing;
-
-namespace NetLib.Excel
+﻿namespace NetLib.Excel
 {
+    using System.Drawing;
+    using OfficeOpenXml;
+    using OfficeOpenXml.Style;
+
     public static class ExcelExt
     {
-        public static void SetBorderByGost(this ExcelStyle style, ExcelBorderStyle vertic = ExcelBorderStyle.Medium,
+        public static void SetBorderByGost(
+            this ExcelStyle style,
+            ExcelBorderStyle vertic = ExcelBorderStyle.Medium,
             ExcelBorderStyle hor = ExcelBorderStyle.Thin)
         {
             try
@@ -24,21 +25,19 @@ namespace NetLib.Excel
             }
         }
 
-        [PublicAPI]
-        public static void SetCellCenter([NotNull] this ExcelRange cell)
+        public static void SetCellCenter(this ExcelRange cell)
         {
             cell.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
             cell.Style.VerticalAlignment = ExcelVerticalAlignment.Center;
         }
 
-        [PublicAPI]
-        public static void SetColor([NotNull] this ExcelRange cell, Color color)
+        public static void SetColor(this ExcelRange cell, Color color)
         {
             cell.Style.Fill.PatternType = ExcelFillStyle.Solid;
             cell.Style.Fill.BackgroundColor.SetColor(color);
         }
 
-        public static void SetStyleCenterAlignment([NotNull] this ExcelStyle style)
+        public static void SetStyleCenterAlignment(this ExcelStyle style)
         {
             style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
             style.VerticalAlignment = ExcelVerticalAlignment.Center;

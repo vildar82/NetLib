@@ -5,7 +5,6 @@
     using JetBrains.Annotations;
     using NLog;
 
-    [PublicAPI]
     public class FileLock : ILockItem
     {
         private static ILogger Log { get; } = LogManager.GetCurrentClassLogger();
@@ -62,7 +61,6 @@
         /// <summary>
         /// строка для сообщения о блокировке - Пользователь, дата
         /// </summary>
-        [NotNull]
         public string GetMessage()
         {
             return $"Пользователь - {Info.Login}, дата блокировки {Info.Date}";

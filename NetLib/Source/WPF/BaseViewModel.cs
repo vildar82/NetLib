@@ -16,7 +16,6 @@
     using System.Windows.Threading;
     using ControlzEx;
     using FluentValidation;
-    using JetBrains.Annotations;
     using NLog;
     using Pik.Metro.Controls.Dialogs;
     using ReactiveUI;
@@ -28,15 +27,14 @@
     /// FluentValidator (должен быть класс с таким же именем +Validator) -
     /// унаследованный от AbstractValidator
     /// </summary>
-    [PublicAPI]
     public abstract class BaseViewModel : ReactiveObject, IBaseViewModel
     {
         private DateTime lastShowError;
         public readonly IDialogCoordinator dialogCoordinator = DialogCoordinator.Instance;
         protected IValidator validator;
         private static readonly HashSet<string> ignoreProps = new HashSet<string> { "Hide", "DialogResult", "Errors" };
-        private static readonly ConcurrentDictionary<RuntimeTypeHandle, IValidator> validators =
-            new ConcurrentDictionary<RuntimeTypeHandle, IValidator>();
+        private static readonly ConcurrentDictionary<RuntimeTypeHandle, IValidator?> validators =
+            new ConcurrentDictionary<RuntimeTypeHandle, IValidator?>();
 
         public static Dispatcher dispatcher = Dispatcher.CurrentDispatcher;
         private readonly object context;
@@ -66,7 +64,7 @@
             validators[typeof(BaseViewModel).TypeHandle] = null;
         }
 
-        public BaseViewModel([CanBeNull] IBaseViewModel parent)
+        public BaseViewModel(IBaseViewModel? parent)
         {
             context = this;
             InitValidator();
@@ -113,7 +111,7 @@
             dispatcher.Invoke(DispatcherPriority.Background, new Action(delegate { }));
         }
 
-        public void CommandException([NotNull] Exception e)
+        public void CommandException(Exception e)
         {
             if (e is OperationCanceledException)
                 return;
@@ -121,58 +119,56 @@
             ShowMessage(e.Message);
         }
 
-        public ReactiveCommand<Unit, Unit> CreateCommandAsync(Func<CancellationToken, Task> execute, IObservable<bool> canExecute = null)
+        public ReactiveCommand<Unit, Unit> CreateCommandAsync(Func<CancellationToken, Task> execute, IObservable<bool>? canExecute = null)
         {
             var command = ReactiveCommand.CreateFromTask(execute, canExecute, new DispatcherScheduler(Dispatcher.CurrentDispatcher));
             command.ThrownExceptions.Subscribe(CommandException);
             return command;
         }
 
-        public ReactiveCommand<Unit, Unit> CreateCommandAsync(Func<Task> execute, IObservable<bool> canExecute = null)
+        public ReactiveCommand<Unit, Unit> CreateCommandAsync(Func<Task> execute, IObservable<bool>? canExecute = null)
         {
             var command = ReactiveCommand.CreateFromTask(execute, canExecute, new DispatcherScheduler(Dispatcher.CurrentDispatcher));
             command.ThrownExceptions.Subscribe(CommandException);
             return command;
         }
 
-        public ReactiveCommand<TParam, Unit> CreateCommandAsync<TParam>(Func<TParam, Task> execute, IObservable<bool> canExecute = null)
+        public ReactiveCommand<TParam, Unit> CreateCommandAsync<TParam>(Func<TParam, Task> execute, IObservable<bool>? canExecute = null)
         {
             var command = ReactiveCommand.CreateFromTask(execute, canExecute, new DispatcherScheduler(Dispatcher.CurrentDispatcher));
             command.ThrownExceptions.Subscribe(CommandException);
             return command;
         }
 
-        public ReactiveCommand<TParam, Unit> CreateCommandAsync<TParam>(Func<TParam, CancellationToken, Task> execute, IObservable<bool> canExecute = null)
+        public ReactiveCommand<TParam, Unit> CreateCommandAsync<TParam>(Func<TParam, CancellationToken, Task> execute, IObservable<bool>? canExecute = null)
         {
             var command = ReactiveCommand.CreateFromTask(execute, canExecute, new DispatcherScheduler(Dispatcher.CurrentDispatcher));
             command.ThrownExceptions.Subscribe(CommandException);
             return command;
         }
 
-        [NotNull]
-        public ReactiveCommand<TParam, TResult> CreateCommandAsync<TParam, TResult>(Func<TParam, CancellationToken, Task<TResult>> execute, IObservable<bool> canExecute = null)
+        public ReactiveCommand<TParam, TResult> CreateCommandAsync<TParam, TResult>(Func<TParam, CancellationToken, Task<TResult>> execute, IObservable<bool>? canExecute = null)
         {
             var command = ReactiveCommand.CreateFromTask(execute, canExecute, new DispatcherScheduler(Dispatcher.CurrentDispatcher));
             command.ThrownExceptions.Subscribe(CommandException);
             return command;
         }
 
-        [NotNull]
-        public ReactiveCommand<Unit, TResult> CreateCommandAsync<TResult>(Func<Task<TResult>> execute, IObservable<bool> canExecute = null)
+        public ReactiveCommand<Unit, TResult> CreateCommandAsync<TResult>(Func<Task<TResult>> execute, IObservable<bool>? canExecute = null)
         {
             var command = ReactiveCommand.CreateFromTask(execute, canExecute, new DispatcherScheduler(Dispatcher.CurrentDispatcher));
             command.ThrownExceptions.Subscribe(CommandException);
             return command;
         }
 
-        public ReactiveCommand<Unit, Unit> CreateCommand(Action execute, IObservable<bool> canExecute = null)
+        public ReactiveCommand<Unit, Unit> CreateCommand(Action execute, IObservable<bool>? canExecute = null)
         {
             var command = ReactiveCommand.Create(execute, canExecute, new DispatcherScheduler(Dispatcher.CurrentDispatcher));
             command.ThrownExceptions.Subscribe(CommandException);
             return command;
         }
 
-        public ReactiveCommand<T, Unit> CreateCommand<T>(Action<T> execute, IObservable<bool> canExecute = null)
+        public ReactiveCommand<T, Unit> CreateCommand<T>(Action<T> execute, IObservable<bool>? canExecute = null)
         {
             var command = ReactiveCommand.Create(execute, canExecute, new DispatcherScheduler(Dispatcher.CurrentDispatcher));
             command.ThrownExceptions.Subscribe(CommandException);
@@ -183,7 +179,6 @@
         {
         }
 
-        [CanBeNull]
         public IEnumerable GetErrors(string propertyName)
         {
             return validationResult?.Errors?
@@ -197,7 +192,6 @@
             else Parent?.HideMe();
         }
 
-        [NotNull]
         public IDisposable HideWindow()
         {
             return new ActionUsage(HideMe, VisibleMe);
@@ -321,7 +315,7 @@
         /// <param name="inMainThread">Выполнять в основном потоке (обязательно для AutoCAD/Revit,
         /// т.к. любые операции с чертежом нужно делать из основного потока).
         /// При этом нужно периодически выполнять прокачку очереди сообщений (DoEvents)</param>
-        public async Task ShowProgressDialog([NotNull] Action<ProgressDialogController> job, string title, string msg,
+        public async Task ShowProgressDialog(Action<ProgressDialogController> job, string title, string msg,
             bool inMainThread = true)
         {
             Exception jobEx = null;
@@ -352,7 +346,7 @@
         /// <summary>
         /// Валидация.
         /// </summary>
-        public async void Validate([CanBeNull] string propName = null)
+        public async void Validate(string? propName = null)
         {
             if (validator == null) return;
             await Task.Run(() =>
@@ -385,7 +379,7 @@
             else Parent?.VisibleMe();
         }
 
-        private void BaseViewModel_PropertyChanged(object sender, [NotNull] PropertyChangedEventArgs e)
+        private void BaseViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (!ignoreProps.Contains(e.PropertyName))
             {
@@ -418,12 +412,12 @@
             }
         }
 
-        public virtual void OnPropertyChanged([CanBeNull] [CallerMemberName] string propertyName = null)
+        public virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
         {
             this.RaisePropertyChanged(propertyName);
         }
 
-        protected void OnPropertyChanged([NotNull] PropertyChangedEventArgs eventArgs)
+        protected void OnPropertyChanged(PropertyChangedEventArgs eventArgs)
         {
             this.RaisePropertyChanged(eventArgs.PropertyName);
         }

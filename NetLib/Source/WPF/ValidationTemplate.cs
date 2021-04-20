@@ -6,10 +6,8 @@
     using System.ComponentModel;
     using System.Linq;
     using FluentValidation;
-    using JetBrains.Annotations;
     using ValidationResult = FluentValidation.Results.ValidationResult;
 
-    [PublicAPI]
     public class ValidationTemplate : INotifyDataErrorInfo
     {
         private static readonly ConcurrentDictionary<RuntimeTypeHandle, IValidator> validators =
@@ -23,7 +21,7 @@
 
         public bool HasErrors => validationResult.Errors.Count > 0;
 
-        public ValidationTemplate([NotNull] INotifyPropertyChanged target)
+        public ValidationTemplate(INotifyPropertyChanged target)
         {
             this.target = target;
             validator = GetValidator(target.GetType());
@@ -32,7 +30,7 @@
             target.PropertyChanged += Validate;
         }
 
-        public static IValidator GetValidator([NotNull] Type modelType)
+        public static IValidator GetValidator(Type modelType)
         {
             if (validators.TryGetValue(modelType.TypeHandle, out IValidator validator)) return validator;
             var typeName = $"{modelType.Namespace}.{modelType.Name}Validator";
@@ -41,7 +39,6 @@
             return validator;
         }
 
-        [NotNull]
         public IEnumerable GetErrors(string propertyName)
         {
             return validationResult.Errors

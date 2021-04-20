@@ -5,7 +5,6 @@ namespace NetLib.Extensions
     using System.Linq;
     using JetBrains.Annotations;
 
-    [PublicAPI]
     public static class ColorExt
     {
         /// <summary>

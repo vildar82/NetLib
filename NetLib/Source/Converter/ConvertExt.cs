@@ -6,7 +6,6 @@
 
     public static class ConvertExt
     {
-        [PublicAPI]
         public static string ColorToString(this Color color)
         {
             return ColorTranslator.ToHtml(color);
@@ -90,14 +89,12 @@
             return (T)Convert.ChangeType(value, typeof(T));
         }
 
-        [PublicAPI]
-        public static Color StringToColor([CanBeNull] this string color)
+        public static Color StringToColor(this string? color)
         {
             return string.IsNullOrEmpty(color) ? Color.Empty : ColorTranslator.FromHtml(color);
         }
 
-        [PublicAPI]
-        public static T? TryGetValue<T>(this object value, T defaultValue = default)
+        public static T? TryGetValue<T>(this object value, T? defaultValue = default)
         {
             try
             {

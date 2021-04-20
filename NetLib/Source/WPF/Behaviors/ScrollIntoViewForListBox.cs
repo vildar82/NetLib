@@ -2,7 +2,6 @@
 {
     using System;
     using System.Windows.Controls;
-    using JetBrains.Annotations;
     using Microsoft.Xaml.Behaviors;
 
     /// <summary>
@@ -15,7 +14,6 @@
     /// i:Interaction.Behaviors>
     /// </ListBox>
     /// </summary>
-    [PublicAPI]
     public class ScrollIntoViewForListBox : Behavior<ListBox>
     {
         /// <summary>

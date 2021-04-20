@@ -2,7 +2,6 @@
 using System.Reflection;
 using System.Windows;
 using System.Windows.Input;
-using JetBrains.Annotations;
 using Microsoft.Xaml.Behaviors;
 
 /// <summary>
@@ -10,7 +9,6 @@ using Microsoft.Xaml.Behaviors;
 /// Behavior that will connect an UI event to a viewmodel Command,
 /// allowing the event arguments to be passed as the CommandParameter.
 /// </summary>
-[PublicAPI]
 public class EventToCommand : Behavior<FrameworkElement>
 {
     private Delegate _handler;

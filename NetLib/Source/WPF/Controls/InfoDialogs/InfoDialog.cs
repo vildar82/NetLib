@@ -2,9 +2,7 @@
 namespace NetLib.WPF.Controls
 {
     using InfoDialogs;
-    using JetBrains.Annotations;
 
-    [PublicAPI]
     public class InfoDialog
     {
         public static bool ShowDialog(string title, string msg)

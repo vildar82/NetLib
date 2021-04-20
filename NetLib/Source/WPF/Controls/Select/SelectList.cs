@@ -5,18 +5,20 @@
     using System.Linq;
     using JetBrains.Annotations;
 
-    [PublicAPI]
     public static class SelectList
     {
-        public static T Select<T>([NotNull] List<SelectListItem<T>> items, string title, [CanBeNull] string name = null)
+        public static T Select<T>(List<SelectListItem<T>> items, string title, string? name = null)
         {
             return Select(items, null, title, name);
         }
 
-        public static T Select<T>([NotNull] List<SelectListItem<T>> items, [CanBeNull] SelectListItem<T> selected, 
-            string title, [CanBeNull] string name = null)
+        public static T Select<T>(
+            List<SelectListItem<T>> items,
+            SelectListItem<T>? selected,
+            string title,
+            string? name = null)
         {
-            var selVM = new SelectListVM<T>(items, title, name) {Selected = selected ?? items[0]};
+            var selVM = new SelectListVM<T>(items, title, name) { Selected = selected ?? items[0] };
             var selView = new SelectListView(selVM);
             if (selView.ShowDialog() == true)
             {
@@ -26,7 +28,7 @@
             throw new OperationCanceledException("Отменено пользователем");
         }
 
-        public static List<T> SelectMany<T>([NotNull] List<SelectListItem<T>> items, string title, [CanBeNull] string name = null)
+        public static List<T> SelectMany<T>(List<SelectListItem<T>> items, string title, string? name = null)
         {
             var selVM = new SelectListVM<T>(items, title, name, true);
             var selView = new SelectListView(selVM);
@@ -38,8 +40,11 @@
             throw new OperationCanceledException("Отменено пользователем");
         }
 
-        public static T Select<T>([NotNull] List<SelectListItem<T>> items, [CanBeNull] T selected, 
-            string title, [CanBeNull] string name = null)
+        public static T Select<T>(
+            List<SelectListItem<T>> items,
+            T? selected,
+            string title,
+            string? name = null)
         {
             return Select(items, items.FirstOrDefault(i => i.Object.Equals(selected)), title, name);
         }

@@ -2,7 +2,6 @@
 {
     using System;
     using System.ComponentModel;
-    using JetBrains.Annotations;
 
     /// <summary>
     /// Конвертер enum значений из описаний значений
@@ -24,16 +23,18 @@
         {
         }
 
-        public static string GetEnumDescription([CanBeNull] object enumValue)
+        public static string? GetEnumDescription(object? enumValue)
         {
-            if (enumValue == null) return null;
+            if (enumValue == null)
+                return null;
+
             var fi = enumValue.GetType().GetField(enumValue.ToString());
             if (fi == null) return enumValue.ToString();
             var attributes = (DescriptionAttribute[])fi.GetCustomAttributes(typeof(DescriptionAttribute), false);
             return attributes.Length > 0 ? attributes[0].Description : enumValue.ToString();
         }
 
-        public override object ConvertTo(ITypeDescriptorContext context, System.Globalization.CultureInfo culture, object value, Type destinationType)
+        public override object? ConvertTo(ITypeDescriptorContext context, System.Globalization.CultureInfo culture, object value, Type destinationType)
         {
             return destinationType == typeof(string)
                 ? GetEnumDescription(value)

@@ -2,13 +2,11 @@
 {
     using System;
     using System.IO;
-    using JetBrains.Annotations;
     using NLog;
 
     /// <summary>
     /// Данные хранимые в файле json локально
     /// </summary>
-    [PublicAPI]
     public class LocalFileData<T>
         where T : class, new()
     {
@@ -25,7 +23,7 @@
         /// </summary>
         /// <param name="localFile"></param>
         /// <param name="isXmlOrJson">true - xml, false - json.</param>
-        public LocalFileData([NotNull] string localFile, bool isXmlOrJson)
+        public LocalFileData(string localFile, bool isXmlOrJson)
         {
             LocalFile = localFile;
             this.isXmlOrJson = isXmlOrJson;

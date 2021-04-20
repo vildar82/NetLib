@@ -6,11 +6,10 @@
     using System.Windows.Data;
     using JetBrains.Annotations;
 
-    [PublicAPI]
     [ValueConversion(typeof(bool), typeof(FontWeights))]
     public class BooleanToFontBoldConverter : ConvertorBase
     {
-        public override object Convert([NotNull] object value, Type targetType, object parameter, CultureInfo culture)
+        public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             return (bool)value ? FontWeights.Bold : FontWeights.Normal;
         }

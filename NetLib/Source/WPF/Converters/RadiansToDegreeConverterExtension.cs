@@ -1,17 +1,14 @@
-﻿using JetBrains.Annotations;
-using System;
-using System.Globalization;
-using System.Windows.Data;
-
-namespace NetLib.WPF.Converters
+﻿namespace NetLib.WPF.Converters
 {
-    [PublicAPI]
+    using System;
+    using System.Globalization;
+    using System.Windows.Data;
+
     [ValueConversion(typeof(int), typeof(string))]
     [ValueConversion(typeof(double), typeof(string))]
     [ValueConversion(typeof(double?), typeof(string))]
     public class RadiansToDegreeConverterExtension : ConvertorBase
     {
-        [NotNull]
         public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value == null) return null;
@@ -19,7 +16,6 @@ namespace NetLib.WPF.Converters
             return date.ToDegrees().ToString("N2");
         }
 
-        [NotNull]
         public override object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value == null) return null;

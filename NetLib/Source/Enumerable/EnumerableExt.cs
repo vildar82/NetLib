@@ -5,7 +5,6 @@
     using System.Linq;
     using JetBrains.Annotations;
 
-    [PublicAPI]
     public static class EnumerableExt
     {
         /// <summary>
@@ -43,8 +42,9 @@
         /// <param name="nameSelector">Выборка имен</param>
         /// <typeparam name="T">Тип элемента</typeparam>
         /// <returns>Дублирующиеся имена</returns>
-        public static IEnumerable<IGrouping<string, T>> GetDublicateNames<T>([NotNull] this IEnumerable<T> items,
-            [NotNull] Func<T, string> nameSelector)
+        public static IEnumerable<IGrouping<string, T>> GetDublicateNames<T>(
+            this IEnumerable<T> items,
+            Func<T, string> nameSelector)
         {
             return items.GroupBy(nameSelector).Where(w => w?.Skip(1).Any() == true);
         }
@@ -55,8 +55,7 @@
         /// <typeparam name="T">Тип значения</typeparam>
         /// <param name="lists">Списки значений</param>
         /// <returns>Список совпадаюших значений</returns>
-        [NotNull]
-        public static IEnumerable<T> IntersectMany<T>([NotNull] this IEnumerable<IEnumerable<T>> lists)
+        public static IEnumerable<T> IntersectMany<T>(this IEnumerable<IEnumerable<T>> lists)
         {
             var listNos = lists.Where(w => w != null);
             if (!listNos.Skip(1).Any())
@@ -78,20 +77,15 @@
         /// <param name="obj">Объект добавляемый в коллекцию. Может быть значимым или ссылочным типом.</param>
         /// <param name="list">Коллекция</param>
         /// <returns>Сам объект</returns>
-        [PublicAPI]
         public static T AddTo<T>(this T obj, ICollection<T> list)
         {
             // Если это значимый тип, или не дефолтное значение для ссылочных типов (null)
             if (typeof(T).IsValueType || !EqualityComparer<T>.Default.Equals(obj, default))
-            {
                 list.Add(obj);
-            }
             return obj;
         }
 
-        [PublicAPI]
-        [NotNull]
-        public static List<List<T>> ChunkBy<T>([NotNull] this List<T> source, int chunkSize)
+        public static List<List<T>> ChunkBy<T>(this List<T> source, int chunkSize)
         {
             return source
                 .Select((x, i) => new { Index = i, Value = x })
@@ -100,25 +94,28 @@
                 .ToList();
         }
 
-        [PublicAPI]
-        public static bool EqualLists<T>(this List<T> list1, List<T> list2)
+        public static bool EqualLists<T>(this List<T>? list1, List<T>? list2)
         {
-            if (ReferenceEquals(list1, list2)) return true;
-            if (list1 == null || list2 == null) return false;
+            if (ReferenceEquals(list1, list2))
+                return true;
+
+            if (list1 == null || list2 == null)
+                return false;
+
             return list1.All(list2.Contains) && list1.Count == list2.Count;
         }
 
-        [PublicAPI]
-        public static bool EqualLists<T>(this List<T> list1, List<T> list2, IEqualityComparer<T> comparer)
+        public static bool EqualLists<T>(this List<T>? list1, List<T>? list2, IEqualityComparer<T> comparer)
         {
             if (ReferenceEquals(list1, list2)) return true;
             if (list1 == null || list2 == null) return false;
             return list1.All(l1 => list2.Contains(l1, comparer)) && list1.Count == list2.Count;
         }
 
-        [NotNull]
-        public static IEnumerable<TRes> SelectTry<TSource, TRes>([NotNull] this IEnumerable<TSource> list,
-            [NotNull] Func<TSource, TRes> selector, [CanBeNull] Action<Exception> onException = null)
+        public static IEnumerable<TRes> SelectTry<TSource, TRes>(
+            this IEnumerable<TSource> list,
+            Func<TSource, TRes> selector,
+            Action<Exception>? onException = null)
         {
             foreach (var item in list)
             {
@@ -133,14 +130,14 @@
                     onException?.Invoke(ex);
                     continue;
                 }
+
                 yield return res;
             }
         }
 
-        [PublicAPI]
-        [NotNull]
-        public static IEnumerable<TRes> SelectManyNulless<TSource, TRes>([NotNull] this IEnumerable<TSource> list,
-            [NotNull] Func<TSource, IEnumerable<TRes>> selector)
+        public static IEnumerable<TRes> SelectManyNulless<TSource, TRes>(
+            this IEnumerable<TSource> list,
+            Func<TSource, IEnumerable<TRes>> selector)
         {
             // ReSharper disable CompareNonConstrainedGenericWithNull
             return list.Where(w => w != null).SelectMany(selector).Where(w => w != null);
@@ -149,15 +146,12 @@
         /// <summary>
         /// Select без Null
         /// </summary>
-        [NotNull]
-        public static IEnumerable<TRes> SelectNulless<TSource, TRes>([NotNull] this IEnumerable<TSource> list, [NotNull] Func<TSource, TRes> selector)
+        public static IEnumerable<TRes> SelectNulless<TSource, TRes>(this IEnumerable<TSource> list, Func<TSource, TRes> selector)
         {
             return list.Where(w => w != null).Select(selector).Where(w => w != null);
         }
 
-        [PublicAPI]
-        [NotNull]
-        public static IEnumerable<IEnumerable<T>> SplitParts<T>([NotNull] this IEnumerable<T> list, int parts)
+        public static IEnumerable<IEnumerable<T>> SplitParts<T>(this IEnumerable<T> list, int parts)
         {
             var i = 0;
             var splits = list.GroupBy(item => i++ % parts).Select(part => part.AsEnumerable());
@@ -167,7 +161,6 @@
         /// <summary>
         /// Преобразует одиночный объект в список из одного объекта (IEnumerable)
         /// </summary>
-        [PublicAPI]
         public static IEnumerable<T> Yield<T>(this T item)
         {
             yield return item;

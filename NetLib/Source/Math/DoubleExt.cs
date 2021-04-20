@@ -3,7 +3,6 @@
     using System;
     using JetBrains.Annotations;
 
-    [PublicAPI]
     public static class DoubleExt
     {
         /// <summary>
@@ -12,7 +11,6 @@
         /// <param name="val">Значение</param>
         /// <param name="start">Стартовое значение интервала</param>
         /// <param name="end">Конечное значение интервала</param>
-        /// <returns></returns>
         public static bool IsInInterval(this double val, double start, double end)
         {
             return val >= start && val <= end;
@@ -23,7 +21,6 @@
         /// </summary>
         /// <param name="value1"></param>
         /// <param name="value2"></param>
-        /// <returns></returns>
         public static bool IsEqual6(this double value1, double value2)
         {
             return Math.Abs(value1 - value2) < 0.0000001;

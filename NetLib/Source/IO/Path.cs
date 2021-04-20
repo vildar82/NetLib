@@ -11,7 +11,6 @@
     using NetLib.Monad;
     using NLog;
 
-    [PublicAPI]
     public static class Path
     {
         private static ILogger Log { get; } = LogManager.GetCurrentClassLogger();
@@ -106,7 +105,6 @@
         /// </summary>
         /// <param name="sourceDir">The source dir.</param>
         /// <param name="destDir">The dest dir.</param>
-        [PublicAPI]
         public static void CopyDirectory(string sourceDir, string destDir)
         {
             CopyDirectory(sourceDir, destDir, false);
@@ -118,7 +116,6 @@
         /// <param name="sourceDir">The source dir.</param>
         /// <param name="destDir">The dest dir.</param>
         /// <param name="onlyNewest">if set to <c>true</c> [only newest].</param>
-        [PublicAPI]
         public static void CopyDirectory(string sourceDir, string destDir, bool onlyNewest)
         {
             sourceDir = sourceDir.TrimEnd(System.IO.Path.DirectorySeparatorChar);
@@ -151,7 +148,6 @@
             }
         }
 
-        [PublicAPI]
         public static void DeleteDir(string dir)
         {
             if (!Directory.Exists(dir) || IsRootDir(dir)) return;
@@ -208,7 +204,6 @@
         /// <summary>
         /// Пользовательская папка настроек
         /// </summary>
-        [PublicAPI]
         public static string GetUserPikFolder()
         {
             var appData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData, Environment.SpecialFolderOption.Create);
@@ -239,7 +234,6 @@
         /// </summary>
         /// <param name="plugin">Имя плагина - имя папки</param>
         /// <returns>Полный путь</returns>
-        [PublicAPI]
         public static string GetUserPluginFolder(string plugin)
         {
             var companyFolder = GetUserPikFolder();

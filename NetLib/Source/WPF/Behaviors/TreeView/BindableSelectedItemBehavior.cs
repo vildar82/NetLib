@@ -10,12 +10,13 @@
     ///     behaviours:BindableSelectedItemBehavior SelectedItem = "{Binding SelectedItem, Mode=TwoWay}"
     /// e:Interaction.Behaviors
     /// </summary>
-    [PublicAPI]
     public class BindableSelectedItemBehavior : Behavior<TreeView>
     {
-        public static readonly DependencyProperty SelectedItemProperty =
-            DependencyProperty.Register("SelectedItem", typeof(object), typeof(BindableSelectedItemBehavior),
-                new UIPropertyMetadata(null, OnSelectedItemChanged));
+        public static readonly DependencyProperty SelectedItemProperty = DependencyProperty.Register(
+            "SelectedItem",
+            typeof(object),
+            typeof(BindableSelectedItemBehavior),
+            new UIPropertyMetadata(null, OnSelectedItemChanged));
 
         public object SelectedItem
         {
@@ -46,7 +47,7 @@
             item?.SetValue(TreeViewItem.IsSelectedProperty, true);
         }
 
-        private void OnTreeViewSelectedItemChanged(object sender, [NotNull] RoutedPropertyChangedEventArgs<object> e)
+        private void OnTreeViewSelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
             SelectedItem = e.NewValue;
         }

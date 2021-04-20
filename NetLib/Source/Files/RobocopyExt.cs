@@ -1,17 +1,16 @@
-﻿using System;
-using System.Diagnostics;
-using System.IO;
-using System.Text;
-using JetBrains.Annotations;
-using Path = NetLib.IO.Path;
-
-// ReSharper disable once CheckNamespace
+﻿// ReSharper disable once CheckNamespace
 namespace NetLib.Files
 {
+    using System;
+    using System.Diagnostics;
+    using System.IO;
+    using System.Text;
+    using JetBrains.Annotations;
+    using Path = NetLib.IO.Path;
+
     public static class RobocopyExt
     {
-        [NotNull]
-        public static string Mirror([NotNull] string sourceDir, [NotNull] string destDir, bool showConsole = false)
+        public static string Mirror(string sourceDir, string destDir, bool showConsole = false)
         {
             return Mirror(sourceDir, destDir, out _, showConsole);
         }
@@ -25,9 +24,7 @@ namespace NetLib.Files
         /// <param name="showConsole"></param>
         /// <exception cref="Exception">StandardError</exception>
         /// <returns>Output</returns>
-        [NotNull]
-        public static string Mirror([NotNull] string sourceDir, [NotNull] string destDir, out int exitCode,
-            bool showConsole = false)
+        public static string Mirror(string sourceDir, string destDir, out int exitCode, bool showConsole = false)
         {
             exitCode = 0;
             if (!Directory.Exists(sourceDir)) throw new DirectoryNotFoundException(sourceDir);
@@ -46,6 +43,7 @@ namespace NetLib.Files
                 //RedirectStandardOutput = true,
                 //RedirectStandardError = true
             };
+
             using (var p = Process.Start(startInfo) ?? throw new InvalidOperationException())
             {
                 p.WaitForExit();
@@ -56,6 +54,7 @@ namespace NetLib.Files
                 //    throw new Exception(err);
                 //}
             }
+
             try
             {
                 var res = File.ReadAllText(logFile, Encoding.GetEncoding(866));

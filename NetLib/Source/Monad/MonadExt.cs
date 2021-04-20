@@ -1,10 +1,9 @@
-﻿using System;
-using JetBrains.Annotations;
-using NLog;
-
-namespace NetLib.Monad
+﻿namespace NetLib.Monad
 {
-    [PublicAPI]
+    using System;
+    using JetBrains.Annotations;
+    using NLog;
+
     public static class MonadExt
     {
         private static ILogger Logger { get; } = LogManager.GetCurrentClassLogger();
@@ -14,13 +13,12 @@ namespace NetLib.Monad
             return (T) obj;
         }
 
-        [CanBeNull]
-        public static TRes With<T,TRes>([CanBeNull] this T obj, Func<T,TRes> func)
+        public static TRes? With<T,TRes>(this T? obj, Func<T,TRes> func)
         {
             return obj == null ? default : func(obj);
         }
 
-        public static void Try(this Action action, [CanBeNull] Action<Exception> exception = null)
+        public static void Try(this Action action, Action<Exception>? exception = null)
         {
             try
             {
@@ -52,7 +50,7 @@ namespace NetLib.Monad
         /// <param name="action">Работа</param>
         /// <param name="exception">обработка исключения при работе</param>
         /// <returns>Объект</returns>
-        public static T Try<T>(this T obj, Action<T> action, [CanBeNull] Action<T, Exception> exception = null)
+        public static T Try<T>(this T obj, Action<T> action, Action<T, Exception>? exception = null)
         {
             try
             {
@@ -62,6 +60,7 @@ namespace NetLib.Monad
             {
                 exception?.Invoke(obj, ex);
             }
+
             return obj;
         }
 
@@ -73,8 +72,7 @@ namespace NetLib.Monad
         /// <param name="obj">Объект</param>
         /// <param name="func">Работа</param>
         /// <param name="exception">Обработка исключения</param>
-        /// <returns></returns>
-        public static TRes Try<T,TRes>(this T obj, Func<T, TRes> func, [CanBeNull] Func<Exception, TRes> exception=null)
+        public static TRes Try<T,TRes>(this T obj, Func<T, TRes> func, Func<Exception, TRes>? exception = null)
         {
             try
             {
@@ -86,7 +84,7 @@ namespace NetLib.Monad
             }
         }
 
-        public static TRes Try<T,TRes>(this T obj, Func<T, TRes> func, TRes defaultRes, [CanBeNull] Action<Exception> exception=null)
+        public static TRes Try<T,TRes>(this T obj, Func<T, TRes> func, TRes defaultRes, Action<Exception>? exception = null)
         {
             try
             {

@@ -6,7 +6,6 @@
     using DynamicData.Binding;
     using JetBrains.Annotations;
 
-    [PublicAPI]
     public class DataGridColumnsRBehavior
     {
         public static readonly DependencyProperty BindableColumnsProperty =
@@ -15,12 +14,12 @@
                 typeof(DataGridColumnsBehavior),
                 new UIPropertyMetadata(null, BindableColumnsPropertyChanged));
 
-        public static ObservableCollectionExtended<DataGridColumn> GetBindableColumns([NotNull] DependencyObject element)
+        public static ObservableCollectionExtended<DataGridColumn> GetBindableColumns(DependencyObject element)
         {
             return (ObservableCollectionExtended<DataGridColumn>)element.GetValue(BindableColumnsProperty);
         }
 
-        public static void SetBindableColumns([NotNull] DependencyObject element, ObservableCollectionExtended<DataGridColumn> value)
+        public static void SetBindableColumns(DependencyObject element, ObservableCollectionExtended<DataGridColumn> value)
         {
             element.SetValue(BindableColumnsProperty, value);
         }

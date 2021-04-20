@@ -5,9 +5,7 @@
     using System.IO;
     using System.Windows.Media;
     using System.Windows.Media.Imaging;
-    using JetBrains.Annotations;
 
-    [PublicAPI]
     public static class ImageExt
     {
         public static BitmapImage ConvertToBitmapImage(this Image image)

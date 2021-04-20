@@ -5,7 +5,6 @@ namespace NetLib.WPF.Controls
     using System.Runtime.CompilerServices;
     using System.Windows;
     using System.Windows.Forms;
-    using JetBrains.Annotations;
 
     public partial class ColorPicker : INotifyPropertyChanged
     {
@@ -51,8 +50,7 @@ namespace NetLib.WPF.Controls
             }
         }
 
-        [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged([CanBeNull] [CallerMemberName] string propertyName = null)
+        protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }

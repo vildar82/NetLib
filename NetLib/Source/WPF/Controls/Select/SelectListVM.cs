@@ -37,7 +37,7 @@
 
         public bool SelectAll { get; set; }
 
-        public SelectListItem<T> Selected { get; set; }
+        public SelectListItem<T>? Selected { get; set; }
 
         public List<SelectListItem<T>> MultiSelected { get; set; }
 
@@ -54,8 +54,12 @@
         
         public Func<string> IsCustomValueValid { get; set; }
 
-        public SelectListVM([NotNull] List<SelectListItem<T>> items, string title, Control customValue,
-            Func<string> isCustomValueValid,             [CanBeNull] string name = null) 
+        public SelectListVM(
+            List<SelectListItem<T>> items,
+            string title,
+            Control customValue,
+            Func<string> isCustomValueValid,
+            string? name = null)
             : this (items, title, name)
         {
             CanCustomValue = true;
@@ -63,20 +67,19 @@
             IsCustomValueValid = isCustomValueValid;
         }
 
-        public SelectListVM([NotNull] List<SelectListItem<T>> items, string title, [CanBeNull] string name = null,
-            bool multiSelect = false)
+        public SelectListVM(List<SelectListItem<T>> items, string title, string? name = null, bool multiSelect = false)
         {
             Title = title;
             Name = name;
             HasName = !string.IsNullOrEmpty(name);
             ItemsView = new ListCollectionView(items)
             {
-                Filter = FilterPredicate
+                Filter = FilterPredicate,
             };
 
             HasFilter = items.Count > 10;
             var canOk = this.WhenAnyValue(v => v.CanCustomValue, v => v.Selected).Select(s => s.Item2 != null || s.Item1);
-            
+
             if (multiSelect)
             {
                 OK = CreateCommand(OkExecute);
@@ -129,7 +132,6 @@
         {
         }
 
-        [NotNull]
         private static List<SelectListItem<int>> GetItems()
         {
             return new List<SelectListItem<int>>
@@ -137,7 +139,7 @@
                 new SelectListItem<int>("K1-1", 5),
                 new SelectListItem<int>("T1-2", 1),
                 new SelectListItem<int>("U2-1", 25),
-                new SelectListItem<int>("I6-1", 1)
+                new SelectListItem<int>("I6-1", 1),
             };
         }
     }

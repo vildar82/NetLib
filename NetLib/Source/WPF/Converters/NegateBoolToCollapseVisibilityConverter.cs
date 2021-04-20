@@ -4,9 +4,7 @@ namespace NetLib.WPF.Converters
     using System.Globalization;
     using System.Windows;
     using System.Windows.Data;
-    using JetBrains.Annotations;
 
-    [PublicAPI]
     [ValueConversion(typeof(bool), typeof(Visibility))]
     public class NegateBoolToCollapseVisibilityConverter : ConvertorBase
     {

@@ -1,21 +1,19 @@
 ﻿namespace NetLib.WPF
 {
     using System.Windows;
-    using JetBrains.Annotations;
 
     /// <summary>
     /// Window ...
     /// xmlns:xc="clr-namespace:ExCastle.Wpf"
     /// xc:DialogCloser.DialogResult="{Binding DialogResult}">
     /// </summary>
-    [PublicAPI]
     public static class DialogCloser
     {
         public static readonly DependencyProperty DialogResultProperty =
             DependencyProperty.RegisterAttached("DialogResult", typeof(bool?), typeof(DialogCloser),
                 new PropertyMetadata(DialogResultChanged));
 
-        public static void SetDialogResult([NotNull] Window target, bool? value)
+        public static void SetDialogResult(Window target, bool? value)
         {
             target.SetValue(DialogResultProperty, value);
         }

@@ -5,7 +5,6 @@
     using System.Windows.Data;
     using JetBrains.Annotations;
 
-    [PublicAPI]
     [ValueConversion(typeof(long), typeof(string))]
     public class Bytes : ConvertorBase
     {

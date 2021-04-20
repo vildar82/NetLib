@@ -3,7 +3,6 @@
     using System;
     using System.Reactive;
     using System.Reactive.Linq;
-    using JetBrains.Annotations;
     using ReactiveUI;
 
     public class DesignTextVM : TextVM
@@ -17,7 +16,6 @@
     /// <summary>
     /// Текстовое значение
     /// </summary>
-    [PublicAPI]
     public class TextVM : BaseViewModel
     {
         public string Name { get; set; }
@@ -28,7 +26,7 @@
 
         public string Value { get; set; }
         
-        public string Error { get; set; }
+        public string? Error { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TextVM"/> class.

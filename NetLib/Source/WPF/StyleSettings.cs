@@ -7,7 +7,6 @@
     using System.Linq;
     using System.Windows.Controls;
     using System.Windows.Media;
-    using JetBrains.Annotations;
     using NLog;
     using Pik.Metro;
     using Theme;
@@ -157,7 +156,7 @@
             return (wTheme, findWindowTheme);
         }
 
-        private static WindowTheme? FindWindowTheme([CanBeNull] string wName)
+        private static WindowTheme? FindWindowTheme(string? wName)
         {
             if (wName == null)
                 return null;

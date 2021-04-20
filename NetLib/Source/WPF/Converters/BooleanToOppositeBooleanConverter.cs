@@ -5,7 +5,6 @@
     using System.Windows.Data;
     using JetBrains.Annotations;
 
-    [PublicAPI]
     [ValueConversion(typeof(bool), typeof(bool))]
     public class BooleanToOppositeBooleanConverter : ConvertorBase
     {
