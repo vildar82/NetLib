@@ -26,46 +26,36 @@ namespace NetLib.Files
         /// <exception cref="Exception">StandardError</exception>
         /// <returns>Output</returns>
         [NotNull]
-        public static string Mirror([NotNull] string sourceDir, [NotNull] string destDir, out int exitCode,
+        public static string Mirror(
+            [NotNull] string sourceDir,
+            [NotNull] string destDir,
+            out int exitCode,
             bool showConsole = false)
         {
             exitCode = 0;
             if (!Directory.Exists(sourceDir)) throw new DirectoryNotFoundException(sourceDir);
             if (!Directory.Exists(destDir)) Directory.CreateDirectory(destDir);
-            var logFile = "robocopy.log";
+
             var startInfo = new ProcessStartInfo
             {
                 FileName = "robocopy.exe",
+
                 // R - число попыток
                 // FP - Включать в вывод полные пути файлов.
-                Arguments = $@"""{sourceDir}"" ""{destDir}"" /R:0 /MIR /FP /TEE /LOG:""{logFile}""",
+                Arguments = $@"""{sourceDir}"" ""{destDir}"" /R:0 /MIR",
                 ErrorDialog = false,
                 LoadUserProfile = false,
                 UseShellExecute = showConsole,
                 CreateNoWindow = !showConsole,
-                //RedirectStandardOutput = true,
-                //RedirectStandardError = true
             };
+
             using (var p = Process.Start(startInfo) ?? throw new InvalidOperationException())
             {
                 p.WaitForExit();
                 exitCode = p.ExitCode;
-                //var err = p.StandardError.ReadToEnd();
-                //if (!err.IsNullOrEmpty())
-                //{
-                //    throw new Exception(err);
-                //}
             }
-            try
-            {
-                var res = File.ReadAllText(logFile, Encoding.GetEncoding(866));
-                Path.TryDeleteFile(logFile);
-                return res;
-            }
-            catch
-            {
-                return "";
-            }
+
+            return exitCode.ToString();
         }
     }
 }
