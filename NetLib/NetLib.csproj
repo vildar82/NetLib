@@ -327,6 +327,7 @@
   <ItemGroup>
     <Content Include="lib\ToastNotifications.dll" />
     <Content Include="lib\ToastNotifications.Messages.dll" />
+    <Content Include="Readme.md" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

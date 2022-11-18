@@ -3,7 +3,7 @@
 <package>
   <metadata>
     <id>NetLib</id>
-    <version>$Version$</version>
+    <version>1.2.7</version>
     <authors>Vildar</authors>
     <projectUrl>https://github.com/vildar82/NetLib</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
@@ -14,7 +14,7 @@
     <dependencies>
       <dependency id="AttachedCommandBehavior" version="2.0.0" />
       <dependency id="BimLab.Metro" version="1.0.1" />
-      <dependency id="DynamicData" version="6.16.*" />
+      <dependency id="DynamicData" version="6.16.9" />
       <dependency id="DynamicData.ReactiveUI" version="6.11.*" />
       <dependency id="EPPlus" version="5.3.2" />
       <dependency id="Enums.NET" version="3.0.3" />

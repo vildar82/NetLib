@@ -1,0 +1,1 @@
+nuget pack NetLib.csproj -properties Configuration=Release
